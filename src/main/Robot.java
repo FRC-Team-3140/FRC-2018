@@ -257,7 +257,7 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("Free memory", runtime.freeMemory());
 		SmartDashboard.putNumber("Total memory", runtime.totalMemory());
 		SmartDashboard.putNumber("Pressure: ", HardwareAdapter.analogPressureSensor1.value());
-		SmartDashboard.putBoolean("Cube Detected: ", cubeSensor1.get());
+		//SmartDashboard.putBoolean("Cube Detected: ", cubeSensor1.get());
 		allPeriodic();
 	}
 	

@@ -116,22 +116,22 @@ public class Elevator extends ImprovedSubsystem {
 	}
 	
 	// Checks if the intake is at bottom
-	public boolean isArmAtBottom() {
-		if (stage1BottomSwitch.get() /*&& stage2BottomSwitch.get()*/) return true;
+	/*public boolean isArmAtBottom() {
+		if (stage1BottomSwitch.get()) return true;
 		else return false;
-	}
+	}*/
 	
 	// Checks if intake is at the top
-	public boolean isArmAtTop() {
-		if (stage1TopSwitch.get() /*&& stage2TopSwitch.get()*/)
+	/*public boolean isArmAtTop() {
+		if (stage1TopSwitch.get())
 			return true;
 		else return false;
-	}
+	}*/
 	
 	// Sets encoders to 0 if the arm is at the bottom (this helps to avoid offset)
 	public void check() {
-		if (isArmAtBottom())
-			zeroSensors();
+		/*if (isArmAtBottom())
+			zeroSensors();*/
 	}
 	
 	// Returns whether or not the intake has reached the set position. Pos is in inches
@@ -232,7 +232,7 @@ public class Elevator extends ImprovedSubsystem {
 	}
 
 	public void moveDown() {
-		if (isArmAtBottom()) {
+		/*if (isArmAtBottom()) {
 			elevatorMaster.set(PERCENT_VBUS_MODE, 0);
 		}
 		else if (isIntakeNearPos(0, nearSetpointDown)) {
@@ -240,11 +240,11 @@ public class Elevator extends ImprovedSubsystem {
 		}
 		else {
 			elevatorMaster.set(-1 * defaultElevatorSpeed);
-		}
+		}*/
 	}
 	
 	public void moveUp() {
-		if (isArmAtTop()) {
+		/*if (isArmAtTop()) {
 			elevatorMaster.set(0);
 		}
 		else if(isIntakeNearPos(elevatorHeight, nearSetpoint)) {
@@ -252,7 +252,7 @@ public class Elevator extends ImprovedSubsystem {
 		}
 		else {
 			elevatorMaster.set(defaultElevatorSpeed);
-		}
+		}*/
 	}
 	
 	/*****************
