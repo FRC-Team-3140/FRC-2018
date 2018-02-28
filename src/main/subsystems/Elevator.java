@@ -215,6 +215,10 @@ public class Elevator extends ImprovedSubsystem {
 		elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
 	}
 	
+	public void moveTimed(double throttle) {
+		elevatorMaster.set(throttle);
+	}
+	
 	// Moves fast to a position if far away, slows down when it gets closer, and stops when it reaches
 	// the position within a tolerance.
 	public void moveToPos(double pos) {

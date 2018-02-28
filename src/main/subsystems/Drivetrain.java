@@ -29,6 +29,11 @@ public class Drivetrain extends ImprovedSubsystem  {
 								 false);	
 	}
 	
+	public void timedTurn(double throttle, double time) {
+		driveTrain.tankDrive(throttle, -throttle);
+		//TODO: FINISH THIS
+	}
+	
 	/***********************
 	 * PLAY/RECORD METHODS *
 	 ***********************/
