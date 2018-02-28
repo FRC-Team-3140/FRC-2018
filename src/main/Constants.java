@@ -73,6 +73,8 @@ public interface Constants {
 	public final double countsPerRev = 4096; // what is this actually supposed to be?
 	public final FeedbackDevice encoder = FeedbackDevice.CTRE_MagEncoder_Relative;
 	
+	public static enum TurnMode { Right, Left };
+	
 	// ELEVATOR LENGTHS
 	/*public final double spindleDiameter = 2; //placeholder
 	public final double spindleCircum = Math.PI * spindleDiameter;

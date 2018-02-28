@@ -29,9 +29,9 @@ public class Drivetrain extends ImprovedSubsystem  {
 								 false);	
 	}
 	
-	public void timedTurn(double throttle, double time) {
-		driveTrain.tankDrive(throttle, -throttle);
-		//TODO: FINISH THIS
+	public void timedTurn(TurnMode mode, double throttle) {
+		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle);
+		if (mode == TurnMode.Right) driveTrain.tankDrive(throttle, -throttle);
 	}
 	
 	/***********************
