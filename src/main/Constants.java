@@ -41,6 +41,7 @@ public interface Constants {
 	// JOYSTICK DEADBANDS
 	public final double throttleDeadband = 0.02;
 	public final double headingDeadband = 0.02;
+	public final double elevatorDeadband = 0.1;
 	
 	// DRIVEHELPER
 //	public final double smoothThrottleDif = 0.1; //Set to max difference you want
@@ -111,8 +112,8 @@ public interface Constants {
 	public final int RIGHT_Drive_Slave2 = 4;
 	
 	// INTAKE MOTORS	
-	public final int LEFT_Intake = (isCompetitionRobot? 11:11);// compBot:practiceBot
-	public final int RIGHT_Intake = (isCompetitionRobot? 10:10);// compBot:practiceBot
+	public final int LEFT_Intake = 1;//(isCompetitionRobot? 11:11);// compBot:practiceBot
+	public final int RIGHT_Intake = 0;///(isCompetitionRobot? 10:10);// compBot:practiceBot
 	
 	// ELEVATOR MOTORS
 	public final int Elevator_Master = 8;
@@ -123,14 +124,14 @@ public interface Constants {
 	public final int PCM_Port2 = 2;
 	
 	// INTAKE PNEUMATICS
-	public final int INTAKE_EXT = (isCompetitionRobot? 0:0);// compBot:practiceBot
-	public final int INTAKE_RET = (isCompetitionRobot? 1:1);// compBot:practiceBot	
-	public final int TILT_EXT = (isCompetitionRobot? 5:5);// compBot:practiceBot
-	public final int TILT_RET = (isCompetitionRobot? 4:4);// compBot:practiceBot
+	public final int INTAKE_EXT = 7;//(isCompetitionRobot? 0:0);// compBot:practiceBot
+	public final int INTAKE_RET = 0;//(isCompetitionRobot? 1:1);// compBot:practiceBot	
+	public final int TILT_EXT = 1;//(isCompetitionRobot? 5:5);// compBot:practiceBot
+	public final int TILT_RET = 6;//(isCompetitionRobot? 4:4);// compBot:practiceBot
 	
 	// SHIFTING
-	public final int SHIFTER_EXT = (isCompetitionRobot? 2:2);// compBot:practiceBot
-	public final int SHIFTER_RET = (isCompetitionRobot? 3:3);// compBot:practiceBot
+	public final int SHIFTER_EXT = 2;//(isCompetitionRobot? 2:2);// compBot:practiceBot
+	public final int SHIFTER_RET = 5;//(isCompetitionRobot? 3:3);// compBot:practiceBot
 	
 	// CLIMB AND RELATED PNEUMATICS
 //	public final int PTO_EXT = 6;

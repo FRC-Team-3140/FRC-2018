@@ -15,7 +15,7 @@ public class Drive extends ImprovedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {    	
-    	Robot.dt.driveVelocity(OI.getXbox().getSmoothedMainY(), OI.getXbox().getSmoothedAltX());
+    	Robot.dt.driveVelocity(-OI.getXbox().getSmoothedMainY(), -OI.getXbox().getSmoothedAltX());
     	//Robot.dt.driveVelocity(OI.getXbox().getSmoothedMainY(), OI.getXbox().getSmoothedAltY());
     }
     

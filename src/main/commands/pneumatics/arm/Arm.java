@@ -18,6 +18,6 @@ public class Arm extends ImprovedCommand {
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 }

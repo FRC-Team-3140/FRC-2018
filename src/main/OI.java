@@ -8,25 +8,27 @@ import main.commands.commandgroups.cubeManipulator.IntakeCube;
 import main.commands.commandgroups.cubeManipulator.IntakeCubeOff;
 import main.commands.commandgroups.cubeManipulator.PushOutCube;
 import main.commands.commandgroups.cubeManipulator.PushOutCubeOff;
+import main.commands.pneumatics.arm.ArmClose;
+import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.shift.ShiftDown;
 import main.commands.pneumatics.shift.ShiftUp;
+import main.commands.pneumatics.tilt.TiltDown;
+import main.commands.pneumatics.tilt.TiltUp;
 
 public class OI extends ImprovedClass {	
 	public OI() {
 		xbox.setInternalControl(false);
 		xbox2.setInternalControl(false);
-	
 		
 		xbox.leftBumper.whenPressed(new ShiftUp());
 		xbox.leftBumper.whenReleased(new ShiftDown());
 
-		xbox2.a.whenReleased(new IntakeCubeOff());
-		xbox2.a.whenPressed(new IntakeCube());
+		xbox2.y.whenReleased(new IntakeCubeOff());
+		xbox2.y.whenPressed(new IntakeCube());
 		xbox2.x.whenPressed(new PushOutCube());
 		xbox2.x.whenReleased(new PushOutCubeOff());
 		xbox2.b.whenPressed(new DropCube());
 		xbox2.b.whenReleased(new DropCubeOff());
-		
 	}
 	
 	public static XboxController getXbox() {

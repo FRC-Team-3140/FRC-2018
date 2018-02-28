@@ -212,7 +212,7 @@ public class Elevator extends ImprovedSubsystem {
 	}
 	
 	public void moveWithJoystick(double throttle) {
-		elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, throttleDeadband)));
+		elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
 	}
 	
 	// Moves fast to a position if far away, slows down when it gets closer, and stops when it reaches

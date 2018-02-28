@@ -26,7 +26,7 @@ public class StartRecord extends ImprovedCommand {
     // Called once after isFinished returns true
     protected void end() {
     	Record.okToRecord(false);
-    	Robot.lg.trim();
+    	//Robot.lg.trim();
     }
 
     // Called when another command which requires one or more of the same
