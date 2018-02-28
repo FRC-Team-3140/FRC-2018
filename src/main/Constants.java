@@ -73,7 +73,17 @@ public interface Constants {
 	public final double countsPerRev = 4096; // what is this actually supposed to be?
 	public final FeedbackDevice encoder = FeedbackDevice.CTRE_MagEncoder_Relative;
 	
+	public final double timedDrivePercent = 0.75;//DO NOT CHANGE
+	//This is a multiplier that will be computed manually distanceMultiplier * time = distanceDriven (When Robot driving at timedDrivePercent)
+	public final double timedDistanceMultiplier = 2.0; 
+	
 	public static enum TurnMode { Right, Left };
+	public final double timedTurnPercent = 0.5;//DO NOT CHANGE
+	public final double timedTurn90degTime = 2.0;
+	public final double timedTurn45degTime = 1.0;
+	
+	public final double timedLiftPercent = 0.5;
+	public final double timedLiftTime = 2;//Time to lift the elevator 3ft at timedLiftPercent of available power.
 	
 	// ELEVATOR LENGTHS
 	/*public final double spindleDiameter = 2; //placeholder

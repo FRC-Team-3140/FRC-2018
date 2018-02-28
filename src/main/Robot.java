@@ -15,8 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedRobot;
 import loopController.Looper;
+import main.commands.auto.Baseline;
+import main.commands.auto.CenterToLeftSwitch;
+import main.commands.auto.CenterToRightSwitch;
+import main.commands.auto.DoNothing;
+import main.commands.auto.LeftToLeftSwitch;
+import main.commands.auto.RightToRightSwitch;
 import main.commands.controllerCommands.DelayedPlay;
-import main.commands.controllerCommands.DoNothing;
 import main.commands.controllerCommands.FileCreator;
 import main.commands.controllerCommands.FileDeletor;
 import main.commands.controllerCommands.FilePicker;
@@ -38,6 +43,7 @@ public class Robot extends ImprovedRobot {
 	public static DriverAlerts da;	
 	public static OI oi;
 	// PLAY AND RECORD
+	/*
 	public static Logger lg;
     private static Looper autoLooper;
     private static SendableChooser<Command> fileChooser;
@@ -46,17 +52,19 @@ public class Robot extends ImprovedRobot {
     private static String newFileName = "";
     private static List<File> listOfFiles = new ArrayList<File>();
     private static int lastNumOfFiles = 0;
-    
+    */
 	// AUTO LOGIC
 	private enum StartPos {LEFT, MIDDLE, RIGHT}
-	private enum RobotAction{DO_Nothing, EDGECASE_DoNothing, EDGECASE_Baseline, EDGECASE_DelayedSwitch}
+	private enum RobotAction{DO_Nothing, Baseline, Switch}
+	//private enum RobotAction{DO_Nothing, EDGECASE_DoNothing, EDGECASE_Baseline, EDGECASE_DelayedSwitch}
 	public static StartPos start_pos = StartPos.LEFT;
 	public static RobotAction robot_act = RobotAction.DO_Nothing;
 	private static SendableChooser<Runnable> autoChooser, startPos;
 	// Competition Mode: Picking a recording and running it
-	private static Command competitionFilePicker;
-	private String fileToPlay = null;
-	private static Command competitionPlayCommand;
+	//private static Command competitionFilePicker;
+	//private String fileToPlay = null;
+	//private static Command competitionPlayCommand;
+	private static Command autoCommand;
 	
 	@Override
 	public void robotInit() {
@@ -68,11 +76,12 @@ public class Robot extends ImprovedRobot {
 		oi = new OI();
 		dc = new DriverCamera();
 		// da = new DriverAlerts();	
-		lg = new Logger();
-		autoLooper = new Looper(kLooperDt);
-		autoLooper.register(new Record());
-		autoLooper.register(new Play()); 
+		//lg = new Logger();
+		//autoLooper = new Looper(kLooperDt);
+		//autoLooper.register(new Record());
+		//autoLooper.register(new Play()); 
 
+		/*
         //**************************************************SmartDashboard
     	if(!isCompetitionMatch) {
     		SmartDashboard.putData("Record", new StartRecord());
@@ -100,6 +109,7 @@ public class Robot extends ImprovedRobot {
     		 * EDGECASE_DelayedSwitch- Robot will act upon given game data except in the Edge Case; in which case it waits a specified
     		 * 							length of time and then places a cube in the switch.
     		 */
+		/*
     		SmartDashboard.putString("Do nothing", "Doesn't move during auto");
     		SmartDashboard.putString("Edgecases", "When the robot is in the left or right starting position and both the scale" + 
     									"and switch are in the opposite position");
@@ -108,12 +118,19 @@ public class Robot extends ImprovedRobot {
     		SmartDashboard.putString("If edgecase occurs", "If the edgecase occurs, then the robot will either do nothing," +
     									"cross baseline, or score in the switch after a 5-sec delay depending on the edgecase" +
     									"mode that is chosen");
-    		
+    	*/
 			// Auto modes
 			autoChooser = new SendableChooser<>();
 			autoChooser.addDefault("Do Nothing", () -> {
 				robot_act = RobotAction.DO_Nothing;
 			});
+			autoChooser.addDefault("Baseline", () -> {
+				robot_act = RobotAction.Baseline;
+			});
+			autoChooser.addDefault("Switch", () -> {
+				robot_act = RobotAction.Switch;
+			});
+			/*
 			autoChooser.addObject("Go Robot Go!: EdgeCase_DoNothing", () -> {
 				robot_act = RobotAction.EDGECASE_DoNothing;
 			});
@@ -124,7 +141,7 @@ public class Robot extends ImprovedRobot {
 				robot_act = RobotAction.EDGECASE_DelayedSwitch;
 			});
 			SmartDashboard.putData("Auto Mode", autoChooser);
-
+			*/
 			// Starting Pos
 			startPos = new SendableChooser<>();
 			startPos.addDefault("Left", () -> {
@@ -137,15 +154,19 @@ public class Robot extends ImprovedRobot {
 				start_pos = StartPos.RIGHT;
 			});
 			SmartDashboard.putData("Starting Position", startPos);
-		}
+			SmartDashboard.putData("Auto Mode", autoChooser);
+		//}
 	}
 	
 	@Override
 	public void disabledInit() {
-		if(isCompetitionMatch) {
+		if(autoCommand.isRunning())
+			autoCommand.cancel();
+		/*if(isCompetitionMatch) {
 			if(autoPlayCommand.isRunning()) autoPlayCommand.cancel();
 		}
 		autoLooper.stop();		
+		*/
 	}
 	
 	public void disabledPeriodic() {
@@ -155,7 +176,7 @@ public class Robot extends ImprovedRobot {
 
 	@Override
 	public void autonomousInit() {
-		autoLooper.start();
+		//autoLooper.start();
 		if (isCompetitionMatch) {
 			// Makes sure game message is correct
 			String gmsg = DriverStation.getInstance().getGameSpecificMessage();
@@ -169,10 +190,32 @@ public class Robot extends ImprovedRobot {
 			}
 
 			boolean leftSwitch = (gmsg.charAt(0) == 'L');
-			boolean leftScale = (gmsg.charAt(1) == 'L');
-			boolean delayedSwitch = false;
+			
+			if(robot_act == RobotAction.DO_Nothing)
+				autoCommand = new DoNothing();
+			else if(robot_act == RobotAction.Baseline)
+				autoCommand = new Baseline();
+			else {
+				if(start_pos == StartPos.LEFT && leftSwitch)
+					autoCommand = new LeftToLeftSwitch();
+				else if(start_pos == StartPos.RIGHT && !leftSwitch)
+					autoCommand = new RightToRightSwitch();
+				else if(start_pos == StartPos.MIDDLE && leftSwitch)
+					autoCommand = new CenterToLeftSwitch();
+				else if(start_pos == StartPos.MIDDLE && !leftSwitch)
+					autoCommand = new CenterToRightSwitch();
+				else
+					autoCommand = new DoNothing();
+			}
+			autoCommand.start();
+			
+			
+			
+			
+			//boolean leftScale = (gmsg.charAt(1) == 'L');
+			//boolean delayedSwitch = false;
 
-			if (robot_act != RobotAction.DO_Nothing) { // Do something chosen
+			/*if (robot_act != RobotAction.DO_Nothing) { // Do something chosen
 				switch (start_pos) { // Checks which starting position was chosen
 				// Following code choose auto mode based on starting position for switch and scale
 				case LEFT:
@@ -229,6 +272,7 @@ public class Robot extends ImprovedRobot {
 
 			if (competitionPlayCommand != null)
 				competitionPlayCommand.start(); // Starts the appropriate command
+			*/
 		}
 	}
 
@@ -240,12 +284,16 @@ public class Robot extends ImprovedRobot {
 
 	@Override
 	public void teleopInit() {
+		if(autoCommand.isRunning())
+			autoCommand.cancel();
+		/*
 		if(isCompetitionMatch) {
 			if(autoPlayCommand.isRunning())
 				autoPlayCommand.cancel();
 		}
 		if(!isCompetitionMatch)
 			autoLooper.start();
+		*/
 	}	
 
 	@Override
@@ -265,7 +313,7 @@ public class Robot extends ImprovedRobot {
 	public void testPeriodic() {
 		allPeriodic();
 	}
-	
+	/*
 	private void checkForSmartDashboardUpdates() {
 		if (!isCompetitionMatch && !newFileName.equals(SmartDashboard.getString("New File Name", "")))
 			newFileName = SmartDashboard.getString("New File Name", "");
@@ -300,26 +348,29 @@ public class Robot extends ImprovedRobot {
 	public static Command getFile() {
 		return fileChooser.getSelected();
 	}
-	
+	*/
 	public void allPeriodic() {
 		SmartDashboard.updateValues();
-		if(!isCompetitionMatch) {
+		/*if(!isCompetitionMatch) {
 			checkForSmartDashboardUpdates();
-		}
-		autoLooper.outputToSmartDashboard();
+		}*/
+		//autoLooper.outputToSmartDashboard();
 		dt.check();
 		pn.check();
 		in.check();
 		el.check();
 		oi.check();
+		/*
 		// Knowing where you're at
 		if(!isCompetitionMatch) {
 			SmartDashboard.putString("Working File", lg.getWorkingFile());
 			SmartDashboard.putString("Working Path", outputPath);
 		}
+		*/
 	}
-	
+	/*
 	public static String getNewFileName() {
 		return newFileName;
 	}
+	*/
 }

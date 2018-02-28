@@ -1,4 +1,4 @@
-package main.commands.controllerCommands;
+package main.commands.auto;
 
 import interfacesAndAbstracts.ImprovedCommand;
 
