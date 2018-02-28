@@ -37,7 +37,7 @@ public class Play implements Loop, Constants {
 		if((line) != null) { 
 			String[] robotState = line.split(",");
 			
-			if(robotState.length == 26 && robotState != null) {
+			if(robotState.length == 27 && robotState != null) {
 				System.out.println("playing");
 				
 				double leftVoltage = Double.parseDouble(robotState[0]);
