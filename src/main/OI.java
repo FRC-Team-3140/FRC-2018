@@ -29,6 +29,8 @@ public class OI extends ImprovedClass {
 		xbox2.x.whenReleased(new PushOutCubeOff());
 		xbox2.b.whenPressed(new DropCube());
 		xbox2.b.whenReleased(new DropCubeOff());
+		xbox2.rightBumper.whenPressed(new TiltDown());
+		xbox2.rightBumper.whenReleased(new TiltUp());
 	}
 	
 	public static XboxController getXbox() {
