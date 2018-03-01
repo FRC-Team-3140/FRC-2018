@@ -10,7 +10,7 @@ public class IntakeCubeOff extends ImprovedCommandGroup {
 	public IntakeCubeOff() {
 		addSequential(new ArmClose());
     	addSequential(new TiltUp());
-    	addSequential(new WaitCommand(1));
+    	addSequential(new WaitCommand(2.5));
     	addSequential(new SpinOff());
     }
 }
