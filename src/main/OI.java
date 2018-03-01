@@ -8,6 +8,8 @@ import main.commands.commandgroups.cubeManipulator.IntakeCube;
 import main.commands.commandgroups.cubeManipulator.IntakeCubeOff;
 import main.commands.commandgroups.cubeManipulator.PushOutCube;
 import main.commands.commandgroups.cubeManipulator.PushOutCubeOff;
+import main.commands.intake.SpinOff;
+import main.commands.intake.SpinOut;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.shift.ShiftDown;
@@ -22,6 +24,9 @@ public class OI extends ImprovedClass {
 		
 		xbox.leftBumper.whenPressed(new ShiftUp());
 		xbox.leftBumper.whenReleased(new ShiftDown());
+		
+		xbox2.rightTrigger.whenPressed(new SpinOut());
+		xbox2.rightTrigger.whenReleased(new SpinOff());
 
 		xbox2.y.whenReleased(new IntakeCubeOff());
 		xbox2.y.whenPressed(new IntakeCube());
