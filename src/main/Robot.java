@@ -19,7 +19,9 @@ import main.commands.auto.Baseline;
 import main.commands.auto.CenterToLeftSwitch;
 import main.commands.auto.CenterToRightSwitch;
 import main.commands.auto.DoNothing;
+import main.commands.auto.LeftToLeftScale;
 import main.commands.auto.LeftToLeftSwitch;
+import main.commands.auto.RightToRightScale;
 import main.commands.auto.RightToRightSwitch;
 import main.commands.controllerCommands.DelayedPlay;
 import main.commands.controllerCommands.FileCreator;
@@ -54,7 +56,7 @@ public class Robot extends ImprovedRobot {
     private static int lastNumOfFiles = 0;
     */
 	// AUTO LOGIC
-	private enum StartPos {LEFT, MIDDLE, RIGHT}
+	private enum StartPos {LEFT, CENTER, RIGHT}
 	private enum RobotAction{DO_Nothing, Baseline, Switch}
 	//private enum RobotAction{DO_Nothing, EDGECASE_DoNothing, EDGECASE_Baseline, EDGECASE_DelayedSwitch}
 	public static StartPos start_pos = StartPos.LEFT;
@@ -147,8 +149,8 @@ public class Robot extends ImprovedRobot {
 			startPos.addDefault("Left", () -> {
 				start_pos = StartPos.LEFT;
 			});
-			startPos.addObject("Middle", () -> {
-				start_pos = StartPos.MIDDLE;
+			startPos.addObject("Center", () -> {
+				start_pos = StartPos.CENTER;
 			});
 			startPos.addObject("Right", () -> {
 				start_pos = StartPos.RIGHT;
@@ -190,6 +192,7 @@ public class Robot extends ImprovedRobot {
 			}
 
 			boolean leftSwitch = (gmsg.charAt(0) == 'L');
+			boolean leftScale = (gmsg.charAt(1) == 'L');
 			
 			if(robot_act == RobotAction.DO_Nothing)
 				autoCommand = new DoNothing();
@@ -198,14 +201,18 @@ public class Robot extends ImprovedRobot {
 			else {
 				if(start_pos == StartPos.LEFT && leftSwitch)
 					autoCommand = new LeftToLeftSwitch();
+				else if(start_pos == StartPos.LEFT && leftScale)
+					autoCommand = new LeftToLeftScale();
+				else if(start_pos == StartPos.CENTER && leftSwitch)
+					autoCommand = new CenterToLeftSwitch();
+				else if(start_pos == StartPos.CENTER && !leftSwitch)
+					autoCommand = new CenterToRightSwitch();
 				else if(start_pos == StartPos.RIGHT && !leftSwitch)
 					autoCommand = new RightToRightSwitch();
-				else if(start_pos == StartPos.MIDDLE && leftSwitch)
-					autoCommand = new CenterToLeftSwitch();
-				else if(start_pos == StartPos.MIDDLE && !leftSwitch)
-					autoCommand = new CenterToRightSwitch();
+				else if(start_pos == StartPos.RIGHT && !leftScale)
+					autoCommand = new RightToRightScale();				
 				else
-					autoCommand = new DoNothing();
+					autoCommand = new Baseline();
 			}
 			autoCommand.start();
 			
