@@ -195,7 +195,7 @@ public class Elevator extends ImprovedSubsystem {
 	 * RECORD/PLAY *
 	 ***************/
 	public double getElevatorVoltage() {
-		return (elevatorMaster.getMotorOutputVoltage() + elevatorSlave.getMotorOutputVoltage())/2;
+		return (elevatorMaster.getMotorOutputVoltage()); //+ elevatorSlave.getMotorOutputVoltage())/2;
 	}
 	
 	/********************

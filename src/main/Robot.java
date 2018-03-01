@@ -162,7 +162,7 @@ public class Robot extends ImprovedRobot {
 	
 	@Override
 	public void disabledInit() {
-		if(autoCommand.isRunning())
+		if(autoCommand != null && autoCommand.isRunning())
 			autoCommand.cancel();
 		/*if(isCompetitionMatch) {
 			if(autoPlayCommand.isRunning()) autoPlayCommand.cancel();
@@ -214,6 +214,7 @@ public class Robot extends ImprovedRobot {
 				else
 					autoCommand = new Baseline();
 			}
+			if(autoCommand != null)
 			autoCommand.start();
 			
 			
@@ -291,7 +292,7 @@ public class Robot extends ImprovedRobot {
 
 	@Override
 	public void teleopInit() {
-		if(autoCommand.isRunning())
+		if(autoCommand != null && autoCommand.isRunning())
 			autoCommand.cancel();
 		/*
 		if(isCompetitionMatch) {
@@ -367,6 +368,8 @@ public class Robot extends ImprovedRobot {
 		in.check();
 		el.check();
 		oi.check();
+		SmartDashboard.putNumber("Left voltage", dt.getLeftVoltage());
+		SmartDashboard.putNumber("Right voltage", dt.getRightVoltage());
 		/*
 		// Knowing where you're at
 		if(!isCompetitionMatch) {

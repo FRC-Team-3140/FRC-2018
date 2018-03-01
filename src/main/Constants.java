@@ -142,12 +142,12 @@ public interface Constants {
 	// INTAKE PNEUMATICS
 	public final int INTAKE_EXT = 7;//(isCompetitionRobot? 0:0);// compBot:practiceBot
 	public final int INTAKE_RET = 0;//(isCompetitionRobot? 1:1);// compBot:practiceBot	
-	public final int TILT_EXT = 1;//(isCompetitionRobot? 5:5);// compBot:practiceBot
-	public final int TILT_RET = 6;//(isCompetitionRobot? 4:4);// compBot:practiceBot
+	public final int TILT_EXT = 6;//(isCompetitionRobot? 5:5);// compBot:practiceBot
+	public final int TILT_RET = 1;//(isCompetitionRobot? 4:4);// compBot:practiceBot
 	
 	// SHIFTING
-	public final int SHIFTER_EXT = 2;//(isCompetitionRobot? 2:2);// compBot:practiceBot
-	public final int SHIFTER_RET = 5;//(isCompetitionRobot? 3:3);// compBot:practiceBot
+	public final int SHIFTER_EXT = 5;//(isCompetitionRobot? 2:2);// compBot:practiceBot
+	public final int SHIFTER_RET = 2;//(isCompetitionRobot? 3:3);// compBot:practiceBot
 	
 	// CLIMB AND RELATED PNEUMATICS
 //	public final int PTO_EXT = 6;
