@@ -83,7 +83,11 @@ public interface Constants {
 	public final double timedTurn45degTime = 1.0;
 	
 	public final double timedLiftPercent = 0.5;
-	public final double timedLiftTime = 2;//Time to lift the elevator 3ft at timedLiftPercent of available power.
+	//Time to lift the elevator 3ft at timedLiftPercent of available power.
+	public final double timedLiftTime = 2;
+	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
+	public final double timedLiftFullHeightTime = 4;
+
 	
 	// ELEVATOR LENGTHS
 	/*public final double spindleDiameter = 2; //placeholder
