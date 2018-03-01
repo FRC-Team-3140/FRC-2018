@@ -9,7 +9,7 @@ public class FileCreator extends ImprovedCommand {
 	
 	// Called just before this Command runs the first time
     protected void initialize() {
-		Robot.lg.createNewFile(Robot.getNewFileName());
+		//Robot.lg.createNewFile(Robot.getNewFileName());
     }    	
 
 	@Override

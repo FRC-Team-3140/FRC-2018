@@ -10,7 +10,7 @@ public class StartRecord extends ImprovedCommand {
 
 	// Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.lg.resetForWrite();
+    	//Robot.lg.resetForWrite();
     	Record.okToRecord(true);
     }
 

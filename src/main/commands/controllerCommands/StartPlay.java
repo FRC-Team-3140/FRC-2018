@@ -10,7 +10,7 @@ public class StartPlay extends ImprovedCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.lg.resetForRead();
+    	//Robot.lg.resetForRead();
     	Robot.oi.setInternalControl(true);
     	Play.okToPlay(true);
     }
