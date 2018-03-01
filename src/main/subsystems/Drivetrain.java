@@ -30,8 +30,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	public void timedTurn(TurnMode mode, double throttle) {
-		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle);
-		if (mode == TurnMode.Right) driveTrain.tankDrive(throttle, -throttle);
+		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle, false);
+		if (mode == TurnMode.Right) driveTrain.tankDrive(throttle, -throttle, false);
 	}
 	
 	/***********************
