@@ -33,7 +33,7 @@ public class Play implements Loop, Constants {
 	}
 	
 	private void execute() {
-		String line = Robot.lg.readLine();
+		/*String line = Robot.lg.readLine();
 		if((line) != null) { 
 			String[] robotState = line.split(",");
 			
@@ -79,7 +79,7 @@ public class Play implements Loop, Constants {
 		else {
 			finished = true;
 			System.out.println("Finished Playing");
-		}
+		}*/
 	}
 	
 	public static boolean isFinished() {
