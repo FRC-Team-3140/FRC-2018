@@ -10,7 +10,7 @@ import main.commands.drivetrain.TimedTurn;
 import main.commands.elevator.TimedLift;
 
 public class LeftToLeftSwitch extends ImprovedCommandGroup {
-	//x & y will be the number of feet that the robot needs to drive/ alex will fill this in a couple of hours
+	//x & y will be the number of inches that the robot needs to drive/ alex will fill this in a couple of hours
 	public LeftToLeftSwitch() {
 		addSequential(new TimedDrive(timedDrivePercent, x/timedDistanceMultiplier));
 		addSequential(new TimedLift(timedLiftPercent, timedLiftTime));

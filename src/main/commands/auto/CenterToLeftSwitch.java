@@ -9,7 +9,7 @@ import main.commands.drivetrain.TimedTurn;
 import main.commands.elevator.TimedLift;
 
 public class CenterToLeftSwitch extends ImprovedCommandGroup {
-	//x, y & z will be the number of feet that the robot needs to drive/ alex will fill this in a couple of hours
+	//x, y & z will be the number of inches that the robot needs to drive/ alex will fill this in a couple of hours
 	//also need to check that 45deg is a sufficient angle
 	public CenterToLeftSwitch() {
 		addSequential(new TimedDrive(timedDrivePercent, x/timedDistanceMultiplier)); //(Break away from wall so there is no resistance on the first turn)
