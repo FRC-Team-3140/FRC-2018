@@ -11,14 +11,13 @@ import main.commands.elevator.TimedLift;
 
 public class CenterToRightSwitch extends ImprovedCommandGroup {
 	//x, y & z will be the number of inches that the robot needs to drive/ alex will fill this in a couple of hours
-	//also need to check that 45deg is a sufficient angle
 	public CenterToRightSwitch() {
-		addSequential(new TimedDrive(timedDrivePercent, x/timedDistanceMultiplier)); //(Break away from wall so there is no resistance on the first turn)
-		addSequential(new TimedTurn(TurnMode.Right, timedTurnPercent, timedTurn45degTime));
+		addSequential(new TimedDrive(timedDrivePercent, 60.375/timedDistanceMultiplier)); //(Break away from wall so there is no resistance on the first turn)
+		addSequential(new TimedTurn(TurnMode.Right, timedTurnPercent, timedTurn90degTime));
+		addSequential(new TimedDrive(timedDrivePercent, 60.5/timedDistanceMultiplier));
+		addSequential(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
 		addSequential(new TimedLift(timedLiftPercent, timedLiftTime));
-		addSequential(new TimedDrive(timedDrivePercent, y/timedDistanceMultiplier));
-		addSequential(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
-		addSequential(new TimedDrive(timedDrivePercent, z/timedDistanceMultiplier));
+		addSequential(new TimedDrive(timedDrivePercent, 60.375/timedDistanceMultiplier));
 		addSequential(new WaitCommand(0.1));
 		addSequential(new DropCube());
 		addSequential(new WaitCommand(0.5));
