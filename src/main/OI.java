@@ -25,19 +25,13 @@ public class OI extends ImprovedClass {
 		xbox.setInternalControl(false);
 		xbox2.setInternalControl(false);
 		
-		// shoots out without elevator
+		// Shoots out without elevator
 		xbox.leftBumper.whenPressed(new ShiftUp());
 		xbox.leftBumper.whenReleased(new ShiftDown());
-		
-		
-		xbox.a.whenPressed(new TimedDrive(timedDrivePercent, 1));
-		//drove 39.5 in x3, 38.5, 36.5, 38, 
-		xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
-		xbox.y.whenPressed(new TimedLift(timedLiftPercent, 2)); //29.25,29.75
+		//xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
 		
 		xbox2.rightTrigger.whenPressed(new SpinOut());
 		xbox2.rightTrigger.whenReleased(new SpinOff());
-
 		xbox2.y.whenReleased(new IntakeCubeOff());
 		xbox2.y.whenPressed(new IntakeCube());
 		xbox2.x.whenPressed(new PushOutCube());

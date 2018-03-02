@@ -75,18 +75,19 @@ public interface Constants {
 	
 	public final double timedDrivePercent = 0.75;//DO NOT CHANGE
 	//This is a multiplier that will be computed manually distanceMultiplier * time = distanceDriven (When Robot driving at timedDrivePercent)
-	public final double timedDistanceMultiplier = 2.0;// (in/s)
+	public final double timedDistanceMultiplier = 38.58;// (in/s)
 	
-	public static enum TurnMode { Right, Left };
+	public static enum TurnMode {Right, Left};
 	public final double timedTurnPercent = 0.5;//DO NOT CHANGE
 	public final double timedTurn90degTime = 2.0;
 	public final double timedTurn45degTime = 1.0;
 	
-	public final double timedLiftPercent = 0.5;
+	public final double timedLiftPercent = 0.5;//DO NOT CHANGE
+	public final double timedLiftMultiplier = 14.75;// (in/s)
 	//Time to lift the elevator 3ft at timedLiftPercent of available power.
-	public final double timedLiftTime = 2;
+	public final double timedLiftTime = 36/timedLiftMultiplier;
 	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
-	public final double timedLiftFullHeightTime = 4;
+	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier;
 
 	
 	// ELEVATOR LENGTHS
