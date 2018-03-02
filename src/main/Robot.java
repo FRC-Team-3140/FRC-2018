@@ -180,6 +180,10 @@ public class Robot extends ImprovedRobot {
 	public void autonomousInit() {
 		//autoLooper.start();
 		if (true) {
+			autoCommand = autoChooser.getSelected();
+			autoCommand.start();
+			/*Command pos = (Command) startPos.getSelected();
+			pos.start();*/
 			// Makes sure game message is correct
 			String gmsg = DriverStation.getInstance().getGameSpecificMessage();
 			while (gmsg == null || gmsg.length() != 3) {
@@ -232,7 +236,7 @@ public class Robot extends ImprovedRobot {
 				else
 					autoCommand = new Baseline();
 			}
-			autoCommand = new Baseline();
+			//autoCommand = new Baseline();
 			if(autoCommand != null)
 			autoCommand.start();
 			
