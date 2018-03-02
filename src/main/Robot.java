@@ -179,7 +179,7 @@ public class Robot extends ImprovedRobot {
 	@Override
 	public void autonomousInit() {
 		//autoLooper.start();
-		if (isCompetitionMatch) {
+		if (true) {
 			// Makes sure game message is correct
 			String gmsg = DriverStation.getInstance().getGameSpecificMessage();
 			while (gmsg == null || gmsg.length() != 3) {
@@ -190,6 +190,24 @@ public class Robot extends ImprovedRobot {
 					e.printStackTrace();
 				}
 			}
+			
+			System.out.println("message" + gmsg);
+			System.out.println("auto" + autoChooser.getSelected());
+			System.out.println("pos" + startPos.getSelected());
+			
+			if(autoChooser.getName().equals("Do Nothing"))
+				robot_act = RobotAction.DO_Nothing;
+			else if(autoChooser.getName().equals("Baseline"))
+				robot_act = RobotAction.Baseline;
+			else if(autoChooser.getName().equals("Switch"))
+				robot_act = RobotAction.Switch;
+			
+			if(startPos.getName().equals("Left"))
+				start_pos = StartPos.LEFT;
+			else if(startPos.getName().equals("Center"))
+				start_pos = StartPos.CENTER;
+			else if(startPos.getName().equals("Right"))
+				start_pos = StartPos.RIGHT;
 
 			boolean leftSwitch = (gmsg.charAt(0) == 'L');
 			boolean leftScale = (gmsg.charAt(1) == 'L');
@@ -214,6 +232,7 @@ public class Robot extends ImprovedRobot {
 				else
 					autoCommand = new Baseline();
 			}
+			autoCommand = new Baseline();
 			if(autoCommand != null)
 			autoCommand.start();
 			

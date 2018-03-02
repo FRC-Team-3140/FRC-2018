@@ -5,19 +5,19 @@ import main.Robot;
 
 
 public class TimedDrive extends TimedCommand {
-	private double throttle, heading;
+	private double throttle;
 	
-	public TimedDrive(double throttle, double heading, double time) {
+	/*public TimedDrive(double throttle, double heading, double time) {
     	super(time);
     	this.throttle = throttle;
     	this.heading = heading;
     	requires(Robot.dt);
-    }
+    }*/
 	
     public TimedDrive(double throttle, double time) {
     	super(time);
     	this.throttle = throttle;
-    	this.heading = 0.0;
+    	//this.heading = 0.0;
     	requires(Robot.dt);
     }
 
@@ -27,7 +27,7 @@ public class TimedDrive extends TimedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.dt.driveVelocity(-throttle, -heading);
+    	Robot.dt.driveVelocity(throttle, 0.0);
     }
     // Make this return true when this Command no longer needs to run execute()
 

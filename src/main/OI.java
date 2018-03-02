@@ -28,8 +28,11 @@ public class OI extends ImprovedClass {
 		// Shoots out without elevator
 		xbox.leftBumper.whenPressed(new ShiftUp());
 		xbox.leftBumper.whenReleased(new ShiftDown());
-		//xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
-		
+		//xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
+		//xbox.y.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));
+
+		//xbox.x.whenPressed(new TimedLift(timedLiftPercent, timedLiftFullHeightTime));
+
 		xbox2.rightTrigger.whenPressed(new SpinOut());
 		xbox2.rightTrigger.whenReleased(new SpinOff());
 		xbox2.y.whenReleased(new IntakeCubeOff());

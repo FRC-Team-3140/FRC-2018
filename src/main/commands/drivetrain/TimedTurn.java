@@ -16,7 +16,7 @@ public class TimedTurn extends TimedCommand {
 	}
 	
 	protected void execute() {
-		Robot.dt.timedTurn(mode, -throttle);
+		Robot.dt.timedTurn(mode, throttle);
 	}
 
 }
