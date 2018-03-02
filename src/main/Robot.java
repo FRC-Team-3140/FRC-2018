@@ -47,6 +47,7 @@ public class Robot extends ImprovedRobot {
 	private enum StartPos {LEFT, CENTER, RIGHT}
 	private enum RobotAction {DO_NOTHING, BASELINE, SWITCH}
 	//private enum RobotAction{DO_Nothing, EDGECASE_DoNothing, EDGECASE_Baseline, EDGECASE_DelayedSwitch}
+	// TODO start_pos and robot_act could probably be removed
 	public static StartPos start_pos;
 	public static RobotAction robot_act;
 	private static SendableChooser<RobotAction> autoChooser;
