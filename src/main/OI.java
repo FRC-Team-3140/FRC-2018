@@ -10,6 +10,7 @@ import main.commands.commandgroups.cubeManipulator.PushOutCube;
 import main.commands.commandgroups.cubeManipulator.PushOutCubeOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
+import main.commands.elevator.TimedLift;
 import main.commands.intake.SpinOff;
 import main.commands.intake.SpinOut;
 import main.commands.pneumatics.arm.ArmClose;
@@ -29,9 +30,10 @@ public class OI extends ImprovedClass {
 		xbox.leftBumper.whenReleased(new ShiftDown());
 		
 		
-		xbox.a.whenPressed(new TimedDrive(timedTurnPercent, 2));
+		xbox.a.whenPressed(new TimedDrive(timedDrivePercent, 1));
+		//drove 39.5 in x3, 38.5, 36.5, 38, 
 		xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
-		xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
+		xbox.y.whenPressed(new TimedLift(timedLiftPercent, 2)); //29.25,29.75
 		
 		xbox2.rightTrigger.whenPressed(new SpinOut());
 		xbox2.rightTrigger.whenReleased(new SpinOff());
