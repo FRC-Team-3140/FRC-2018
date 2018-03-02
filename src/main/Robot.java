@@ -14,6 +14,7 @@ import main.commands.auto.CenterToRightSwitch;
 import main.commands.auto.DoNothing;
 import main.commands.auto.LeftToLeftScale;
 import main.commands.auto.LeftToLeftSwitch;
+import main.commands.auto.ResetForTeleop;
 import main.commands.auto.RightToRightScale;
 import main.commands.auto.RightToRightSwitch;
 import main.subsystems.DriverAlerts;
@@ -50,6 +51,7 @@ public class Robot extends ImprovedRobot {
 	public static RobotAction robot_act;
 	private static SendableChooser<RobotAction> autoChooser;
 	private static SendableChooser<StartPos> startPos;
+	
 	// Competition Mode: Picking a recording and running it
 	//private static Command competitionFilePicker;
 	//private String fileToPlay = null;
@@ -189,7 +191,7 @@ public class Robot extends ImprovedRobot {
 				if(start_pos == StartPos.LEFT && leftSwitch)
 					autoCommand = new LeftToLeftSwitch();
 				else if(start_pos == StartPos.LEFT && leftScale)
-					autoCommand = new LeftToLeftScale();
+					autoCommand = new Baseline();
 				else if(start_pos == StartPos.CENTER && leftSwitch)
 					autoCommand = new CenterToLeftSwitch();
 				else if(start_pos == StartPos.CENTER && !leftSwitch)
@@ -197,7 +199,7 @@ public class Robot extends ImprovedRobot {
 				else if(start_pos == StartPos.RIGHT && !leftSwitch)
 					autoCommand = new RightToRightSwitch();
 				else if(start_pos == StartPos.RIGHT && !leftScale)
-					autoCommand = new RightToRightScale();				
+					autoCommand = new Baseline();				
 				else
 					autoCommand = new Baseline();
 			}
@@ -280,6 +282,7 @@ public class Robot extends ImprovedRobot {
 
 	@Override
 	public void teleopInit() {
+		new ResetForTeleop().start();
 		if(autoCommand != null && autoCommand.isRunning())
 			autoCommand.cancel();
 		/*

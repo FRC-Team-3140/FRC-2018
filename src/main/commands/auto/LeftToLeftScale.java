@@ -15,11 +15,12 @@ public class LeftToLeftScale extends ImprovedCommandGroup {
 		addSequential(new TimedDrive(timedDrivePercent, 238.66/timedDistanceMultiplier));
 		addSequential(new TimedTurn(TurnMode.Right, timedTurnPercent, timedTurn45degTime));
 		addSequential(new TiltDown());
+		addSequential(new WaitCommand(1));
 		addSequential(new TimedLift(timedLiftPercent, timedLiftFullHeightTime));
 		addSequential(new TimedDrive(timedDrivePercent, 67.3/timedDistanceMultiplier));
 		addSequential(new WaitCommand(0.1));
 		addSequential(new DropCube());
-		addSequential(new WaitCommand(0.5));
+		addSequential(new WaitCommand(1));
 		addSequential(new DropCubeOff());	
 	}
 }
