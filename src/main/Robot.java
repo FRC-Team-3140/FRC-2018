@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedRobot;
 import loopController.Looper;
+import main.basicauto.BaselineCommand;
+import main.basicauto.DoNothingCommand;
+import main.basicauto.SwitchCommand;
 import main.commands.auto.Baseline;
 import main.commands.auto.CenterToLeftSwitch;
 import main.commands.auto.CenterToRightSwitch;
@@ -57,11 +60,12 @@ public class Robot extends ImprovedRobot {
     */
 	// AUTO LOGIC
 	private enum StartPos {LEFT, CENTER, RIGHT}
-	private enum RobotAction{DO_Nothing, Baseline, Switch}
+	public enum RobotAction{DO_Nothing, Baseline, Switch}
 	//private enum RobotAction{DO_Nothing, EDGECASE_DoNothing, EDGECASE_Baseline, EDGECASE_DelayedSwitch}
 	public static StartPos start_pos = StartPos.LEFT;
 	public static RobotAction robot_act = RobotAction.DO_Nothing;
-	private static SendableChooser<Runnable> autoChooser, startPos;
+	private static SendableChooser<Command> autoChooser;
+	private static SendableChooser<Runnable> startPos;
 	// Competition Mode: Picking a recording and running it
 	//private static Command competitionFilePicker;
 	//private String fileToPlay = null;
@@ -123,15 +127,11 @@ public class Robot extends ImprovedRobot {
     	*/
 			// Auto modes
 			autoChooser = new SendableChooser<>();
-			autoChooser.addDefault("Do Nothing", () -> {
-				robot_act = RobotAction.DO_Nothing;
-			});
-			autoChooser.addDefault("Baseline", () -> {
-				robot_act = RobotAction.Baseline;
-			});
-			autoChooser.addDefault("Switch", () -> {
-				robot_act = RobotAction.Switch;
-			});
+			autoChooser.addDefault("Do Nothing", new DoNothingCommand());
+			autoChooser.addObject("Baseline",
+				new BaselineCommand());
+			autoChooser.addObject("Switch",
+				new SwitchCommand());
 			/*
 			autoChooser.addObject("Go Robot Go!: EdgeCase_DoNothing", () -> {
 				robot_act = RobotAction.EDGECASE_DoNothing;

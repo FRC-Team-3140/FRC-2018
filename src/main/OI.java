@@ -54,6 +54,16 @@ public class OI extends ImprovedClass {
 		xbox.check();
 		xbox2.check();
 	}
+	
+	/*public void DoNothing() {
+		Robot.robot_act = Robot.RobotAction.DO_Nothing;
+	}
+	public void Baseline() {
+		Robot.robot_act = Robot.RobotAction.Baseline;
+	}
+	public void Switch() {
+		Robot.robot_act = Robot.RobotAction.Switch;
+	}*/
 
 	/**************
 	 * PLAY/RECORD *
