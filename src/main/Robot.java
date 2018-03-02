@@ -2,22 +2,12 @@
 
 package main;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import Util.Logger;
-import controllers.Play;
-import controllers.Record;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedRobot;
-import loopController.Looper;
-import main.basicauto.BaselineCommand;
-import main.basicauto.DoNothingCommand;
-import main.basicauto.SwitchCommand;
 import main.commands.auto.Baseline;
 import main.commands.auto.CenterToLeftSwitch;
 import main.commands.auto.CenterToRightSwitch;
@@ -26,12 +16,6 @@ import main.commands.auto.LeftToLeftScale;
 import main.commands.auto.LeftToLeftSwitch;
 import main.commands.auto.RightToRightScale;
 import main.commands.auto.RightToRightSwitch;
-import main.commands.controllerCommands.DelayedPlay;
-import main.commands.controllerCommands.FileCreator;
-import main.commands.controllerCommands.FileDeletor;
-import main.commands.controllerCommands.FilePicker;
-import main.commands.controllerCommands.StartPlay;
-import main.commands.controllerCommands.StartRecord;
 import main.subsystems.DriverAlerts;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
@@ -60,12 +44,12 @@ public class Robot extends ImprovedRobot {
     */
 	// AUTO LOGIC
 	private enum StartPos {LEFT, CENTER, RIGHT}
-	public enum RobotAction{DO_Nothing, Baseline, Switch}
+	private enum RobotAction {DO_NOTHING, BASELINE, SWITCH}
 	//private enum RobotAction{DO_Nothing, EDGECASE_DoNothing, EDGECASE_Baseline, EDGECASE_DelayedSwitch}
-	public static StartPos start_pos = StartPos.LEFT;
-	public static RobotAction robot_act = RobotAction.DO_Nothing;
-	private static SendableChooser<Command> autoChooser;
-	private static SendableChooser<Runnable> startPos;
+	public static StartPos start_pos;
+	public static RobotAction robot_act;
+	private static SendableChooser<RobotAction> autoChooser;
+	private static SendableChooser<StartPos> startPos;
 	// Competition Mode: Picking a recording and running it
 	//private static Command competitionFilePicker;
 	//private String fileToPlay = null;
@@ -127,11 +111,9 @@ public class Robot extends ImprovedRobot {
     	*/
 			// Auto modes
 			autoChooser = new SendableChooser<>();
-			autoChooser.addDefault("Do Nothing", new DoNothingCommand());
-			autoChooser.addObject("Baseline",
-				new BaselineCommand());
-			autoChooser.addObject("Switch",
-				new SwitchCommand());
+			autoChooser.addDefault("Do Nothing", RobotAction.DO_NOTHING);
+			autoChooser.addObject("Baseline", RobotAction.BASELINE);
+			autoChooser.addObject("Switch", RobotAction.SWITCH);
 			/*
 			autoChooser.addObject("Go Robot Go!: EdgeCase_DoNothing", () -> {
 				robot_act = RobotAction.EDGECASE_DoNothing;
@@ -146,15 +128,9 @@ public class Robot extends ImprovedRobot {
 			*/
 			// Starting Pos
 			startPos = new SendableChooser<>();
-			startPos.addDefault("Left", () -> {
-				start_pos = StartPos.LEFT;
-			});
-			startPos.addObject("Center", () -> {
-				start_pos = StartPos.CENTER;
-			});
-			startPos.addObject("Right", () -> {
-				start_pos = StartPos.RIGHT;
-			});
+			startPos.addDefault("Left", StartPos.LEFT);
+			startPos.addObject("Center", StartPos.CENTER);
+			startPos.addObject("Right", StartPos.RIGHT);
 			SmartDashboard.putData("Starting Position", startPos);
 			SmartDashboard.putData("Auto Mode", autoChooser);
 		//}
@@ -198,27 +174,16 @@ public class Robot extends ImprovedRobot {
 			System.out.println("message" + gmsg);
 			System.out.println("auto" + autoChooser.getSelected());
 			System.out.println("pos" + startPos.getSelected());
-			
-			if(autoChooser.getName().equals("Do Nothing"))
-				robot_act = RobotAction.DO_Nothing;
-			else if(autoChooser.getName().equals("Baseline"))
-				robot_act = RobotAction.Baseline;
-			else if(autoChooser.getName().equals("Switch"))
-				robot_act = RobotAction.Switch;
-			
-			if(startPos.getName().equals("Left"))
-				start_pos = StartPos.LEFT;
-			else if(startPos.getName().equals("Center"))
-				start_pos = StartPos.CENTER;
-			else if(startPos.getName().equals("Right"))
-				start_pos = StartPos.RIGHT;
 
-			boolean leftSwitch = (gmsg.charAt(0) == 'L');
-			boolean leftScale = (gmsg.charAt(1) == 'L');
+			boolean leftSwitch = gmsg.charAt(0) == 'L';
+			boolean leftScale = gmsg.charAt(1) == 'L';
 			
-			if(robot_act == RobotAction.DO_Nothing)
+			start_pos = startPos.getSelected();
+			robot_act = autoChooser.getSelected();
+			
+			if(robot_act == RobotAction.DO_NOTHING)
 				autoCommand = new DoNothing();
-			else if(robot_act == RobotAction.Baseline)
+			else if(robot_act == RobotAction.BASELINE)
 				autoCommand = new Baseline();
 			else {
 				if(start_pos == StartPos.LEFT && leftSwitch)
@@ -236,7 +201,7 @@ public class Robot extends ImprovedRobot {
 				else
 					autoCommand = new Baseline();
 			}
-			autoCommand = new Baseline();
+			//autoCommand = new Baseline();
 			if(autoCommand != null)
 			autoCommand.start();
 			
