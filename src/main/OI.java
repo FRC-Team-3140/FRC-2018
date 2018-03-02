@@ -8,6 +8,8 @@ import main.commands.commandgroups.cubeManipulator.IntakeCube;
 import main.commands.commandgroups.cubeManipulator.IntakeCubeOff;
 import main.commands.commandgroups.cubeManipulator.PushOutCube;
 import main.commands.commandgroups.cubeManipulator.PushOutCubeOff;
+import main.commands.drivetrain.TimedDrive;
+import main.commands.drivetrain.TimedTurn;
 import main.commands.intake.SpinOff;
 import main.commands.intake.SpinOut;
 import main.commands.pneumatics.arm.ArmClose;
@@ -22,8 +24,14 @@ public class OI extends ImprovedClass {
 		xbox.setInternalControl(false);
 		xbox2.setInternalControl(false);
 		
+		// shoots out without elevator
 		xbox.leftBumper.whenPressed(new ShiftUp());
 		xbox.leftBumper.whenReleased(new ShiftDown());
+		
+		
+		xbox.a.whenPressed(new TimedDrive(timedTurnPercent, 2));
+		xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
+		xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
 		
 		xbox2.rightTrigger.whenPressed(new SpinOut());
 		xbox2.rightTrigger.whenReleased(new SpinOff());
