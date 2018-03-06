@@ -111,6 +111,7 @@ public class Elevator extends ImprovedSubsystem {
 	 * SENSOR SUPPORT METHODS *
 	 **************************/
 	
+	@Override
 	public void zeroSensors() {
 		elevatorMaster.getSensorCollection().setQuadraturePosition(0, 10);
 	}
@@ -129,6 +130,7 @@ public class Elevator extends ImprovedSubsystem {
 	}*/
 	
 	// Sets encoders to 0 if the arm is at the bottom (this helps to avoid offset)
+	@Override
 	public void check() {
 		/*if (isArmAtBottom())
 			zeroSensors();*/

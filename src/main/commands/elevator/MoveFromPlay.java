@@ -10,6 +10,7 @@ public class MoveFromPlay extends ImprovedCommand {
 		this.voltage = voltage;
 	}
 	
+	@Override
 	protected void execute() {
 		Robot.el.moveFromPlay(voltage);
 	}

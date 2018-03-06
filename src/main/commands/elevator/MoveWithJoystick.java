@@ -9,6 +9,7 @@ public class MoveWithJoystick extends ImprovedCommand {
 		requires(Robot.el);
 	}
 	
+	@Override
 	protected void execute() {
 		Robot.el.moveWithJoystick(-OI.getXbox2().getSmoothedMainY()); //no negate for other
 	}

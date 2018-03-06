@@ -54,6 +54,7 @@ public class AnalogButton extends Button {
 		return THRESHOLD;
 	}
 
+	@Override
 	public boolean get() {
 		if (THRESHOLD < 0) {
 			return m_joystick.getRawAxis(m_axisNumber) < THRESHOLD; 

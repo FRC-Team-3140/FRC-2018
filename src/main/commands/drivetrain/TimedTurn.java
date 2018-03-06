@@ -15,8 +15,8 @@ public class TimedTurn extends TimedCommand {
 		requires(Robot.dt);
 	}
 	
+	@Override
 	protected void execute() {
 		Robot.dt.timedTurn(mode, throttle);
 	}
-
 }

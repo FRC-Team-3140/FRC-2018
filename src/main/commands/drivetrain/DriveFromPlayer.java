@@ -14,24 +14,29 @@ public class DriveFromPlayer extends ImprovedCommand {
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
+    @Override
+	protected void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+    @Override
+	protected void execute() {
     	Robot.dt.driveVoltageTank(leftVoltage, rightVoltage);
     }
     
-    protected boolean isFinished() {
+    @Override
+	protected boolean isFinished() {
         return true;
     }
 
     // Called once after isFinished returns true
-    protected void end() {
+    @Override
+	protected void end() {
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void interrupted() {
+    @Override
+	protected void interrupted() {
     }
 }

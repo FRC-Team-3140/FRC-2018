@@ -95,6 +95,7 @@ public class Pneumatics extends ImprovedSubsystem {
 	/*******************
 	 * DEFAULT METHODS *
 	 *******************/
+	@Override
 	public void initDefaultCommand() {
 		setDefaultCommand(null);
 	}

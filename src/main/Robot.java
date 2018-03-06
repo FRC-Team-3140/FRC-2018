@@ -89,6 +89,7 @@ public class Robot extends ImprovedRobot {
 			autoCommand.cancel();
 	}
 
+	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		allPeriodic();

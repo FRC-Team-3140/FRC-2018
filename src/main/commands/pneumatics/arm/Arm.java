@@ -12,7 +12,8 @@ public class Arm extends ImprovedCommand {
 		this.v = v;
 	}
 	
-    protected void execute() {
+    @Override
+	protected void execute() {
     	Robot.pn.toggleArm(v);
     }
 

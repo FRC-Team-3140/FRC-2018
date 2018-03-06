@@ -12,6 +12,7 @@ public class TimedLift extends TimedCommand {
 		requires(Robot.el);
 	}
 	
+	@Override
 	protected void execute() {
 		Robot.el.moveTimed(throttle);
 	}

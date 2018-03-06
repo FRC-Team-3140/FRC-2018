@@ -44,6 +44,7 @@ public class OI extends ImprovedClass {
 		return xbox2;
 	}
 
+	@Override
 	public void check() {
 		xbox.check();
 		xbox2.check();

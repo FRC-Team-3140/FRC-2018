@@ -3,40 +3,50 @@ package main.commands.drivetrain;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import main.Robot;
 
-// XXX start from this class
+/**
+ * Drive for a certain amount of time.
+ * 
+ * @author Yuchen Jing
+ *
+ */
 public class TimedDrive extends TimedCommand {
-	private double throttle;
+	private double throttle, heading;
+
+	/**
+	 * Constructor with default heading of 0.
+	 * <p>
+	 * <b>Parameter description copied from {@linkplain edu.wpi.first.wpilibj.drive.DifferentialDrive#arcadeDrive(double, double)
+	 * DifferentialDrive}
+	 * 
+	 * @param throttle The robot's speed along the X axis [-1.0..1.0]. Forward is positive.
+	 * @param time time
+	 */
+	public TimedDrive(double throttle, double time) {
+		this(throttle, 0, time);
+	}
+
+	/**
+	 * Constructor.
+	 * <p>
+	 * <b>Parameter description copied from {@linkplain edu.wpi.first.wpilibj.drive.DifferentialDrive#arcadeDrive(double, double)
+	 * DifferentialDrive}
+	 * 
+	 * @param throttle The robot's speed along the X axis [-1.0..1.0]. Forward is positive.
+	 * @param heading The robot's rotation rate around the Z axis [-1.0..1.0]. Clockwise is positive.
+	 * @param time time
+	 */
+	public TimedDrive(double throttle, double heading, double time) {
+		super(time);
+		this.throttle=throttle;
+		this.heading=heading;
+		requires(Robot.dt);
+	}
 	
-	/*public TimedDrive(double throttle, double heading, double time) {
-    	super(time);
-    	this.throttle = throttle;
-    	this.heading = heading;
-    	requires(Robot.dt);
-    }*/
-	
-    public TimedDrive(double throttle, double time) {
-    	super(time);
-    	this.throttle = throttle;
-    	//this.heading = 0.0;
-    	requires(Robot.dt);
-    }
-
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }           
-
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.dt.driveVelocity(throttle, 0.0);
-    }
-    // Make this return true when this Command no longer needs to run execute()
-
-    // Called once after isFinished returns true
-    protected void end() {
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	/**
+	 * Calls the DriveTrain's driveVelocity(double, double).
+	 */
+	@Override
+	protected void execute() {
+		Robot.dt.driveVelocity(throttle, heading);
+	}
 }
