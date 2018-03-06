@@ -85,7 +85,7 @@ public interface Constants {
 	public final double timedLiftPercent = 0.75;//DO NOT CHANGE
 	public final double timedLiftMultiplier = 22.125;// (in/s)
 	//Time to lift the elevator 3ft at timedLiftPercent of available power.
-	public final double timedLiftTime = 36/timedLiftMultiplier;
+	public final double timedLiftTime = 28.5/timedLiftMultiplier;
 	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
 	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier;
 
@@ -143,12 +143,12 @@ public interface Constants {
 	// INTAKE PNEUMATICS
 	public final int INTAKE_EXT = 7;//(isCompetitionRobot? 0:0);// compBot:practiceBot
 	public final int INTAKE_RET = 0;//(isCompetitionRobot? 1:1);// compBot:practiceBot	
-	public final int TILT_EXT = 6;//(isCompetitionRobot? 5:5);// compBot:practiceBot
-	public final int TILT_RET = 1;//(isCompetitionRobot? 4:4);// compBot:practiceBot
+	public final int TILT_EXT = (isCompetitionRobot? 6:1);// compBot:practiceBot
+	public final int TILT_RET = (isCompetitionRobot? 1:6);// compBot:practiceBot
 	
 	// SHIFTING
-	public final int SHIFTER_EXT = 5;//(isCompetitionRobot? 2:2);// compBot:practiceBot
-	public final int SHIFTER_RET = 2;//(isCompetitionRobot? 3:3);// compBot:practiceBot
+	public final int SHIFTER_EXT = (isCompetitionRobot? 5:2);// compBot:practiceBot
+	public final int SHIFTER_RET = (isCompetitionRobot? 2:5);// compBot:practiceBot
 	
 	// CLIMB AND RELATED PNEUMATICS
 //	public final int PTO_EXT = 6;
