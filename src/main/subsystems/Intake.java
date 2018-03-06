@@ -1,12 +1,19 @@
 package main.subsystems;
 
 import interfacesAndAbstracts.ImprovedSubsystem;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import Util.DriveHelper;
+import Util.EncoderHelper;
+import interfacesAndAbstracts.ImprovedSubsystem;
+import main.commands.intake.ShootWithJoystick;
+
 
 public class Intake extends ImprovedSubsystem {
 	public static enum WheelStates {
 		In, Out, Off
 	}
 	
+	private DriveHelper driveHelper = new DriveHelper(7.5);
 	// NOT SURE IF WE SHOULD USE AN ENUM- TESTING SWITCH METHODS FIRST
 //	public static enum CubeInIntake {
 //		HasCube, NoCube
@@ -51,5 +58,8 @@ public class Intake extends ImprovedSubsystem {
 	public void zeroSensors() {
 		// TODO Auto-generated method stub
 		
+	}
+	public void moveWithJoystick(double throttle) {
+		elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
 	}
 }
