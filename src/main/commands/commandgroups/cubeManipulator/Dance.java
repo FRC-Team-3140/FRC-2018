@@ -27,7 +27,6 @@ public class Dance extends ImprovedCommandGroup {
 		addSequential(new TiltUp());
 		addSequential(new WaitCommand(.2));
 		addSequential(new SpinIn());
-		
 	}
 }
 

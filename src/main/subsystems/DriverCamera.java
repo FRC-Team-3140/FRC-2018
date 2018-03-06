@@ -9,15 +9,13 @@ public class DriverCamera extends ImprovedClass {
 	UsbCamera cam;
 
 	public DriverCamera() {
-		camServer = CameraServer.getInstance();
-		cam = camServer.startAutomaticCapture();
+		UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
 		cam.setFPS(30);
 		cam.setResolution(320, 240);
 	}
 
 	@Override
 	public void check() {
-		// TODO Auto-generated method stub
-		
+		// TODO implement
 	}
 }

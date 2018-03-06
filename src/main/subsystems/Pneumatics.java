@@ -101,13 +101,13 @@ public class Pneumatics extends ImprovedSubsystem {
 
 	@Override
 	public void check() {
-		// TODO Auto-generated method stub
+		// TODO implement
 		
 	}
 
 	@Override
 	public void zeroSensors() {
-		// TODO Auto-generated method stub
+		// TODO implement
 		
 	}
 }
