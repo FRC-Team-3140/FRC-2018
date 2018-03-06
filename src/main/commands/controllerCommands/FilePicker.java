@@ -1,9 +1,11 @@
 package main.commands.controllerCommands;
 
 import interfacesAndAbstracts.ImprovedCommand;
-import main.Robot;
 
+// TODO are we using this
 public class FilePicker extends ImprovedCommand {
+	@SuppressWarnings("unused")
+	// TODO are we using this
 	private String filePath = "";
 	
 	public FilePicker(String filePath) {

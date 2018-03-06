@@ -1,15 +1,11 @@
 package controllers;
 
-import lib.joystick.XboxController;
 import loopController.Loop;
 import main.Constants;
-import main.OI;
-import main.Robot;
 
+// TODO are we using this
 public class Record implements Loop, Constants {
 	private static boolean recordOK = false;
-	private static XboxController controller = OI.getXbox();
-	private static XboxController controller2 = OI.getXbox2();
 
 	public static void okToRecord(boolean okToRecord) {
 		recordOK = okToRecord;

@@ -1,12 +1,7 @@
-
 package controllers;
 
-import edu.wpi.first.wpilibj.command.Command;
 import loopController.Loop;
 import main.Constants;
-import main.Robot;
-import main.commands.drivetrain.DriveFromPlayer;
-import main.commands.elevator.MoveFromPlay;
 
 public class Play implements Loop, Constants {
 	private static boolean playOK = false;

@@ -1,7 +1,6 @@
 package main.commands.controllerCommands;
 
 import interfacesAndAbstracts.ImprovedCommand;
-import main.Robot;
 
 public class FileDeletor extends ImprovedCommand {
 	public FileDeletor() {

@@ -1,8 +1,6 @@
 package main.commands.controllerCommands;
 
-import controllers.Play;
 import interfacesAndAbstracts.ImprovedCommand;
-import main.Robot;
 
 public class StartPlay extends ImprovedCommand {
 	public StartPlay() {

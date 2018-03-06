@@ -1,8 +1,6 @@
 package main.commands.controllerCommands;
 
-import controllers.Record;
 import interfacesAndAbstracts.ImprovedCommand;
-import main.Robot;
 
 public class StartRecord extends ImprovedCommand {
 	public StartRecord() {
