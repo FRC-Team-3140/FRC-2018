@@ -13,7 +13,7 @@ public interface Constants {
 	 * VARIABLES *
 	 *************/
 	public final boolean isCompetitionMatch = true;
-	public final boolean isCompetitionRobot = true;
+	public final boolean isCompetitionRobot = false;
 	
 	// FILE OUTPUT PATH
 	public final String outputPath = "/home/lvuser"; // USB output path: /U

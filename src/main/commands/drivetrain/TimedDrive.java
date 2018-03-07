@@ -1,10 +1,11 @@
 package main.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
+import main.Constants;
 import main.Robot;
 
 
-public class TimedDrive extends TimedCommand {
+public class TimedDrive extends TimedCommand implements Constants {
 	private double throttle;
 	
 	/*public TimedDrive(double throttle, double heading, double time) {
@@ -27,7 +28,10 @@ public class TimedDrive extends TimedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.dt.driveVelocity(throttle, 0.0);
+    	if(isCompetitionRobot)
+    		Robot.dt.driveVelocity(throttle, 0.0);
+    	else
+    		Robot.dt.driveVelocity(-throttle, 0.0);
     }
     // Make this return true when this Command no longer needs to run execute()
 
