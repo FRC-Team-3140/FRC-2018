@@ -8,17 +8,9 @@ import main.Robot;
 public class TimedDrive extends TimedCommand implements Constants {
 	private double throttle;
 	
-	/*public TimedDrive(double throttle, double heading, double time) {
-    	super(time);
-    	this.throttle = throttle;
-    	this.heading = heading;
-    	requires(Robot.dt);
-    }*/
-	
     public TimedDrive(double throttle, double time) {
     	super(time);
     	this.throttle = throttle;
-    	//this.heading = 0.0;
     	requires(Robot.dt);
     }
 

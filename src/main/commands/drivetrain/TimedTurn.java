@@ -16,8 +16,7 @@ public class TimedTurn extends TimedCommand implements Constants {
 	}
 	
 	protected void execute() {
-		if(isCompetitionRobot) Robot.dt.timedTurn(mode, throttle);
-		else Robot.dt.timedTurn(mode, -throttle);
+		Robot.dt.timedTurn(mode, throttle);//Turning is the same between both robots
 	}
 
 }
