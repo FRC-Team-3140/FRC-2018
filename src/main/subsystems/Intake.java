@@ -46,6 +46,7 @@ public class Intake extends ImprovedSubsystem {
 //	
 	@Override
 	protected void initDefaultCommand() {
+		setDefaultCommand(new ShootWithJoystick());
 	}
 
 	@Override
@@ -60,6 +61,7 @@ public class Intake extends ImprovedSubsystem {
 		
 	}
 	public void moveWithJoystick(double throttle) {
-		elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+		leftIntakeMotor.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+		rightIntakeMotor.set(-driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
 	}
 }

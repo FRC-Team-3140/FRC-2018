@@ -11,6 +11,8 @@ import main.commands.commandgroups.cubeManipulator.PushOutCubeOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
 import main.commands.elevator.TimedLift;
+import main.commands.intake.DeployIntake;
+import main.commands.intake.DeployIntakeOff;
 import main.commands.intake.SpinOff;
 import main.commands.intake.SpinOut;
 import main.commands.pneumatics.arm.ArmClose;
@@ -34,14 +36,14 @@ public class OI extends ImprovedClass {
 
 		//xbox.x.whenPressed(new TimedLift(timedLiftPercent, timedLiftFullHeightTime));
 
-		xbox2.rightTrigger.whenPressed(new SpinOut());
-		xbox2.rightTrigger.whenReleased(new SpinOff());
-		xbox2.y.whenReleased(new IntakeCubeOff());
+		xbox2.leftTrigger.whenPressed(new DeployIntake());
+		xbox2.leftTrigger.whenReleased(new DeployIntakeOff());
+		/*xbox2.y.whenReleased(new IntakeCubeOff());
 		xbox2.y.whenPressed(new IntakeCube());
 		xbox2.x.whenPressed(new PushOutCube());
 		xbox2.x.whenReleased(new PushOutCubeOff());
 		xbox2.b.whenPressed(new DropCube());
-		xbox2.b.whenReleased(new DropCubeOff());
+		xbox2.b.whenReleased(new DropCubeOff());*/
 		xbox2.rightBumper.whenPressed(new TiltDown());
 		xbox2.rightBumper.whenReleased(new TiltUp());
 	}
