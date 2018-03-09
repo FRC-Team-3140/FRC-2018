@@ -7,6 +7,7 @@ import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.elevator.MoveWithJoystick;
 
 public class Elevator extends ImprovedSubsystem {
+	/*
 	// GET F-GAIN
 	// TEST ERROR AND CALCULATE P
 	// TEST FOR COASTING- BRAKE MODE WORKS GREAT
@@ -36,7 +37,7 @@ public class Elevator extends ImprovedSubsystem {
 	public final double elevator_kI = 0;
 	public final double elevator_kD = 0;
 			
-	private EncoderHelper encoderHelper = new EncoderHelper();
+	private EncoderHelper encoderHelper = new EncoderHelper();*/
 	private DriveHelper driveHelper = new DriveHelper(7.5);
 	
 	//max velocity was 100523u/100ms	
@@ -49,6 +50,7 @@ public class Elevator extends ImprovedSubsystem {
 	 ************************
 	 * This is to make a trapezoidal motion profile for the elevator... Hopefully it will work.
 	 */
+	/*
 	private void setStatusFrames() {
 		//something goes here but idk what
 	}
@@ -71,7 +73,7 @@ public class Elevator extends ImprovedSubsystem {
 		setAccelAndVeloDefaults();
 		setPIDValues();
 	}
-
+	*/
 	
 	/*************************
 	 * TALON SUPPORT METHODS *
@@ -112,28 +114,30 @@ public class Elevator extends ImprovedSubsystem {
 	 **************************/
 	
 	public void zeroSensors() {
-		elevatorMaster.getSensorCollection().setQuadraturePosition(0, 10);
+		//elevatorMaster.getSensorCollection().setQuadraturePosition(0, 10);
 	}
 	
 	// Checks if the intake is at bottom
-	/*public boolean isArmAtBottom() {
-		if (stage1BottomSwitch.get()) return true;
-		else return false;
-	}*/
+	public boolean isArmAtBottom() {
+		return stage1BottomSwitch.get() && stage2BottomSwitch.get();
+	}
 	
 	// Checks if intake is at the top
-	/*public boolean isArmAtTop() {
-		if (stage1TopSwitch.get())
-			return true;
-		else return false;
-	}*/
+	public boolean isArmAtTop() {
+		return stage1TopSwitch.get() && stage2TopSwitch.get();
+	}
+	
+	// Checks to see if the intake is at the height needed to dump into the switch
+	public boolean isArmAtSwitch() {
+		return switchHeightSwitch.get();
+	}
 	
 	// Sets encoders to 0 if the arm is at the bottom (this helps to avoid offset)
 	public void check() {
 		/*if (isArmAtBottom())
 			zeroSensors();*/
 	}
-	
+	/*
 	// Returns whether or not the intake has reached the set position. Pos is in inches
 	public boolean isIntakeAtPos(double pos) {
 		if (getDistanceFromPos(pos) < elevatorTolerance && getDistanceFromPos(pos) > -1 * elevatorTolerance) {
@@ -159,7 +163,7 @@ public class Elevator extends ImprovedSubsystem {
 	/**********************
 	 * ENC OUTPUT METHODS *
 	 **********************/
-	
+	/*
 	public double getElevatorVelocity() {
 		return elevatorMaster.getSensorCollection().getQuadratureVelocity();
 	}
@@ -186,11 +190,11 @@ public class Elevator extends ImprovedSubsystem {
 	/**********************
 	 * CONVERSION METHODS *
 	 **********************/
-	
+	/*
 	private double inchesToElevatorEncoderTicks(double inches) {
 		return encoderHelper.inchesToEncoderTicks(inches, spindleCircum, countsPerRev);
 	}
-	
+	*/
 	/***************
 	 * RECORD/PLAY *
 	 ***************/
@@ -203,22 +207,25 @@ public class Elevator extends ImprovedSubsystem {
 	 ********************/
 	
 	public void moveFromPlay(double voltage) {
-		elevatorMaster.set(voltage);
+		if(voltage == 0 || (voltage > 0 && !isArmAtTop()) || (voltage < 0 && !isArmAtBottom()))
+			elevatorMaster.set(voltage/12);
 	}
-	
+	/*
 	public void moveToPosPID(double pos) {
 		setMotionMagicDefaults();
 		elevatorMaster.set(ControlMode.MotionMagic, inchesToElevatorEncoderTicks(pos));
 	}
-	
+	*/
 	public void moveWithJoystick(double throttle) {
-		elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+		if(throttle == 0 || (throttle > 0 && !isArmAtTop()) || (throttle < 0 && !isArmAtBottom()))
+			elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
 	}
 	
-	public void moveTimed(double throttle) {
-		elevatorMaster.set(throttle);
+	public void move(double throttle) {
+		if(throttle == 0 || (throttle > 0 && !isArmAtTop()) || (throttle < 0 && !isArmAtBottom()))
+			elevatorMaster.set(throttle);
 	}
-	
+	/*
 	// Moves fast to a position if far away, slows down when it gets closer, and stops when it reaches
 	// the position within a tolerance.
 	public void moveToPos(double pos) {
@@ -244,7 +251,7 @@ public class Elevator extends ImprovedSubsystem {
 		}
 		else {
 			elevatorMaster.set(-1 * defaultElevatorSpeed);
-		}*/
+		}
 	}
 	
 	public void moveUp() {
@@ -256,13 +263,13 @@ public class Elevator extends ImprovedSubsystem {
 		}
 		else {
 			elevatorMaster.set(defaultElevatorSpeed);
-		}*/
-	}
+		}
+	}*/
 	
 	/*****************
 	 * DUMMY METHODS *
 	 *****************/
-	
+	/*
 	public void up() {
 		elevatorMaster.set(-1.0);
 	}
@@ -273,7 +280,7 @@ public class Elevator extends ImprovedSubsystem {
 	
 	public void stop() {
 		elevatorMaster.set(0);
-	}
+	}*/
 	
 	@Override
 	protected void initDefaultCommand() {

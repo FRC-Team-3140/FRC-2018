@@ -159,10 +159,11 @@ public interface Constants {
 //	public final int HOOK_RET = 4;
 //	
 	// SWITCHES
-//	public final int STAGE1_Bottom = 8;
-//	public final int STAGE1_Top = 2;
-//	public final int STAGE2_Bottom = 1;
-//	public final int STAGE2_Top = 3;
+	public final int STAGE1_Bottom = 0;
+	public final int STAGE1_Top = 1;
+	public final int STAGE2_Bottom = 2;
+	public final int STAGE2_Top = 3;
+	public final int SWITCH_Limit = 4;
 //	public final int INTAKE_Switch = 5;
 
 	//Driver Alert
