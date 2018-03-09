@@ -7,13 +7,13 @@ import main.OI;
 import main.Robot;
 
 public class ShootWithJoystick extends ImprovedCommand {
-	private DriveHelper driveHelper = new DriveHelper(7.5);
+	//private DriveHelper driveHelper = new DriveHelper(7.5);
 	public ShootWithJoystick() {
-		requires(Robot.el);
+		requires(Robot.in);
 	}
 	
 	protected void execute() {
-		Robot.el.moveWithJoystick(-OI.getXbox2().getSmoothedAltY()); //no negate for other
+		Robot.in.moveWithJoystick(-OI.getXbox2().getSmoothedAltY()); //no negate for other
 	}
 
 	@Override

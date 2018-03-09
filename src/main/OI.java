@@ -13,6 +13,8 @@ import main.commands.drivetrain.TimedTurn;
 import main.commands.elevator.MoveToScale;
 import main.commands.elevator.MoveToSwitch;
 import main.commands.elevator.TimedLift;
+import main.commands.intake.DeployIntake;
+import main.commands.intake.DeployIntakeOff;
 import main.commands.intake.SpinOff;
 import main.commands.intake.SpinOut;
 import main.commands.pneumatics.arm.ArmClose;
@@ -33,21 +35,27 @@ public class OI extends ImprovedClass {
 		//xbox.rightBumper.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));
 		//xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
 		//xbox.y.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));
-
 		//xbox.x.whenPressed(new TimedLift(timedLiftPercent, timedLiftFullHeightTime));
-
+		
 		//xbox2.rightTrigger.whenPressed(new SpinOut());
 		//xbox2.rightTrigger.whenReleased(new SpinOff());
 		xbox2.y.whenReleased(new IntakeCubeOff());
+		xbox2.leftTrigger.whenPressed(new DeployIntake());
+		xbox2.leftTrigger.whenReleased(new DeployIntakeOff());
+		xbox2.start.whenPressed(new MoveToSwitch(5));
+		xbox2.select.whenPressed(new MoveToScale(5));
+		/*xbox2.y.whenReleased(new IntakeCubeOff());
 		xbox2.y.whenPressed(new IntakeCube());
 		xbox2.x.whenPressed(new PushOutCube());
 		xbox2.x.whenReleased(new PushOutCubeOff());
 		xbox2.b.whenPressed(new DropCube());
 		xbox2.b.whenReleased(new DropCubeOff());
-		xbox2.start.whenPressed(new MoveToSwitch(5));
-		xbox2.select.whenPressed(new MoveToScale(5));
+	
 		//xbox2.rightBumper.whenPressed(new TiltDown());
 		//xbox2.rightBumper.whenReleased(new TiltUp());
+		xbox2.b.whenReleased(new DropCubeOff());*/
+		xbox2.rightBumper.whenPressed(new TiltDown());
+		xbox2.rightBumper.whenReleased(new TiltUp());
 	}
 	
 	public static XboxController getXbox() {
