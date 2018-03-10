@@ -15,11 +15,7 @@ public class Drive extends ImprovedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(isCompetitionRobot)
-    		Robot.dt.driveVelocity(OI.getXbox().getSmoothedMainY(), -OI.getXbox().getSmoothedAltX());
-    	else 
-    		Robot.dt.driveVelocity(-OI.getXbox().getSmoothedMainY(), -OI.getXbox().getSmoothedAltX());
-    	
+    	Robot.dt.driveVelocity(OI.getXbox().getSmoothedMainY(), OI.getXbox().getSmoothedAltX());
     }
     
     protected boolean isFinished() {

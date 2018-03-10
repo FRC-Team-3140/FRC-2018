@@ -18,10 +18,16 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	// DRIVE FOR TELEOP
 	public void driveVelocity(double throttle, double heading) {
-		driveTrain.arcadeDrive(helper.handleOverPower(helper.handleDeadband(throttle, throttleDeadband)),
-				helper.handleOverPower(helper.handleDeadband(heading, headingDeadband)));
+		if (isCompetitionRobot) {
+			driveTrain.arcadeDrive(helper.handleOverPower(helper.handleDeadband(throttle, throttleDeadband)),
+					helper.handleOverPower(helper.handleDeadband(-heading, headingDeadband)));
+		}
+		else {
+			driveTrain.arcadeDrive(helper.handleOverPower(helper.handleDeadband(-throttle, throttleDeadband)),
+					helper.handleOverPower(helper.handleDeadband(-heading, headingDeadband)));
+		}
 	}
-	
+
 	//Drive for playing back
 	public void driveVoltageTank(double leftVoltage, double rightVoltage) {
 		driveTrain.tankDrive((Math.abs(leftVoltage) > 12.0) ? Math.signum(leftVoltage) : leftVoltage/12, 
@@ -33,7 +39,6 @@ public class Drivetrain extends ImprovedSubsystem  {
 		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle, false);
 		if (mode == TurnMode.Right) driveTrain.tankDrive(throttle, -throttle, false);
 	}
-	
 	/***********************
 	 * PLAY/RECORD METHODS *
 	 ***********************/

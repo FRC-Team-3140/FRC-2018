@@ -217,8 +217,11 @@ public class Elevator extends ImprovedSubsystem {
 	}
 	*/
 	public void moveWithJoystick(double throttle) {
-//		if(throttle == 0 || (throttle > 0 && !isArmAtTop()) || (throttle < 0 && !isArmAtBottom()))
-		elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+		// if(throttle == 0 || (throttle > 0 && !isArmAtTop()) || (throttle < 0 && !isArmAtBottom()))
+		if (isCompetitionRobot)
+			elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, elevatorDeadband)));
+		else
+			elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
 	}
 	
 //	public void move(double throttle) {
