@@ -118,19 +118,19 @@ public class Elevator extends ImprovedSubsystem {
 	}
 	
 	// Checks if the intake is at bottom
-	public boolean isArmAtBottom() {
-		return stage1BottomSwitch.get() && stage2BottomSwitch.get();
-	}
+//	public boolean isArmAtBottom() {
+//		return stage1BottomSwitch.get() && stage2BottomSwitch.get();
+//	}
 	
 	// Checks if intake is at the top
-	public boolean isArmAtTop() {
-		return stage1TopSwitch.get() && stage2TopSwitch.get();
-	}
+//	public boolean isArmAtTop() {
+//		return stage1TopSwitch.get() && stage2TopSwitch.get();
+//	}
 	
 	// Checks to see if the intake is at the height needed to dump into the switch
-	public boolean isArmAtSwitch() {
-		return switchHeightSwitch.get();
-	}
+//	public boolean isArmAtSwitch() {
+//		return switchHeightSwitch.get();
+//	}
 	
 	// Sets encoders to 0 if the arm is at the bottom (this helps to avoid offset)
 	public void check() {
@@ -207,7 +207,7 @@ public class Elevator extends ImprovedSubsystem {
 	 ********************/
 	
 	public void moveFromPlay(double voltage) {
-		if(voltage == 0 || (voltage > 0 && !isArmAtTop()) || (voltage < 0 && !isArmAtBottom()))
+//		if(voltage == 0 || (voltage > 0 && !isArmAtTop()) || (voltage < 0 && !isArmAtBottom()))
 			elevatorMaster.set(voltage/12);
 	}
 	/*
@@ -217,14 +217,14 @@ public class Elevator extends ImprovedSubsystem {
 	}
 	*/
 	public void moveWithJoystick(double throttle) {
-		if(throttle == 0 || (throttle > 0 && !isArmAtTop()) || (throttle < 0 && !isArmAtBottom()))
-			elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+//		if(throttle == 0 || (throttle > 0 && !isArmAtTop()) || (throttle < 0 && !isArmAtBottom()))
+		elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
 	}
 	
-	public void move(double throttle) {
-		if(throttle == 0 || (throttle > 0 && !isArmAtTop()) || (throttle < 0 && !isArmAtBottom()))
-			elevatorMaster.set(throttle);
-	}
+//	public void move(double throttle) {
+//		if(throttle == 0 || (throttle > 0 && !isArmAtTop()) || (throttle < 0 && !isArmAtBottom()))
+//			elevatorMaster.set(throttle);
+//	}
 	/*
 	// Moves fast to a position if far away, slows down when it gets closer, and stops when it reaches
 	// the position within a tolerance.

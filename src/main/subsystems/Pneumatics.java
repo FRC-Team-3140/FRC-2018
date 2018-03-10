@@ -31,6 +31,9 @@ public class Pneumatics extends ImprovedSubsystem {
 	
 	public static ArmStates armStates = ArmStates.Off;
 	public static LiftStates liftStates = LiftStates.Off;
+	
+	public static boolean armOpen = false;
+	public static boolean tiltDown = false;
 
 	/*******************
 	 * COMMAND METHODS *
@@ -51,18 +54,24 @@ public class Pneumatics extends ImprovedSubsystem {
 	
 	// Toggles Arm to open or closed
 	public void toggleArm(DoubleSolenoid.Value v) {
-		if (v == EXT) armStates = ArmStates.Closed;
-		else if (v == RET) armStates = ArmStates.Opened;
-		else { armStates = ArmStates.Off; }
+		if (v == EXT) armOpen = false;
+		else if (v == RET) armOpen = true;
 		intakeArm.set(v);
 	}
-	
+		
 	// Changes the tilter to up or down
 	public void tilt(DoubleSolenoid.Value v) {
-		if (v == EXT) liftStates = LiftStates.Down;
-		else if (v == RET) liftStates = LiftStates.Up;
-		else { liftStates = LiftStates.Off; }
+		if (v == EXT) tiltDown = false;
+		else if (v == RET) tiltDown = true;
 		tilter.set(v);
+	}
+	
+	public boolean isArmOpen() {
+		return armOpen;
+	}
+	
+	public boolean isTiltDown() {
+		return tiltDown;
 	}
 //	
 //	public void shiftPTO(DoubleSolenoid.Value v) {
