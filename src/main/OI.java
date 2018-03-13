@@ -19,12 +19,12 @@ import main.commands.intake.SpinOff;
 import main.commands.intake.SpinOut;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
-import main.commands.pneumatics.arm.ArmToggle;
+import main.commands.pneumatics.arm.SwitchArm;
 import main.commands.pneumatics.shift.ShiftDown;
 import main.commands.pneumatics.shift.ShiftUp;
+import main.commands.pneumatics.tilt.SwitchTilt;
 import main.commands.pneumatics.tilt.TiltDown;
 import main.commands.pneumatics.tilt.TiltUp;
-import main.commands.pneumatics.tilt.ToggleTilt;
 
 public class OI extends ImprovedClass {	
 	public OI() {
@@ -32,28 +32,33 @@ public class OI extends ImprovedClass {
 		xbox2.setInternalControl(false);
 		
 		// Shoots out without elevator
-		xbox.leftBumper.whenPressed(new ShiftUp());
-		xbox.leftBumper.whenReleased(new ShiftDown());
+		xbox.leftJoystickPress.whenPressed(new ShiftUp());
+		xbox.leftJoystickPress.whenReleased(new ShiftDown());
+		//xbox.rightBumper.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));
+		//xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
+		//xbox.y.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));
+		//xbox.x.whenPressed(new TimedLift(timedLiftPercent, timedLiftFullHeightTime));
 		
-		xbox2.leftBumper.whenPressed(new ArmToggle());
-		xbox2.rightBumper.whenPressed(new ToggleTilt());
-		
-		//xbox2.rightTrigger.whenPressed(new SpinOut());
+		//xbox2.rightTrigger.whileHeld(new SpinOut());
 		//xbox2.rightTrigger.whenReleased(new SpinOff());
-//		xbox2.y.whenReleased(new IntakeCubeOff());
-//		xbox2.leftTrigger.whenPressed(new DeployIntake());
-//		xbox2.leftTrigger.whenReleased(new DeployIntakeOff());
-//		xbox2.start.whenPressed(new MoveToSwitch(5));
-//		xbox2.select.whenPressed(new MoveToScale(5));
-		/*xbox2.y.whenReleased(new IntakeCubeOff());
-		xbox2.y.whenPressed(new IntakeCube());
-		xbox2.x.whenPressed(new PushOutCube());
-		xbox2.x.whenReleased(new PushOutCubeOff());
-		xbox2.b.whenPressed(new DropCube());
-		xbox2.b.whenReleased(new DropCubeOff());
-		xbox2.b.whenReleased(new DropCubeOff());*/
-//		xbox2.rightBumper.whenPressed(new TiltDown());
-//		xbox2.rightBumper.whenReleased(new TiltUp());
+		//xbox2.y.whenReleased(new IntakeCubeOff());
+		//xbox2.leftTrigger.whenPressed(new DeployIntake());
+		//xbox2.leftTrigger.whenReleased(new DeployIntakeOff());
+		//xbox2.start.whenPressed(new MoveToSwitch(5));
+		//xbox2.select.whenPressed(new MoveToScale(5));
+		//xbox2.y.whenReleased(new IntakeCubeOff());
+		//xbox2.y.whileHeld(new IntakeCube());
+		//xbox2.x.whileHeld(new PushOutCube());
+		//xbox2.x.whenReleased(new PushOutCubeOff());
+		//xbox2.b.whileHeld(new DropCube());
+		//xbox2.b.whenReleased(new DropCubeOff());
+		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
+		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
+		//xbox2.rightBumper.whenPressed(new TiltDown());
+		//xbox2.rightBumper.whenReleased(new TiltUp());
+		//xbox2.b.whenReleased(new DropCubeOff());
+		//xbox2.rightBumper.whenPressed(new TiltDown());
+		//xbox2.rightBumper.whenReleased(new TiltUp());
 	}
 	
 	public static XboxController getXbox() {
