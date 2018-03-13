@@ -56,6 +56,14 @@ public interface Constants {
 	// LOOPER CONSTANTS
 	public final double kLooperDt = 0.005;// 0.005
 	
+	// BIAS VOLTAGES FOR DIFFERENCE BETWEEN ROBOTS COMPENSATION
+	//Currently 0, implement if necessary, (+) voltage biases will make 
+	//that side of the robot move faster and go farther; (-) voltage biases 
+	//will do the opposite. These value should ideally be smaller than 2V.
+	//Start small and increase 0.1V-0.5V at a time until the desired effect is achieved.
+	public final double leftVoltageBias = 0.0;// Units, (V), Volts
+	public final double rightVoltageBias = 0.0;// Units, (V), Volts
+	
 	/*************
 	 * CONSTANTS *
 	 *************/

@@ -30,9 +30,13 @@ public class Drivetrain extends ImprovedSubsystem  {
 
 	//Drive for playing back
 	public void driveVoltageTank(double leftVoltage, double rightVoltage) {
-		driveTrain.tankDrive((Math.abs(leftVoltage) > 12.0) ? Math.signum(leftVoltage) : leftVoltage/12, 
-								 -((Math.abs(rightVoltage)  > 12.0) ? Math.signum(rightVoltage) : rightVoltage/12),
-								 false);	
+		leftVoltage = (Math.abs(leftVoltage) > 12.0) ? Math.signum(leftVoltage) : leftVoltage/12;
+		rightVoltage = -((Math.abs(rightVoltage)  > 12.0) ? Math.signum(rightVoltage) : rightVoltage/12);
+		
+		leftVoltage = Math.signum(leftVoltage) * (Math.abs(leftVoltage) + leftVoltageBias);
+		rightVoltage = Math.signum(rightVoltage) * (Math.abs(rightVoltage) + rightVoltageBias);
+		
+		driveTrain.tankDrive(leftVoltage, rightVoltage, false);	
 	}
 	
 	public void timedTurn(TurnMode mode, double throttle) {
