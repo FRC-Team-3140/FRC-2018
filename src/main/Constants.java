@@ -61,8 +61,8 @@ public interface Constants {
 	//that side of the robot move faster and go farther; (-) voltage biases 
 	//will do the opposite. These value should ideally be smaller than 2V.
 	//Start small and increase 0.1V-0.5V at a time until the desired effect is achieved.
-	public final double leftVoltageBias = 0.0;// Units, (V), Volts
-	public final double rightVoltageBias = 0.0;// Units, (V), Volts
+	public final double leftVoltageBias =(isCompetitionRobot? 0.0 : 0.0);// compBot:practiceBot // Units, (V), Volts
+	public final double rightVoltageBias = (isCompetitionRobot? 0.0 : 0.0);// compBot:practiceBot // Units, (V), Volts
 	
 	/*************
 	 * CONSTANTS *
