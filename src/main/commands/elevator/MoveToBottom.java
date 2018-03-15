@@ -3,9 +3,9 @@ package main.commands.elevator;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import main.Robot;
 
-public class MoveToScale extends TimedCommand {
-	public MoveToScale(double timeout) {
-		super(5);//Timeout forced to a maximum of 5, this is for the emergency case that a limit switch breaks
+public class MoveToBottom extends TimedCommand {
+	public MoveToBottom(double timeout) {//3 recommended timeout
+		super(timeout);//Timeout forced to a maximum of 5, this is for the emergency case that a limit switch breaks
 		//So that the elevator will not continue to drive up.
 		requires(Robot.el);
 	}
@@ -16,12 +16,12 @@ public class MoveToScale extends TimedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	Robot.el.move(1);
+//    	Robot.el.move(-1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-//        return Robot.el.isArmAtTop();
+//        return Robot.el.isArmAtBottom();
     	return false;
     }
 
@@ -35,5 +35,3 @@ public class MoveToScale extends TimedCommand {
     protected void interrupted() {
     }
 }
-
-

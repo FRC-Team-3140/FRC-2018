@@ -39,6 +39,11 @@ public class Drivetrain extends ImprovedSubsystem  {
 		driveTrain.tankDrive(leftVoltage, rightVoltage, false);	
 	}
 	
+	//Drive for testing the drivetrain so that the needed constants to compute the bias voltages may be derived
+	public void driveVoltageTankTest(double leftVoltage, double rightVoltage) {
+		driveTrain.tankDrive(leftVoltage/12, -rightVoltage/12, false);
+	}
+	
 	public void timedTurn(TurnMode mode, double throttle) {
 		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle, false);
 		if (mode == TurnMode.Right) driveTrain.tankDrive(throttle, -throttle, false);
