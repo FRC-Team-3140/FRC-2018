@@ -35,7 +35,7 @@ public class TimedDrive extends TimedCommand {
 	 * @param heading The robot's rotation rate around the Z axis [-1.0..1.0]. Clockwise is positive.
 	 * @param time time
 	 */
-	public TimedDrive(double throttle, double heading, double time) {
+	public TimedDrive(double throttle, double heading, double time) { // NO_UCD (use default)
 		super(time);
 		this.throttle=throttle;
 		this.heading=heading;

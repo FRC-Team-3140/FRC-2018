@@ -2,8 +2,9 @@ package lib.joystick;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public abstract class InterfaceableJoystick extends Joystick {
-	public InterfaceableJoystick(int port) {
+abstract class InterfaceableJoystick extends Joystick {
+	
+	public InterfaceableJoystick(int port) { // NO_UCD
 		super(port);
 	}
 	

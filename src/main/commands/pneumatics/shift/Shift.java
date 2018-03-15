@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class Shift extends ImprovedCommand {
+class Shift extends ImprovedCommand {
 
 	private DoubleSolenoid.Value v;
     public Shift(DoubleSolenoid.Value v) {

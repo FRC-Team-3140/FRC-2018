@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class Tilt extends ImprovedCommand {
+class Tilt extends ImprovedCommand {
 	public DoubleSolenoid.Value v;
 	
 	public Tilt(DoubleSolenoid.Value v) {

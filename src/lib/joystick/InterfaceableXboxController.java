@@ -2,8 +2,8 @@ package lib.joystick;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public abstract class InterfaceableXboxController extends Joystick {
-	public InterfaceableXboxController(int port) {
+abstract class InterfaceableXboxController extends Joystick {
+	public InterfaceableXboxController(int port) { // NO_UCD (use default)
 		super(port);
 	}
 	

@@ -3,7 +3,7 @@ package lib.joystick;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.buttons.Button;
 
-public class AnalogButton extends Button {
+class AnalogButton extends Button {
 	GenericHID m_joystick;
 	int m_axisNumber;
 	private double THRESHOLD = 0.5;
