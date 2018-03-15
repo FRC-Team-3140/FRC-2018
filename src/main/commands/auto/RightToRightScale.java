@@ -9,7 +9,8 @@ import main.commands.drivetrain.TimedTurn;
 import main.commands.elevator.MoveToTop;
 import main.commands.pneumatics.tilt.TiltDown;
 
-public class RightToRightScale extends ImprovedCommandGroup {
+// TODO use or remove
+public class RightToRightScale extends ImprovedCommandGroup { // NO_UCD (unused code)
 	public RightToRightScale() {
 		addSequential(new TimedDrive(timedDrivePercent, 238.66/timedDistanceMultiplier));
 		addSequential(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
