@@ -40,6 +40,19 @@ public class Intake extends ImprovedSubsystem {
     	wheelStates = WheelStates.Off;
 	}
 	
+	public double getLeftIntakeWheelValue() {
+		return leftIntakeMotor.get();
+	}
+	
+	public double getRightIntakeWheelValue() {
+		return leftIntakeMotor.get();
+	}
+	
+	public void setIntakeValues(double leftIntakeWheelValue, double rightIntakeWheelValue) {
+		leftIntakeMotor.set(leftIntakeWheelValue);
+		rightIntakeMotor.set(rightIntakeWheelValue);
+	}
+	
 //	public boolean isCubeInIntake() {
 //		return intakeSwitch.get();
 //	}

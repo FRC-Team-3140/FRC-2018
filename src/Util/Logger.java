@@ -164,40 +164,44 @@ public class Logger implements Constants {
 			for(int i = 1; i < countLines(); i++) {
 				String[] splitLine = getLine(i).split(",");
 				
-				double leftVoltage = Double.parseDouble(splitLine[0]);
-				double rightVoltage = Double.parseDouble(splitLine[1]);
-				boolean a = Boolean.parseBoolean(splitLine[2]);
-				boolean b = Boolean.parseBoolean(splitLine[3]);
-				boolean x = Boolean.parseBoolean(splitLine[4]);
-				boolean y = Boolean.parseBoolean(splitLine[5]);
-				boolean leftBumper = Boolean.parseBoolean(splitLine[6]);
-				boolean rightBumper = Boolean.parseBoolean(splitLine[7]);
-				boolean select = Boolean.parseBoolean(splitLine[8]);
-				boolean start = Boolean.parseBoolean(splitLine[9]);
-				boolean leftJoystickPress = Boolean.parseBoolean(splitLine[10]);
-				boolean rightJoystickPress = Boolean.parseBoolean(splitLine[11]);
-				boolean leftTrigger = Boolean.parseBoolean(splitLine[12]);
-				boolean rightTrigger = Boolean.parseBoolean(splitLine[13]);
-				double elevatorVoltage = Double.parseDouble(splitLine[14]);
-				boolean a2 = Boolean.parseBoolean(splitLine[15]);
-				boolean b2 = Boolean.parseBoolean(splitLine[16]);
-				boolean x2 = Boolean.parseBoolean(splitLine[17]);
-				boolean y2 = Boolean.parseBoolean(splitLine[18]);
-				boolean leftBumper2 = Boolean.parseBoolean(splitLine[19]);
-				boolean rightBumper2 = Boolean.parseBoolean(splitLine[20]);
-				boolean select2 = Boolean.parseBoolean(splitLine[21]);
-				boolean start2 = Boolean.parseBoolean(splitLine[22]);
-				boolean leftJoystickPress2 = Boolean.parseBoolean(splitLine[23]);
-				boolean rightJoystickPress2 = Boolean.parseBoolean(splitLine[24]);
-				boolean leftTrigger2 = Boolean.parseBoolean(splitLine[25]);
-				boolean rightTrigger2 = Boolean.parseBoolean(splitLine[26]);
+				double leftDriveVoltage = Double.parseDouble(splitLine[0]);
+				double rightDriveVoltage = Double.parseDouble(splitLine[1]);
+				double leftIntakeWheelValue = Double.parseDouble(splitLine[2]);
+				double rightIntakeWheelValue = Double.parseDouble(splitLine[3]);
 				
-				if(leftVoltage != 0 || rightVoltage != 0 || elevatorVoltage != 0 || a || b || x || y || leftBumper || rightBumper ||
-					select || start || leftJoystickPress || rightJoystickPress || leftTrigger || rightTrigger || a2 || b2 ||x2 || y2 ||
-					leftBumper2 || rightBumper2 || select2 || start2 || leftJoystickPress2 || rightJoystickPress2 || leftTrigger2 || rightTrigger2) {
-					
-					firstNonZeroValueLine = i;
-					break;
+				boolean a = Boolean.parseBoolean(splitLine[4]);
+				boolean b = Boolean.parseBoolean(splitLine[5]);
+				boolean x = Boolean.parseBoolean(splitLine[6]);
+				boolean y = Boolean.parseBoolean(splitLine[7]);
+				boolean leftBumper = Boolean.parseBoolean(splitLine[8]);
+				boolean rightBumper = Boolean.parseBoolean(splitLine[9]);
+				boolean select = Boolean.parseBoolean(splitLine[10]);
+				boolean start = Boolean.parseBoolean(splitLine[11]);
+				boolean leftJoystickPress = Boolean.parseBoolean(splitLine[12]);
+				boolean rightJoystickPress = Boolean.parseBoolean(splitLine[13]);
+				boolean leftTrigger = Boolean.parseBoolean(splitLine[14]);
+				boolean rightTrigger = Boolean.parseBoolean(splitLine[15]);
+				
+				boolean a2 = Boolean.parseBoolean(splitLine[16]);
+				boolean b2 = Boolean.parseBoolean(splitLine[17]);
+				boolean x2 = Boolean.parseBoolean(splitLine[18]);
+				boolean y2 = Boolean.parseBoolean(splitLine[19]);
+				boolean leftBumper2 = Boolean.parseBoolean(splitLine[20]);
+				boolean rightBumper2 = Boolean.parseBoolean(splitLine[21]);
+				boolean select2 = Boolean.parseBoolean(splitLine[22]);
+				boolean start2 = Boolean.parseBoolean(splitLine[23]);
+				boolean leftJoystickPress2 = Boolean.parseBoolean(splitLine[24]);
+				boolean rightJoystickPress2 = Boolean.parseBoolean(splitLine[25]);
+				boolean leftTrigger2 = Boolean.parseBoolean(splitLine[26]);
+				boolean rightTrigger2 = Boolean.parseBoolean(splitLine[27]);
+				
+				if(leftDriveVoltage != 0 || rightDriveVoltage != 0 || leftIntakeWheelValue != 0 || rightIntakeWheelValue != 0 
+					|| a || b || x || y || leftBumper || rightBumper ||select || start || leftJoystickPress || rightJoystickPress 
+					|| leftTrigger || rightTrigger || a2 || b2 ||x2 || y2 || leftBumper2 || rightBumper2 || select2 || start2 
+					|| leftJoystickPress2 || rightJoystickPress2 || leftTrigger2 || rightTrigger2) {
+						
+						firstNonZeroValueLine = i;
+						break;
 				}
 			}
 		} catch (NumberFormatException e) {

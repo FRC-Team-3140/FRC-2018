@@ -3,10 +3,10 @@ package main.commands.elevator;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class MoveFromPlay extends ImprovedCommand {
+public class MoveElevatorFromPlay extends ImprovedCommand {
 	private double voltage;
 	
-	public MoveFromPlay(double voltage) {
+	public MoveElevatorFromPlay(double voltage) {
 		this.voltage = voltage;
 	}
 	
