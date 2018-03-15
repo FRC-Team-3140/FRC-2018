@@ -1,8 +1,9 @@
 package interfacesAndAbstracts;
 
-public abstract class SwitchCommand extends ImprovedCommand {
-	ImprovedCommand trueCommand;
-	ImprovedCommand falseCommand;
+// TODO use this class
+public abstract class SwitchCommand extends ImprovedCommand { // NO_UCD (unused code)
+	final ImprovedCommand trueCommand;
+	final ImprovedCommand falseCommand;
 	
 	public SwitchCommand(ImprovedCommand trueCommand, ImprovedCommand falseCommand) {
 		this.trueCommand = trueCommand;
