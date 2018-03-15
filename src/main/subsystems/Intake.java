@@ -1,8 +1,16 @@
 package main.subsystems;
 
 import interfacesAndAbstracts.ImprovedSubsystem;
+import Util.DriveHelper;
+import main.commands.intake.ShootWithJoystick;
 
 public class Intake extends ImprovedSubsystem {
+	public static enum WheelStates {
+		In, Out, Off
+	}
+	
+	private DriveHelper driveHelper = new DriveHelper(7.5);
+
 	public void spinIn() {
 		leftIntakeMotor.set(1.0);
     	rightIntakeMotor.set(-1.0);
@@ -20,6 +28,7 @@ public class Intake extends ImprovedSubsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
+		setDefaultCommand(new ShootWithJoystick());
 	}
 
 	@Override
@@ -30,5 +39,9 @@ public class Intake extends ImprovedSubsystem {
 	@Override
 	public void zeroSensors() {
 		// TODO implement
+	}
+	public void moveWithJoystick(double throttle) {
+		leftIntakeMotor.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+		rightIntakeMotor.set(-driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
 	}
 }

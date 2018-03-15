@@ -208,7 +208,7 @@ public class Logger implements Constants {
 		
 		for(int i = 1; i < firstNonZeroValueLine; i++)
 			try {
-				deleteNthLine(i);
+				deleteNthLine(1);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

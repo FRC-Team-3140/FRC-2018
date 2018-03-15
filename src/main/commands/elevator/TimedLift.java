@@ -14,8 +14,12 @@ public class TimedLift extends TimedCommand {
 	
 	@Override
 	protected void execute() {
-		Robot.el.moveTimed(throttle);
+//		Robot.el.move(throttle);
 	}
-
-
+	
+	// Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+//        return Robot.el.isArmAtTop();
+    	return false;
+    }
 }

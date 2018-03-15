@@ -13,8 +13,7 @@ public interface Constants {
 	 * VARIABLES *
 	 *************/
 	public final boolean isCompetitionMatch = true;
-	public final boolean isCompetitionRobot = true;
-
+	public final boolean isCompetitionRobot = false;
 	// FILE OUTPUT PATH
 	public final String outputPath = "/home/lvuser"; // USB output path: /U
 
@@ -49,6 +48,14 @@ public interface Constants {
 
 	// LOOPER CONSTANTS
 	public final double kLooperDt = 0.005;// 0.005
+	
+	// BIAS VOLTAGES FOR DIFFERENCE BETWEEN ROBOTS COMPENSATION
+	//Currently 0, implement if necessary, (+) voltage biases will make 
+	//that side of the robot move faster and go farther; (-) voltage biases 
+	//will do the opposite. These value should ideally be smaller than 2V.
+	//Start small and increase 0.1V-0.5V at a time until the desired effect is achieved.
+	public final double leftVoltageBias =(isCompetitionRobot? 0.0 : 0.0);// compBot:practiceBot // Units, (V), Volts
+	public final double rightVoltageBias = (isCompetitionRobot? 0.0 : 0.0);// compBot:practiceBot // Units, (V), Volts
 
 	/*************
 	 * CONSTANTS *
@@ -82,11 +89,10 @@ public interface Constants {
 
 	public final double timedLiftPercent = 0.75;// DO NOT CHANGE
 	public final double timedLiftMultiplier = 22.125;// (in/s)
-	// Time to lift the elevator 3ft at timedLiftPercent of available power.
-	public final double timedLiftTime = 36 / timedLiftMultiplier;
-	// Time to lift the elevator 78" or nearly full height at timedLiftPercent of
-	// available power.
-	public final double timedLiftFullHeightTime = 78 / timedLiftMultiplier;
+	//Time to lift the elevator 3ft at timedLiftPercent of available power.
+	public final double timedLiftTime = 28.5/timedLiftMultiplier;
+	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
+	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier;
 
 	/*********
 	 * PORTS *
@@ -116,12 +122,12 @@ public interface Constants {
 	public final int PCM_Port2 = 2;
 
 	// INTAKE PNEUMATICS
-	public final int INTAKE_EXT = 7;
-	public final int INTAKE_RET = 0;
-	public final int TILT_EXT = 6;
-	public final int TILT_RET = 1;
-
+	public final int INTAKE_EXT = 7;//(isCompetitionRobot? 0:0);// compBot:practiceBot
+	public final int INTAKE_RET = 0;//(isCompetitionRobot? 1:1);// compBot:practiceBot	
+	public final int TILT_EXT = (isCompetitionRobot? 6:1);// compBot:practiceBot
+	public final int TILT_RET = (isCompetitionRobot? 1:6);// compBot:practiceBot
+	
 	// SHIFTING
-	public final int SHIFTER_EXT = 5;
-	public final int SHIFTER_RET = 2;
+	public final int SHIFTER_EXT = (isCompetitionRobot? 5:2);// compBot:practiceBot
+	public final int SHIFTER_RET = (isCompetitionRobot? 2:5);// compBot:practiceBot
 }

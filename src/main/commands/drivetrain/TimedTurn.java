@@ -1,10 +1,10 @@
 package main.commands.drivetrain;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
-import main.Constants.TurnMode;
+import main.Constants;
 import main.Robot;
 
-public class TimedTurn extends TimedCommand {
+public class TimedTurn extends TimedCommand implements Constants {
 	private double throttle;
 	private TurnMode mode;
 
@@ -17,6 +17,6 @@ public class TimedTurn extends TimedCommand {
 	
 	@Override
 	protected void execute() {
-		Robot.dt.timedTurn(mode, throttle);
+		Robot.dt.timedTurn(mode, throttle);//Turning is the same between both robots
 	}
 }
