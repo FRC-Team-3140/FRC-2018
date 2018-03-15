@@ -7,7 +7,6 @@ import main.commands.commandgroups.cubeManipulator.DropCubeOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
 import main.commands.elevator.MoveToScale;
-import main.commands.elevator.TimedLift;
 import main.commands.pneumatics.tilt.TiltDown;
 
 public class LeftToLeftScale extends ImprovedCommandGroup {

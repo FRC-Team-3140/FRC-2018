@@ -1,7 +1,5 @@
 package main.commands.intake;
 
-
-import Util.DriveHelper;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.OI;
 import main.Robot;
@@ -12,6 +10,7 @@ public class ShootWithJoystick extends ImprovedCommand {
 		requires(Robot.in);
 	}
 	
+	@Override
 	protected void execute() {
 		Robot.in.moveWithJoystick(-OI.getXbox2().getSmoothedAltY()); //no negate for other
 	}
