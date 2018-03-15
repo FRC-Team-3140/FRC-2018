@@ -26,8 +26,9 @@ public class Robot extends ImprovedRobot {
 	public static Pneumatics pn;
 	public static Intake in;
 	public static Elevator el;
-	public static DriverCamera dc;
-	public static OI oi;
+	// TODO either use this or remove DriverCamera and put the initializing code in Robot
+	public static DriverCamera dc; // NO_UCD
+	public static OI oi; // NO_UCD
 
 	// AUTO LOGIC
 	private enum StartPos {
@@ -174,7 +175,7 @@ public class Robot extends ImprovedRobot {
 		allPeriodic();
 	}
 
-	public void allPeriodic() {
+	private void allPeriodic() {
 		SmartDashboard.updateValues();
 		dt.check();
 		pn.check();

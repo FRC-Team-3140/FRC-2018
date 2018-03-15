@@ -2,6 +2,9 @@ package main;
 
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
+import main.commands.elevator.MoveToBottom;
+import main.commands.elevator.MoveToSwitch;
+import main.commands.elevator.MoveToTop;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.arm.SwitchArm;
@@ -22,6 +25,10 @@ public class OI extends ImprovedClass {
 		
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
+		
+		xbox2.x.whenPressed(new MoveToBottom(3));
+		xbox2.y.whenPressed(new MoveToSwitch(3));
+		xbox2.b.whenPressed(new MoveToTop(5));
 	}
 
 	public static XboxController getXbox() {
@@ -41,22 +48,6 @@ public class OI extends ImprovedClass {
 	/**************
 	 * PLAY/RECORD *
 	 ***************/
-	public void setButtonValues(boolean a, boolean b, boolean x, boolean y, boolean leftBumper, boolean rightBumper,
-			boolean select, boolean start, boolean leftJoystickPress, boolean rightJoystickPress, boolean leftTrigger,
-			boolean rightTrigger) {
-		xbox.setInternalControl(true);
-		xbox.setButtonStatus(a, b, x, y, leftBumper, rightBumper, select, start, leftJoystickPress, rightJoystickPress,
-				leftTrigger, rightTrigger);
-	}
-
-	public void setButtonValues2(boolean a, boolean b, boolean x, boolean y, boolean leftBumper, boolean rightBumper,
-			boolean select, boolean start, boolean leftJoystickPress, boolean rightJoystickPress, boolean leftTrigger,
-			boolean rightTrigger) {
-		xbox2.setInternalControl(true);
-		xbox2.setButtonStatus(a, b, x, y, leftBumper, rightBumper, select, start, leftJoystickPress, rightJoystickPress,
-				leftTrigger, rightTrigger);
-	}
-
 	public void setInternalControl(boolean internalControl) {
 		xbox.setInternalControl(internalControl);
 		xbox2.setInternalControl(internalControl);

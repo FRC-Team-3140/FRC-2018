@@ -1,7 +1,5 @@
 package main;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -12,28 +10,31 @@ public interface Constants {
 	/*************
 	 * VARIABLES *
 	 *************/
-	public final boolean isCompetitionMatch = true;
+	// TODO use isCompetitionMatch
+	public final boolean isCompetitionMatch = true; // NO_UCD
 	public final boolean isCompetitionRobot = false;
 	// FILE OUTPUT PATH
 	public final String outputPath = "/home/lvuser"; // USB output path: /U
 
 	// FILE NAMES
-	public final String LEFT_LeftSwitch = "LEFT_LSwitch";
-	public final String LEFT_Scale = "LEFT_Scale";
-	public final String LEFT_RightSwitch = "LEFT_RSwitch";
-	public final String LEFT_SwitchAndScale = "LEFT_SwitchScale";
-	public final String RIGHT_RightSwitch = "RIGHT_RSwitch";
-	public final String RIGHT_Scale = "RIGHT_Scale";
-	public final String RIGHT_LeftSwitch = "RIGHT_LSwitch";
-	public final String RIGHT_SwitchAndScale = "RIGHT_SwitchScale";
-	public final String MID_RightSwitch = "MID_RSwitch";
-	public final String MID_LeftSwitch = "MID_LSwitch";
-	public final String driveBaseline = "Baseline";
+	// TODO use the names
+	public final String LEFT_LEFT_SWITCH = "LEFT_LEFT_SWITCH"; // NO_UCD (unused code)
+	public final String LEFT_SCALE = "LEFT_SCALE"; // NO_UCD (unused code)
+	public final String LEFT_RIGHT_SWITCH = "LEFT_RIGHT_SWITCH"; // NO_UCD (unused code)
+	public final String LEFT_SWITCH_AND_SCALE = "LEFT_SWITCH_AND_SCALE"; // NO_UCD (unused code)
+	public final String RIGHT_RIGHT_SWITCH = "RIGHT_RIGHT_SWITCH"; // NO_UCD (unused code)
+	public final String RIGHT_SCALE = "RIGHT_SCALE"; // NO_UCD (unused code)
+	public final String RIGHT_LEFT_SWITCH = "RIGHT_LEFT_SWITCH"; // NO_UCD (unused code)
+	public final String RIGHT_SWITCH_AND_SCALE = "RIGHT_SWITCH_AND_SCALE"; // NO_UCD (unused code)
+	public final String MID_RIGHT_SWITCH = "MID_RIGHT_SWITCH"; // NO_UCD (unused code)
+	public final String MID_LEFT_SWITCH = "MID_LEFT_SWITCH"; // NO_UCD (unused code)
+	public final String BASELINE = "BASELINE"; // NO_UCD (unused code)
 
 	// Auto Delay Time
 	// This is the time that the robot will wait before executing the selected auto
 	// in an EDGECASE situation.
-	public final int autoDelay = 5;
+	// TODO do we need this?
+	public final int autoDelay = 5; // NO_UCD (unused code)
 
 	// REV ROBOTICS SENSORS
 	public final int analogSensor = 0;
@@ -45,9 +46,6 @@ public interface Constants {
 
 	// TALON VOLTAGE COMPENSATION
 	public final double voltageCompensationVoltage = 12.0;
-
-	// LOOPER CONSTANTS
-	public final double kLooperDt = 0.005;// 0.005
 	
 	// BIAS VOLTAGES FOR DIFFERENCE BETWEEN ROBOTS COMPENSATION
 	//Currently 0, implement if necessary, (+) voltage biases will make 
@@ -66,13 +64,11 @@ public interface Constants {
 	public final DoubleSolenoid.Value OFF = Value.kOff;
 
 	// TALON CONTROL MODES
-	public final ControlMode SLAVE_MODE = ControlMode.Follower;
-	public final ControlMode PERCENT_VBUS_MODE = ControlMode.PercentOutput;
 	public final NeutralMode BRAKE_MODE = NeutralMode.Brake;
 
 	// ENCODERS STUFF
-	public final double countsPerRev = 4096; // what is this actually supposed to be?
-	public final FeedbackDevice encoder = FeedbackDevice.CTRE_MagEncoder_Relative;
+	// TODO do we need this? what is this actually supposed to be?
+	public final double countsPerRev = 4096; // NO_UCD (unused code)
 
 	public final double timedDrivePercent = -0.75;// DO NOT CHANGE
 	// This is a multiplier that will be computed manually distanceMultiplier * time
@@ -87,12 +83,15 @@ public interface Constants {
 	public final double timedTurn90degTime = 0.70;
 	public final double timedTurn45degTime = 0.35;
 
-	public final double timedLiftPercent = 0.75;// DO NOT CHANGE
+	// TODO use or remove
+	public final double timedLiftPercent = 0.75; // DO NOT CHANGE // NO_UCD 
 	public final double timedLiftMultiplier = 22.125;// (in/s)
 	//Time to lift the elevator 3ft at timedLiftPercent of available power.
-	public final double timedLiftTime = 28.5/timedLiftMultiplier;
+	// TODO use or remove
+	public final double timedLiftTime = 28.5/timedLiftMultiplier; // NO_UCD 
 	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
-	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier;
+	// TODO use or remove
+	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier; // NO_UCD 
 
 	/*********
 	 * PORTS *
@@ -106,12 +105,10 @@ public interface Constants {
 	public final int LEFT_Drive_Slave1 = 6;
 	public final int RIGHT_Drive_Master = 12;
 	public final int RIGHT_Drive_Slave1 = 5;
-	public final int LEFT_Drive_Slave2 = 9;
-	public final int RIGHT_Drive_Slave2 = 4;
 
 	// INTAKE MOTORS
-	public final int LEFT_Intake = 1;// (isCompetitionRobot? 11:11);// compBot:practiceBot
-	public final int RIGHT_Intake = 0;/// (isCompetitionRobot? 10:10);// compBot:practiceBot
+	public final int LEFT_Intake = 1;
+	public final int RIGHT_Intake = 0;
 
 	// ELEVATOR MOTORS
 	public final int Elevator_Master = 8;
@@ -119,15 +116,14 @@ public interface Constants {
 
 	// PNEUMATICS CONTROL MODULE
 	public final int PCM_Port1 = 1;
-	public final int PCM_Port2 = 2;
 
 	// INTAKE PNEUMATICS
-	public final int INTAKE_EXT = 7;//(isCompetitionRobot? 0:0);// compBot:practiceBot
-	public final int INTAKE_RET = 0;//(isCompetitionRobot? 1:1);// compBot:practiceBot	
-	public final int TILT_EXT = (isCompetitionRobot? 6:1);// compBot:practiceBot
-	public final int TILT_RET = (isCompetitionRobot? 1:6);// compBot:practiceBot
+	public final int INTAKE_EXT = 7;
+	public final int INTAKE_RET = 0;
+	public final int TILT_EXT = (isCompetitionRobot? 6:1);
+	public final int TILT_RET = (isCompetitionRobot? 1:6);
 	
 	// SHIFTING
-	public final int SHIFTER_EXT = (isCompetitionRobot? 5:2);// compBot:practiceBot
-	public final int SHIFTER_RET = (isCompetitionRobot? 2:5);// compBot:practiceBot
+	public final int SHIFTER_EXT = (isCompetitionRobot? 5:2);
+	public final int SHIFTER_RET = (isCompetitionRobot? 2:5);
 }
