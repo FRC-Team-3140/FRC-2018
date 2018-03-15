@@ -5,7 +5,7 @@ import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
 class Tilt extends ImprovedCommand {
-	public DoubleSolenoid.Value v;
+	public final DoubleSolenoid.Value v;
 	
 	public Tilt(DoubleSolenoid.Value v) {
 		requires(Robot.pn);
