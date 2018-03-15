@@ -5,7 +5,8 @@ import main.commands.intake.SpinIn;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.tilt.*;
 
-public class IntakeCube extends ImprovedCommandGroup {
+// TODO use this class
+public class IntakeCube extends ImprovedCommandGroup { // NO_UCD
 	public IntakeCube() {
     	addSequential(new TiltDown());
     	addSequential(new ArmOpen());

@@ -8,7 +8,8 @@ import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.tilt.TiltDown;
 import main.commands.pneumatics.tilt.TiltUp;;
 
-public class Dance extends ImprovedCommandGroup {
+// TODO use this class
+public class Dance extends ImprovedCommandGroup { // NO_UCD
 	public Dance() {
 		addSequential(new ArmOpen());
 		addSequential(new WaitCommand(.2));

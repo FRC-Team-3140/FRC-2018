@@ -4,7 +4,8 @@ import interfacesAndAbstracts.ImprovedCommandGroup;
 import main.commands.intake.SpinOff;
 import main.commands.pneumatics.tilt.TiltUp;
 
-public class PushOutCubeOff extends ImprovedCommandGroup {
+// TODO use this class
+public class PushOutCubeOff extends ImprovedCommandGroup { // NO_UCD
 	public PushOutCubeOff() {
     	addSequential(new SpinOff());
     	addSequential(new TiltUp());

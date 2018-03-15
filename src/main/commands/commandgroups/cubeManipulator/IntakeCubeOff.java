@@ -6,7 +6,8 @@ import main.commands.intake.SpinOff;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.tilt.TiltUp;
 
-public class IntakeCubeOff extends ImprovedCommandGroup {
+// TODO use this class
+public class IntakeCubeOff extends ImprovedCommandGroup { // NO_UCD (unused code)
 	public IntakeCubeOff() {
 		addSequential(new ArmClose());
 		addSequential(new WaitCommand(0.5));
