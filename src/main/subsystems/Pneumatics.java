@@ -12,28 +12,11 @@ public class Pneumatics extends ImprovedSubsystem {
 		tilter.set(OFF);
 		intakeArm.set(EXT);
 		intakeArm.set(OFF);
-//		pto.set(RET);
-//		pto.set(OFF);
-//		forklift.set(EXT);
-//		forklift.set(OFF);
-//		hook.set(EXT);
-//		hook.set(OFF);
 	}
-	
-	public static enum ArmStates {
-		Opened, Closed, Off
-	}
-	
-	public static enum LiftStates {
-		Up, Down, Off
-	}
-	
-	public static ArmStates armStates = ArmStates.Off;
-	public static LiftStates liftStates = LiftStates.Off;
 	
 	//Default Robot State at start of match.
-	public static boolean armClose = true;
-	public static boolean tiltUp = true;
+	static boolean armClose = true;
+	static boolean tiltUp = true;
 
 	/*******************
 	 * COMMAND METHODS *
@@ -68,33 +51,6 @@ public class Pneumatics extends ImprovedSubsystem {
 	
 	public boolean isTiltUp() {
 		return tiltUp;
-	}
-//	
-//	public void shiftPTO(DoubleSolenoid.Value v) {
-//		pto.set(v);
-//	}
-//	
-//	public void toggleForks(DoubleSolenoid.Value v) {
-//		forklift.set(v);
-//	}
-//	
-//	public void toggleHooks(DoubleSolenoid.Value v) {
-//		hook.set(v);
-//	}
-//	
-	/**
-	 * Toggles the compressor (ON/OFF)
-	 */
-	public void toggleComp() {
-		if (comp.enabled())
-			comp.stop();
-		else
-			comp.start();
-	}
-	
-	public void turnCompOff() {
-		if (comp.enabled())
-			comp.stop();
 	}
 
 	/*******************

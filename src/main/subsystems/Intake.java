@@ -5,11 +5,7 @@ import Util.DriveHelper;
 import main.commands.intake.ShootWithJoystick;
 
 public class Intake extends ImprovedSubsystem {
-	public static enum WheelStates {
-		In, Out, Off
-	}
-	
-	private DriveHelper driveHelper = new DriveHelper(7.5);
+	private final DriveHelper driveHelper = new DriveHelper(7.5);
 
 	public void spinIn() {
 		leftIntakeMotor.set(1.0);

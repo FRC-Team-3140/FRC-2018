@@ -5,7 +5,7 @@ import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.elevator.MoveWithJoystick;
 
 public class Elevator extends ImprovedSubsystem {
-	private DriveHelper driveHelper = new DriveHelper(7.5);
+	private final DriveHelper driveHelper = new DriveHelper(7.5);
 	
 	//max velocity was 100523u/100ms	
 	public Elevator() {
@@ -24,7 +24,7 @@ public class Elevator extends ImprovedSubsystem {
 		elevatorSlave.follow(elevatorMaster);
 	}
 	
-	public void setVoltageMode(boolean set, double voltage, int timeout) {
+	private void setVoltageMode(boolean set, double voltage, int timeout) {
 		elevatorMaster.enableVoltageCompensation(set);
 		elevatorSlave.enableVoltageCompensation(set);
 		elevatorMaster.configVoltageCompSaturation(voltage, timeout);

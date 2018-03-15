@@ -5,9 +5,6 @@ import edu.wpi.first.wpilibj.CameraServer;
 import interfacesAndAbstracts.ImprovedClass;
 
 public class DriverCamera extends ImprovedClass {
-	CameraServer camServer;
-	UsbCamera cam;
-
 	public DriverCamera() {
 		UsbCamera cam = CameraServer.getInstance().startAutomaticCapture();
 		cam.setFPS(30);
