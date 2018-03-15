@@ -10,7 +10,7 @@ import main.Robot;
  *
  */
 public class TimedDrive extends TimedCommand {
-	private double throttle, heading;
+	private final double throttle, heading;
 
 	/**
 	 * Constructor with default heading of 0.
