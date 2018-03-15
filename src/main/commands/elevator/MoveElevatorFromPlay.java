@@ -3,8 +3,9 @@ package main.commands.elevator;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class MoveElevatorFromPlay extends ImprovedCommand {
-	private double voltage;
+// TODO use or remove
+public class MoveElevatorFromPlay extends ImprovedCommand { // NO_UCD (unused code)
+	private final double voltage;
 	
 	public MoveElevatorFromPlay(double voltage) {
 		this.voltage = voltage;

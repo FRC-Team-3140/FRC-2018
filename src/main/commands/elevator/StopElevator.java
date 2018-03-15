@@ -3,7 +3,8 @@ package main.commands.elevator;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class StopElevator extends ImprovedCommand {
+// TODO use or remove
+public class StopElevator extends ImprovedCommand { // NO_UCD (unused code)
 	public StopElevator() {
     	requires(Robot.el);
     }
