@@ -36,8 +36,22 @@ public class Intake extends ImprovedSubsystem {
 	public void zeroSensors() {
 		// TODO implement
 	}
+	
 	public void moveWithJoystick(double throttle) {
 		leftIntakeMotor.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
 		rightIntakeMotor.set(-driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+	}
+	
+	public double getLeftIntakeWheelValue() {
+		return leftIntakeMotor.get();
+	}
+	
+	public double getRightIntakeWheelValue() {
+		return leftIntakeMotor.get();
+	}
+	
+	public void setIntakeValues(double leftIntakeWheelValue, double rightIntakeWheelValue) {
+		leftIntakeMotor.set(leftIntakeWheelValue);
+		rightIntakeMotor.set(rightIntakeWheelValue);
 	}
 }

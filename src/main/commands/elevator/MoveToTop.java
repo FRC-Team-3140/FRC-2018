@@ -3,7 +3,7 @@ package main.commands.elevator;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import main.Robot;
 
-//TODO implement
+// TODO implement
 public class MoveToTop extends TimedCommand {
 	public MoveToTop(double timeout) {//5 recommended timeout
 		super(timeout);//Timeout forced to a maximum of 5, this is for the emergency case that a limit switch breaks
@@ -11,7 +11,8 @@ public class MoveToTop extends TimedCommand {
 		requires(Robot.el);
 	}
 	
-	@Override
+    // Make this return true when this Command no longer needs to run execute()
+    @Override
     protected boolean isFinished() {
     	return true;
     }

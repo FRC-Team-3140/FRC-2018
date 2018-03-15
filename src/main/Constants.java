@@ -47,13 +47,36 @@ public interface Constants {
 	// TALON VOLTAGE COMPENSATION
 	public final double voltageCompensationVoltage = 12.0;
 	
+	//ROBOT BIAS TEST CONSTANTS
+	public final double practiceBotLeftWheelRadius = 2;//Update with real measurements
+	public final double practiceBotRightWheelRadius = 2;//Update with real measurements
+	public final double competitonBotLeftWheelRadius = 2;//Update with real measurements
+	public final double competitonBotRightWheelRadius = 2;//Update with real measurements
+
+	
+	public final double testVoltage = 8.0;//Subject to change
+	public final double practiceBotLeftFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
+	public final double practiceBotRightFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
+	public final double competitonBotLeftFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
+	public final double competitonBotRightFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
+	
+	//ROBOT BIAS CONSTANTS COMPUTATION
+	public final double competitionBiasLeft = ((testVoltage*competitonBotLeftWheelRadius*competitonBotLeftFreeRPMAtTestVoltage) - 
+												(testVoltage*practiceBotLeftWheelRadius*practiceBotLeftFreeRPMAtTestVoltage)) / 
+												(practiceBotLeftWheelRadius*practiceBotLeftFreeRPMAtTestVoltage);
+	
+	public final double competitionBiasRight = ((testVoltage*competitonBotRightWheelRadius*competitonBotRightFreeRPMAtTestVoltage) - 
+												(testVoltage*practiceBotRightWheelRadius*practiceBotRightFreeRPMAtTestVoltage)) / 
+												(practiceBotRightWheelRadius*practiceBotRightFreeRPMAtTestVoltage);
+	
+	
 	// BIAS VOLTAGES FOR DIFFERENCE BETWEEN ROBOTS COMPENSATION
 	//Currently 0, implement if necessary, (+) voltage biases will make 
 	//that side of the robot move faster and go farther; (-) voltage biases 
 	//will do the opposite. These value should ideally be smaller than 2V.
 	//Start small and increase 0.1V-0.5V at a time until the desired effect is achieved.
-	public final double leftVoltageBias =(isCompetitionRobot? 0.0 : 0.0);// compBot:practiceBot // Units, (V), Volts
-	public final double rightVoltageBias = (isCompetitionRobot? 0.0 : 0.0);// compBot:practiceBot // Units, (V), Volts
+	public final double leftVoltageBias =(isCompetitionRobot? competitionBiasLeft : 0.0);// compBot:practiceBot // Units, (V), Volts
+	public final double rightVoltageBias = (isCompetitionRobot? competitionBiasRight : 0.0);// compBot:practiceBot // Units, (V), Volts
 
 	/*************
 	 * CONSTANTS *

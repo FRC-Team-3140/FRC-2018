@@ -1,12 +1,13 @@
 package main.subsystems;
 
+
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import Util.DriveHelper;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.drivetrain.Drive;
 
-// XXX start from here
 public class Drivetrain extends ImprovedSubsystem  {
 	private final static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
 	
@@ -38,6 +39,11 @@ public class Drivetrain extends ImprovedSubsystem  {
 		rightVoltage = Math.signum(rightVoltage) * (Math.abs(rightVoltage) + rightVoltageBias);
 		
 		driveTrain.tankDrive(leftVoltage, rightVoltage, false);	
+	}
+	
+	//Drive for testing the drivetrain so that the needed constants to compute the bias voltages may be derived
+	public void driveVoltageTankTest(double leftVoltage, double rightVoltage) {
+		driveTrain.tankDrive(leftVoltage/12, -rightVoltage/12, false);
 	}
 	
 	public void timedTurn(TurnMode mode, double throttle) {
@@ -129,4 +135,3 @@ public class Drivetrain extends ImprovedSubsystem  {
 		// TODO implement
 	}	
 }
-
