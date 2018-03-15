@@ -4,8 +4,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
+// TODO make a single class to replace all the one-line execute command
 class Arm extends ImprovedCommand {
-	public DoubleSolenoid.Value v;
+	public final DoubleSolenoid.Value v;
 	
 	public Arm(DoubleSolenoid.Value v) {
 		requires(Robot.pn);

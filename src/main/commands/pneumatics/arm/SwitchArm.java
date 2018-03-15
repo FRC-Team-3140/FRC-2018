@@ -5,7 +5,6 @@ import interfacesAndAbstracts.SwitchCommandGroup;
 import main.Robot;
 
 public class SwitchArm extends SwitchCommandGroup {
-
 	public SwitchArm(ImprovedCommandGroup trueCommand, ImprovedCommandGroup falseCommand) {
 		super(trueCommand, falseCommand);
 	}
