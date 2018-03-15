@@ -16,7 +16,8 @@ import java.util.List;
 
 import main.Constants;
 
-public class Logger implements Constants {
+// TODO use this class
+public class Logger implements Constants { // NO_UCD (unused code)
 	private File file;
 	private FileWriter fw;
 	private FileReader fr;
