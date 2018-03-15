@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.buttons.InternalButton;
  * @author Jason
  *
  */
-public class DpadButton extends InternalButton {
+public class DpadButton extends InternalButton { // NO_UCD (needed if changing OI buttons)
 	public static final int UP=0, DOWN=180, LEFT=270, RIGHT=90;
 	private GenericHID hid;
 	private int pov;

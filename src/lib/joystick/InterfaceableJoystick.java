@@ -2,7 +2,8 @@ package lib.joystick;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-abstract class InterfaceableJoystick extends Joystick {
+// TODO use this class
+abstract class InterfaceableJoystick extends Joystick { // NO_UCD (unused code)
 	
 	public InterfaceableJoystick(int port) { // NO_UCD
 		super(port);

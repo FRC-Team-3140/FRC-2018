@@ -9,40 +9,40 @@ public class XboxController extends InterfaceableXboxController {
 	/**
 	 * Buttons
 	 */
-	private JoystickButton aButton;
-	private JoystickButton bButton;
-	private JoystickButton xButton;
-	private JoystickButton yButton;
-	private JoystickButton selectButton;
-	private JoystickButton startButton;
+	private final JoystickButton aButton;
+	private final JoystickButton bButton;
+	private final JoystickButton xButton;
+	private final JoystickButton yButton;
+	private final JoystickButton selectButton;
+	private final JoystickButton startButton;
 	// Thumb-stick buttons
-	private JoystickButton leftJoystickPressButton;
-	private JoystickButton rightJoystickPressButton;
+	private final JoystickButton leftJoystickPressButton;
+	private final JoystickButton rightJoystickPressButton;
 	// Bumpers
-	private JoystickButton leftBumperButton;
-	private JoystickButton rightBumperButton;
+	private final JoystickButton leftBumperButton;
+	private final JoystickButton rightBumperButton;
 	// Triggers
-	private Button leftTriggerButton;
-	private Button rightTriggerButton;
+	private final Button leftTriggerButton;
+	private final Button rightTriggerButton;
 	
 	/**
 	 * Internal Buttons
 	 */
-	public InternalButton a;
-	public InternalButton b;
-	public InternalButton x;
-	public InternalButton y;
-	public InternalButton select;
-	public InternalButton start;
+	public InternalButton a; // NO_UCD (use default)
+	public InternalButton b; // NO_UCD (use final)
+	public InternalButton x; // NO_UCD (use final)
+	public InternalButton y; // NO_UCD (use final)
+	public InternalButton select; // NO_UCD (use default)
+	public InternalButton start; // NO_UCD (use default)
 	// Thumb-stick InternalButtons
-	public InternalButton leftJoystickPress;
-	public InternalButton rightJoystickPress;
+	public InternalButton leftJoystickPress; // NO_UCD (use final)
+	public InternalButton rightJoystickPress; // NO_UCD (use default)
 	// Bumpers
-	public InternalButton leftBumper;
-	public InternalButton rightBumper;
+	public InternalButton leftBumper; // NO_UCD (use final)
+	public InternalButton rightBumper; // NO_UCD (use final)
 	// Triggers
-	public InternalButton leftTrigger;
-	public InternalButton rightTrigger;
+	public InternalButton leftTrigger; // NO_UCD (use default)
+	public InternalButton rightTrigger; // NO_UCD (use default)
 	
 	public XboxController(int port) {
 		super(port);
