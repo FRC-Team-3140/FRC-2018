@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.buttons.InternalButton;
 /**
  * A D-pad button that gets its state from a GenericHID.
  * Created on 2018/2/4 15:45
- * @author Jason
+ * 
+ * @author TheSuperDuck
  *
  */
 public class DpadButton extends InternalButton { // NO_UCD (needed if changing OI buttons)

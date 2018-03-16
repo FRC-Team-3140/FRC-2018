@@ -1,10 +1,11 @@
 package lib.joystick;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-public class XboxController extends InterfaceableXboxController {
+public class XboxController extends Joystick {
 	private static boolean internalControl = false;
 	/**
 	 * Buttons
@@ -74,7 +75,6 @@ public class XboxController extends InterfaceableXboxController {
 		rightTrigger = new InternalButton();
 	}
 	
-	@Override
 	public void check() {
 		if(!internalControl) {
 			a.setPressed(aButton.get());
@@ -128,7 +128,6 @@ public class XboxController extends InterfaceableXboxController {
 		return Math.sin(Math.PI/2 * super.getRawAxis(5));
 	}
 	
-	@Override
 	public void setButtonStatus(boolean a, boolean b, boolean x, boolean y, boolean leftBumper, boolean rightBumper,
 								boolean select, boolean start, boolean leftJoystickPress, boolean rightJoystickPress,
 								boolean leftTrigger, boolean rightTrigger) {
@@ -148,12 +147,10 @@ public class XboxController extends InterfaceableXboxController {
 		}
 	}
 	
-	@Override
 	public void setInternalControl(boolean internalControl) {
 		XboxController.internalControl = internalControl;		
 	}
 
-	@Override
 	public boolean getInternalControl() {
 		return internalControl;
 	}
