@@ -5,7 +5,6 @@ import main.OI;
 import main.Robot;
 
 public class ShootWithJoystick extends ImprovedCommand {
-	//private DriveHelper driveHelper = new DriveHelper(7.5);
 	public ShootWithJoystick() {
 		requires(Robot.in);
 	}

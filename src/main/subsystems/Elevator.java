@@ -5,8 +5,6 @@ import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.elevator.MoveWithJoystick;
 
 public class Elevator extends ImprovedSubsystem {
-	private final DriveHelper driveHelper = new DriveHelper(7.5);
-	
 	//max velocity was 100523u/100ms	
 	public Elevator() {
 		setElevatorDefaults();
@@ -78,11 +76,10 @@ public class Elevator extends ImprovedSubsystem {
 	}
 
 	public void moveWithJoystick(double throttle) {
-		// if(throttle == 0 || (throttle > 0 && !isArmAtTop()) || (throttle < 0 && !isArmAtBottom()))
 		if (isCompetitionRobot)
-			elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, elevatorDeadband)));
+			elevatorMaster.set(DriveHelper.handleDrive(-throttle, elevatorDeadband));
 		else
-			elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+			elevatorMaster.set(DriveHelper.handleDrive(throttle, elevatorDeadband));
 	}
 	
 	@Override

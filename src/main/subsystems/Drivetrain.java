@@ -1,7 +1,5 @@
 package main.subsystems;
 
-
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import Util.DriveHelper;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -11,9 +9,6 @@ import main.commands.drivetrain.Drive;
 public class Drivetrain extends ImprovedSubsystem  {
 	private final static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
 	
-	//TELEOP DRIVING
-	private final DriveHelper helper = new DriveHelper(7.5);
-
 	public Drivetrain() {
 		setTalonDefaults();
 	}
@@ -21,12 +16,12 @@ public class Drivetrain extends ImprovedSubsystem  {
 	// DRIVE FOR TELEOP
 	public void driveVelocity(double throttle, double heading) {
 		if (isCompetitionRobot) {
-			driveTrain.arcadeDrive(helper.handleOverPower(helper.handleDeadband(throttle, throttleDeadband)),
-					helper.handleOverPower(helper.handleDeadband(-heading, headingDeadband)));
+			driveTrain.arcadeDrive(DriveHelper.handleDrive(throttle, throttleDeadband),
+					DriveHelper.handleDrive(-heading, headingDeadband));
 		}
 		else {
-			driveTrain.arcadeDrive(helper.handleOverPower(helper.handleDeadband(-throttle, throttleDeadband)),
-					helper.handleOverPower(helper.handleDeadband(-heading, headingDeadband)));
+			driveTrain.arcadeDrive(DriveHelper.handleDrive(-throttle, throttleDeadband),
+					DriveHelper.handleDrive(-heading, headingDeadband));
 		}
 	}
 
