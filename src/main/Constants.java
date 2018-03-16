@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public interface Constants {
+	public enum TurnMode {
+		RIGHT, LEFT
+	}
 
 	/*************
 	 * VARIABLES *
@@ -100,10 +103,6 @@ public interface Constants {
 	// This is a multiplier that will be computed manually distanceMultiplier * time
 	// = distanceDriven (When Robot driving at timedDrivePercent)
 	public final double TIMED_DISTANCE_MULTIPLIER = 38.58;// (in/s)
-
-	public static enum TurnMode {
-		RIGHT, LEFT
-	};
 
 	public final double TIMED_TURN_PERCENT = 0.5;// DO NOT CHANGE
 	public final double TIMED_TURN_90_DEG_TIME = 0.70;

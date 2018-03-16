@@ -2,7 +2,6 @@ package main.commands.drivetrain;
 
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
-import main.OI;
 
 public class Drive extends ImprovedCommand {
 	public Drive() {
@@ -17,8 +16,7 @@ public class Drive extends ImprovedCommand {
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {    	
-    	Robot.dt.driveVelocity(OI.getXbox().getSmoothedMainY(), -OI.getXbox().getSmoothedAltX());
-    	//Robot.dt.driveVelocity(-OI.getXbox().getSmoothedMainY(), -OI.getXbox().getSmoothedAltX());
+    	Robot.dt.driveVelocity(Robot.oi.getXbox().getSmoothedMainY(), -Robot.oi.getXbox().getSmoothedAltX());
     }
     
     @Override

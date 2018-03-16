@@ -22,15 +22,6 @@ import main.subsystems.Intake;
 import main.subsystems.Pneumatics;
 
 public class Robot extends ImprovedRobot {
-	public static Drivetrain dt;
-	public static Pneumatics pn;
-	public static Intake in;
-	public static Elevator el;
-	// TODO either use this or remove DriverCamera and put the initializing code in Robot
-	public static DriverCamera dc; // NO_UCD
-	public static OI oi; // NO_UCD
-
-	// AUTO LOGIC
 	private enum StartPos {
 		LEFT, CENTER, RIGHT
 	}
@@ -38,11 +29,18 @@ public class Robot extends ImprovedRobot {
 	private enum RobotAction {
 		DO_NOTHING, BASELINE, SWITCH
 	}
-
-	private static SendableChooser<RobotAction> autoChooser;
-	private static SendableChooser<StartPos> startPos;
-
-	private static Command autoCommand;
+	
+	public static Drivetrain dt;
+	public static Pneumatics pn;
+	public static Intake in;
+	public static Elevator el;
+	// TODO either use this or remove DriverCamera and put the initializing code in Robot
+	public static DriverCamera dc; // NO_UCD
+	public static OI oi; // NO_UCD
+	
+	private SendableChooser<RobotAction> autoChooser;
+	private SendableChooser<StartPos> startPos;
+	private Command autoCommand;
 
 	@Override
 	public void robotInit() {

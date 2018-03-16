@@ -15,6 +15,9 @@ import main.commands.pneumatics.tilt.TiltDown;
 import main.commands.pneumatics.tilt.TiltUp;
 
 public class OI extends ImprovedClass {
+	private XboxController xbox = new XboxController(XBOX_PORT);
+	private XboxController xbox2 = new XboxController(XBOX_PORT_2);
+	
 	public OI() {
 		xbox.setInternalControl(false);
 		xbox2.setInternalControl(false);
@@ -31,11 +34,11 @@ public class OI extends ImprovedClass {
 		xbox2.b.whenPressed(new MoveToTop(5));
 	}
 
-	public static XboxController getXbox() {
+	public XboxController getXbox() {
 		return xbox;
 	}
 
-	public static XboxController getXbox2() {
+	public XboxController getXbox2() {
 		return xbox2;
 	}
 
