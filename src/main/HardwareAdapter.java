@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import lib.joystick.XboxController;
 import Util.RevRoboticsAnalogPressureSensor;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
 
@@ -28,6 +29,11 @@ public interface HardwareAdapter extends Constants{
 	
 	//SENSORS
 	public static RevRoboticsAnalogPressureSensor analogPressureSensor1 = new RevRoboticsAnalogPressureSensor(ANALOG_SENSOR);
+	public static DigitalInput stage1BottomSwitch = new DigitalInput(STAGE_1_BOTTOM);
+	public static DigitalInput stage1TopSwitch = new DigitalInput(STAGE_1_TOP);
+	public static DigitalInput stage2BottomSwitch = new DigitalInput(STAGE_2_BUTTOM);
+	public static DigitalInput stage2TopSwitch = new DigitalInput(STAGE_2_TOP);
+	public static DigitalInput switchHeightSwitch = new DigitalInput(SWITCH_LIMIT);
 	
 	//PNEUMATICS
 	public static DoubleSolenoid shifter = new DoubleSolenoid(PCM_PORT_1, SHIFTER_EXT, SHIFTER_RET);

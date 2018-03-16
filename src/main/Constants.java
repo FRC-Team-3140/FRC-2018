@@ -152,4 +152,11 @@ public interface Constants {
 	// SHIFTING
 	public final int SHIFTER_EXT = (IS_COMPETITION_ROBOT? 5:2);
 	public final int SHIFTER_RET = (IS_COMPETITION_ROBOT? 2:5);
+	
+	// SWITCHES
+	public final int STAGE_1_BOTTOM = 0;
+	public final int STAGE_1_TOP = 1;
+	public final int STAGE_2_BUTTOM = 2;
+	public final int STAGE_2_TOP = 3;
+	public final int SWITCH_LIMIT = 4;
 }
