@@ -137,6 +137,9 @@ public class Robot extends ImprovedRobot {
 			SmartDashboard.putData("Starting Position", startPos);
 			SmartDashboard.putData("Auto Mode", autoChooser);
 		//}
+			
+		//Robot Self Test
+		SmartDashboard.putData("Robot Self Test", new RobotSelfTest());
 	}
 	
 	@Override
@@ -360,8 +363,14 @@ public class Robot extends ImprovedRobot {
 		in.check();
 		el.check();
 		oi.check();
-		SmartDashboard.putNumber("Left voltage", dt.getLeftVoltage());
-		SmartDashboard.putNumber("Right voltage", dt.getRightVoltage());
+		//SmartDashboard.putNumber("Left voltage", dt.getLeftVoltage());
+		//SmartDashboard.putNumber("Right voltage", dt.getRightVoltage());
+		SmartDashboard.putBoolean("First Stage Bottom", !stage1BottomSwitch.get());
+		SmartDashboard.putBoolean("First Stage Top", !stage1TopSwitch.get());
+		SmartDashboard.putBoolean("Second Stage Bottom", !stage2BottomSwitch.get());
+		SmartDashboard.putBoolean("Second Stage Top", !stage2TopSwitch.get());
+		SmartDashboard.putBoolean("Switch Height", switchHeightSwitch.get());
+		
 		/*
 		// Knowing where you're at
 		if(!isCompetitionMatch) {

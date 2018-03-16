@@ -119,12 +119,12 @@ public class Elevator extends ImprovedSubsystem {
 	
 	// Checks if the intake is at bottom
 //	public boolean isArmAtBottom() {
-//		return stage1BottomSwitch.get() && stage2BottomSwitch.get();
+//		return !stage1BottomSwitch.get() && !stage2BottomSwitch.get();
 //	}
 	
 	// Checks if intake is at the top
 //	public boolean isArmAtTop() {
-//		return stage1TopSwitch.get() && stage2TopSwitch.get();
+//		return !stage1TopSwitch.get() && !stage2TopSwitch.get();
 //	}
 	
 	// Checks to see if the intake is at the height needed to dump into the switch
