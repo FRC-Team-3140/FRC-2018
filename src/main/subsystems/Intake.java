@@ -1,8 +1,8 @@
 package main.subsystems;
 
 import interfacesAndAbstracts.ImprovedSubsystem;
-import Util.DriveHelper;
 import main.commands.intake.ShootWithJoystick;
+import util.DriveHelper;
 
 public class Intake extends ImprovedSubsystem {
 	public void spinIn() {

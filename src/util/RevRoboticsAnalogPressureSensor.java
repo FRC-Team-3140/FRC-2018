@@ -1,4 +1,4 @@
-package Util;
+package util;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 

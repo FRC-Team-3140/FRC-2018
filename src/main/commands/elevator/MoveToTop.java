@@ -11,7 +11,6 @@ public class MoveToTop extends TimedCommand {
 		requires(Robot.el);
 	}
 	
-    // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
     	return true;
