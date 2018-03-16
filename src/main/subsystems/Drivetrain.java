@@ -15,13 +15,13 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	// DRIVE FOR TELEOP
 	public void driveVelocity(double throttle, double heading) {
-		if (isCompetitionRobot) {
-			driveTrain.arcadeDrive(DriveHelper.handleDrive(throttle, throttleDeadband),
-					DriveHelper.handleDrive(-heading, headingDeadband));
+		if (IS_COMPETITION_ROBOT) {
+			driveTrain.arcadeDrive(DriveHelper.handleDrive(throttle, THROTTLE_DEADBAND),
+					DriveHelper.handleDrive(-heading, HEADING_DEADBAND));
 		}
 		else {
-			driveTrain.arcadeDrive(DriveHelper.handleDrive(-throttle, throttleDeadband),
-					DriveHelper.handleDrive(-heading, headingDeadband));
+			driveTrain.arcadeDrive(DriveHelper.handleDrive(-throttle, THROTTLE_DEADBAND),
+					DriveHelper.handleDrive(-heading, HEADING_DEADBAND));
 		}
 	}
 
@@ -31,8 +31,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 		leftVoltage = (Math.abs(leftVoltage) > 12.0) ? Math.signum(leftVoltage) : leftVoltage/12;
 		rightVoltage = -((Math.abs(rightVoltage)  > 12.0) ? Math.signum(rightVoltage) : rightVoltage/12);
 		
-		leftVoltage = Math.signum(leftVoltage) * (Math.abs(leftVoltage) + leftVoltageBias);
-		rightVoltage = Math.signum(rightVoltage) * (Math.abs(rightVoltage) + rightVoltageBias);
+		leftVoltage = Math.signum(leftVoltage) * (Math.abs(leftVoltage) + LEFT_VOLTAGE_BIAS);
+		rightVoltage = Math.signum(rightVoltage) * (Math.abs(rightVoltage) + RIGHT_VOLTAGE_BIAS);
 		
 		driveTrain.tankDrive(leftVoltage, rightVoltage, false);	
 	}
@@ -43,8 +43,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	public void timedTurn(TurnMode mode, double throttle) {
-		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle, false);
-		if (mode == TurnMode.Right) driveTrain.tankDrive(throttle, -throttle, false);
+		if (mode == TurnMode.LEFT) driveTrain.tankDrive(-throttle, throttle, false);
+		if (mode == TurnMode.RIGHT) driveTrain.tankDrive(throttle, -throttle, false);
 	}
 	
 	/***********************
@@ -113,7 +113,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		reverseTalons(false);
 		setBrakeMode(BRAKE_MODE);
 		setCtrlMode();
-		setVoltageComp(true, voltageCompensationVoltage, 10);
+		setVoltageComp(true, VOLTAGE_COMPENSATION_VOLTAGE, 10);
 	}
 
 	@Override

@@ -36,8 +36,8 @@ public class Intake extends ImprovedSubsystem {
 	}
 	
 	public void moveWithJoystick(double throttle) {
-		leftIntakeMotor.set(DriveHelper.handleDrive(throttle, elevatorDeadband));
-		rightIntakeMotor.set(DriveHelper.handleDrive(throttle, elevatorDeadband));
+		leftIntakeMotor.set(DriveHelper.handleDrive(throttle, ELEVATOR_DEADBAND));
+		rightIntakeMotor.set(DriveHelper.handleDrive(throttle, ELEVATOR_DEADBAND));
 	}
 	
 	public double getLeftIntakeWheelValue() {

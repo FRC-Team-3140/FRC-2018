@@ -9,30 +9,30 @@ import edu.wpi.first.wpilibj.Spark;
 
 public interface HardwareAdapter extends Constants{
 	//OI
-	public static XboxController xbox = new XboxController(Xbox_Port);
-	public static XboxController xbox2 = new XboxController(Xbox_Port2);
+	public static XboxController xbox = new XboxController(XBOX_PORT);
+	public static XboxController xbox2 = new XboxController(XBOX_PORT_2);
 	
 	//DRIVETRAIN
-	public static WPI_TalonSRX leftDriveMaster = new WPI_TalonSRX(LEFT_Drive_Master);
-	public static WPI_TalonSRX leftDriveSlave1 = new WPI_TalonSRX(LEFT_Drive_Slave1);
-	public static WPI_TalonSRX rightDriveMaster = new WPI_TalonSRX(RIGHT_Drive_Master);
-	public static WPI_TalonSRX rightDriveSlave1 = new WPI_TalonSRX(RIGHT_Drive_Slave1);
+	public static WPI_TalonSRX leftDriveMaster = new WPI_TalonSRX(LEFT_DRIVE_MASTER);
+	public static WPI_TalonSRX leftDriveSlave1 = new WPI_TalonSRX(LEFT_DRIVE_SLAVE_1);
+	public static WPI_TalonSRX rightDriveMaster = new WPI_TalonSRX(RIGHT_DRIVE_MASTER);
+	public static WPI_TalonSRX rightDriveSlave1 = new WPI_TalonSRX(RIGHT_DRIVE_SLAVE_1);
 	 
 	//INTAKE
-	public static Spark leftIntakeMotor = new Spark(LEFT_Intake);
-	public static Spark rightIntakeMotor = new Spark(RIGHT_Intake);
+	public static Spark leftIntakeMotor = new Spark(LEFT_INTAKE);
+	public static Spark rightIntakeMotor = new Spark(RIGHT_INTAKE);
 	
 	//ELEVATOR
-	public static WPI_TalonSRX elevatorMaster = new WPI_TalonSRX(Elevator_Master);
-	public static WPI_TalonSRX elevatorSlave = new WPI_TalonSRX(Elevator_Slave);
+	public static WPI_TalonSRX elevatorMaster = new WPI_TalonSRX(ELEVATOR_MASTER);
+	public static WPI_TalonSRX elevatorSlave = new WPI_TalonSRX(ELEVATOR_SLAVE);
 	
 	//SENSORS
-	public static RevRoboticsAnalogPressureSensor analogPressureSensor1 = new RevRoboticsAnalogPressureSensor(analogSensor);
+	public static RevRoboticsAnalogPressureSensor analogPressureSensor1 = new RevRoboticsAnalogPressureSensor(ANALOG_SENSOR);
 	
 	//PNEUMATICS
-	public static DoubleSolenoid shifter = new DoubleSolenoid(PCM_Port1, SHIFTER_EXT, SHIFTER_RET);
-	public static DoubleSolenoid tilter = new DoubleSolenoid(PCM_Port1, TILT_EXT, TILT_RET);
+	public static DoubleSolenoid shifter = new DoubleSolenoid(PCM_PORT_1, SHIFTER_EXT, SHIFTER_RET);
+	public static DoubleSolenoid tilter = new DoubleSolenoid(PCM_PORT_1, TILT_EXT, TILT_RET);
 	// TODO use or remove
-	public static Compressor comp = new Compressor(PCM_Port1); // NO_UCD (unused code)
-	public static DoubleSolenoid intakeArm = new DoubleSolenoid(PCM_Port1, INTAKE_EXT, INTAKE_RET);
+	public static Compressor comp = new Compressor(PCM_PORT_1); // NO_UCD (unused code)
+	public static DoubleSolenoid intakeArm = new DoubleSolenoid(PCM_PORT_1, INTAKE_EXT, INTAKE_RET);
 }

@@ -29,12 +29,12 @@ public class Logger implements Constants { // NO_UCD (unused code)
 
 	public Logger() {
 		// Adding Restricted Files
-		restrictedFilesList.add(new File(outputPath + "/README_File_Paths.txt"));
-		restrictedFilesList.add(new File(outputPath + "/crash_tracking.txt"));
+		restrictedFilesList.add(new File(OUTPUT_PATH + "/README_File_Paths.txt"));
+		restrictedFilesList.add(new File(OUTPUT_PATH + "/crash_tracking.txt"));
 	}
 
 	public void createNewFile(String name) {
-		File newFile = new File(outputPath + "/" + name + ".txt");
+		File newFile = new File(OUTPUT_PATH + "/" + name + ".txt");
 		if (newFile != null && !newFile.exists())
 			try {
 				newFile.createNewFile();
@@ -230,7 +230,7 @@ public class Logger implements Constants { // NO_UCD (unused code)
 			if (nameOrPath == "00000000000000000000000000000000000000000000000000000000000")
 				fileSelected = false;
 			else
-				for (File file : new File(outputPath).listFiles())
+				for (File file : new File(OUTPUT_PATH).listFiles())
 					if (file.getName().equals(nameOrPath))
 						changePath(file.getPath(), false);
 		} else {

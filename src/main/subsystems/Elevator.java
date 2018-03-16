@@ -76,10 +76,10 @@ public class Elevator extends ImprovedSubsystem {
 	}
 
 	public void moveWithJoystick(double throttle) {
-		if (isCompetitionRobot)
-			elevatorMaster.set(DriveHelper.handleDrive(-throttle, elevatorDeadband));
+		if (IS_COMPETITION_ROBOT)
+			elevatorMaster.set(DriveHelper.handleDrive(-throttle, ELEVATOR_DEADBAND));
 		else
-			elevatorMaster.set(DriveHelper.handleDrive(throttle, elevatorDeadband));
+			elevatorMaster.set(DriveHelper.handleDrive(throttle, ELEVATOR_DEADBAND));
 	}
 	
 	@Override

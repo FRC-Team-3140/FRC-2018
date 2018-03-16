@@ -128,25 +128,6 @@ public class XboxController extends Joystick {
 		return Math.sin(Math.PI/2 * super.getRawAxis(5));
 	}
 	
-	public void setButtonStatus(boolean a, boolean b, boolean x, boolean y, boolean leftBumper, boolean rightBumper,
-								boolean select, boolean start, boolean leftJoystickPress, boolean rightJoystickPress,
-								boolean leftTrigger, boolean rightTrigger) {
-		if(internalControl) {
-			this.a.setPressed(a);
-			this.b.setPressed(b);
-			this.x.setPressed(x);
-			this.y.setPressed(y);
-			this.leftBumper.setPressed(leftBumper);
-			this.rightBumper.setPressed(rightBumper);
-			this.select.setPressed(select);
-			this.start.setPressed(start);
-			this.leftJoystickPress.setPressed(leftJoystickPress);
-			this.rightJoystickPress.setPressed(rightJoystickPress);
-			this.leftTrigger.setPressed(leftTrigger);
-			this.rightTrigger.setPressed(rightTrigger);
-		}
-	}
-	
 	public void setInternalControl(boolean internalControl) {
 		XboxController.internalControl = internalControl;		
 	}

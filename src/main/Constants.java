@@ -11,10 +11,10 @@ public interface Constants {
 	 * VARIABLES *
 	 *************/
 	// TODO use isCompetitionMatch
-	public final boolean isCompetitionMatch = true; // NO_UCD
-	public final boolean isCompetitionRobot = false;
+	public final boolean IS_COMPETITION_MATCH = true; // NO_UCD
+	public final boolean IS_COMPETITION_ROBOT = false;
 	// FILE OUTPUT PATH
-	public final String outputPath = "/home/lvuser"; // USB output path: /U
+	public final String OUTPUT_PATH = "/home/lvuser"; // USB output path: /U
 
 	// FILE NAMES
 	// TODO use the names
@@ -34,50 +34,53 @@ public interface Constants {
 	// This is the time that the robot will wait before executing the selected auto
 	// in an EDGECASE situation.
 	// TODO do we need this?
-	public final int autoDelay = 5; // NO_UCD (unused code)
+	public final int AUTO_DELAY = 5; // NO_UCD (unused code)
 
 	// REV ROBOTICS SENSORS
-	public final int analogSensor = 0;
+	public final int ANALOG_SENSOR = 0;
 
 	// JOYSTICK DEADBANDS
-	public final double throttleDeadband = 0.02;
-	public final double headingDeadband = 0.02;
-	public final double elevatorDeadband = 0.1;
+	public final double THROTTLE_DEADBAND = 0.02;
+	public final double HEADING_DEADBAND = 0.02;
+	public final double ELEVATOR_DEADBAND = 0.1;
 
 	// TALON VOLTAGE COMPENSATION
-	public final double voltageCompensationVoltage = 12.0;
+	public final double VOLTAGE_COMPENSATION_VOLTAGE = 12.0;
 	
 	//ROBOT BIAS TEST CONSTANTS
-	public final double practiceBotLeftWheelRadius = 2;//Update with real measurements
-	public final double practiceBotRightWheelRadius = 2;//Update with real measurements
-	public final double competitonBotLeftWheelRadius = 2;//Update with real measurements
-	public final double competitonBotRightWheelRadius = 2;//Update with real measurements
+	public final double PRACTICE_BOT_LEFT_WHEEL_RADIUS = 2; // TODO Update with real measurements
+	public final double PRACTICE_BOT_RIGHT_WHEEL_RADIUS = 2;// TODO Update with real measurements
+	public final double COMPETITION_BOT_LEFT_WHEEL_RADIUS = 2;// TODO Update with real measurements
+	public final double COMPETITION_BOT_RIGHT_WHEEL_RADIUS = 2;// TODO Update with real measurements
 
 	
-	public final double testVoltage = 8.0;//Subject to change
-	public final double practiceBotLeftFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
-	public final double practiceBotRightFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
-	public final double competitonBotLeftFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
-	public final double competitonBotRightFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
+	public final double TEST_VOLTAGE = 8.0;//Subject to change
+	public final double PRACTICE_BOT_LEFT_FREE_RPM_AT_TEST_VOLTAGE = 1000.0;// TODO Update with real measurement (+ value only)
+	public final double PRACTICE_BOT_RIGHT_FREE_RPM_AT_TEST_VOLTAGE = 1000.0;// TODO Update with real measurement (+ value only)
+	public final double COMPETITION_BOT_LEFT_FREE_RPM_AT_TEST_VOLTAGE = 1000.0;// TODO Update with real measurement (+ value only) and use this value NO_UCD
+	public final double COMPETITION_BOT_RIGHT_FREE_RPM_AT_TEST_VOLTAGE = 1000.0;// TODO Update with real measurement (+ value only) and use this value NO_UCD
 	
 	//ROBOT BIAS CONSTANTS COMPUTATION
-	public final double competitionBiasLeft = ((testVoltage*competitonBotLeftWheelRadius*competitonBotLeftFreeRPMAtTestVoltage) - 
-												(testVoltage*practiceBotLeftWheelRadius*practiceBotLeftFreeRPMAtTestVoltage)) / 
-												(practiceBotLeftWheelRadius*practiceBotLeftFreeRPMAtTestVoltage);
-	
-	public final double competitionBiasRight = ((testVoltage*competitonBotRightWheelRadius*competitonBotRightFreeRPMAtTestVoltage) - 
-												(testVoltage*practiceBotRightWheelRadius*practiceBotRightFreeRPMAtTestVoltage)) / 
-												(practiceBotRightWheelRadius*practiceBotRightFreeRPMAtTestVoltage);
-	
-	
-	// BIAS VOLTAGES FOR DIFFERENCE BETWEEN ROBOTS COMPENSATION
-	//Currently 0, implement if necessary, (+) voltage biases will make 
-	//that side of the robot move faster and go farther; (-) voltage biases 
-	//will do the opposite. These value should ideally be smaller than 2V.
-	//Start small and increase 0.1V-0.5V at a time until the desired effect is achieved.
-	public final double leftVoltageBias =(isCompetitionRobot? competitionBiasLeft : 0.0);// compBot:practiceBot // Units, (V), Volts
-	public final double rightVoltageBias = (isCompetitionRobot? competitionBiasRight : 0.0);// compBot:practiceBot // Units, (V), Volts
+	public final double COMPETITION_BIAS_LEFT = ((TEST_VOLTAGE * COMPETITION_BOT_LEFT_WHEEL_RADIUS
+			* PRACTICE_BOT_LEFT_FREE_RPM_AT_TEST_VOLTAGE)
+			- (TEST_VOLTAGE * PRACTICE_BOT_LEFT_WHEEL_RADIUS * PRACTICE_BOT_LEFT_FREE_RPM_AT_TEST_VOLTAGE))
+			/ (PRACTICE_BOT_LEFT_WHEEL_RADIUS * PRACTICE_BOT_LEFT_FREE_RPM_AT_TEST_VOLTAGE);
 
+	public final double COMPETITION_BIAS_RIGHT = ((TEST_VOLTAGE * COMPETITION_BOT_RIGHT_WHEEL_RADIUS
+			* PRACTICE_BOT_RIGHT_FREE_RPM_AT_TEST_VOLTAGE)
+			- (TEST_VOLTAGE * PRACTICE_BOT_RIGHT_WHEEL_RADIUS * PRACTICE_BOT_RIGHT_FREE_RPM_AT_TEST_VOLTAGE))
+			/ (PRACTICE_BOT_RIGHT_WHEEL_RADIUS * PRACTICE_BOT_RIGHT_FREE_RPM_AT_TEST_VOLTAGE);
+	
+	
+	/* BIAS VOLTAGES FOR DIFFERENCE BETWEEN ROBOTS COMPENSATION
+	 * Currently 0, implement if necessary, (+) voltage biases will make 
+	 * that side of the robot move faster and go farther; (-) voltage biases 
+	 * will do the opposite. These value should ideally be smaller than 2V.
+	 * Start small and increase 0.1V-0.5V at a time until the desired effect is achieved.
+	 */
+	public final double LEFT_VOLTAGE_BIAS =(IS_COMPETITION_ROBOT? COMPETITION_BIAS_LEFT : 0.0); // compBot:practiceBot // Units, (V), Volts
+	public final double RIGHT_VOLTAGE_BIAS = (IS_COMPETITION_ROBOT? COMPETITION_BIAS_RIGHT : 0.0); // compBot:practiceBot // Units, (V), Volts
+	
 	/*************
 	 * CONSTANTS *
 	 *************/
@@ -91,62 +94,62 @@ public interface Constants {
 
 	// ENCODERS STUFF
 	// TODO do we need this? what is this actually supposed to be?
-	public final double countsPerRev = 4096; // NO_UCD (unused code)
+	public final double COUNTS_PER_REV = 4096; // NO_UCD (unused code)
 
-	public final double timedDrivePercent = -0.75;// DO NOT CHANGE
+	public final double TIMED_DRIVE_PERCENT = -0.75;// DO NOT CHANGE
 	// This is a multiplier that will be computed manually distanceMultiplier * time
 	// = distanceDriven (When Robot driving at timedDrivePercent)
-	public final double timedDistanceMultiplier = 38.58;// (in/s)
+	public final double TIMED_DISTANCE_MULTIPLIER = 38.58;// (in/s)
 
 	public static enum TurnMode {
-		Right, Left
+		RIGHT, LEFT
 	};
 
-	public final double timedTurnPercent = 0.5;// DO NOT CHANGE
-	public final double timedTurn90degTime = 0.70;
-	public final double timedTurn45degTime = 0.35;
+	public final double TIMED_TURN_PERCENT = 0.5;// DO NOT CHANGE
+	public final double TIMED_TURN_90_DEG_TIME = 0.70;
+	public final double TIMED_TURN_45_DEG_TIME = 0.35;
 
 	// TODO use or remove
-	public final double timedLiftPercent = 0.75; // DO NOT CHANGE // NO_UCD 
-	public final double timedLiftMultiplier = 22.125;// (in/s)
+	public final double TIMED_LIFT_PERCENT = 0.75; // DO NOT CHANGE // NO_UCD 
+	public final double TIMED_LIFT_MULTIPLIER = 22.125;// (in/s)
 	//Time to lift the elevator 3ft at timedLiftPercent of available power.
 	// TODO use or remove
-	public final double timedLiftTime = 28.5/timedLiftMultiplier; // NO_UCD 
+	public final double TIMED_LIFT_TIME = 28.5/TIMED_LIFT_MULTIPLIER; // NO_UCD 
 	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
 	// TODO use or remove
-	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier; // NO_UCD 
+	public final double TIMED_LIFT_FULL_HEIGHT_TIME = 78/TIMED_LIFT_MULTIPLIER; // NO_UCD 
 
 	/*********
 	 * PORTS *
 	 *********/
 	// XBOX PORTS
-	public final int Xbox_Port = 0;
-	public final int Xbox_Port2 = 1;
+	public final int XBOX_PORT = 0;
+	public final int XBOX_PORT_2 = 1;
 
 	// DRIVETRAIN TALONS (CAN BUS)
-	public final int LEFT_Drive_Master = 3;
-	public final int LEFT_Drive_Slave1 = 6;
-	public final int RIGHT_Drive_Master = 12;
-	public final int RIGHT_Drive_Slave1 = 5;
+	public final int LEFT_DRIVE_MASTER = 3;
+	public final int LEFT_DRIVE_SLAVE_1 = 6;
+	public final int RIGHT_DRIVE_MASTER = 12;
+	public final int RIGHT_DRIVE_SLAVE_1 = 5;
 
 	// INTAKE MOTORS
-	public final int LEFT_Intake = 1;
-	public final int RIGHT_Intake = 0;
+	public final int LEFT_INTAKE = 1;
+	public final int RIGHT_INTAKE = 0;
 
 	// ELEVATOR MOTORS
-	public final int Elevator_Master = 8;
-	public final int Elevator_Slave = 7;
+	public final int ELEVATOR_MASTER = 8;
+	public final int ELEVATOR_SLAVE = 7;
 
 	// PNEUMATICS CONTROL MODULE
-	public final int PCM_Port1 = 1;
+	public final int PCM_PORT_1 = 1;
 
 	// INTAKE PNEUMATICS
 	public final int INTAKE_EXT = 7;
 	public final int INTAKE_RET = 0;
-	public final int TILT_EXT = (isCompetitionRobot? 6:1);
-	public final int TILT_RET = (isCompetitionRobot? 1:6);
+	public final int TILT_EXT = (IS_COMPETITION_ROBOT? 6:1);
+	public final int TILT_RET = (IS_COMPETITION_ROBOT? 1:6);
 	
 	// SHIFTING
-	public final int SHIFTER_EXT = (isCompetitionRobot? 5:2);
-	public final int SHIFTER_RET = (isCompetitionRobot? 2:5);
+	public final int SHIFTER_EXT = (IS_COMPETITION_ROBOT? 5:2);
+	public final int SHIFTER_RET = (IS_COMPETITION_ROBOT? 2:5);
 }
