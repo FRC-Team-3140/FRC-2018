@@ -10,6 +10,7 @@ public class StartRecord extends ImprovedCommand {
 
 	// Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.dt.enableVoltageComp(true);
     	Robot.lg.resetForWrite();
     	Record.okToRecord(true);
     }
@@ -28,6 +29,7 @@ public class StartRecord extends ImprovedCommand {
     protected void end() {
     	Record.okToRecord(false);
     	Robot.lg.trim();
+    	Robot.dt.enableVoltageComp(false);
     }
 
     // Called when another command which requires one or more of the same

@@ -10,6 +10,7 @@ public class StartPlay extends ImprovedCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.dt.enableVoltageComp(true);
     	Robot.lg.resetForRead();
     	Robot.oi.setInternalControl(true);
     	Play.okToPlay(true);
@@ -30,6 +31,7 @@ public class StartPlay extends ImprovedCommand {
     	Play.okToPlay(false);
     	Robot.oi.setInternalControl(false);
     	Play.reset();
+    	Robot.dt.enableVoltageComp(false);
     }
 
     // Called when another command which requires one or more of the same

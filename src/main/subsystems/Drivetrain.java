@@ -132,7 +132,16 @@ public class Drivetrain extends ImprovedSubsystem  {
 		reverseTalons(false);
 		setBrakeMode(BRAKE_MODE);
 		setCtrlMode();
-		setVoltageComp(true, voltageCompensationVoltage, 10);
+		setVoltageComp(false, voltageCompensationVoltage, 10);
+	}
+	
+	public void enableVoltageComp(boolean enable) {
+		if(enable)
+			setVoltageComp(true, voltageCompensationVoltage, 10);
+		else
+			setVoltageComp(false, voltageCompensationVoltage, 10);
+
+
 	}
 
 	@Override

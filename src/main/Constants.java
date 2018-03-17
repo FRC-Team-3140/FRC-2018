@@ -51,7 +51,7 @@ public interface Constants {
 //	public final int cubeSensor = 0;
 	
 	// TALON VOLTAGE COMPENSATION
-	public final double voltageCompensationVoltage = 12.0;
+	public final double voltageCompensationVoltage = 10.5;//Subject to change
 
 	// LOOPER CONSTANTS
 	public final double kLooperDt = 0.005;// 0.005
