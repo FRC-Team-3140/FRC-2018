@@ -9,7 +9,7 @@ public class FileDeletor extends ImprovedCommand {
 	
 	// Called just before this Command runs the first time
     protected void initialize() {
-		//Robot.lg.deleteFile(Robot.getFileChooser().getSelected().getName());
+		Robot.lg.deleteFile(Robot.getFileChooser().getSelected().getName());
     }    	
 
 	@Override

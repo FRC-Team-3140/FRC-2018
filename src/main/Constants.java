@@ -16,7 +16,7 @@ public interface Constants {
 	public final boolean isCompetitionRobot = false;
 	
 	// FILE OUTPUT PATH
-	public final String outputPath = "/home/lvuser"; // USB output path: /U
+	public final String outputPath = "/U"; //  /home/lvuser"; // USB output path: /U
 	
 	// FILE NAMES
 	public final String LEFT_LeftSwitch = "LEFT_LSwitch";

@@ -10,8 +10,8 @@ public class StartRecord extends ImprovedCommand {
 
 	// Called just before this Command runs the first time
     protected void initialize() {
-    	//Robot.lg.resetForWrite();
-    	//Record.okToRecord(true);
+    	Robot.lg.resetForWrite();
+    	Record.okToRecord(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -20,14 +20,14 @@ public class StartRecord extends ImprovedCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        //return false;
-    	return true;//(remove when switching back to record and play & use line above)
+        return false;
+    	//return true;//(remove when switching back to record and play & use line above)
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	//Record.okToRecord(false);
-    	///////Robot.lg.trim();
+    	Record.okToRecord(false);
+    	Robot.lg.trim();
     }
 
     // Called when another command which requires one or more of the same
