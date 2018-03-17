@@ -70,12 +70,20 @@ public class Drivetrain extends ImprovedSubsystem  {
 	/***********************
 	 * PLAY/RECORD METHODS *
 	 ***********************/
-	public double getLeftVoltage() {
+	public double getLeftMasterVoltage() {
 		return (leftDriveMaster.getMotorOutputVoltage()); //+ leftDriveSlave1.getMotorOutputVoltage())/2;
 	}
 	
-	public double getRightVoltage() {
+	public double getRightMasterVoltage() {
 		return (rightDriveMaster.getMotorOutputVoltage()); //+ rightDriveSlave1.getMotorOutputVoltage())/2;
+	}
+	
+	public double getLeftSlaveVoltage() {
+		return (leftDriveSlave1.getMotorOutputVoltage());
+	}
+	
+	public double getRightSlaveVoltage() {
+		return (rightDriveSlave1.getMotorOutputVoltage());
 	}
 	
 	/*************************

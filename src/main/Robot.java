@@ -48,12 +48,12 @@ public class Robot extends ImprovedRobot {
 	public static DriverCamera dc;
 	public static DriverAlerts da;	
 	public static OI oi;
-	// PLAY AND RECORD
 	
+	// PLAY AND RECORD	
 	public static Logger lg;
     private static Looper autoLooper;
     private static SendableChooser<Command> fileChooser;
-    private static Command autoPlayCommand;
+    //private static Command autoPlayCommand;
     private Command lastSelectedFile = new DoNothing();
     private static String newFileName = "";
     private static List<File> listOfFiles = new ArrayList<File>();
@@ -157,7 +157,7 @@ public class Robot extends ImprovedRobot {
 		//if(autoCommand != null && autoCommand.isRunning())
 			//autoCommand.cancel();
 		if(isCompetitionMatch) {
-			if(autoPlayCommand.isRunning()) autoPlayCommand.cancel();
+			if(competitionPlayCommand.isRunning()) competitionPlayCommand.cancel();
 		}
 		autoLooper.stop();				
 	}
@@ -291,10 +291,10 @@ public class Robot extends ImprovedRobot {
 		//if(autoCommand != null && autoCommand.isRunning())
 			//autoCommand.cancel();
 		
-		if(isCompetitionMatch) {
-			if(autoPlayCommand.isRunning())
-				autoPlayCommand.cancel();
-		}
+		if(isCompetitionMatch)
+			if(competitionPlayCommand.isRunning()) 
+				competitionPlayCommand.cancel();
+
 		if(!isCompetitionMatch)
 			autoLooper.start();
 		new ResetForTeleop().start();
@@ -302,14 +302,7 @@ public class Robot extends ImprovedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		Runtime runtime = Runtime.getRuntime();
-
-		// SmartDashboard stuff goes here
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Free memory", runtime.freeMemory());
-		SmartDashboard.putNumber("Total memory", runtime.totalMemory());
-		SmartDashboard.putNumber("Pressure: ", HardwareAdapter.analogPressureSensor1.value());
-		//SmartDashboard.putBoolean("Cube Detected: ", cubeSensor1.get());
 		allPeriodic();
 	}
 	
@@ -358,14 +351,36 @@ public class Robot extends ImprovedRobot {
 		if(!isCompetitionMatch) {
 			checkForSmartDashboardUpdates();
 		}
+		// Push Loop Dt to SmartDashboard
 		autoLooper.outputToSmartDashboard();
+		
+		// Check Sensors
 		dt.check();
 		pn.check();
 		in.check();
 		el.check();
 		oi.check();
-		//SmartDashboard.putNumber("Left voltage", dt.getLeftVoltage());
-		//SmartDashboard.putNumber("Right voltage", dt.getRightVoltage());
+		
+		// Grab the Runtime so that system resources can be monitored
+		Runtime runtime = Runtime.getRuntime();
+		// System
+		SmartDashboard.putNumber("Free memory", runtime.freeMemory());
+		SmartDashboard.putNumber("Total memory", runtime.totalMemory());
+		// Scheduler
+		SmartDashboard.putData(Scheduler.getInstance());
+		// Subsystems
+		SmartDashboard.putData("DriveTrain: ", dt);
+		SmartDashboard.putData("Elevator: ", el);
+		SmartDashboard.putData("Intake: ", in);
+		SmartDashboard.putData("Pnuematics", pn);
+		// Pressure
+		SmartDashboard.putNumber("Pressure: ", HardwareAdapter.analogPressureSensor1.value());
+		// Drive Voltages
+		SmartDashboard.putNumber("Left Master Voltage", dt.getLeftMasterVoltage());
+		SmartDashboard.putNumber("Left Slave Voltage", dt.getLeftSlaveVoltage());
+		SmartDashboard.putNumber("Right Master Voltage", dt.getRightMasterVoltage());
+		SmartDashboard.putNumber("Right Slave Voltage", dt.getRightSlaveVoltage());
+		// Limit Switch States
 		SmartDashboard.putBoolean("First Stage Bottom", !stage1BottomSwitch.get());
 		SmartDashboard.putBoolean("First Stage Top", !stage1TopSwitch.get());
 		SmartDashboard.putBoolean("Second Stage Bottom", !stage2BottomSwitch.get());
