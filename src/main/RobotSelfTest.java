@@ -27,80 +27,81 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		 * Drive Systems Test
 		 */
 		//Increment Forwards Drive
-		addSequential(new TimedDrive(0.1, 0.2));
-		addSequential(new TimedDrive(0.2, 0.2));
-		addSequential(new TimedDrive(0.3, 0.2));
-		addSequential(new TimedDrive(0.4, 0.2));
-		addSequential(new TimedDrive(0.5, 0.2));
-		addSequential(new TimedDrive(0.6, 0.2));
-		addSequential(new TimedDrive(0.7, 0.2));
-		addSequential(new TimedDrive(0.8, 0.2));
-		addSequential(new TimedDrive(0.9, 0.2));
-		addSequential(new TimedDrive(1.0, 0.2));
+		addSequential(new TimedDrive(0.1, 0.5));
+		addSequential(new TimedDrive(0.2, 0.5));
+		addSequential(new TimedDrive(0.3, 0.5));
+		addSequential(new TimedDrive(0.4, 0.5));
+		addSequential(new TimedDrive(0.5, 0.5));
+		addSequential(new TimedDrive(0.6, 0.5));
+		addSequential(new TimedDrive(0.7, 0.5));
+		addSequential(new TimedDrive(0.8, 0.5));
+		addSequential(new TimedDrive(0.9, 0.5));
+		addSequential(new TimedDrive(1.0, 0.5));
 		
 		//Stop & Wait
 		addSequential(new DriveTrainOff());
-		addSequential(new WaitCommand(0.25));
+		addSequential(new WaitCommand(0.5));
 		
 		//Increment Backwards Drive
-		addSequential(new TimedDrive(-0.1, 0.2));
-		addSequential(new TimedDrive(-0.2, 0.2));
-		addSequential(new TimedDrive(-0.3, 0.2));
-		addSequential(new TimedDrive(-0.4, 0.2));
-		addSequential(new TimedDrive(-0.5, 0.2));
-		addSequential(new TimedDrive(-0.6, 0.2));
-		addSequential(new TimedDrive(-0.7, 0.2));
-		addSequential(new TimedDrive(-0.8, 0.2));
-		addSequential(new TimedDrive(-0.9, 0.2));
-		addSequential(new TimedDrive(-1.0, 0.2));
+		addSequential(new TimedDrive(-0.1, 0.5));
+		addSequential(new TimedDrive(-0.2, 0.5));
+		addSequential(new TimedDrive(-0.3, 0.5));
+		addSequential(new TimedDrive(-0.4, 0.5));
+		addSequential(new TimedDrive(-0.5, 0.5));
+		addSequential(new TimedDrive(-0.6, 0.5));
+		addSequential(new TimedDrive(-0.7, 0.5));
+		addSequential(new TimedDrive(-0.8, 0.5));
+		addSequential(new TimedDrive(-0.9, 0.5));
+		addSequential(new TimedDrive(-1.0, 0.5));
 		
 		//Stop & Wait
 		addSequential(new DriveTrainOff());
-		addSequential(new WaitCommand(0.25));
+		addSequential(new WaitCommand(0.5));
 		
 		//Increment Left Turn
-		addSequential(new TimedTurn(TurnMode.Left, 0.1, 0.2));
-		addSequential(new TimedTurn(TurnMode.Left, 0.2, 0.2));
-		addSequential(new TimedTurn(TurnMode.Left, 0.3, 0.2));
-		addSequential(new TimedTurn(TurnMode.Left, 0.4, 0.2));
-		addSequential(new TimedTurn(TurnMode.Left, 0.5, 0.2));
-		addSequential(new TimedTurn(TurnMode.Left, 0.6, 0.2));
-		addSequential(new TimedTurn(TurnMode.Left, 0.7, 0.2));
-		addSequential(new TimedTurn(TurnMode.Left, 0.8, 0.2));
-		addSequential(new TimedTurn(TurnMode.Left, 0.9, 0.2));
-		addSequential(new TimedTurn(TurnMode.Left, 1.0, 0.2));
+		addSequential(new TimedTurn(TurnMode.Left, 0.1, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.2, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.3, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.4, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.5, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.6, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.7, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.8, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.9, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 1.0, 0.5));
 		
 		//Stop & Wait
 		addSequential(new DriveTrainOff());
-		addSequential(new WaitCommand(0.25));
+		addSequential(new WaitCommand(0.5));
 
 		
 		//Increment Right Turn
-		addSequential(new TimedTurn(TurnMode.Right, 0.1, 0.2));
-		addSequential(new TimedTurn(TurnMode.Right, 0.2, 0.2));
-		addSequential(new TimedTurn(TurnMode.Right, 0.3, 0.2));
-		addSequential(new TimedTurn(TurnMode.Right, 0.4, 0.2));
-		addSequential(new TimedTurn(TurnMode.Right, 0.5, 0.2));
-		addSequential(new TimedTurn(TurnMode.Right, 0.6, 0.2));
-		addSequential(new TimedTurn(TurnMode.Right, 0.7, 0.2));
-		addSequential(new TimedTurn(TurnMode.Right, 0.8, 0.2));
-		addSequential(new TimedTurn(TurnMode.Right, 0.9, 0.2));
-		addSequential(new TimedTurn(TurnMode.Right, 1.0, 0.2));
+		addSequential(new TimedTurn(TurnMode.Right, 0.1, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.2, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.3, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.4, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.5, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.6, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.7, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.8, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.9, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 1.0, 0.5));
 		
 		//Stop & Wait
 		addSequential(new DriveTrainOff());
-		addSequential(new WaitCommand(0.25));
+		addSequential(new WaitCommand(0.5));
 
 		//Shifting
-		addSequential(new TimedDrive(1.0, 1));
-		addSequential(new TimedDrive(1.0, 1));
+		addSequential(new TimedDrive(1.0, 2.5));
+		addSequential(new TimedDrive(1.0, 2.5));
 		addParallel(new ShiftUp());
-		addSequential(new TimedDrive(1.0, 1));
+		addSequential(new TimedDrive(1.0, 2.5));
 		addParallel(new ShiftDown());
+		addSequential(new TimedDrive(1.0, 2.5));
 		
 		//Stop & Wait
 		addSequential(new DriveTrainOff());
-		addSequential(new WaitCommand(0.25));
+		addSequential(new WaitCommand(0.5));
 				
 		/***********************
 		 * Pneumatics System Test
@@ -141,25 +142,25 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		addSequential(new MoveToSwitch(3));
 		
 		//Wait
-		addSequential(new WaitCommand(0.25));
+		addSequential(new WaitCommand(0.5));
 		
 		//Elevator To Bottom
 		addSequential(new MoveToBottom(3));
 		
 		//Wait
-		addSequential(new WaitCommand(0.25));
+		addSequential(new WaitCommand(0.5));
 		
 		//Lift To Max Height
 		addSequential(new MoveToTop(5));
 			
 		//Wait
-		addSequential(new WaitCommand(0.25));
+		addSequential(new WaitCommand(0.5));
 		
 		//ElevatorToBottom
 		addSequential(new MoveToBottom(3));
 			
 		//Wait
-		addSequential(new WaitCommand(0.25));				
+		addSequential(new WaitCommand(0.5));				
 		
 		
 		/***********************
@@ -167,15 +168,15 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		 */
 		//Spin In
 		addSequential(new SpinIn());
-		addParallel(new WaitCommand(1));//Force previous command to run for 1 second
+		addParallel(new WaitCommand(2));//Force previous command to run for 1 second
 		addSequential(new SpinOff());
 		
 		//Wait
-		addSequential(new WaitCommand(0.25));	
+		addSequential(new WaitCommand(0.5));	
 		
 		//Spin Out
 		addSequential(new SpinOut());
-		addParallel(new WaitCommand(1));//Force previous command to run for 1 second
+		addParallel(new WaitCommand(2));//Force previous command to run for 1 second
 		addSequential(new SpinOff());
 	}
 }
