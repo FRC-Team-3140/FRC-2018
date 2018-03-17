@@ -155,10 +155,14 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	public void enableVoltageComp(boolean enable) {
-		if(enable)
+		if(enable) {
 			setVoltageComp(true, voltageCompensationVoltage, 10);
-		else
+			System.out.println("Set Voltage Compensation To: " + voltageCompensationVoltage + " Volts.");
+		}
+		else {
 			setVoltageComp(false, voltageCompensationVoltage, 10);
+			System.out.println("Turned Voltage Compensation Off.");
+		}
 
 
 	}
