@@ -22,6 +22,11 @@ public class Intake extends ImprovedSubsystem {
 	public static WheelStates wheelStates = WheelStates.Off;
 	//public static CubeInIntake cubeInIntake = CubeInIntake.NoCube;
 	
+	public Intake() {
+		leftIntakeMotor.setSafetyEnabled(false);
+		rightIntakeMotor.setSafetyEnabled(false);
+	}
+	
 	public void spinIn() {
 		leftIntakeMotor.set(1.0);
     	rightIntakeMotor.set(-1.0);
