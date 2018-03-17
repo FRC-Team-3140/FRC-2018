@@ -32,6 +32,7 @@ import main.commands.controllerCommands.FileDeletor;
 import main.commands.controllerCommands.FilePicker;
 import main.commands.controllerCommands.StartPlay;
 import main.commands.controllerCommands.StartRecord;
+import main.commands.drivetrain.DriveVoltageTestCommand;
 import main.subsystems.DriverAlerts;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
@@ -148,6 +149,7 @@ public class Robot extends ImprovedRobot {
 			
 		//Robot Self Test
 		SmartDashboard.putData("Robot Self Test", new RobotSelfTest());
+		SmartDashboard.putData("DriveTrain Test Voltage Command", new DriveVoltageTestCommand());
 	}
 	
 	@Override

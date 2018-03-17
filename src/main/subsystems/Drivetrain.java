@@ -30,13 +30,28 @@ public class Drivetrain extends ImprovedSubsystem  {
 
 	//Drive for playing back
 	public void driveVoltageTank(double leftVoltage, double rightVoltage) {
-		leftVoltage = (Math.abs(leftVoltage) > 12.0) ? Math.signum(leftVoltage) : leftVoltage/12;
-		rightVoltage = -((Math.abs(rightVoltage)  > 12.0) ? Math.signum(rightVoltage) : rightVoltage/12);
+		//ROBOT BIAS CONSTANTS COMPUTATION
+			double competitionBiasLeft = ((Math.abs(leftVoltage)*practiceBotLeftFreeRPMAtTestVoltage*competitionBotWeight*competitonBotLeftWheelRadius) /
+					(practiceBotLeftWheelRadius*competitonBotLeftFreeRPMAtTestVoltage*practiceBotWeight)) - Math.abs(leftVoltage);
 		
-		leftVoltage = Math.signum(leftVoltage) * (Math.abs(leftVoltage) + leftVoltageBias);
-		rightVoltage = Math.signum(rightVoltage) * (Math.abs(rightVoltage) + rightVoltageBias);
+			double competitionBiasRight = ((Math.abs(rightVoltage)*practiceBotRightFreeRPMAtTestVoltage*competitionBotWeight*competitonBotRightWheelRadius) /
+					(practiceBotRightWheelRadius*competitonBotRightFreeRPMAtTestVoltage*practiceBotWeight)) - Math.abs(rightVoltage);
 		
-		driveTrain.tankDrive(leftVoltage, rightVoltage, false);	
+		//IMPLEMENT BIAS VOLTAGES FOR DIFFERENCE BETWEEN ROBOTS COMPENSATION?
+		//If it is the competition robot then implement, otherwise don't
+			double leftVoltageBias =(isCompetitionRobot? competitionBiasLeft : 0.0);// compBot:practiceBot // Units, (V), Volts
+			double rightVoltageBias = (isCompetitionRobot? competitionBiasRight : 0.0);// compBot:practiceBot // Units, (V), Volts
+		
+		//APPLY BIASES
+			leftVoltage = Math.signum(leftVoltage) * (Math.abs(leftVoltage) + leftVoltageBias);
+			rightVoltage = Math.signum(rightVoltage) * (Math.abs(rightVoltage) + rightVoltageBias);
+		
+		//APPLY {-1:1} DOMAIN TO COMPUTED VALUES BEFORE PASSING TO DRIVETRAIN
+			double leftValue = (Math.abs(leftVoltage) > 12.0) ? Math.signum(leftVoltage) : leftVoltage/12;
+			// Negate one side so that the robot won't drive in circles
+			double rightValue = -((Math.abs(rightVoltage)  > 12.0) ? Math.signum(rightVoltage) : rightVoltage/12);	
+		
+		driveTrain.tankDrive(leftValue, rightValue, false);// Don't square inputs as this will affect accuracy
 	}
 	
 	//Drive for testing the drivetrain so that the needed constants to compute the bias voltages may be derived
@@ -47,6 +62,10 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public void timedTurn(TurnMode mode, double throttle) {
 		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle, false);
 		if (mode == TurnMode.Right) driveTrain.tankDrive(throttle, -throttle, false);
+	}
+	
+	public void turnOff() {
+		driveTrain.tankDrive(0.0, 0.0);
 	}
 	/***********************
 	 * PLAY/RECORD METHODS *

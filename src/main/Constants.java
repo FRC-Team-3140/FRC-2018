@@ -69,24 +69,9 @@ public interface Constants {
 	public final double competitonBotLeftFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
 	public final double competitonBotRightFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
 	
-	//ROBOT BIAS CONSTANTS COMPUTATION
-	public final double competitionBiasLeft = ((testVoltage*competitonBotLeftWheelRadius*competitonBotLeftFreeRPMAtTestVoltage) - 
-												(testVoltage*practiceBotLeftWheelRadius*practiceBotLeftFreeRPMAtTestVoltage)) / 
-												(practiceBotLeftWheelRadius*practiceBotLeftFreeRPMAtTestVoltage);
-	
-	public final double competitionBiasRight = ((testVoltage*competitonBotRightWheelRadius*competitonBotRightFreeRPMAtTestVoltage) - 
-												(testVoltage*practiceBotRightWheelRadius*practiceBotRightFreeRPMAtTestVoltage)) / 
-												(practiceBotRightWheelRadius*practiceBotRightFreeRPMAtTestVoltage);
-	
-	// BIAS VOLTAGES FOR DIFFERENCE BETWEEN ROBOTS COMPENSATION
-	//Currently 0, implement if necessary, (+) voltage biases will make 
-	//that side of the robot move faster and go farther; (-) voltage biases 
-	//will do the opposite. These value should ideally be smaller than 2V.
-	//Start small and increase 0.1V-0.5V at a time until the desired effect is achieved.
-	public final double leftVoltageBias =(isCompetitionRobot? competitionBiasLeft : 0.0);// compBot:practiceBot // Units, (V), Volts
-	public final double rightVoltageBias = (isCompetitionRobot? competitionBiasRight : 0.0);// compBot:practiceBot // Units, (V), Volts
-	
-	
+	public final double practiceBotWeight = 150;//lbs
+	public final double competitionBotWeight = 150;
+		
 	/*************
 	 * CONSTANTS *
 	 *************/
