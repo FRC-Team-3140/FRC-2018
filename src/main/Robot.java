@@ -62,7 +62,7 @@ public class Robot extends ImprovedRobot {
 	// AUTO LOGIC
 	private enum StartPos {LEFT, CENTER, RIGHT}
 	//private enum RobotAction {DO_NOTHING, BASELINE, SWITCH}
-	private enum RobotAction{DO_Nothing, EDGECASE_DoNothing, EDGECASE_Baseline, EDGECASE_DelayedSwitch}
+	private enum RobotAction{DO_Nothing, EDGECASE_DoNothing, EDGECASE_Baseline, EDGECASE_SwitchFromBehind}
 	public static StartPos start_pos;
 	public static RobotAction robot_act;
 	private static SendableChooser<RobotAction> autoChooser;
@@ -114,8 +114,8 @@ public class Robot extends ImprovedRobot {
     		 * Do Nothing- Robot won't move during auto
     		 * EDGECASE_DoNothing- Robot will act upon given game data except in the Edge Case; in which case it does nothing.
     		 * EDGECASE_Baseline- Robot will act upon given game data except in the Edge Case; in which case it crosses the baseline.
-    		 * EDGECASE_DelayedSwitch- Robot will act upon given game data except in the Edge Case; in which case it waits a specified
-    		 * 							length of time and then places a cube in the switch.
+    		 * EDGECASE_SwitchFromBehind- Robot will act upon given game data except in the Edge Case; in which case it drives around 
+    		 * 							the back of the switch to prevent collision and then places the cube in the switch.
     		 */
 		
     		SmartDashboard.putString("Do nothing", "Doesn't move during auto");
@@ -124,7 +124,7 @@ public class Robot extends ImprovedRobot {
     		SmartDashboard.putString("No edgecase", "If edgecase doesn't occur, the robot will do an auto depending on starting" +
     									"position and switch/scale lineup as long as Do Nothing is NOT chosen");
     		SmartDashboard.putString("If edgecase occurs", "If the edgecase occurs, then the robot will either do nothing," +
-    									"cross baseline, or score in the switch after a 5-sec delay depending on the edgecase" +
+    									"cross baseline, or score in the switch from behind depending on the edgecase" +
     									"mode that is chosen");
     		/*
 			// Auto modes
@@ -136,7 +136,7 @@ public class Robot extends ImprovedRobot {
 			autoChooser.addDefault("Do Nothing", RobotAction.DO_Nothing);
 			autoChooser.addObject("Go Robot Go!: EdgeCase_DoNothing", RobotAction.EDGECASE_DoNothing);
 			autoChooser.addObject("Go Robot Go!: EdgeCase_BaseLine", RobotAction.EDGECASE_Baseline);
-			autoChooser.addObject("Go Robot Go!: EdgeCase_DelayedSwitch", RobotAction.EDGECASE_DelayedSwitch);
+			autoChooser.addObject("Go Robot Go!: EdgeCase_DelayedSwitch", RobotAction.EDGECASE_SwitchFromBehind);
 			SmartDashboard.putData("Auto Mode", autoChooser);
 			
 			// Starting Pos
@@ -219,7 +219,8 @@ public class Robot extends ImprovedRobot {
 		if(autoCommand != null)
 		autoCommand.start();
 		*/
-		boolean delayedSwitch = false;
+		
+		//boolean delayedSwitch = false;
 
 		if (robot_act != RobotAction.DO_Nothing) { // Do something chosen
 			switch (start_pos) { // Checks which starting position was chosen
@@ -233,9 +234,9 @@ public class Robot extends ImprovedRobot {
 					fileToPlay = LEFT_Scale;
 				else {
 					if (robot_act == RobotAction.EDGECASE_Baseline) fileToPlay = driveBaseline;
-					else if(robot_act == RobotAction.EDGECASE_DelayedSwitch) {
+					else if(robot_act == RobotAction.EDGECASE_SwitchFromBehind) {
 						fileToPlay = LEFT_RightSwitch;
-						delayedSwitch = true;
+						//delayedSwitch = true;
 					}
 				}
 				break;
@@ -254,21 +255,21 @@ public class Robot extends ImprovedRobot {
 					fileToPlay = RIGHT_RightSwitch;
 				else {
 					if (robot_act == RobotAction.EDGECASE_Baseline) fileToPlay = driveBaseline;
-					else if(robot_act == RobotAction.EDGECASE_DelayedSwitch) {
+					else if(robot_act == RobotAction.EDGECASE_SwitchFromBehind) {
 						fileToPlay = RIGHT_LeftSwitch;
-						delayedSwitch = true;
+						//delayedSwitch = true;
 					}							
 				}
 				break;
 			}
 		
-			if(fileToPlay != null && !delayedSwitch) {
+			if(fileToPlay != null) {// && !delayedSwitch) {
 				competitionFilePicker = new FilePicker(fileToPlay);
 				competitionFilePicker.start(); // Changes path to the chosen file
 				competitionPlayCommand = new StartPlay();
 			}
-			else if(fileToPlay != null && delayedSwitch)
-				competitionPlayCommand = new DelayedPlay(fileToPlay, autoDelay);
+			//else if(fileToPlay != null && delayedSwitch)
+				//competitionPlayCommand = new DelayedPlay(fileToPlay, autoDelay);
 			else
 				competitionPlayCommand = new DoNothing();		
 			} 
