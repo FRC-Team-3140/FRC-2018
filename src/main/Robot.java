@@ -313,8 +313,10 @@ public class Robot extends ImprovedRobot {
 	}
 	
 	private void checkForSmartDashboardUpdates() {
-		if (!isCompetitionMatch && !newFileName.equals(SmartDashboard.getString("New File Name", "")))
+		if (!isCompetitionMatch && !newFileName.equals(SmartDashboard.getString("New File Name", ""))) {
 			newFileName = SmartDashboard.getString("New File Name", "");
+			System.out.println(newFileName);
+		}
 		
 		if (fileChooser.getSelected() != lastSelectedFile && fileChooser.getSelected() != null) {
 			fileChooser.getSelected().start();
