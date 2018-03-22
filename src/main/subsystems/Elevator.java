@@ -53,6 +53,21 @@ public class Elevator extends ImprovedSubsystem {
 		//elevatorMaster.getSensorCollection().setQuadraturePosition(0, 10);
 	}
 	
+	// Checks if the intake is at bottom
+	public boolean isArmAtBottom() {
+		return !stage1BottomSwitch.get() && !stage2BottomSwitch.get();
+	}
+	
+	// Checks if intake is at the top
+	public boolean isArmAtTop() {
+		return !stage1TopSwitch.get() && !stage2TopSwitch.get();
+	}
+
+	// Checks to see if the intake is at the height needed to dump into the switch
+	public boolean isArmAtSwitch() {
+		return switchHeightSwitch.get();
+	}
+	
 	// Sets encoders to 0 if the arm is at the bottom (this helps to avoid offset)
 	@Override
 	public void check() {
@@ -76,15 +91,25 @@ public class Elevator extends ImprovedSubsystem {
 	}
 
 	public void moveWithJoystick(double throttle) {
+		if ((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
+			throttle = 0.0;
 		if (IS_COMPETITION_ROBOT)
 			elevatorMaster.set(DriveHelper.handleDrive(-throttle, ELEVATOR_DEADBAND));
 		else
 			elevatorMaster.set(DriveHelper.handleDrive(throttle, ELEVATOR_DEADBAND));
+	}
+
+	public void move(double throttle) {
+		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
+			throttle = 0.0;
+		if (IS_COMPETITION_ROBOT)
+			elevatorMaster.set(-throttle);
+		else
+			elevatorMaster.set(throttle);
 	}
 	
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new MoveWithJoystick());
 	}
-
 }

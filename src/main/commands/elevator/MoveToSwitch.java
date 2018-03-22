@@ -4,14 +4,21 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 import main.Robot;
 
 public class MoveToSwitch extends TimedCommand {
-	@SuppressWarnings("unused")
-	private static final double switchHeight = 24; // TODO set this in encoder units today... use or remove
+	//public final double switchHeight = 24; //set this in encoder units today... //TODO Should be pulled from constants
 	
-	public MoveToSwitch(double timeout) {
-		super(3);//Timeout forced to a maximum of 3, this is for the emergency case that a limit switch breaks
+	public MoveToSwitch(double timeout) {//3 recommended timeout
+		super(timeout);//Timeout forced to a maximum of 3, this is for the emergency case that a limit switch breaks
 				//So that the elevator will not continue to drive up.
 		requires(Robot.el);
 	}
-	
-	// TODO implement
+
+    @Override
+	protected void execute() {
+    	Robot.el.move(-1);
+    }
+
+    @Override
+	protected boolean isFinished() {
+    	return Robot.el.isArmAtSwitch() || Robot.el.isArmAtTop();
+    }
 }

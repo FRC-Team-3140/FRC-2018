@@ -12,8 +12,10 @@ import main.commands.auto.Baseline;
 import main.commands.auto.CenterToLeftSwitch;
 import main.commands.auto.CenterToRightSwitch;
 import main.commands.auto.DoNothing;
+import main.commands.auto.LeftToLeftScale;
 import main.commands.auto.LeftToLeftSwitch;
 import main.commands.auto.ResetForTeleop;
+import main.commands.auto.RightToRightScale;
 import main.commands.auto.RightToRightSwitch;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
@@ -130,7 +132,7 @@ public class Robot extends ImprovedRobot {
 			if (start_pos == StartPos.LEFT && leftSwitch)
 				autoCommand = new LeftToLeftSwitch();
 			else if (start_pos == StartPos.LEFT && leftScale)
-				autoCommand = new Baseline();
+				autoCommand = new LeftToLeftScale();
 			else if (start_pos == StartPos.CENTER && leftSwitch)
 				autoCommand = new CenterToLeftSwitch();
 			else if (start_pos == StartPos.CENTER && !leftSwitch)
@@ -138,7 +140,7 @@ public class Robot extends ImprovedRobot {
 			else if (start_pos == StartPos.RIGHT && !leftSwitch)
 				autoCommand = new RightToRightSwitch();
 			else if (start_pos == StartPos.RIGHT && !leftScale)
-				autoCommand = new Baseline();
+				autoCommand = new RightToRightScale();
 			else
 				autoCommand = new Baseline();
 		}

@@ -15,7 +15,7 @@ public interface Constants {
 	 *************/
 	// TODO use isCompetitionMatch
 	public final boolean IS_COMPETITION_MATCH = true; // NO_UCD
-	public final boolean IS_COMPETITION_ROBOT = false;
+	public final boolean IS_COMPETITION_ROBOT = true;
 	// FILE OUTPUT PATH
 	public final String OUTPUT_PATH = "/home/lvuser"; // USB output path: /U
 
@@ -81,7 +81,7 @@ public interface Constants {
 	 * will do the opposite. These value should ideally be smaller than 2V.
 	 * Start small and increase 0.1V-0.5V at a time until the desired effect is achieved.
 	 */
-	public final double LEFT_VOLTAGE_BIAS =(IS_COMPETITION_ROBOT? COMPETITION_BIAS_LEFT : 0.0); // compBot:practiceBot // Units, (V), Volts
+	public final double LEFT_VOLTAGE_BIAS = (IS_COMPETITION_ROBOT? COMPETITION_BIAS_LEFT : 0.0); // compBot:practiceBot // Units, (V), Volts
 	public final double RIGHT_VOLTAGE_BIAS = (IS_COMPETITION_ROBOT? COMPETITION_BIAS_RIGHT : 0.0); // compBot:practiceBot // Units, (V), Volts
 	
 	/*************
@@ -117,7 +117,11 @@ public interface Constants {
 	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
 	// TODO use or remove
 	public final double TIMED_LIFT_FULL_HEIGHT_TIME = 78/TIMED_LIFT_MULTIPLIER; // NO_UCD 
-
+	// length of robot
+	public final double ROBOT_LENGTH = 38.5;
+	// subtracted from last move on auto
+	public final double SAFETY_FACTOR = 4.0;
+	
 	/*********
 	 * PORTS *
 	 *********/
