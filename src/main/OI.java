@@ -14,9 +14,9 @@ import main.commands.pneumatics.tilt.SwitchTilt;
 import main.commands.pneumatics.tilt.TiltDown;
 import main.commands.pneumatics.tilt.TiltUp;
 
-public class OI extends ImprovedClass {
-	private XboxController xbox = new XboxController(XBOX_PORT);
-	private XboxController xbox2 = new XboxController(XBOX_PORT_2);
+public class OI extends ImprovedClass { // NO_UCD (use default)
+	private final XboxController xbox = new XboxController(XBOX_PORT);
+	private final XboxController xbox2 = new XboxController(XBOX_PORT_2);
 	
 	public OI() {
 		xbox.setInternalControl(false);

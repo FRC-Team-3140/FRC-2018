@@ -85,7 +85,8 @@ public class Elevator extends ImprovedSubsystem {
 	 * MOVEMENT METHODS *
 	 ********************/
 	
-	public void moveFromPlay(double voltage) {
+	// TODO use or remove
+	public void moveFromPlay(double voltage) { // NO_UCD (unused code)
 		elevatorMaster.set(voltage/12);
 	}
 

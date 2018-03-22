@@ -10,7 +10,7 @@ import main.commands.pneumatics.tilt.TiltUp;;
 
 // TODO use this class
 public class Dance extends ImprovedCommandGroup { // NO_UCD
-	private static double WAIT_TIME=0.2;
+	private final static double WAIT_TIME=0.2;
 	
 	public Dance() {
 		addSequential(new ArmOpen());
