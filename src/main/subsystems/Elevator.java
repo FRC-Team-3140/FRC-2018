@@ -50,7 +50,7 @@ public class Elevator extends ImprovedSubsystem {
 	
 	@Override
 	public void zeroSensors() {
-		//elevatorMaster.getSensorCollection().setQuadraturePosition(0, 10);
+		
 	}
 	
 	// Checks if the intake is at bottom
@@ -71,15 +71,14 @@ public class Elevator extends ImprovedSubsystem {
 	// Sets encoders to 0 if the arm is at the bottom (this helps to avoid offset)
 	@Override
 	public void check() {
-		/*if (isArmAtBottom())
-			zeroSensors();*/
+		
 	}
 	
 	/***************
 	 * RECORD/PLAY *
 	 ***************/
 	public double getElevatorVoltage() {
-		return (elevatorMaster.getMotorOutputVoltage()); //+ elevatorSlave.getMotorOutputVoltage())/2;
+		return (elevatorMaster.getMotorOutputVoltage());
 	}
 	
 	/********************
