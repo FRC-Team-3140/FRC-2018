@@ -3,10 +3,16 @@ package main.commands.elevator;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class MoveFromPlay extends ImprovedCommand {
-	private double voltage;
+public class MoveElevatorFromPlay extends ImprovedCommand {
+
+	@Override
+	protected boolean isFinished() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	/*private double voltage;
 	
-	public MoveFromPlay(double voltage) {
+	public MoveElevatorFromPlay(double voltage) {
 		this.voltage = voltage;
 	}
 	
@@ -17,5 +23,5 @@ public class MoveFromPlay extends ImprovedCommand {
 	@Override
 	protected boolean isFinished() {
 		return true;
-	}
+	}*/
 }

@@ -4,24 +4,25 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 import main.Constants;
 import main.Robot;
 
-
-public class TimedDrive extends TimedCommand implements Constants {
+public class TimedTurn extends TimedCommand implements Constants {
 	private double throttle;
-	
-    public TimedDrive(double throttle, double time) {
-    	super(time);
-    	this.throttle = throttle;
-    	requires(Robot.dt);
-    }
+	private TurnMode mode;
 
-    // Called just before this Command runs the first time
+	public TimedTurn(TurnMode mode, double throttle, double timeout) {
+		super(timeout);
+		this.throttle = throttle;
+		this.mode = mode;
+		requires(Robot.dt);
+	}
+	
+	// Called just before this Command runs the first time
     protected void initialize() {
     }           
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.dt.driveVelocity(throttle, 0.0);
-    }
+		Robot.dt.timedTurn(mode, throttle);//Turning is the same between both robots
+	}
 
     // Called once after isFinished returns true
     protected void end() {
@@ -34,4 +35,5 @@ public class TimedDrive extends TimedCommand implements Constants {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
+
 }

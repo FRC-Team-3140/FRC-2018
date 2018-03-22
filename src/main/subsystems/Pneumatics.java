@@ -4,15 +4,14 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import interfacesAndAbstracts.ImprovedSubsystem;
 
 public class Pneumatics extends ImprovedSubsystem {
-	private boolean down = false;
 
 	public Pneumatics() {
 		shifter.set(EXT);
 		shifter.set(OFF);
 		tilter.set(EXT);
 		tilter.set(OFF);
-		arm.set(EXT);
-		arm.set(OFF);
+		intakeArm.set(EXT);
+		intakeArm.set(OFF);
 //		pto.set(RET);
 //		pto.set(OFF);
 //		forklift.set(EXT);
@@ -31,6 +30,10 @@ public class Pneumatics extends ImprovedSubsystem {
 	
 	public static ArmStates armStates = ArmStates.Off;
 	public static LiftStates liftStates = LiftStates.Off;
+	
+	//Default Robot State at start of match.
+	public static boolean armClose = true;
+	public static boolean tiltUp = true;
 
 	/*******************
 	 * COMMAND METHODS *
@@ -44,25 +47,27 @@ public class Pneumatics extends ImprovedSubsystem {
 	public void shift(DoubleSolenoid.Value v) {
 		shifter.set(v);
 	}
-	
-	public boolean getDown() {
-		return down;
-	}
-	
+
 	// Toggles Arm to open or closed
 	public void toggleArm(DoubleSolenoid.Value v) {
-		if (v == EXT) armStates = ArmStates.Closed;
-		else if (v == RET) armStates = ArmStates.Opened;
-		else { armStates = ArmStates.Off; }
-		arm.set(v);
+		if (v == EXT) armClose = true;
+		else if (v == RET) armClose = false;
+		intakeArm.set(v);
 	}
-	
+		
 	// Changes the tilter to up or down
 	public void tilt(DoubleSolenoid.Value v) {
-		if (v == EXT) liftStates = LiftStates.Down;
-		else if (v == RET) liftStates = LiftStates.Up;
-		else { liftStates = LiftStates.Off; }
+		if (v == EXT) tiltUp = true;
+		else if (v == RET) tiltUp = false;
 		tilter.set(v);
+	}
+	
+	public boolean isArmClose() {
+		return armClose;
+	}
+	
+	public boolean isTiltUp() {
+		return tiltUp;
 	}
 //	
 //	public void shiftPTO(DoubleSolenoid.Value v) {

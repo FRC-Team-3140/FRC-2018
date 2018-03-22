@@ -7,7 +7,6 @@ import main.commands.pneumatics.tilt.TiltUp;
 
 public class PushOutCubeOff extends ImprovedCommandGroup {
 	public PushOutCubeOff() {
-		addSequential(new ArmClose());
     	addSequential(new SpinOff());
     	addSequential(new TiltUp());
     }

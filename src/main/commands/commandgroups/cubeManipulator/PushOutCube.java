@@ -9,6 +9,5 @@ public class PushOutCube extends ImprovedCommandGroup {
 	public PushOutCube() {
     	addSequential(new SpinOut());
     	addSequential(new TiltDown());
-    	addSequential(new ArmOpen());
     }
 }

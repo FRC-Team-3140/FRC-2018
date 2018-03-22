@@ -12,12 +12,12 @@ public class Tilt extends ImprovedCommand {
 		this.v = v;
 	}
 	
-	public void execute(DoubleSolenoid.Value v) {
+	public void execute() {
 		Robot.pn.tilt(v);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 }

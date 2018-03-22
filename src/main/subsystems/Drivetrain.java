@@ -18,26 +18,73 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	// DRIVE FOR TELEOP
 	public void driveVelocity(double throttle, double heading) {
-		driveTrain.arcadeDrive(helper.handleOverPower(helper.handleDeadband(throttle, throttleDeadband)),
-				helper.handleOverPower(helper.handleDeadband(heading, headingDeadband)));
+		if (isCompetitionRobot) {
+			driveTrain.arcadeDrive(helper.handleOverPower(helper.handleDeadband(throttle, throttleDeadband)),
+					helper.handleOverPower(helper.handleDeadband(-heading, headingDeadband)));
+		}
+		else {
+			driveTrain.arcadeDrive(helper.handleOverPower(helper.handleDeadband(-throttle, throttleDeadband)),
+					helper.handleOverPower(helper.handleDeadband(-heading, headingDeadband)));
+		}
 	}
-	
+
 	//Drive for playing back
 	public void driveVoltageTank(double leftVoltage, double rightVoltage) {
-		driveTrain.tankDrive((Math.abs(leftVoltage) > 12.0) ? Math.signum(leftVoltage) : leftVoltage/12, 
-								 -((Math.abs(rightVoltage)  > 12.0) ? Math.signum(rightVoltage) : rightVoltage/12),
-								 false);	
+		/*
+		//ROBOT BIAS CONSTANTS COMPUTATION
+			double competitionBiasLeft = ((Math.abs(leftVoltage)*practiceBotLeftFreeRPMAtTestVoltage*competitionBotWeight*competitonBotLeftWheelRadius) /
+					(practiceBotLeftWheelRadius*competitonBotLeftFreeRPMAtTestVoltage*practiceBotWeight)) - Math.abs(leftVoltage);
+		
+			double competitionBiasRight = ((Math.abs(rightVoltage)*practiceBotRightFreeRPMAtTestVoltage*competitionBotWeight*competitonBotRightWheelRadius) /
+					(practiceBotRightWheelRadius*competitonBotRightFreeRPMAtTestVoltage*practiceBotWeight)) - Math.abs(rightVoltage);
+		
+		//IMPLEMENT BIAS VOLTAGES FOR DIFFERENCE BETWEEN ROBOTS COMPENSATION?
+		//If it is the competition robot then implement, otherwise don't
+			double leftVoltageBias =(isCompetitionRobot? competitionBiasLeft : 0.0);// compBot:practiceBot // Units, (V), Volts
+			double rightVoltageBias = (isCompetitionRobot? competitionBiasRight : 0.0);// compBot:practiceBot // Units, (V), Volts
+		
+		//APPLY BIASES
+			leftVoltage = Math.signum(leftVoltage) * (Math.abs(leftVoltage) + leftVoltageBias);
+			rightVoltage = Math.signum(rightVoltage) * (Math.abs(rightVoltage) + rightVoltageBias);
+		*/
+		//APPLY {-1:1} DOMAIN TO COMPUTED VALUES BEFORE PASSING TO DRIVETRAIN
+			double leftValue = ((Math.abs(leftVoltage) > voltageCompensationVoltage) ? Math.signum(leftVoltage) : leftVoltage/voltageCompensationVoltage);
+			// Negate one side so that the robot won't drive in circles
+			double rightValue = -((Math.abs(rightVoltage)  > voltageCompensationVoltage) ? Math.signum(rightVoltage) : rightVoltage/voltageCompensationVoltage);	
+	
+		driveTrain.tankDrive(leftValue, rightValue, false);// Don't square inputs as this will affect accuracy
 	}
 	
+	//Drive for testing the drivetrain so that the needed constants to compute the bias voltages may be derived
+	public void driveVoltageTankTest(double leftVoltage, double rightVoltage) {
+		driveTrain.tankDrive(leftVoltage/12, rightVoltage/12, false);
+	}
+	
+	public void timedTurn(TurnMode mode, double throttle) {
+		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle, false);
+		if (mode == TurnMode.Right) driveTrain.tankDrive(throttle, -throttle, false);
+	}
+	
+	public void turnOff() {
+		driveTrain.tankDrive(0.0, 0.0);
+	}
 	/***********************
 	 * PLAY/RECORD METHODS *
 	 ***********************/
-	public double getLeftVoltage() {
-		return (leftDriveMaster.getMotorOutputVoltage() + leftDriveSlave1.getMotorOutputVoltage())/2;
+	public double getLeftMasterVoltage() {
+		return (leftDriveMaster.getMotorOutputVoltage()); //+ leftDriveSlave1.getMotorOutputVoltage())/2;
 	}
 	
-	public double getRightVoltage() {
-		return (rightDriveMaster.getMotorOutputVoltage() + rightDriveSlave1.getMotorOutputVoltage())/2;
+	public double getRightMasterVoltage() {
+		return (rightDriveMaster.getMotorOutputVoltage()); //+ rightDriveSlave1.getMotorOutputVoltage())/2;
+	}
+	
+	public double getLeftSlaveVoltage() {
+		return (leftDriveSlave1.getMotorOutputVoltage());
+	}
+	
+	public double getRightSlaveVoltage() {
+		return (rightDriveSlave1.getMotorOutputVoltage());
 	}
 	
 	/*************************
@@ -113,7 +160,20 @@ public class Drivetrain extends ImprovedSubsystem  {
 		reverseTalons(false);
 		setBrakeMode(BRAKE_MODE);
 		setCtrlMode();
-		setVoltageComp(true, voltageCompensationVoltage, 10);
+		setVoltageComp(false, voltageCompensationVoltage, 10);
+	}
+	
+	public void enableVoltageComp(boolean enable) {
+		if(enable) {
+			setVoltageComp(true, voltageCompensationVoltage, 10);
+			System.out.println("Set Voltage Compensation To: " + voltageCompensationVoltage + " Volts.");
+		}
+		else {
+			setVoltageComp(false, voltageCompensationVoltage, 10);
+			System.out.println("Turned Voltage Compensation Off.");
+		}
+
+
 	}
 
 	@Override

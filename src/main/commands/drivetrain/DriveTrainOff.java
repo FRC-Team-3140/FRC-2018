@@ -1,11 +1,11 @@
-package main.commands.elevator;
+package main.commands.drivetrain;
 
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class MoveUp extends ImprovedCommand {	
-    public MoveUp() {
-    	requires(Robot.el);
+public class DriveTrainOff extends ImprovedCommand {
+	public DriveTrainOff() {
+    	requires(Robot.dt);
     }
 
     // Called just before this Command runs the first time
@@ -14,12 +14,11 @@ public class MoveUp extends ImprovedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.el.up();
+    	Robot.dt.turnOff();
     }
-
-    // Make this return true when this Command no longer needs to run execute()
+    
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
