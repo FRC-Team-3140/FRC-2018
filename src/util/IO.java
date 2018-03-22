@@ -17,7 +17,9 @@ import java.util.List;
 import main.Constants;
 
 // TODO use this class
-public class Logger implements Constants { // NO_UCD (unused code)
+public class IO implements Constants { // NO_UCD (unused code)
+	private static final int BUFFER_SIZE=1024;
+	
 	private File file;
 	private FileWriter fw;
 	private FileReader fr;
@@ -27,7 +29,7 @@ public class Logger implements Constants { // NO_UCD (unused code)
 	// Restricted Files List
 	private final List<File> restrictedFilesList = new ArrayList<File>();
 
-	public Logger() {
+	public IO() {
 		// Adding Restricted Files
 		restrictedFilesList.add(new File(OUTPUT_PATH + "/README_File_Paths.txt"));
 		restrictedFilesList.add(new File(OUTPUT_PATH + "/crash_tracking.txt"));
@@ -79,32 +81,27 @@ public class Logger implements Constants { // NO_UCD (unused code)
 
 	// Returns the number of lines within the file located at filePath.
 	public int countLines() throws IOException {
-		InputStream is = new BufferedInputStream(new FileInputStream(file));
-		try {
-			byte[] c = new byte[1024];
+		try (InputStream is = new BufferedInputStream(new FileInputStream(file))) {
+			byte[] c = new byte[BUFFER_SIZE];
 			int count = 0;
 			int readChars = 0;
 			boolean empty = true;
-			while ((readChars = is.read(c)) != -1) {
+			while ((readChars = is.read(c)) != -1) {	
 				empty = false;
 				for (int i = 0; i < readChars; ++i)
 					if (c[i] == '\n')
 						++count;
 			}
 			return (count == 0 && !empty) ? 1 : count;
-		} finally {
-			is.close();
 		}
 	}
 
 	// Returns the specified line of the file located at filePath as a string.
 	public String getLine(int lineNum) {
-		BufferedReader br = null;
 		String chosenLine = null;
-		try {
-			br = new BufferedReader(new FileReader(file));
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			List<String> lines = new ArrayList<>();
-			String line = null;
+			String line;
 			int i = 0;
 			while (i < 5) { // Leave some empty lines at the end of the list which may be utilized as place-holders
 				line = br.readLine();
@@ -121,43 +118,37 @@ public class Logger implements Constants { // NO_UCD (unused code)
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 		return chosenLine;
 	}
 
 	// Removes the Nth line located within the file at filePath.
-	public void deleteNthLine(int NthLineNum) throws IOException {
-		RandomAccessFile raf = new RandomAccessFile(file, "rw");
-
-		// Leave the n first lines unchanged.
-		for (int i = 1; i < NthLineNum; i++)
+	public void deleteNthLine(int NthLineNum) {
+		try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
+	
+			// Leave the n first lines unchanged.
+			for (int i = 1; i < NthLineNum; i++)
+				raf.readLine();
+	
+			// Shift remaining lines upwards.
+			long writePos = raf.getFilePointer();
 			raf.readLine();
-
-		// Shift remaining lines upwards.
-		long writePos = raf.getFilePointer();
-		raf.readLine();
-		long readPos = raf.getFilePointer();
-
-		byte[] buf = new byte[1024];
-		int n;
-		while (-1 != (n = raf.read(buf))) {
-			raf.seek(writePos);
-			raf.write(buf, 0, n);
-			readPos += n;
-			writePos += n;
-			raf.seek(readPos);
+			long readPos = raf.getFilePointer();
+	
+			byte[] buf = new byte[1024];
+			int n;
+			while (-1 != (n = raf.read(buf))) {
+				raf.seek(writePos);
+				raf.write(buf, 0, n);
+				readPos += n;
+				writePos += n;
+				raf.seek(readPos);
+			}
+	
+			raf.setLength(writePos);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
-		raf.setLength(writePos);
-		raf.close();
 	}
 
 	public void trim() {
@@ -213,12 +204,7 @@ public class Logger implements Constants { // NO_UCD (unused code)
 			e.printStackTrace();
 		}
 
-		for (int i = 1; i < firstNonZeroValueLine; i++)
-			try {
-				deleteNthLine(1);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		for (int i = 1; i < firstNonZeroValueLine; i++) deleteNthLine(1);
 	}
 
 	public void changePath(String nameOrPath, boolean useFileLookup) {
@@ -267,7 +253,7 @@ public class Logger implements Constants { // NO_UCD (unused code)
 		List<File> textFiles = new ArrayList<File>();
 		File dir = new File(path + "/");
 		for (File file : dir.listFiles()) {
-			if (file.getName().toLowerCase().endsWith((".txt")) && !fileInRestrictedList(file)) {
+			if (file.getName().toLowerCase().endsWith((".txt")) && !restrictedFilesList.contains(file)) {
 				textFiles.add(file);
 			}
 		}
@@ -277,13 +263,6 @@ public class Logger implements Constants { // NO_UCD (unused code)
 			allFiles[i] = textFiles.get(i);
 
 		return allFiles;
-	}
-
-	private boolean fileInRestrictedList(File file) {
-		for (File f : restrictedFilesList)
-			if (f.getName().toLowerCase().equals(file.getName().toLowerCase()))
-				return true;
-		return false;
 	}
 
 	public String getWorkingFile() {
