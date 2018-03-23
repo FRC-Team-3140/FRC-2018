@@ -15,6 +15,7 @@ public interface Constants {
 	public final boolean isCompetitionMatch = true;
 	public final boolean isCompetitionRobot = true;
 	
+	
 	// FILE OUTPUT PATH
 	public final String outputPath = "/home/lvuser"; // USB output path: /U
 	
@@ -119,6 +120,10 @@ public interface Constants {
 	public final double timedLiftTime = 28.5/timedLiftMultiplier;
 	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
 	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier;
+	// length of robot
+	public final double robotLength = 38.5;
+	// subtracted from last move on auto
+	public final double safetyFactor = 4.0;
 
 	
 	// ELEVATOR LENGTHS
