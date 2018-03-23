@@ -4,6 +4,7 @@ package main;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -58,6 +59,13 @@ public class Robot extends ImprovedRobot {
 	//private String fileToPlay = null;
 	//private static Command competitionPlayCommand;
 	private static Command autoCommand;
+	
+	class AutoCommandGroup extends CommandGroup {
+		public AutoCommandGroup(Command auto, boolean reset) {
+			addSequential(auto);
+			if (reset) addSequential(new ResetForTeleop());
+		}
+	}
 	
 	@Override
 	public void robotInit() {
@@ -227,9 +235,10 @@ public class Robot extends ImprovedRobot {
 			}
 			
 			if(autoCommand != null)
-			autoCommand.start();
-				
-			
+			(autoCommand=new AutoCommandGroup(
+					autoCommand,
+					!(autoCommand instanceof Baseline || autoCommand instanceof DoNothing))
+					).start();
 			
 			//boolean leftScale = (gmsg.charAt(1) == 'L');
 			//boolean delayedSwitch = false;
@@ -303,7 +312,6 @@ public class Robot extends ImprovedRobot {
 
 	@Override
 	public void teleopInit() {
-		new ResetForTeleop().start();
 		if(autoCommand != null && autoCommand.isRunning())
 			autoCommand.cancel();
 		/*
