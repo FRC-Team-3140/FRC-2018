@@ -116,8 +116,8 @@ public class Robot extends ImprovedRobot {
 			autoChooser = new SendableChooser<>();
 			autoChooser.addDefault("Do Nothing", RobotAction.DO_NOTHING);
 			autoChooser.addObject("Baseline", RobotAction.BASELINE);
-			autoChooser.addObject("Switch", RobotAction.SWITCH);
-			autoChooser.addObject("Scale", RobotAction.SCALE);
+			autoChooser.addObject("Switch Priority", RobotAction.SWITCH);
+			autoChooser.addObject("Scale Priority", RobotAction.SCALE);
 			
 			/*
 			autoChooser.addObject("Go Robot Go!: EdgeCase_DoNothing", () -> {
@@ -189,31 +189,46 @@ public class Robot extends ImprovedRobot {
 			start_pos = startPos.getSelected();
 			robot_act = autoChooser.getSelected();
 			
-			if(robot_act == RobotAction.DO_NOTHING)
+			if(robot_act == RobotAction.DO_NOTHING)//Do Nothing
 				autoCommand = new DoNothing();
-			else if(robot_act == RobotAction.BASELINE)
+			else if(robot_act == RobotAction.BASELINE)//Baseline
 				autoCommand = new Baseline();
-			else {
-				if(start_pos == StartPos.LEFT && leftSwitch && !leftScale)
-					autoCommand = new LeftToLeftSwitch();
-				else if(start_pos == StartPos.LEFT && leftScale)
-					autoCommand = new LeftToLeftScale();
-				else if(start_pos == StartPos.CENTER && leftSwitch)
-					autoCommand = new CenterToLeftSwitch();
-				else if(start_pos == StartPos.CENTER && !leftSwitch)
-					autoCommand = new CenterToRightSwitch();
-				else if(start_pos == StartPos.RIGHT && !leftSwitch && leftScale)
-					autoCommand = new RightToRightSwitch();
-				else if(start_pos == StartPos.RIGHT && !leftScale)
-					autoCommand = new RightToRightScale();				
-				else
-					autoCommand = new Baseline();
+			else if(robot_act == RobotAction.SWITCH){//Priority Switch
+				if(start_pos == StartPos.LEFT) {
+					if(leftSwitch) autoCommand = new LeftToLeftSwitch();
+					else if(leftScale) autoCommand = new LeftToLeftScale();
+					else autoCommand = new Baseline();					
+				}
+				else if(start_pos == StartPos.CENTER) {
+					if(leftSwitch) autoCommand = new CenterToLeftSwitch();
+					else autoCommand = new CenterToRightSwitch();
+				}
+				else if(start_pos == StartPos.RIGHT) {
+					if(!leftSwitch) autoCommand = new RightToRightSwitch();
+					else if(!leftScale) autoCommand = new RightToRightScale();
+					else autoCommand = new Baseline();					
+				}
 			}
-			//autoCommand = new Baseline();
+			else {//Priority Scale
+				if(start_pos == StartPos.LEFT) {
+					if(leftScale) autoCommand = new LeftToLeftScale();
+					else if(leftSwitch) autoCommand = new LeftToLeftSwitch();
+					else autoCommand = new Baseline();					
+				}
+				else if(start_pos == StartPos.CENTER) {
+					if(leftSwitch) autoCommand = new CenterToLeftSwitch();
+					else autoCommand = new CenterToRightSwitch();
+				}
+				else if(start_pos == StartPos.RIGHT) {
+					if(!leftScale) autoCommand = new RightToRightScale();
+					else if(!leftSwitch) autoCommand = new RightToRightSwitch();
+					else autoCommand = new Baseline();				
+				}
+			}
+			
 			if(autoCommand != null)
 			autoCommand.start();
-			
-			
+				
 			
 			
 			//boolean leftScale = (gmsg.charAt(1) == 'L');
