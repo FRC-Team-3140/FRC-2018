@@ -92,12 +92,11 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		addSequential(new WaitCommand(0.5));
 
 		//Shifting
-		addSequential(new TimedDrive(1.0, 2.5));
-		addSequential(new TimedDrive(1.0, 2.5));
+		addSequential(new TimedDrive(1.0, 1.5));
 		addParallel(new ShiftUp());
-		addSequential(new TimedDrive(1.0, 2.5));
+		addSequential(new TimedDrive(1.0, 1.5));
 		addParallel(new ShiftDown());
-		addSequential(new TimedDrive(1.0, 2.5));
+		addSequential(new TimedDrive(1.0, 1.5));
 		
 		//Stop & Wait
 		addSequential(new DriveTrainOff());
@@ -171,7 +170,7 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		 */
 		//Spin In
 		addSequential(new SpinIn());
-		addParallel(new WaitCommand(2));//Force previous command to run for 1 second
+		addSequential(new WaitCommand(2));//Force previous command to run for 2 seconds
 		addSequential(new SpinOff());
 		
 		//Wait
@@ -179,7 +178,7 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		
 		//Spin Out
 		addSequential(new SpinOut());
-		addParallel(new WaitCommand(2));//Force previous command to run for 1 second
+		addSequential(new WaitCommand(2));//Force previous command to run for 2 seconds
 		addSequential(new SpinOff());
 	}
 }
