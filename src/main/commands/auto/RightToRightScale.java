@@ -19,11 +19,13 @@ public class RightToRightScale extends ImprovedCommandGroup {
 		addSequential(new TiltDown());
 		addSequential(new WaitCommand(1));
 		//addSequential(new TimedLift(timedLiftPercent, timedLiftFullHeightTime));
-		addSequential(new MoveToTop(5));
+		//addSequential(new MoveToTop(5));
 		addSequential(new TimedDrive(timedDrivePercent, 67.3/timedDistanceMultiplier));
 		addSequential(new WaitCommand(0.1));
+		/*
 		addSequential(new DropCube());
 		addSequential(new WaitCommand(1));
-		addSequential(new DropCubeOff());		
+		addSequential(new DropCubeOff());	
+		*/	
 	}
 }

@@ -16,8 +16,8 @@ public class CenterToLeftSwitch extends ImprovedCommandGroup {
 		addSequential(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
 		addSequential(new TimedDrive(timedDrivePercent, 69.5/timedDistanceMultiplier));
 		addSequential(new TimedTurn(TurnMode.Right, timedTurnPercent, timedTurn90degTime));
-		addSequential(new WaitCommand(1));
-		//addSequential(new TimedLift(timedLiftPercent, timedLiftTime));
+		//addSequential(new WaitCommand(1));
+		addSequential(new TimedLift(timedLiftPercent, timedLiftTime));
 		addSequential(new MoveToSwitch(5));
 		addSequential(new TimedDrive(timedDrivePercent, 60.375/timedDistanceMultiplier));
 		addSequential(new WaitCommand(0.1));

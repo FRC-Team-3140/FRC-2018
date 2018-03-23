@@ -45,7 +45,7 @@ public class Robot extends ImprovedRobot {
     */
 	// AUTO LOGIC
 	private enum StartPos {LEFT, CENTER, RIGHT}
-	private enum RobotAction {DO_NOTHING, BASELINE, SWITCH}
+	private enum RobotAction {DO_NOTHING, BASELINE, SWITCH, SCALE}
 	//private enum RobotAction{DO_Nothing, EDGECASE_DoNothing, EDGECASE_Baseline, EDGECASE_DelayedSwitch}
 	// TODO start_pos and robot_act could probably be removed
 	public static StartPos start_pos;
@@ -117,6 +117,8 @@ public class Robot extends ImprovedRobot {
 			autoChooser.addDefault("Do Nothing", RobotAction.DO_NOTHING);
 			autoChooser.addObject("Baseline", RobotAction.BASELINE);
 			autoChooser.addObject("Switch", RobotAction.SWITCH);
+			autoChooser.addObject("Scale", RobotAction.SCALE);
+			
 			/*
 			autoChooser.addObject("Go Robot Go!: EdgeCase_DoNothing", () -> {
 				robot_act = RobotAction.EDGECASE_DoNothing;
@@ -192,18 +194,18 @@ public class Robot extends ImprovedRobot {
 			else if(robot_act == RobotAction.BASELINE)
 				autoCommand = new Baseline();
 			else {
-				if(start_pos == StartPos.LEFT && leftSwitch)
+				if(start_pos == StartPos.LEFT && leftSwitch && !leftScale)
 					autoCommand = new LeftToLeftSwitch();
 				else if(start_pos == StartPos.LEFT && leftScale)
-					autoCommand = new Baseline();
+					autoCommand = new LeftToLeftScale();
 				else if(start_pos == StartPos.CENTER && leftSwitch)
 					autoCommand = new CenterToLeftSwitch();
 				else if(start_pos == StartPos.CENTER && !leftSwitch)
 					autoCommand = new CenterToRightSwitch();
-				else if(start_pos == StartPos.RIGHT && !leftSwitch)
+				else if(start_pos == StartPos.RIGHT && !leftSwitch && leftScale)
 					autoCommand = new RightToRightSwitch();
 				else if(start_pos == StartPos.RIGHT && !leftScale)
-					autoCommand = new Baseline();				
+					autoCommand = new RightToRightScale();				
 				else
 					autoCommand = new Baseline();
 			}
@@ -241,7 +243,7 @@ public class Robot extends ImprovedRobot {
 					else
 						fileToPlay = MID_RightSwitch;
 					break;
-				case RIGHT:
+				case RIGHT
 					if (!leftSwitch && !leftScale)
 						fileToPlay = RIGHT_SwitchAndScale;
 					else if (leftSwitch && !leftScale)
