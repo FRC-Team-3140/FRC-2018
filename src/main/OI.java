@@ -2,6 +2,7 @@ package main;
 
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
+import main.Constants.TurnMode;
 import main.commands.commandgroups.cubeManipulator.DropCube;
 import main.commands.commandgroups.cubeManipulator.DropCubeOff;
 import main.commands.commandgroups.cubeManipulator.IntakeCube;
@@ -35,6 +36,14 @@ public class OI extends ImprovedClass {
 		// Shoots out without elevator
 		xbox.leftJoystickPress.whenPressed(new ShiftUp());
 		xbox.leftJoystickPress.whenReleased(new ShiftDown());
+		
+		/*
+		// auto testing calibration
+		xbox.a.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
+		xbox.x.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
+		xbox.y.whenPressed(new TimedDrive(timedDrivePercent, 2.5));
+		*/
+		
 		//xbox.rightBumper.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));
 		//xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
 		//xbox.y.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));

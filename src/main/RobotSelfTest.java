@@ -138,6 +138,7 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		/***********************
 		 * Elevator System Test
 		 */
+		/*
 		//Lift To Switch Height
 		addSequential(new MoveToSwitch(3));
 		
@@ -146,9 +147,11 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		
 		//Elevator To Bottom
 		addSequential(new MoveToBottom(3));
-		
+		*/
 		//Wait
 		addSequential(new WaitCommand(0.5));
+		addSequential(new TiltDown());
+		
 		
 		//Lift To Max Height
 		addSequential(new MoveToTop(5));

@@ -17,8 +17,8 @@ public class RightToRightScale extends ImprovedCommandGroup {
 		// distance from start to scale  minus robot length
 		addSequential(new TimedDrive(timedDrivePercent, (260-robotLength/2)/timedDistanceMultiplier));
 		addSequential(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
-		addSequential(new TiltDown());
-		addSequential(new WaitCommand(1));
+		//addSequential(new TiltDown());
+		addSequential(new WaitCommand(0.25));
 		//addSequential(new TimedLift(timedLiftPercent, timedLiftFullHeightTime));
 		addSequential(new MoveToTop(5));
 		// adjusted distance to scale
