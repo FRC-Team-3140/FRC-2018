@@ -115,7 +115,7 @@ public interface Constants {
 	public final double timedTurn45degTime = 0.35;
 	
 	public final double timedLiftPercent = 0.75;//DO NOT CHANGE
-	public final double timedLiftMultiplier = 22.125;// (in/s)
+	public final double timedLiftMultiplier = 41.6;// (in/s)
 	//Time to lift the elevator 3ft at timedLiftPercent of available power.
 	public final double timedLiftTime = 28.5/timedLiftMultiplier;
 	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.

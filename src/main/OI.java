@@ -42,7 +42,7 @@ public class OI extends ImprovedClass {
 		xbox.a.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
 		xbox.x.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
 		xbox.y.whenPressed(new TimedDrive(timedDrivePercent, 2.5));
-		*/
+	*/
 		
 		//xbox.rightBumper.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));
 		//xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
@@ -64,9 +64,11 @@ public class OI extends ImprovedClass {
 		//xbox2.b.whenReleased(new DropCubeOff());
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
+		/*
 		xbox2.x.whenPressed(new MoveToBottom(1.5));
-		//xbox2.y.whenPressed(new MoveToSwitch(3));
 		xbox2.b.whenPressed(new MoveToTop(3));
+		*/
+		//xbox2.y.whenPressed(new MoveToSwitch(3));
 		//xbox2.x.whenPressed(new MoveToBottom(3));
 		//xbox2.y.whenPressed(new MoveToSwitch(3));
 		//xbox2.b.whenPressed(new MoveToTop(5));

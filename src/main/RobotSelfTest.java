@@ -149,8 +149,9 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		*/
 		//Wait
 		addSequential(new WaitCommand(0.5));
-		addSequential(new TiltDown());
 		
+		//Tilt Down to Prevent Collision
+		addSequential(new TiltDown());		
 		
 		//Lift To Max Height
 		addSequential(new MoveToTop(5));
@@ -180,5 +181,8 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		addSequential(new SpinOut());
 		addSequential(new WaitCommand(2));//Force previous command to run for 2 seconds
 		addSequential(new SpinOff());
+		
+		//Clean Up and put us Back in Starting Config
+		addSequential(new TiltUp());
 	}
 }
