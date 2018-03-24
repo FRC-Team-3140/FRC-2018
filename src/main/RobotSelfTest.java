@@ -92,11 +92,11 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		addSequential(new WaitCommand(0.5));
 
 		//Shifting
-		addSequential(new TimedDrive(1.0, 1.5));
+		addSequential(new TimedDrive(1.0, 1));
 		addParallel(new ShiftUp());
-		addSequential(new TimedDrive(1.0, 1.5));
+		addSequential(new TimedDrive(1.0, 1));
 		addParallel(new ShiftDown());
-		addSequential(new TimedDrive(1.0, 1.5));
+		addSequential(new TimedDrive(1.0, 1));
 		
 		//Stop & Wait
 		addSequential(new DriveTrainOff());
@@ -154,13 +154,13 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		addSequential(new TiltDown());		
 		
 		//Lift To Max Height
-		addSequential(new MoveToTop(5));
+		addSequential(new MoveToTop(3));
 			
 		//Wait
 		addSequential(new WaitCommand(0.5));
 		
 		//ElevatorToBottom
-		addSequential(new MoveToBottom(3));
+		addSequential(new MoveToBottom(1.5));
 			
 		//Wait
 		addSequential(new WaitCommand(0.5));				
@@ -171,7 +171,7 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		 */
 		//Spin In
 		addSequential(new SpinIn());
-		addSequential(new WaitCommand(2));//Force previous command to run for 2 seconds
+		addSequential(new WaitCommand(1));//Force previous command to run for 1 seconds
 		addSequential(new SpinOff());
 		
 		//Wait
@@ -179,7 +179,7 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		
 		//Spin Out
 		addSequential(new SpinOut());
-		addSequential(new WaitCommand(2));//Force previous command to run for 2 seconds
+		addSequential(new WaitCommand(1));//Force previous command to run for 1 seconds
 		addSequential(new SpinOff());
 		
 		//Clean Up and put us Back in Starting Config
