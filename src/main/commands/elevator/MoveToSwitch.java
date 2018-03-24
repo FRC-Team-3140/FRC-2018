@@ -6,8 +6,8 @@ import main.Robot;
 public class MoveToSwitch extends TimedCommand {
 	//public final double switchHeight = 24; //set this in encoder units today... //TODO Should be pulled from constants
 	
-	public MoveToSwitch(double timeout) {//3 recommended timeout
-		super(timeout);//Timeout forced to a maximum of 3, this is for the emergency case that a limit switch breaks
+	public MoveToSwitch(double timeout) {//1.5 recommended timeout
+		super(timeout);//Timeout forced to a maximum of 1.5, this is for the emergency case that a limit switch breaks
 				//So that the elevator will not continue to drive up.
 		requires(Robot.el);
 	}

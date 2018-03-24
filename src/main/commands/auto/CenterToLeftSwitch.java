@@ -21,7 +21,7 @@ public class CenterToLeftSwitch extends ImprovedCommandGroup {
 
 		//addSequential(new WaitCommand(1));
 		//addSequential(new TimedLift(timedLiftPercent, timedLiftTime));
-		addSequential(new MoveToTop(5));
+		addSequential(new MoveToTop(3));
 		//addSequential(new MoveToSwitch(5));
 		addSequential(new TimedDrive(timedDrivePercent, 90.375/timedDistanceMultiplier));
 		addSequential(new WaitCommand(0.1));

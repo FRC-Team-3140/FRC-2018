@@ -20,7 +20,7 @@ public class CenterToRightSwitch extends ImprovedCommandGroup {
 		addSequential(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
 		addSequential(new WaitCommand(0.25));
 		//addSequential(new TimedLift(timedLiftPercent, timedLiftTime));
-		addSequential(new MoveToTop(5));
+		addSequential(new MoveToTop(3));
 
 		//addSequential(new MoveToSwitch(5));
 		addSequential(new TimedDrive(timedDrivePercent, 90.375/timedDistanceMultiplier));

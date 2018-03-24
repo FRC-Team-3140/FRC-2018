@@ -18,7 +18,7 @@ public class LeftToLeftScale extends ImprovedCommandGroup {
 		//addSequential(new TiltDown());
 		addSequential(new WaitCommand(0.25));
 		//addSequential(new TimedLift(timedLiftPercent, timedLiftFullHeightTime));
-		addSequential(new MoveToTop(5));
+		addSequential(new MoveToTop(3));
 		// adjusted distance to scale
 		addSequential(new TimedDrive(timedDrivePercent, (60.5 - safetyFactor)/timedDistanceMultiplier));
 		addSequential(new WaitCommand(0.1));
