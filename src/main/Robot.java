@@ -208,7 +208,7 @@ public class Robot extends ImprovedRobot {
 						isSwitch = true;
 						autoCommand = new LeftToLeftSwitch();
 					}
-					else if(leftScale) autoCommand = new LeftToLeftScale();
+					//else if(leftScale) autoCommand = new LeftToLeftScale();
 					else autoCommand = new Baseline();					
 				}
 				else if(start_pos == StartPos.CENTER) {
@@ -221,7 +221,7 @@ public class Robot extends ImprovedRobot {
 						isSwitch = true;
 						autoCommand = new RightToRightSwitch();
 					}
-					else if(!leftScale) autoCommand = new RightToRightScale();
+					//else if(!leftScale) autoCommand = new RightToRightScale();
 					else autoCommand = new Baseline();					
 				}
 			}
