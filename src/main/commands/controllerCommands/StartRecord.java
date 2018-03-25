@@ -12,6 +12,7 @@ public class StartRecord extends ImprovedCommand {
     protected void initialize() {
     	Robot.dt.enableVoltageComp(true);
     	Robot.lg.resetForWrite();
+    	Record.reachedFirstNonZero(false); // init or end?
     	Record.okToRecord(true);
     }
 
@@ -29,6 +30,7 @@ public class StartRecord extends ImprovedCommand {
     protected void end() {
     	Record.okToRecord(false);
     	//Robot.lg.trim();
+    	Record.reachedFirstNonZero(false);
     	Robot.dt.enableVoltageComp(false);
     }
 
