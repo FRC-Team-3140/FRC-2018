@@ -226,9 +226,9 @@ public class Drivetrain extends ImprovedSubsystem  {
             yAxisRate = Math.sin(rollAngleRadians) * -1;
         }
         
-        Robot.dt
+        Robot.dt.driveVelocity(xAxisRate, yAxisRate);
         
-        myRobot.mecanumDrive_Cartesian(xAxisRate, yAxisRate, xbox.getTwist(),0);
+        //myRobot.mecanumDrive_Cartesian(xAxisRate, yAxisRate, xbox.getTwist(),0);
         Timer.delay(0.005);		// wait for a motor update time
     }
 	

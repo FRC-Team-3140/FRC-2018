@@ -413,6 +413,8 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putBoolean("Second Stage Top", !stage2TopSwitch.get());
 		SmartDashboard.putBoolean("Switch Height", switchHeightSwitch.get());
 		
+		dt.autoBalance();
+		
 		/*
 		// Knowing where you're at
 		if(!isCompetitionMatch) {
