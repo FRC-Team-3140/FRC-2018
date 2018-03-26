@@ -32,16 +32,16 @@ public class Elevator extends ImprovedSubsystem {
 	}
 		
 	private void setAccelAndVeloDefaults() {
-		elevatorMaster.configMotionCruiseVelocity(cruiseVelocity, 10);
-		elevatorMaster.configMotionAcceleration(acceleration, 10);
+		elevatorMaster.configMotionCruiseVelocity(cruiseVelocity, timeout);
+		elevatorMaster.configMotionAcceleration(acceleration, timeout);
 	}
 	
 	private void setPIDValues() {
 		elevatorMaster.selectProfileSlot(elevatorIdx, pidIdx);
-		elevatorMaster.config_kF(elevatorIdx, fGain, 10);
-		elevatorMaster.config_kP(elevatorIdx, elevator_kP, 10);
-		elevatorMaster.config_kI(elevatorIdx, elevator_kI, 10);
-		elevatorMaster.config_kD(elevatorIdx, elevator_kD, 10);
+		elevatorMaster.config_kF(elevatorIdx, fGain, timeout);
+		elevatorMaster.config_kP(elevatorIdx, elevator_kP, timeout);
+		elevatorMaster.config_kI(elevatorIdx, elevator_kI, timeout);
+		elevatorMaster.config_kD(elevatorIdx, elevator_kD, timeout);
 	}
 	
 	private void setMotionMagicDefaults() {
@@ -108,10 +108,9 @@ public class Elevator extends ImprovedSubsystem {
 	public boolean isArmAtTop() {
 		return !stage1TopSwitch.get() && !stage2TopSwitch.get();
 	}
-	
-	// Checks to see if the intake is at the height needed to dump into the switch
+		
 	public boolean isArmAtSwitch() {
-		return switchHeightSwitch.get();
+		return isIntakeAtPos(switchHeight);
 	}
 	
 	// Sets encoders to 0 if the arm is at the bottom (this helps to avoid offset)
@@ -141,6 +140,7 @@ public class Elevator extends ImprovedSubsystem {
 		return elevatorMaster.getSensorCollection().getQuadraturePosition() / countsPerRev;
 	}
 	
+	// Returns the distance travelled in native encoder units
 	public double getTicksTravelled() {
 		return elevatorMaster.getSensorCollection().getQuadraturePosition();
 	}

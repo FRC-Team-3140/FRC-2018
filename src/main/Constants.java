@@ -61,7 +61,6 @@ public interface Constants {
 	public final double practiceBotRightWheelRadius = 2;//Update with real measurements
 	public final double competitonBotLeftWheelRadius = 2;//Update with real measurements
 	public final double competitonBotRightWheelRadius = 2;//Update with real measurements
-
 	
 	public final double testVoltage = 8.0;//Subject to change
 	public final double practiceBotLeftFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
@@ -106,13 +105,15 @@ public interface Constants {
 	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier;
 
 	
-	// ELEVATOR LENGTHS
+	// ELEVATOR LENGTHS 
+	// CALIBRATE THESE
 	public final double spindleDiameter = 2; //placeholder
 	public final double spindleCircum = Math.PI * spindleDiameter;
 	public final double elevatorHeight = 86;  
 	public final double elevatorTolerance = 1;
-	public final double switchHeight = 24; //set this in encoder units today...
+	public final double switchHeight = 24;
 	public final double scaleHeight = 70; 
+	public final double elevatorBottom = 0;
 	
 	// ELEVATOR SPEEDS
 	public final int cruiseVelocity = 125000; //native units of encoder per 100 ms
@@ -164,14 +165,6 @@ public interface Constants {
 	public final int SHIFTER_EXT = (isCompetitionRobot? 5:2);// compBot:practiceBot
 	public final int SHIFTER_RET = (isCompetitionRobot? 2:5);// compBot:practiceBot
 	
-	// CLIMB AND RELATED PNEUMATICS
-//	public final int PTO_EXT = 6;
-//	public final int PTO_RET = 7;
-//	public final int FORK_EXT = 1;
-//	public final int FORK_RET = 2;
-//	public final int HOOK_EXT = 3;
-//	public final int HOOK_RET = 4;
-//	
 	// SWITCHES
 	public final int STAGE1_Bottom = 0;
 	public final int STAGE1_Top = 1;

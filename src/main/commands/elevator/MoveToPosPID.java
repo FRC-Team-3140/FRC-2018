@@ -4,10 +4,11 @@ import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
 public class MoveToPosPID extends ImprovedCommand {
-	private int pos;
+	private double pos;
 	
-	public MoveToPosPID(int pos) {
+	public MoveToPosPID(double pos) {
 		this.pos = pos;
+		requires(Robot.el);
 	}
 	
 	protected void execute() {

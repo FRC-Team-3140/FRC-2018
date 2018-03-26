@@ -4,9 +4,10 @@ import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
 public class MoveToPosDumb extends ImprovedCommand {
-	private int pos;
-	public MoveToPosDumb(int pos) {
+	private double pos;
+	public MoveToPosDumb(double pos) {
 		this.pos = pos;
+		requires(Robot.el);
 	}
 	
 	protected void execute() {
