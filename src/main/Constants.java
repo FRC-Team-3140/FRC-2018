@@ -113,11 +113,8 @@ public interface Constants {
 	public final double elevatorTolerance = 1;
 	public final double switchHeight = 24; //set this in encoder units today...
 	public final double scaleHeight = 70; 
-	public final double nearSetpoint = 12;
 	
 	// ELEVATOR SPEEDS
-	public final double defaultElevatorSpeed = 0.8;
-	public final double slowElevatorSpeed = 0.2;
 	public final int cruiseVelocity = 125000; //native units of encoder per 100 ms
 	public final int acceleration = 62500; //native units of encoder per 100 ms per second
 	
