@@ -11,11 +11,6 @@ import main.commands.elevator.MoveWithJoystick;
 
 public class Elevator extends ImprovedSubsystem {
 	
-	// GET F-GAIN
-	// TEST ERROR AND CALCULATE P
-	// TEST FOR COASTING- BRAKE MODE WORKS GREAT
-
-			
 	private EncoderHelper encoderHelper = new EncoderHelper();
 	private DriveHelper driveHelper = new DriveHelper(7.5);
 	
@@ -133,20 +128,6 @@ public class Elevator extends ImprovedSubsystem {
 		else return false;
 	}
 	
-	// Returns whether or not the elevator is close to set position
-	private boolean isIntakeNearPos(double pos, double near) {
-		if (getDistanceFromPos(pos) < near && getDistanceFromPos(pos) > -1* near) {
-			return true;
-		}
-		else return false;
-	}
-	
-	// Returns if the intake is currently below the desired position or not
-	private boolean isIntakeBelowPos(double pos) {
-		if (getDistanceFromPos(pos) > 0) return true;
-		else return false;
-	}
-	
 	/**********************
 	 * ENC OUTPUT METHODS *
 	 **********************/
@@ -203,7 +184,6 @@ public class Elevator extends ImprovedSubsystem {
 	}*/
 	
 	public void moveToPosPID(double pos) {
-		setMotionMagicDefaults();
 		elevatorMaster.set(ControlMode.MotionMagic, inchesToElevatorEncoderTicks(pos));
 	}
 	
@@ -217,8 +197,6 @@ public class Elevator extends ImprovedSubsystem {
 	}
 	
 	public void move(double throttle) {
-		//if(throttle == 0 || (throttle > 0 && !isArmAtTop()) || (throttle < 0 && !isArmAtBottom()))
-			//elevatorMaster.set(throttle);
 		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
 			throttle = 0.0;
 		if (isCompetitionRobot)
@@ -227,38 +205,12 @@ public class Elevator extends ImprovedSubsystem {
 			elevatorMaster.set(throttle);
 	}
 	
-	// Moves fast to a position if far away, slows down when it gets closer, and stops when it reaches
-	// the position within a tolerance.
 	public void moveToPosDumb(double pos) {
 		double posTicks = inchesToElevatorEncoderTicks(pos);
 		if(posTicks - getTicksTravelled() > 0) move(-0.8);
 		else if(posTicks - getTicksTravelled() < 0) move(0.8);
 	}
 
-	//public void moveDown() {
-		/*if (isArmAtBottom()) {
-			elevatorMaster.set(PERCENT_VBUS_MODE, 0);
-		}
-		else if (isIntakeNearPos(0, nearSetpointDown)) {
-			elevatorMaster.set(getDistanceTravelled() * (-1/36));
-		}
-		else {
-			elevatorMaster.set(-1 * defaultElevatorSpeed);
-		}
-	}
-	
-	public void moveUp() {
-		/*if (isArmAtTop()) {
-			elevatorMaster.set(0);
-		}
-		else if(isIntakeNearPos(elevatorHeight, nearSetpoint)) {
-			elevatorMaster.set(slowElevatorSpeed);
-		}
-		else {
-			elevatorMaster.set(defaultElevatorSpeed);
-		}
-	}*/
-	
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new MoveWithJoystick());
