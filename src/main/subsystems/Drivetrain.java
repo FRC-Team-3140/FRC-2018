@@ -1,19 +1,43 @@
 package main.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.kauailabs.navx.frc.AHRS;
+
 import Util.DriveHelper;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import interfacesAndAbstracts.ImprovedSubsystem;
+import main.Robot;
 import main.commands.drivetrain.Drive;
 
 public class Drivetrain extends ImprovedSubsystem  {
 	private static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
+	private static AHRS NavX;
+	private static final double kOffBalanceAngleThresholdDegrees = 10;
+	private static final double kOonBalanceAngleThresholdDegrees  = 5;
+    boolean autoBalanceXMode;
+    boolean autoBalanceYMode;
+    double xAxisRate;
+    double yAxisRate;
+    double pitchAngleDegrees;
+    double rollAngleDegrees;
 	
 	//TELEOP DRIVING
 	private DriveHelper helper = new DriveHelper(7.5);
 
 	public Drivetrain() {
 		setTalonDefaults();
+		try {
+	        /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
+	        /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+	        /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+	        NavX = new AHRS(SPI.Port.kMXP); 
+	    } catch (RuntimeException ex ) {
+	        DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
+	    }
+		resetSensors();
 	}
 	
 	// DRIVE FOR TELEOP
@@ -149,5 +173,65 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public void zeroSensors() {
 		// TODO Auto-generated method stub
 	}	
+	
+	// EVERYTHING BELOW HERE IS FOR NAVX
+	
+	public void resetSensors() {
+		resetGyro();
+		//In the future, add resetEncoders() here too, look at FRC 2017 for an example
+	}
+	
+	public void resetGyro() {
+		NavX.reset();
+		NavX.zeroYaw();
+	}
+	
+	public void autoBalance() {
+        xAxisRate            = xbox.getX();
+        yAxisRate            = xbox.getY();
+        pitchAngleDegrees    = NavX.getPitch();
+        rollAngleDegrees     = NavX.getRoll();
+        
+        if ( !autoBalanceXMode && 
+             (Math.abs(pitchAngleDegrees) >= 
+              Math.abs(kOffBalanceAngleThresholdDegrees))) {
+            autoBalanceXMode = true;
+        }
+        else if ( autoBalanceXMode && 
+                  (Math.abs(pitchAngleDegrees) <= 
+                   Math.abs(kOonBalanceAngleThresholdDegrees))) {
+            autoBalanceXMode = false;
+        }
+        if ( !autoBalanceYMode && 
+             (Math.abs(pitchAngleDegrees) >= 
+              Math.abs(kOffBalanceAngleThresholdDegrees))) {
+            autoBalanceYMode = true;
+        }
+        else if ( autoBalanceYMode && 
+                  (Math.abs(pitchAngleDegrees) <= 
+                   Math.abs(kOonBalanceAngleThresholdDegrees))) {
+            autoBalanceYMode = false;
+        }
+        
+        // Control drive system automatically, 
+        // driving in reverse direction of pitch/roll angle,
+        // with a magnitude based upon the angle
+        
+        if ( autoBalanceXMode ) {
+            double pitchAngleRadians = pitchAngleDegrees * (Math.PI / 180.0);
+            xAxisRate = Math.sin(pitchAngleRadians) * -1;
+        }
+        if ( autoBalanceYMode ) {
+            double rollAngleRadians = rollAngleDegrees * (Math.PI / 180.0);
+            yAxisRate = Math.sin(rollAngleRadians) * -1;
+        }
+        
+        Robot.dt
+        
+        myRobot.mecanumDrive_Cartesian(xAxisRate, yAxisRate, xbox.getTwist(),0);
+        Timer.delay(0.005);		// wait for a motor update time
+    }
+	
+	
 }
 

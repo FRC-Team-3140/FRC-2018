@@ -2,6 +2,8 @@
 
 package main;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -76,6 +78,7 @@ public class Robot extends ImprovedRobot {
 		el = new Elevator();
 		oi = new OI();
 		dc = new DriverCamera();
+		
 		// da = new DriverAlerts();	
 		//lg = new Logger();
 		//autoLooper = new Looper(kLooperDt);

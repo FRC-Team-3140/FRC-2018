@@ -39,6 +39,9 @@ public interface Constants {
 	// REV ROBOTICS SENSORS
 	public final int analogSensor = 0;
 	
+	//NAVX SENSOR PORT
+	
+	
 	// JOYSTICK DEADBANDS
 	public final double throttleDeadband = 0.02;
 	public final double headingDeadband = 0.02;
