@@ -110,7 +110,7 @@ public interface Constants {
 	public final double spindleDiameter = 2; //placeholder
 	public final double spindleCircum = Math.PI * spindleDiameter;
 	public final double elevatorHeight = 86;  
-	public final double elevatorTolerance = 2;
+	public final double elevatorTolerance = 1;
 	public final double switchHeight = 24; //set this in encoder units today...
 	public final double scaleHeight = 70; 
 	public final double nearSetpoint = 12;

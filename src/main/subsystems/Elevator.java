@@ -127,7 +127,7 @@ public class Elevator extends ImprovedSubsystem {
 	
 	// Returns whether or not the intake has reached the set position. Pos is in inches
 	public boolean isIntakeAtPos(double pos) {
-		if (getDistanceFromPos(pos) < elevatorTolerance && getDistanceFromPos(pos) > -1 * elevatorTolerance) {
+		if (Math.abs(getDistanceFromPos(pos)) < elevatorTolerance) {
 			return true;
 		}
 		else return false;
@@ -177,11 +177,11 @@ public class Elevator extends ImprovedSubsystem {
 	/**********************
 	 * CONVERSION METHODS *
 	 **********************/
-	/*
+	
 	private double inchesToElevatorEncoderTicks(double inches) {
 		return encoderHelper.inchesToEncoderTicks(inches, spindleCircum, countsPerRev);
 	}
-	*/
+	
 	/***************
 	 * RECORD/PLAY *
 	 ***************/
@@ -201,12 +201,12 @@ public class Elevator extends ImprovedSubsystem {
 		else
 			elevatorMaster.set(voltage/12);
 	}*/
-	/*
+	
 	public void moveToPosPID(double pos) {
 		setMotionMagicDefaults();
 		elevatorMaster.set(ControlMode.MotionMagic, inchesToElevatorEncoderTicks(pos));
 	}
-	*/
+	
 	public void moveWithJoystick(double throttle) {
 		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
 			throttle = 0.0;
@@ -229,18 +229,10 @@ public class Elevator extends ImprovedSubsystem {
 	
 	// Moves fast to a position if far away, slows down when it gets closer, and stops when it reaches
 	// the position within a tolerance.
-	public void moveToPos(double pos) {
-//		if(isIntakeAtPos(pos)) {
-//			elevatorMaster.set(0);
-//		}
-		if (isIntakeNearPos(pos, nearSetpoint)) {
-			if (isIntakeBelowPos(pos)) elevatorMaster.set(slowElevatorSpeed);
-			else elevatorMaster.set(-1 * slowElevatorSpeed);
-		}
-		else {
-			if (isIntakeBelowPos(pos)) elevatorMaster.set(defaultElevatorSpeed);
-			else elevatorMaster.set(defaultElevatorSpeed * -1); 
-		}
+	public void moveToPosDumb(double pos) {
+		double posTicks = inchesToElevatorEncoderTicks(pos);
+		if(posTicks - getTicksTravelled() > 0) move(-0.8);
+		else if(posTicks - getTicksTravelled() < 0) move(0.8);
 	}
 
 	//public void moveDown() {
