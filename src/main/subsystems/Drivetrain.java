@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import interfacesAndAbstracts.ImprovedSubsystem;
+import main.OI;
 import main.Robot;
 import main.commands.drivetrain.Drive;
 
@@ -187,8 +188,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	public void autoBalance() {
-        xAxisRate            = xbox.getX();
-        yAxisRate            = xbox.getY();
+        xAxisRate            = OI.getXbox().getSmoothedAltX();
+        yAxisRate            = OI.getXbox().getSmoothedMainY();
         pitchAngleDegrees    = NavX.getPitch();
         rollAngleDegrees     = NavX.getRoll();
         
@@ -220,10 +221,12 @@ public class Drivetrain extends ImprovedSubsystem  {
         if ( autoBalanceXMode ) {
             double pitchAngleRadians = pitchAngleDegrees * (Math.PI / 180.0);
             xAxisRate = Math.sin(pitchAngleRadians) * -1;
+            System.out.println("Balancing x by: " + xAxisRate);
         }
         if ( autoBalanceYMode ) {
             double rollAngleRadians = rollAngleDegrees * (Math.PI / 180.0);
             yAxisRate = Math.sin(rollAngleRadians) * -1;
+            System.out.println("Balancing y by: " + yAxisRate);
         }
         
         Robot.dt.driveVelocity(xAxisRate, yAxisRate);
