@@ -55,7 +55,7 @@ public class Elevator extends ImprovedSubsystem {
 	 * TALON SUPPORT METHODS *
 	 ************************/
 	private void configSensors() {
-		elevatorMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, pidIdx, timeout);
+		elevatorMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
 		elevatorMaster.setSensorPhase(true);
 		zeroSensors();
 	}
@@ -96,7 +96,7 @@ public class Elevator extends ImprovedSubsystem {
 	 **************************/
 	
 	public void zeroSensors() {
-		elevatorMaster.getSensorCollection().setQuadraturePosition(0, 10);
+		elevatorMaster.getSensorCollection().setQuadraturePosition(0, 0);
 	}
 	
 	// Checks if the intake is at bottom
@@ -188,27 +188,27 @@ public class Elevator extends ImprovedSubsystem {
 	}
 	
 	public void moveWithJoystick(double throttle) {
-		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
+		if ((isArmAtTop() && throttle > 0) || (isArmAtBottom() && throttle < 0))
 			throttle = 0.0;
-			if (isCompetitionRobot)
-				elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, elevatorDeadband)));
-			else
-				elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+		if (isCompetitionRobot)
+			elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+		else
+			elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
 	}
 	
 	public void move(double throttle) {
-		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
+		if((isArmAtTop() && throttle > 0) || (isArmAtBottom() && throttle < 0))
 			throttle = 0.0;
 		if (isCompetitionRobot)
-			elevatorMaster.set(-throttle);
+			elevatorMaster.set(throttle);
 		else
 			elevatorMaster.set(throttle);
 	}
 	
 	public void moveToPosDumb(double pos) {
 		double posTicks = inchesToElevatorEncoderTicks(pos);
-		if(posTicks - getTicksTravelled() > 0) move(-0.8);
-		else if(posTicks - getTicksTravelled() < 0) move(0.8);
+		if(posTicks - getTicksTravelled() > 0) move(0.8);
+		else if(posTicks - getTicksTravelled() < 0) move(-0.8);
 	}
 
 	@Override

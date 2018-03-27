@@ -16,7 +16,7 @@ public interface Constants {
 	public final boolean isCompetitionRobot = false;
 	
 	// FILE OUTPUT PATH
-	public final String outputPath = "/home/lvuser"; //"/U"; //  /home/lvuser"; // USB output path: /U
+	public final String outputPath = "/home/lvuser"; //"/U";
 	
 	// FILE NAMES
 	public final String LEFT_LeftSwitch = "LEFT_LSwitch";
@@ -86,7 +86,7 @@ public interface Constants {
 	
 	// ENCODERS STUFF
 	public final double countsPerRev = 4096; // what is this actually supposed to be?
-	public final FeedbackDevice encoder = FeedbackDevice.CTRE_MagEncoder_Relative;
+	public final FeedbackDevice magEncoder = FeedbackDevice.CTRE_MagEncoder_Relative;
 	
 	public final double timedDrivePercent = -0.75;//DO NOT CHANGE
 	//This is a multiplier that will be computed manually distanceMultiplier * time = distanceDriven (When Robot driving at timedDrivePercent)
@@ -104,9 +104,8 @@ public interface Constants {
 	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
 	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier;
 
-	
 	// ELEVATOR LENGTHS 
-	// CALIBRATE THESE
+	// CALIBRATE THESE- ALL ARE IN INCHES
 	public final double spindleDiameter = 2; //placeholder
 	public final double spindleCircum = Math.PI * spindleDiameter;
 	public final double elevatorHeight = 86;  
@@ -114,19 +113,18 @@ public interface Constants {
 	public final double switchHeight = 24;
 	public final double scaleHeight = 70; 
 	public final double elevatorBottom = 0;
-	
-	// ELEVATOR SPEEDS
-	public final int cruiseVelocity = 125000; //native units of encoder per 100 ms
-	public final int acceleration = 62500; //native units of encoder per 100 ms per second
-	
+		
 	// MOTION MAGIC ELEVATOR STUFF
 	public final int elevatorIdx = 0;
 	public final int pidIdx = 0;
-	public final double fGain = 0.01066 ;// 1023/max speed
+	public final double elevatorFullThrottle = 125000;
+	public final double fGain = 1023 / elevatorFullThrottle ;// 1023/max speed
 	public final double elevator_kP = 0;
 	public final double elevator_kI = 0;
 	public final double elevator_kD = 0;
-	public int timeout = 10;
+	public final int cruiseVelocity = 125000; //native units of encoder per 100 ms
+	public final int acceleration = 62500; //native units of encoder per 100 ms per second
+	public final int timeout = 10;
 	
 	/*********
 	 * PORTS *
@@ -144,8 +142,8 @@ public interface Constants {
 	public final int RIGHT_Drive_Slave2 = 4;
 	
 	// INTAKE MOTORS	
-	public final int LEFT_Intake = 1;//(isCompetitionRobot? 11:11);// compBot:practiceBot
-	public final int RIGHT_Intake = 0;///(isCompetitionRobot? 10:10);// compBot:practiceBot
+	public final int LEFT_Intake = 1;
+	public final int RIGHT_Intake = 0;
 	
 	// ELEVATOR MOTORS
 	public final int Elevator_Master = 8;
@@ -156,8 +154,8 @@ public interface Constants {
 	public final int PCM_Port2 = 2;
 	
 	// INTAKE PNEUMATICS
-	public final int INTAKE_EXT = 7;//(isCompetitionRobot? 0:0);// compBot:practiceBot
-	public final int INTAKE_RET = 0;//(isCompetitionRobot? 1:1);// compBot:practiceBot	
+	public final int INTAKE_EXT = 7;
+	public final int INTAKE_RET = 0;
 	public final int TILT_EXT = (isCompetitionRobot? 6:1);// compBot:practiceBot
 	public final int TILT_RET = (isCompetitionRobot? 1:6);// compBot:practiceBot
 	
