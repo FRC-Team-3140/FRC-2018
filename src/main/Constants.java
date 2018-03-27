@@ -108,10 +108,10 @@ public interface Constants {
 	// CALIBRATE THESE- ALL ARE IN INCHES
 	public final double spindleDiameter = 2; //placeholder
 	public final double spindleCircum = Math.PI * spindleDiameter;
-	public final double elevatorHeight = 86;  
+	public final double elevatorHeight = 78;  
 	public final double elevatorTolerance = 1;
-	public final double switchHeight = 24;
-	public final double scaleHeight = 70; 
+	public final double switchHeight = 36;
+//	public final double scaleHeight = 70; 
 	public final double elevatorBottom = 0;
 		
 	// MOTION MAGIC ELEVATOR STUFF
