@@ -6,6 +6,7 @@ import loopController.Loop;
 import main.Constants;
 import main.Robot;
 import main.commands.drivetrain.DriveFromPlayer;
+import main.commands.drivetrain.DriveFromPlayerWithSensors;
 import main.commands.intake.IntakeFromPlayer;
 
 public class Play implements Loop, Constants {
@@ -70,9 +71,22 @@ public class Play implements Loop, Constants {
 				boolean rightJoystickPress2 = Boolean.parseBoolean(robotState[25]);
 				boolean leftTrigger2 = Boolean.parseBoolean(robotState[26]);
 				boolean rightTrigger2 = Boolean.parseBoolean(robotState[27]);
+				
+				double temp1 = 0;
+				double temp2 = 0;
+				double temp3 = 0;
 			
-				Command drive = new DriveFromPlayer(leftDriveVoltage, rightDriveVoltage);
-				Command intake = new IntakeFromPlayer(leftIntakeWheelValue, rightIntakeWheelValue);
+				Command drive;
+				Command intake;
+				//Command lift?
+				if(!isSmartPlayAuto) {
+					drive = new DriveFromPlayer(leftDriveVoltage, rightDriveVoltage);
+					intake = new IntakeFromPlayer(leftIntakeWheelValue, rightIntakeWheelValue);
+				}
+				else {
+					drive  = new DriveFromPlayerWithSensors(temp1, temp2, temp3);
+				}
+				
 				drive.start();
 				intake.start();
 				

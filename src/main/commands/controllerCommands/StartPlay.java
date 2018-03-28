@@ -11,9 +11,11 @@ public class StartPlay extends ImprovedCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.dt.enableVoltageComp(true);
+    	Robot.dt.zeroSensors();
+    	Robot.dt.zeroPIDVariables();
     	Robot.lg.resetForRead();
     	Robot.oi.setInternalControl(true);
-    	Play.okToPlay(true);
+    	Play.okToPlay(true); 
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -23,7 +25,6 @@ public class StartPlay extends ImprovedCommand {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return Play.isFinished();
-    	//return true;
     }
 
     // Called once after isFinished returns true
@@ -31,6 +32,8 @@ public class StartPlay extends ImprovedCommand {
     	Play.okToPlay(false);
     	Robot.oi.setInternalControl(false);
     	Play.reset();
+    	Robot.dt.zeroPIDVariables();
+    	Robot.dt.zeroSensors();
     	Robot.dt.enableVoltageComp(false);
     }
 

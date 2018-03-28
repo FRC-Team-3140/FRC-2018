@@ -1,8 +1,11 @@
 package main.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+
+import Util.ChezyMath;
 import Util.DriveHelper;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.drivetrain.Drive;
 
@@ -11,8 +14,19 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	//TELEOP DRIVING
 	private DriveHelper helper = new DriveHelper(7.5);
+	
+	//SENSORS
+	//Declare Sensors
+	
+	//ProfilePIDVariables
+	private static double lastLeftEncPosError = 0.0;
+	private static double lastRightEncPosError = 0.0;
+	//ProfilePIDIntegralAccumulators
+	private static double leftIntegralAccum = 0.0;
+	private static double rightIntegralAccum = 0.0;
 
 	public Drivetrain() {
+		//Instantiate Sensors
 		setTalonDefaults();
 	}
 	
@@ -60,6 +74,38 @@ public class Drivetrain extends ImprovedSubsystem  {
 		driveTrain.tankDrive(leftVoltage/12, rightVoltage/12, false);
 	}
 	
+	//Drive for Playback utilizing sensors for real-time path correction
+	public void driveProfileWithPid(double leftEncTargetPos, double rightEncTargetPos, double targetHeading) {	
+        //Calculate left driveTrain side error with PID
+        double leftError = leftEncTargetPos - leftEncTargetPos;
+        leftIntegralAccum += (leftError*kLooperDt);
+        double leftDerivative = (leftError - lastLeftEncPosError)/kLooperDt;
+        double leftPIDOutput = kDrivePositionKp*leftError + kDrivePositionKi*leftIntegralAccum + kDrivePositionKd*leftDerivative;        	    
+        lastLeftEncPosError = leftError;
+        
+        //Calculate right driveTrain side error with PID
+        double rightError = rightEncTargetPos - rightEncTargetPos;
+        rightIntegralAccum += (rightError*kLooperDt);
+        double rightDerivative = (rightError - lastRightEncPosError)/kLooperDt;
+        double rightPIDOutput = kDrivePositionKp*rightError + kDrivePositionKi*rightIntegralAccum + kDrivePositionKd*rightDerivative;        	    
+        lastRightEncPosError = rightError;
+        
+        //Post values to SmartDashboard so that variable tuning can be better understood/visualized
+        SmartDashboard.putNumber("Left: FollowerSensor", getLeftEncDist());
+        SmartDashboard.putNumber("Left: FollowerGoal", leftEncTargetPos);
+        SmartDashboard.putNumber("Left: FollowerError", leftError);
+        SmartDashboard.putNumber("Right: FollowerSensor", getRightEncDist());
+        SmartDashboard.putNumber("Right: FollowerGoal", rightEncTargetPos);
+        SmartDashboard.putNumber("Right: FollowerError", rightError);
+        
+        //Compute Turning, Well Built FRC Robots drive in virtually a straight line so no need
+        //For PID just a simple proportional value to keep it on track
+        double angleDiff = ChezyMath.getDifferenceInAngleDegrees(getHeading(), targetHeading);
+        double turn = kDrivePathHeadingFollowKp * angleDiff;        
+        
+        //Drive!!!
+		driveTrain.tankDrive(leftPIDOutput + turn, rightPIDOutput - turn);
+	}
 	public void timedTurn(TurnMode mode, double throttle) {
 		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle, false);
 		if (mode == TurnMode.Right) driveTrain.tankDrive(throttle, -throttle, false);
@@ -175,6 +221,18 @@ public class Drivetrain extends ImprovedSubsystem  {
 
 
 	}
+	
+	public double getHeading() {
+		return 0;
+	}
+	
+	public double getLeftEncDist() {
+		return 0;
+	}
+	
+	public double getRightEncDist() {
+		return 0;
+	}
 
 	@Override
 	protected void initDefaultCommand() {
@@ -188,7 +246,18 @@ public class Drivetrain extends ImprovedSubsystem  {
 
 	@Override
 	public void zeroSensors() {
-		// TODO Auto-generated method stub
+		//Zero LeftEnc
+		//Zero RightEnc
+		//Zero NavX
 	}	
+	
+	public void zeroPIDVariables() {
+		//Clear Previous Errors
+		lastLeftEncPosError = 0.0;
+	    lastRightEncPosError = 0.0;
+		//Clear Integral Accumulators
+		leftIntegralAccum = 0.0;
+		rightIntegralAccum = 0.0;
+	}
 }
 

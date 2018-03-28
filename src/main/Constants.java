@@ -14,6 +14,8 @@ public interface Constants {
 	 *************/
 	public final boolean isCompetitionMatch = false;
 	public final boolean isCompetitionRobot = false;
+	public final boolean isTimedAuto = false;
+	public final boolean isSmartPlayAuto = false;
 	
 	// FILE OUTPUT PATH
 	public final String outputPath = "/home/lvuser"; //"/U"; //  /home/lvuser"; // USB output path: /U
@@ -128,6 +130,47 @@ public interface Constants {
 	public final double elevator_kP = 0;
 	public final double elevator_kI = 0;
 	public final double elevator_kD = 0;*/
+	
+	//DRIVETRAIN PROFILE FOLLWING PID GAINS
+	//Need to be tuned stolen from the cheesy poofs 2015 code
+	//Deduced that the poofs were using the same wheel diameter via
+	//picture of their wheels and cross refferencing their omnis wheels with vex Pro
+	//Turning may need to be tuned the most, poofs used omni's on front and rear of 
+	//their bot in 2015, whereas we use colsons this year.
+	
+
+    // DriveStraightController gains
+	//Tune to 2cim + gear ratio spec
+    public static double kDriveMaxSpeedInchesPerSec = 120.0;
+    public static double kDriveMaxAccelInchesPerSec2 = 107.0;
+    //Looks ok
+    public static double kDrivePositionKp = 0.7;
+    public static double kDrivePositionKi = 0;
+    public static double kDrivePositionKd = 0;
+    public static double kDriveStraightKp = 3.0;
+    public static double kDriveStraightKi = 0;
+    public static double kDriveStraightKd = 0;
+    //May become unused
+    public static double kDrivePositionKv = 0.008;
+    public static double kDrivePositionKa = 0.0017;
+    //May need to to something more realistic
+    public static double kDriveOnTargetError = 0.75;
+    //Looks ok
+    public static double kDrivePathHeadingFollowKp = 0.01;
+
+    // TurnInPlaceController gains
+	//Tune to 2cim + gear ratio spec
+    public static double kTurnMaxSpeedRadsPerSec = 5.25;
+    public static double kTurnMaxAccelRadsPerSec2 = 5.25;
+    //Looks ok
+    public static double kTurnKp = 3.0;
+    public static double kTurnKi = 0.18;
+    public static double kTurnKd = 0.23;
+    //May become unused
+    public static double kTurnKv = 0.085;
+    public static double kTurnKa = 0.075;
+    //May need to to something more realistic
+    public static double kTurnOnTargetError = 0.0225;
 	
 	/*********
 	 * PORTS *
