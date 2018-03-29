@@ -77,11 +77,11 @@ public class Play implements Loop, Constants {
 				double heading = Double.parseDouble(robotState[30]);
 			
 				Command drive;
-				Command intake;
+				Command intake = new IntakeFromPlayer(leftIntakeWheelValue, rightIntakeWheelValue);
 				//Command lift?
+				
 				if(!isSmartPlayAuto) {
 					drive = new DriveFromPlayer(leftDriveVoltage, rightDriveVoltage);
-					intake = new IntakeFromPlayer(leftIntakeWheelValue, rightIntakeWheelValue);
 				}
 				else {
 					drive  = new DriveFromPlayerWithSensors(leftEncoderDistanceTravelled, rightEncoderDistanceTravelled, heading);
