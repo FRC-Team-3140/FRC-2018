@@ -3,6 +3,7 @@ package main.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;
 
+import Util.AutoBalance;
 import Util.DriveHelper;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
@@ -20,8 +21,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private static final double kOonBalanceAngleThresholdDegrees  = 5;
     boolean autoBalanceXMode;
     boolean autoBalanceYMode;
-    double xAxisRate;
-    double yAxisRate;
+    public double xAxisRate;
+    public double yAxisRate;
     double pitchAngleDegrees;
     double rollAngleDegrees;
 	
@@ -202,6 +203,7 @@ public class Drivetrain extends ImprovedSubsystem  {
                   (Math.abs(pitchAngleDegrees) <= 
                    Math.abs(kOonBalanceAngleThresholdDegrees))) {
             autoBalanceXMode = false;
+            xAxisRate = 0;
         }
         if ( !autoBalanceYMode && 
              (Math.abs(pitchAngleDegrees) >= 
@@ -212,6 +214,7 @@ public class Drivetrain extends ImprovedSubsystem  {
                   (Math.abs(pitchAngleDegrees) <= 
                    Math.abs(kOonBalanceAngleThresholdDegrees))) {
             autoBalanceYMode = false;
+            yAxisRate = 0;
         }
         
         // Control drive system automatically, 
@@ -229,10 +232,10 @@ public class Drivetrain extends ImprovedSubsystem  {
             System.out.println("Balancing y by: " + yAxisRate);
         }
         
-        Robot.dt.driveVelocity(xAxisRate, yAxisRate);
+        //Robot.dt.driveVelocity(xAxisRate, yAxisRate);
         
         //myRobot.mecanumDrive_Cartesian(xAxisRate, yAxisRate, xbox.getTwist(),0);
-        Timer.delay(0.005);		// wait for a motor update time
+        Timer.delay(0.05);		// wait for a motor update time, originally 0.005
     }
 	
 	
