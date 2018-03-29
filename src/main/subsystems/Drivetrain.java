@@ -82,7 +82,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	//Drive for testing the drivetrain so that the needed constants to compute the bias voltages may be derived
 	public void driveVoltageTankTest(double leftVoltage, double rightVoltage) {
-		driveTrain.tankDrive(leftVoltage/12, rightVoltage/12, false);
+		driveTrain.tankDrive(leftVoltage/voltageCompensationVoltage, rightVoltage/voltageCompensationVoltage, false);
 	}
 	
 	//Push Default Gains To SmartDashboard
