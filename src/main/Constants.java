@@ -89,7 +89,7 @@ public interface Constants {
 	
 	// ENCODERS STUFF
 	// VP Integrated Encoder
-	public final double countsPerRev = 4096; // what is this actually supposed to be?
+	public final double countsPerRev = 1024;
 	public final FeedbackDevice magEncoder = FeedbackDevice.CTRE_MagEncoder_Relative;
 	public final int pidIdx = 0;
 	public final int timeout = 10;

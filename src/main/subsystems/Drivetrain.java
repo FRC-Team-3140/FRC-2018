@@ -133,7 +133,7 @@ public class Drivetrain extends ImprovedSubsystem  {
         SmartDashboard.putNumber("Heading: Error", angleDiff);
         
         //Drive!!!
-		driveTrain.tankDrive(leftPIDOutput + turn, rightPIDOutput - turn);
+		driveTrain.tankDrive(leftPIDOutput + turn, rightPIDOutput - turn, false);
 	}
 	public void timedTurn(TurnMode mode, double throttle) {
 		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle, false);
