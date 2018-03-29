@@ -88,9 +88,13 @@ public interface Constants {
 	public final NeutralMode BRAKE_MODE = NeutralMode.Brake;
 	
 	// ENCODERS STUFF
+	// VP Integrated Encoder
 	public final double countsPerRev = 4096; // what is this actually supposed to be?
-	public final FeedbackDevice encoder = FeedbackDevice.CTRE_MagEncoder_Relative;
-	
+	public final FeedbackDevice magEncoder = FeedbackDevice.CTRE_MagEncoder_Relative;
+	public final int pidIdx = 0;
+	public final int timeout = 10;
+
+	//TIMED AUTO
 	public final double timedDrivePercent = -0.75;//DO NOT CHANGE
 	//This is a multiplier that will be computed manually distanceMultiplier * time = distanceDriven (When Robot driving at timedDrivePercent)
 	public final double timedDistanceMultiplier = 38.58;// (in/s)

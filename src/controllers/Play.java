@@ -38,7 +38,7 @@ public class Play implements Loop, Constants {
 		if((line) != null) { 
 			String[] robotState = line.split(",");
 			
-			if(robotState.length == 28 && robotState != null) {
+			if(robotState.length == 31 && robotState != null) {
 				System.out.println("Playing");
 				
 				double leftDriveVoltage = Double.parseDouble(robotState[0]);
@@ -72,9 +72,9 @@ public class Play implements Loop, Constants {
 				boolean leftTrigger2 = Boolean.parseBoolean(robotState[26]);
 				boolean rightTrigger2 = Boolean.parseBoolean(robotState[27]);
 				
-				double temp1 = 0;
-				double temp2 = 0;
-				double temp3 = 0;
+				double leftEncoderDistanceTravelled = Double.parseDouble(robotState[28]);
+				double rightEncoderDistanceTravelled = Double.parseDouble(robotState[29]);
+				double heading = Double.parseDouble(robotState[30]);
 			
 				Command drive;
 				Command intake;
@@ -84,7 +84,7 @@ public class Play implements Loop, Constants {
 					intake = new IntakeFromPlayer(leftIntakeWheelValue, rightIntakeWheelValue);
 				}
 				else {
-					drive  = new DriveFromPlayerWithSensors(temp1, temp2, temp3);
+					drive  = new DriveFromPlayerWithSensors(leftEncoderDistanceTravelled, rightEncoderDistanceTravelled, heading);
 				}
 				
 				drive.start();

@@ -39,7 +39,8 @@ public class Record implements Loop, Constants {
 							+ "," + controller.rightJoystickPress.get() + "," + controller.leftTrigger.get() + "," + controller.rightTrigger.get() + "," + controller2.a.get()
 							+ "," + controller2.b.get() + "," + controller2.x.get() + "," + controller2.y.get() + "," + controller2.leftBumper.get() + "," + controller2.rightBumper.get()
 							+ "," + controller2.select.get() + ","  + controller2.start.get() + "," + controller2.leftJoystickPress.get() + "," + controller2.rightJoystickPress.get() 
-							+ "," + controller2.leftTrigger.get() + "," + controller2.rightTrigger.get());
+							+ "," + controller2.leftTrigger.get() + "," + controller2.rightTrigger.get() + "," + Robot.dt.getLeftEncoderDistanceTravelled() + "," + Robot.dt.getRightEncoderDistanceTravelled()
+							+ "," + Robot.dt.getHeading());
 	}
 }
 
