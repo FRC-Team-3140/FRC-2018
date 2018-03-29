@@ -6,7 +6,6 @@ import main.commands.commandgroups.cubeManipulator.DropCube;
 import main.commands.commandgroups.cubeManipulator.DropCubeOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
-import main.commands.elevator.MoveToSwitch;
 import main.commands.elevator.MoveToTop;
 
 public class RightToRightSwitch extends ImprovedCommandGroup {

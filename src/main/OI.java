@@ -2,9 +2,6 @@ package main;
 
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
-import main.commands.elevator.MoveToBottom;
-import main.commands.elevator.MoveToSwitch;
-import main.commands.elevator.MoveToTop;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.arm.SwitchArm;

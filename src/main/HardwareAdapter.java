@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
 import util.RevRoboticsAnalogPressureSensor;
 
-public interface HardwareAdapter extends Constants{
+public interface HardwareAdapter extends Constants{ // TODO maybe make all things final? should improve design
 	//DRIVETRAIN
 	public static WPI_TalonSRX leftDriveMaster = new WPI_TalonSRX(LEFT_DRIVE_MASTER);
 	public static WPI_TalonSRX leftDriveSlave1 = new WPI_TalonSRX(LEFT_DRIVE_SLAVE_1);

@@ -6,7 +6,6 @@ import main.commands.drivetrain.DriveTrainOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
 import main.commands.elevator.MoveToBottom;
-import main.commands.elevator.MoveToSwitch;
 import main.commands.elevator.MoveToTop;
 import main.commands.intake.SpinIn;
 import main.commands.intake.SpinOff;

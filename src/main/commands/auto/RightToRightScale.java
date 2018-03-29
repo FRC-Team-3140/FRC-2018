@@ -7,7 +7,6 @@ import main.commands.commandgroups.cubeManipulator.DropCubeOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
 import main.commands.elevator.MoveToTop;
-import main.commands.pneumatics.tilt.TiltDown;
 
 // TODO use or remove
 public class RightToRightScale extends ImprovedCommandGroup { // NO_UCD (unused code)
