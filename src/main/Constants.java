@@ -102,7 +102,7 @@ public interface Constants {
 	public final double TIMED_DRIVE_PERCENT = -0.75;// DO NOT CHANGE
 	// This is a multiplier that will be computed manually distanceMultiplier * time
 	// = distanceDriven (When Robot driving at timedDrivePercent)
-	public final double TIMED_DISTANCE_MULTIPLIER = 38.58;// (in/s)
+	public final double TIMED_DISTANCE_MULTIPLIER = 42.414;//38.58;// (in/s)
 
 	public final double TIMED_TURN_PERCENT = 0.5;// DO NOT CHANGE
 	public final double TIMED_TURN_90_DEG_TIME = 0.70;
@@ -110,7 +110,7 @@ public interface Constants {
 
 	// TODO use or remove
 	public final double TIMED_LIFT_PERCENT = 0.75; // DO NOT CHANGE // NO_UCD 
-	public final double TIMED_LIFT_MULTIPLIER = 22.125;// (in/s)
+	public final double TIMED_LIFT_MULTIPLIER = 41.6;// (in/s)
 	//Time to lift the elevator 3ft at timedLiftPercent of available power.
 	// TODO use or remove
 	public final double TIMED_LIFT_TIME = 28.5/TIMED_LIFT_MULTIPLIER; // NO_UCD 

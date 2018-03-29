@@ -28,10 +28,6 @@ public class OI extends ImprovedClass { // NO_UCD (use default)
 		
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
-		
-		xbox2.x.whenPressed(new MoveToBottom(3));
-		xbox2.y.whenPressed(new MoveToSwitch(3));
-		xbox2.b.whenPressed(new MoveToTop(5));
 	}
 
 	public XboxController getXbox() {
