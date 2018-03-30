@@ -12,7 +12,7 @@ public class FilePicker extends ImprovedCommand {
 	}
 	
 	protected void initialize() {
-		Robot.lg.changePath(filePath, false);
+		Robot.lg.changePath(filePath, true);
 	}
 
 	@Override
