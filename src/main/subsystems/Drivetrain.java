@@ -1,8 +1,13 @@
 package main.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.kauailabs.navx.frc.AHRS;//NavX import
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SPI;
+import Util.ChezyMath;
 import Util.DriveHelper;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.drivetrain.Drive;
 
@@ -10,21 +15,41 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
 	
 	//TELEOP DRIVING
-	private DriveHelper helper = new DriveHelper(7.5);
+	private DriveHelper driveHelper = new DriveHelper(7.5);
+	
+	//SENSORS
+	private static AHRS NavX;	
+	
+	//ProfilePIDVariables
+	private static double lastLeftEncPosError = 0.0;
+	private static double lastRightEncPosError = 0.0;
+	//ProfilePIDIntegralAccumulators
+	private static double leftIntegralAccum = 0.0;
+	private static double rightIntegralAccum = 0.0;
 
 	public Drivetrain() {
+		try {
+			/* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
+	        /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+	        /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+	        NavX = new AHRS(SPI.Port.kMXP); 
+		} catch (RuntimeException ex ) {
+	          DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
+	    }
+		
 		setTalonDefaults();
+		pushPIDGainsToSmartDashboard();
 	}
 	
 	// DRIVE FOR TELEOP
 	public void driveVelocity(double throttle, double heading) {
 		if (isCompetitionRobot) {
-			driveTrain.arcadeDrive(helper.handleOverPower(helper.handleDeadband(throttle, throttleDeadband)),
-					helper.handleOverPower(helper.handleDeadband(-heading, headingDeadband)));
+			driveTrain.arcadeDrive(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, throttleDeadband)),
+					driveHelper.handleOverPower(driveHelper.handleDeadband(-heading, headingDeadband)));
 		}
 		else {
-			driveTrain.arcadeDrive(helper.handleOverPower(helper.handleDeadband(-throttle, throttleDeadband)),
-					helper.handleOverPower(helper.handleDeadband(-heading, headingDeadband)));
+			driveTrain.arcadeDrive(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, throttleDeadband)),
+					driveHelper.handleOverPower(driveHelper.handleDeadband(-heading, headingDeadband)));
 		}
 	}
 
@@ -57,9 +82,59 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	//Drive for testing the drivetrain so that the needed constants to compute the bias voltages may be derived
 	public void driveVoltageTankTest(double leftVoltage, double rightVoltage) {
-		driveTrain.tankDrive(leftVoltage/12, rightVoltage/12, false);
+		driveTrain.tankDrive(leftVoltage/voltageCompensationVoltage, rightVoltage/voltageCompensationVoltage, false);
 	}
 	
+	//Push Default Gains To SmartDashboard
+	private void pushPIDGainsToSmartDashboard() {
+        SmartDashboard.putNumber("Pos: PGain", kDrivePositionKp);
+        SmartDashboard.putNumber("Pos: IGain", kDrivePositionKi);
+        SmartDashboard.putNumber("Pos: DGain", kDrivePositionKd);
+        SmartDashboard.putNumber("Heading: PGain", kDrivePathHeadingFollowKp);
+	}
+	
+	//Drive for Playback utilizing sensors for real-time path correction
+	public void driveProfileWithPid(double leftEncTargetPos, double rightEncTargetPos, double targetHeading) {	
+		//Grab PID Vars
+		double PGain = SmartDashboard.getNumber("Pos: PGain", kDrivePositionKp);
+		double IGain = SmartDashboard.getNumber("Pos: IGain", kDrivePositionKi);
+		double DGain = SmartDashboard.getNumber("Pos: DGain", kDrivePositionKd);
+		double headingGain = SmartDashboard.getNumber("Heading: PGain", kDrivePathHeadingFollowKp);
+		
+        //Calculate left driveTrain side error with PID
+        double leftError = leftEncTargetPos - getLeftEncoderDistanceTravelled();
+        leftIntegralAccum += (leftError*kLooperDt);
+        double leftDerivative = (leftError - lastLeftEncPosError)/kLooperDt;
+        double leftPIDOutput = PGain*leftError + IGain*leftIntegralAccum + DGain*leftDerivative;        	    
+        lastLeftEncPosError = leftError;
+        
+        //Calculate right driveTrain side error with PID
+        double rightError = rightEncTargetPos - getRightEncoderDistanceTravelled();
+        rightIntegralAccum += (rightError*kLooperDt);
+        double rightDerivative = (rightError - lastRightEncPosError)/kLooperDt;
+        double rightPIDOutput = PGain*rightError + IGain*rightIntegralAccum + DGain*rightDerivative;        	    
+        lastRightEncPosError = rightError;
+        
+        //Post values to SmartDashboard so that variable tuning can be better understood/visualized
+        SmartDashboard.putNumber("Left: FollowerSensor", getLeftEncoderDistanceTravelled());
+        SmartDashboard.putNumber("Left: FollowerGoal", leftEncTargetPos);
+        SmartDashboard.putNumber("Left: FollowerError", leftError);
+        SmartDashboard.putNumber("Right: FollowerSensor", getRightEncoderDistanceTravelled());
+        SmartDashboard.putNumber("Right: FollowerGoal", rightEncTargetPos);
+        SmartDashboard.putNumber("Right: FollowerError", rightError);
+        
+        //Compute Turning, Well Built FRC Robots drive in virtually a straight line so no need
+        //For PID just a simple proportional value to keep it on track
+        double angleDiff = ChezyMath.getDifferenceInAngleDegrees(getHeading(), targetHeading);
+        double turn = headingGain * angleDiff;
+        
+        SmartDashboard.putNumber("Heading: Sensor", getHeading());
+        SmartDashboard.putNumber("Heading: Target", targetHeading);
+        SmartDashboard.putNumber("Heading: Error", angleDiff);
+        
+        //Drive!!!
+		driveTrain.tankDrive(leftPIDOutput + turn, rightPIDOutput - turn, false);
+	}
 	public void timedTurn(TurnMode mode, double throttle) {
 		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle, false);
 		if (mode == TurnMode.Right) driveTrain.tankDrive(throttle, -throttle, false);
@@ -68,15 +143,16 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public void turnOff() {
 		driveTrain.tankDrive(0.0, 0.0);
 	}
+	
 	/***********************
 	 * PLAY/RECORD METHODS *
 	 ***********************/
 	public double getLeftMasterVoltage() {
-		return (leftDriveMaster.getMotorOutputVoltage()); //+ leftDriveSlave1.getMotorOutputVoltage())/2;
+		return (leftDriveMaster.getMotorOutputVoltage());
 	}
 	
 	public double getRightMasterVoltage() {
-		return (rightDriveMaster.getMotorOutputVoltage()); //+ rightDriveSlave1.getMotorOutputVoltage())/2;
+		return (rightDriveMaster.getMotorOutputVoltage());
 	}
 	
 	public double getLeftSlaveVoltage() {
@@ -94,66 +170,55 @@ public class Drivetrain extends ImprovedSubsystem  {
 		leftDriveMaster.setInverted(isInverted);
 		rightDriveMaster.setInverted(isInverted);
 		leftDriveSlave1.setInverted(isInverted);
-		//leftDriveSlave2.setInverted(!isInverted);
 		rightDriveSlave1.setInverted(isInverted);
-		//rightDriveSlave2.setInverted(!isInverted);
 	}
 
 	private void setBrakeMode(NeutralMode mode) {
 		leftDriveMaster.setNeutralMode(mode);
 		leftDriveSlave1.setNeutralMode(mode);
-		//leftDriveSlave2.setNeutralMode(mode);
 		rightDriveMaster.setNeutralMode(mode);
 		rightDriveSlave1.setNeutralMode(mode);
-		//rightDriveSlave2.setNeutralMode(mode);
 	}
 
 	private void setCtrlMode() {
 		leftDriveSlave1.follow(leftDriveMaster);
 		rightDriveSlave1.follow(rightDriveMaster);
-		//leftDriveSlave2.follow(leftDriveMaster);
-		//rightDriveSlave2.follow(rightDriveMaster);
 	}
 	
 	private void setVoltageComp(boolean set, double voltage, int timeout) {
 		//Voltage Compensation
 		leftDriveMaster.enableVoltageCompensation(set);
 		leftDriveSlave1.enableVoltageCompensation(set);
-//		leftDriveSlave2.enableVoltageCompensation(set);
 		rightDriveMaster.enableVoltageCompensation(set);
 		rightDriveSlave1.enableVoltageCompensation(set);
-//		rightDriveSlave2.enableVoltageCompensation(set);
 		leftDriveMaster.configVoltageCompSaturation(voltage, timeout);
 		leftDriveSlave1.configVoltageCompSaturation(voltage, timeout);
-//		leftDriveSlave2.configVoltageCompSaturation(voltage, timeout);
 		rightDriveMaster.configVoltageCompSaturation(voltage, timeout);
 		rightDriveSlave1.configVoltageCompSaturation(voltage, timeout);
-//		rightDriveSlave2.configVoltageCompSaturation(voltage, timeout);
 		//Nominal and peak outputs
 		leftDriveMaster.configPeakOutputForward(1.0, timeout);
 		leftDriveSlave1.configPeakOutputForward(1.0, timeout);
-//		leftDriveSlave2.configPeakOutputForward(1.0, timeout);
 		rightDriveMaster.configPeakOutputForward(1.0, timeout);
 		rightDriveSlave1.configPeakOutputForward(1.0, timeout);
-//		rightDriveSlave2.configPeakOutputForward(1.0, timeout);
 		leftDriveMaster.configPeakOutputReverse(-1.0, timeout);
 		leftDriveSlave1.configPeakOutputReverse(-1.0, timeout);
-//		leftDriveSlave2.configPeakOutputReverse(-1.0, timeout);
 		rightDriveMaster.configPeakOutputReverse(-1.0, timeout);
 		rightDriveSlave1.configPeakOutputReverse(-1.0, timeout);
-//		rightDriveSlave2.configPeakOutputReverse(-1.0, timeout);
 		leftDriveMaster.configNominalOutputForward(0.0, timeout);
 		leftDriveSlave1.configNominalOutputForward(0.0, timeout);
-//		leftDriveSlave2.configNominalOutputForward(0.0, timeout);
 		rightDriveMaster.configNominalOutputForward(0.0, timeout);
 		rightDriveSlave1.configNominalOutputForward(0.0, timeout);
-//		rightDriveSlave2.configNominalOutputForward(0.0, timeout);
 		leftDriveMaster.configNominalOutputReverse(0.0, timeout);
 		leftDriveSlave1.configNominalOutputReverse(0.0, timeout);
-//		leftDriveSlave2.configNominalOutputReverse(0.0, timeout);
 		rightDriveMaster.configNominalOutputReverse(0.0, timeout);
 		rightDriveSlave1.configNominalOutputReverse(0.0, timeout);
-//		rightDriveSlave2.configNominalOutputReverse(0.0, timeout);
+	}
+	
+	private void configTalonEncoders() {
+		leftDriveMaster.setSensorPhase(true);
+		leftDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
+		rightDriveMaster.setSensorPhase(true);
+		rightDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
 	}
 	
 	public void setTalonDefaults() {
@@ -161,6 +226,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		setBrakeMode(BRAKE_MODE);
 		setCtrlMode();
 		setVoltageComp(false, voltageCompensationVoltage, 10);
+		configTalonEncoders();
 	}
 	
 	public void enableVoltageComp(boolean enable) {
@@ -174,6 +240,68 @@ public class Drivetrain extends ImprovedSubsystem  {
 		}
 
 
+	}	
+
+	public AHRS getGyro(){
+		return NavX;
+	}
+	
+	public void zeroGyro() {
+		NavX.reset();
+		NavX.zeroYaw();
+	}
+	
+	public double getHeading() {
+		return NavX.getYaw();
+	}
+	
+	public double getLeftEncoderVelocity() {
+		return leftDriveMaster.getSensorCollection().getQuadratureVelocity();
+	}
+	
+	// Gets the number of revolutions of the encoder
+	private double getLeftEncoderRevs() {
+		return leftDriveMaster.getSensorCollection().getQuadraturePosition() / countsPerRev;
+	}
+	
+	// Returns the distance traveled in native encoder units
+	public double getLeftEncoderTicksTravelled() {
+		return leftDriveMaster.getSensorCollection().getQuadraturePosition();
+	}
+	
+	// Get the distance the elevator has traveled in inches
+	public double getLeftEncoderDistanceTravelled() {
+		if(isCompetitionRobot)
+			return getLeftEncoderRevs() * 2 * Math.PI * competitonBotLeftWheelRadius;
+		else
+			return getLeftEncoderRevs() * 2 * Math.PI * practiceBotLeftWheelRadius;
+	}
+	
+	public double getRightEncoderVelocity() {
+		return rightDriveMaster.getSensorCollection().getQuadratureVelocity();
+	}
+	
+	// Gets the number of revolutions of the encoder
+	private double getRightEncoderRevs() {
+		return rightDriveMaster.getSensorCollection().getQuadraturePosition() / countsPerRev;
+	}
+	
+	// Returns the distance traveled in native encoder units
+	public double getRightEncoderTicksTravelled() {
+		return rightDriveMaster.getSensorCollection().getQuadraturePosition();
+	}
+	
+	// Get the distance the elevator has traveled in inches
+	public double getRightEncoderDistanceTravelled() {
+		if(isCompetitionRobot)
+			return getRightEncoderRevs() * 2 * Math.PI * competitonBotRightWheelRadius;
+		else
+			return getRightEncoderRevs() * 2 * Math.PI * practiceBotRightWheelRadius;
+	}
+	
+	public void zeroEncoders() {
+		leftDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
+		rightDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
 	}
 
 	@Override
@@ -188,7 +316,17 @@ public class Drivetrain extends ImprovedSubsystem  {
 
 	@Override
 	public void zeroSensors() {
-		// TODO Auto-generated method stub
+		zeroEncoders();
+		zeroGyro();
 	}	
+	
+	public void zeroPIDVariables() {
+		//Clear Previous Errors
+		lastLeftEncPosError = 0.0;
+	    lastRightEncPosError = 0.0;
+		//Clear Integral Accumulators
+		leftIntegralAccum = 0.0;
+		rightIntegralAccum = 0.0;
+	}
 }
 

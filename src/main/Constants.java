@@ -12,24 +12,26 @@ public interface Constants {
 	/*************
 	 * VARIABLES *
 	 *************/
-	public final boolean isCompetitionMatch = false;
+	public final boolean isCompetitionMatch = true;
 	public final boolean isCompetitionRobot = false;
+	public final boolean isTimedAuto = false;
+	public final boolean isSmartPlayAuto = false;
 	
 	// FILE OUTPUT PATH
 	public final String outputPath = "/home/lvuser"; //"/U";
 	
 	// FILE NAMES
-	public final String LEFT_LeftSwitch = "LEFT_LSwitch";
-	public final String LEFT_Scale = "LEFT_Scale";
-	public final String LEFT_RightSwitch = "LEFT_RSwitch";
-	public final String LEFT_SwitchAndScale = "LEFT_SwitchScale";
-	public final String RIGHT_RightSwitch = "RIGHT_RSwitch";
-	public final String RIGHT_Scale = "RIGHT_Scale";
-	public final String RIGHT_LeftSwitch = "RIGHT_LSwitch";
-	public final String RIGHT_SwitchAndScale = "RIGHT_SwitchScale";
-	public final String MID_RightSwitch = "MID_RSwitch";
-	public final String MID_LeftSwitch = "MID_LSwitch";
-	public final String driveBaseline = "Baseline";
+	public final String LEFT_LeftSwitch = "LEFT_LSwitch.txt";
+	public final String LEFT_Scale = "LEFT_Scale.txt";
+	public final String LEFT_RightSwitch = "LEFT_RSwitch.txt";
+	public final String LEFT_SwitchAndScale = "LEFT_SwitchScale.txt";
+	public final String RIGHT_RightSwitch = "RIGHT_RSwitch.txt";
+	public final String RIGHT_Scale = "RIGHT_Scale.txt";
+	public final String RIGHT_LeftSwitch = "RIGHT_LSwitch.txt";
+	public final String RIGHT_SwitchAndScale = "RIGHT_SwitchScale.txt";
+	public final String MID_RightSwitch = "MID_RSwitch.txt";
+	public final String MID_LeftSwitch = "MID_LSwitch.txt";
+	public final String driveBaseline = "Baseline.txt";
 	
 	// Auto Delay Time
 	// This is the time that the robot will wait before executing the selected auto in an EDGECASE situation.
@@ -84,10 +86,11 @@ public interface Constants {
 	public final ControlMode PERCENT_VBUS_MODE = ControlMode.PercentOutput;
 	public final NeutralMode BRAKE_MODE = NeutralMode.Brake;
 	
-	// ENCODERS STUFF
-	public final double countsPerRev = 4096; // what is this actually supposed to be?
+	// VP Integrated Encoder
+	public final double countsPerRev = 1024;
 	public final FeedbackDevice magEncoder = FeedbackDevice.CTRE_MagEncoder_Relative;
-	
+
+	//TIMED AUTO
 	public final double timedDrivePercent = -0.75;//DO NOT CHANGE
 	//This is a multiplier that will be computed manually distanceMultiplier * time = distanceDriven (When Robot driving at timedDrivePercent)
 	public final double timedDistanceMultiplier = 38.58;// (in/s)
@@ -125,6 +128,47 @@ public interface Constants {
 	public final int cruiseVelocity = 125000; //native units of encoder per 100 ms
 	public final int acceleration = 62500; //native units of encoder per 100 ms per second
 	public final int timeout = 10;
+	
+	//DRIVETRAIN PROFILE FOLLWING PID GAINS
+	//Need to be tuned stolen from the cheesy poofs 2015 code
+	//Deduced that the poofs were using the same wheel diameter via
+	//picture of their wheels and cross refferencing their omnis wheels with vex Pro
+	//Turning may need to be tuned the most, poofs used omni's on front and rear of 
+	//their bot in 2015, whereas we use colsons this year.
+	
+
+    // DriveStraightController gains
+	//Tune to 2cim + gear ratio spec
+    public static double kDriveMaxSpeedInchesPerSec = 120.0;
+    public static double kDriveMaxAccelInchesPerSec2 = 107.0;
+    //Looks ok
+    public static double kDrivePositionKp = 0.7;
+    public static double kDrivePositionKi = 0;
+    public static double kDrivePositionKd = 0;
+    public static double kDriveStraightKp = 3.0;
+    public static double kDriveStraightKi = 0;
+    public static double kDriveStraightKd = 0;
+    //May become unused
+    public static double kDrivePositionKv = 0.008;
+    public static double kDrivePositionKa = 0.0017;
+    //May need to to something more realistic
+    public static double kDriveOnTargetError = 0.75;
+    //Looks ok
+    public static double kDrivePathHeadingFollowKp = 0.01;
+
+    // TurnInPlaceController gains
+	//Tune to 2cim + gear ratio spec
+    public static double kTurnMaxSpeedRadsPerSec = 5.25;
+    public static double kTurnMaxAccelRadsPerSec2 = 5.25;
+    //Looks ok
+    public static double kTurnKp = 3.0;
+    public static double kTurnKi = 0.18;
+    public static double kTurnKd = 0.23;
+    //May become unused
+    public static double kTurnKv = 0.085;
+    public static double kTurnKa = 0.075;
+    //May need to to something more realistic
+    public static double kTurnOnTargetError = 0.0225;
 	
 	/*********
 	 * PORTS *

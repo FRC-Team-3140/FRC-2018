@@ -133,6 +133,7 @@ public class Robot extends ImprovedRobot {
 			autoChooser.addObject("Baseline", RobotAction.BASELINE);
 			autoChooser.addObject("Switch", RobotAction.SWITCH);
 			*/
+			autoChooser = new SendableChooser<>();
 			autoChooser.addDefault("Do Nothing", RobotAction.DO_Nothing);
 			autoChooser.addObject("Go Robot Go!: EdgeCase_DoNothing", RobotAction.EDGECASE_DoNothing);
 			autoChooser.addObject("Go Robot Go!: EdgeCase_BaseLine", RobotAction.EDGECASE_Baseline);
@@ -156,10 +157,10 @@ public class Robot extends ImprovedRobot {
 	public void disabledInit() {
 		//if(autoCommand != null && autoCommand.isRunning())
 			//autoCommand.cancel();
-		if(isCompetitionMatch) {
+		if(isCompetitionMatch && competitionPlayCommand != null) {
 			if(competitionPlayCommand.isRunning()) competitionPlayCommand.cancel();
 		}
-		autoLooper.stop();				
+		autoLooper.stop();//Had been commented out in testing			
 	}
 	
 	public void disabledPeriodic() {
@@ -267,6 +268,7 @@ public class Robot extends ImprovedRobot {
 				competitionFilePicker = new FilePicker(fileToPlay);
 				competitionFilePicker.start(); // Changes path to the chosen file
 				competitionPlayCommand = new StartPlay();
+				System.out.println("File selected: " + fileToPlay);
 			}
 			//else if(fileToPlay != null && delayedSwitch)
 				//competitionPlayCommand = new DelayedPlay(fileToPlay, autoDelay);
@@ -277,8 +279,10 @@ public class Robot extends ImprovedRobot {
 			competitionPlayCommand = new DoNothing();
 		}
 	/////////////////////////////////////////////////////////////////////////////////////
-		if (competitionPlayCommand != null)
+		if (competitionPlayCommand != null) {
+			System.out.println("running auto");
 			competitionPlayCommand.start(); // Starts the appropriate command
+		}
 	}
 
 	@Override

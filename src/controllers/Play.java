@@ -6,6 +6,7 @@ import loopController.Loop;
 import main.Constants;
 import main.Robot;
 import main.commands.drivetrain.DriveFromPlayer;
+import main.commands.drivetrain.DriveFromPlayerWithSensors;
 import main.commands.intake.IntakeFromPlayer;
 
 public class Play implements Loop, Constants {
@@ -37,7 +38,7 @@ public class Play implements Loop, Constants {
 		if((line) != null) { 
 			String[] robotState = line.split(",");
 			
-			if(robotState.length == 28 && robotState != null) {
+			if(robotState.length == 31 && robotState != null) {
 				System.out.println("Playing");
 				
 				double leftDriveVoltage = Double.parseDouble(robotState[0]);
@@ -70,9 +71,23 @@ public class Play implements Loop, Constants {
 				boolean rightJoystickPress2 = Boolean.parseBoolean(robotState[25]);
 				boolean leftTrigger2 = Boolean.parseBoolean(robotState[26]);
 				boolean rightTrigger2 = Boolean.parseBoolean(robotState[27]);
+				
+				double leftEncoderDistanceTravelled = Double.parseDouble(robotState[28]);
+				double rightEncoderDistanceTravelled = Double.parseDouble(robotState[29]);
+				double heading = Double.parseDouble(robotState[30]);
 			
-				Command drive = new DriveFromPlayer(leftDriveVoltage, rightDriveVoltage);
+				Command drive;
 				Command intake = new IntakeFromPlayer(leftIntakeWheelValue, rightIntakeWheelValue);
+				//Command lift?
+				
+				if(!isSmartPlayAuto) {
+					drive = new DriveFromPlayer(leftDriveVoltage, rightDriveVoltage);
+					
+				}
+				else {
+					drive  = new DriveFromPlayerWithSensors(leftEncoderDistanceTravelled, rightEncoderDistanceTravelled, heading);
+				}
+				
 				drive.start();
 				intake.start();
 				

@@ -11,6 +11,7 @@ public class StartRecord extends ImprovedCommand {
 	// Called just before this Command runs the first time
     protected void initialize() {
     	Robot.dt.enableVoltageComp(true);
+    	Robot.dt.zeroSensors();
     	Robot.lg.resetForWrite();
     	Record.okToRecord(true);
     }
@@ -22,13 +23,12 @@ public class StartRecord extends ImprovedCommand {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;
-    	//return true;//(remove when switching back to record and play & use line above)
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Record.okToRecord(false);
-    	//Robot.lg.trim();
+    	Robot.dt.zeroSensors();
     	Robot.dt.enableVoltageComp(false);
     }
 
