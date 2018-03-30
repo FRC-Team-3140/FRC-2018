@@ -133,6 +133,8 @@ public class Robot extends ImprovedRobot {
 			autoChooser.addObject("Baseline", RobotAction.BASELINE);
 			autoChooser.addObject("Switch", RobotAction.SWITCH);
 			*/
+			autoChooser = new SendableChooser<>();
+
 			autoChooser.addDefault("Do Nothing", RobotAction.DO_Nothing);
 			autoChooser.addObject("Go Robot Go!: EdgeCase_DoNothing", RobotAction.EDGECASE_DoNothing);
 			autoChooser.addObject("Go Robot Go!: EdgeCase_BaseLine", RobotAction.EDGECASE_Baseline);
@@ -156,7 +158,7 @@ public class Robot extends ImprovedRobot {
 	public void disabledInit() {
 		//if(autoCommand != null && autoCommand.isRunning())
 			//autoCommand.cancel();
-		if(isCompetitionMatch) {
+		if(isCompetitionMatch && competitionPlayCommand != null) {
 			if(competitionPlayCommand.isRunning()) competitionPlayCommand.cancel();
 		}
 		autoLooper.stop();				
