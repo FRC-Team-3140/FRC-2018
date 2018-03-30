@@ -82,6 +82,7 @@ public class Play implements Loop, Constants {
 				
 				if(!isSmartPlayAuto) {
 					drive = new DriveFromPlayer(leftDriveVoltage, rightDriveVoltage);
+					
 				}
 				else {
 					drive  = new DriveFromPlayerWithSensors(leftEncoderDistanceTravelled, rightEncoderDistanceTravelled, heading);
