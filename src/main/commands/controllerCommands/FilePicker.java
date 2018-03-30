@@ -5,14 +5,16 @@ import main.Robot;
 
 public class FilePicker extends ImprovedCommand {
 	private String filePath = "";
+	private boolean useFileLookup;
 	
-	public FilePicker(String filePath) {
+	public FilePicker(String filePath, boolean useFileLookup) {
 		this.filePath = filePath;
+		this.useFileLookup = useFileLookup;
 		this.setName(filePath);
 	}
 	
 	protected void initialize() {
-		Robot.lg.changePath(filePath, false);
+		Robot.lg.changePath(filePath, useFileLookup);
 	}
 
 	@Override

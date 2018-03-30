@@ -5,9 +5,6 @@ import interfacesAndAbstracts.ImprovedCommandGroup;
 import main.commands.drivetrain.DriveTrainOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
-import main.commands.elevator.MoveToBottom;
-import main.commands.elevator.MoveToSwitch;
-import main.commands.elevator.MoveToTop;
 import main.commands.intake.SpinIn;
 import main.commands.intake.SpinOff;
 import main.commands.intake.SpinOut;
@@ -138,26 +135,27 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		/***********************
 		 * Elevator System Test
 		 */
+		// FIX THESE LATER
 		//Lift To Switch Height
-		addSequential(new MoveToSwitch(3));
+//		addSequential(new MoveToSwitch(3));
 		
 		//Wait
 		addSequential(new WaitCommand(0.5));
 		
 		//Elevator To Bottom
-		addSequential(new MoveToBottom(3));
+//		addSequential(new MoveToBottom(3));
 		
 		//Wait
 		addSequential(new WaitCommand(0.5));
 		
 		//Lift To Max Height
-		addSequential(new MoveToTop(5));
+//		addSequential(new MoveToTop(5));
 			
 		//Wait
 		addSequential(new WaitCommand(0.5));
 		
 		//ElevatorToBottom
-		addSequential(new MoveToBottom(3));
+//		addSequential(new MoveToBottom(3));
 			
 		//Wait
 		addSequential(new WaitCommand(0.5));				

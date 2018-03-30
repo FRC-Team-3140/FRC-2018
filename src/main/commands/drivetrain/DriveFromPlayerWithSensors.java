@@ -1,11 +1,18 @@
-package main.commands.elevator;
+package main.commands.drivetrain;
 
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class StopElevator extends ImprovedCommand {
-	public StopElevator() {
-    	requires(Robot.el);
+public class DriveFromPlayerWithSensors extends ImprovedCommand {
+	private double leftEncTargetPos;
+	private double rightEncTargetPos;
+	private double targetHeading;
+	
+	public DriveFromPlayerWithSensors(double leftEncTargetPos, double rightEncTargetPos, double targetHeading) {
+    	requires(Robot.dt);    	
+    	this.leftEncTargetPos = leftEncTargetPos;
+    	this.rightEncTargetPos = rightEncTargetPos;
+    	this.targetHeading = targetHeading;
     }
 
     // Called just before this Command runs the first time
@@ -14,10 +21,9 @@ public class StopElevator extends ImprovedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.el.move(0);
+    	Robot.dt.driveProfileWithPid(leftEncTargetPos, rightEncTargetPos, targetHeading);
     }
-
-    // Make this return true when this Command no longer needs to run execute()
+    
     protected boolean isFinished() {
         return true;
     }

@@ -133,6 +133,7 @@ public class Robot extends ImprovedRobot {
 			autoChooser.addObject("Baseline", RobotAction.BASELINE);
 			autoChooser.addObject("Switch", RobotAction.SWITCH);
 			*/
+			autoChooser = new SendableChooser<>();
 			autoChooser.addDefault("Do Nothing", RobotAction.DO_Nothing);
 			autoChooser.addObject("Go Robot Go!: EdgeCase_DoNothing", RobotAction.EDGECASE_DoNothing);
 			autoChooser.addObject("Go Robot Go!: EdgeCase_BaseLine", RobotAction.EDGECASE_Baseline);
@@ -156,10 +157,10 @@ public class Robot extends ImprovedRobot {
 	public void disabledInit() {
 		//if(autoCommand != null && autoCommand.isRunning())
 			//autoCommand.cancel();
-		if(isCompetitionMatch) {
+		if(isCompetitionMatch && competitionPlayCommand != null) {
 			if(competitionPlayCommand.isRunning()) competitionPlayCommand.cancel();
 		}
-		autoLooper.stop();				
+		autoLooper.stop();//Had been commented out in testing			
 	}
 	
 	public void disabledPeriodic() {
@@ -264,9 +265,10 @@ public class Robot extends ImprovedRobot {
 			}
 		
 			if(fileToPlay != null) {// && !delayedSwitch) {
-				competitionFilePicker = new FilePicker(fileToPlay);
+				competitionFilePicker = new FilePicker(fileToPlay, true);
 				competitionFilePicker.start(); // Changes path to the chosen file
 				competitionPlayCommand = new StartPlay();
+				System.out.println("File selected: " + fileToPlay);
 			}
 			//else if(fileToPlay != null && delayedSwitch)
 				//competitionPlayCommand = new DelayedPlay(fileToPlay, autoDelay);
@@ -277,8 +279,10 @@ public class Robot extends ImprovedRobot {
 			competitionPlayCommand = new DoNothing();
 		}
 	/////////////////////////////////////////////////////////////////////////////////////
-		if (competitionPlayCommand != null)
+		if (competitionPlayCommand != null) {
+			System.out.println("running auto");
 			competitionPlayCommand.start(); // Starts the appropriate command
+		}
 	}
 
 	@Override
@@ -326,7 +330,7 @@ public class Robot extends ImprovedRobot {
 		if (lg.getFiles(outputPath).length != lastNumOfFiles) {
 			for (File file : lg.getFiles(outputPath))
 				if (!fileNameInListOfFiles(listOfFiles, file)) {
-					fileChooser.addObject(file.getName(), new FilePicker(file.getPath()));
+					fileChooser.addObject(file.getName(), new FilePicker(file.getPath(), false));
 					listOfFiles.add(file);
 				}
 			lastNumOfFiles = lg.getFiles(outputPath).length;
@@ -383,13 +387,25 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("Left Slave Voltage", dt.getLeftSlaveVoltage());
 		SmartDashboard.putNumber("Right Master Voltage", dt.getRightMasterVoltage());
 		SmartDashboard.putNumber("Right Slave Voltage", dt.getRightSlaveVoltage());
+		// DriveTrain Encoders
+		SmartDashboard.putNumber("DriveTrain Left Encoder Ticks", dt.getLeftEncoderTicksTravelled());
+		SmartDashboard.putNumber("DriveTrain Left Encoder Distance", dt.getLeftEncoderDistanceTravelled());
+		SmartDashboard.putNumber("DriveTrain Left Encoder Velocity", dt.getLeftEncoderVelocity());
+		SmartDashboard.putNumber("DriveTrain Right Encoder Ticks", dt.getRightEncoderTicksTravelled());
+		SmartDashboard.putNumber("DriveTrain Right Encoder Distance", dt.getRightEncoderDistanceTravelled());
+		SmartDashboard.putNumber("DriveTrain Right Encoder Velocity", dt.getRightEncoderVelocity());
+		// DriveTrain Gyro
+		SmartDashboard.putNumber("NavX Heading", dt.getHeading());
 		// Limit Switch States
 		SmartDashboard.putBoolean("First Stage Bottom", !stage1BottomSwitch.get());
 		SmartDashboard.putBoolean("First Stage Top", !stage1TopSwitch.get());
 		SmartDashboard.putBoolean("Second Stage Bottom", !stage2BottomSwitch.get());
 		SmartDashboard.putBoolean("Second Stage Top", !stage2TopSwitch.get());
 		SmartDashboard.putBoolean("Switch Height", switchHeightSwitch.get());
-		
+		// Elevator encoder
+		SmartDashboard.putNumber("Elevator encoder in units", el.getTicksTravelled());
+		SmartDashboard.putNumber("Elevator encoder inches", el.getDistanceTravelled());
+		SmartDashboard.putNumber("Elevator speed in units", el.getElevatorVelocity());
 		
 		// Knowing where you're at
 		if(!isCompetitionMatch) {

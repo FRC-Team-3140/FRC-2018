@@ -12,24 +12,26 @@ public interface Constants {
 	/*************
 	 * VARIABLES *
 	 *************/
-	public final boolean isCompetitionMatch = false;
+	public final boolean isCompetitionMatch = true;
 	public final boolean isCompetitionRobot = false;
+	public final boolean isTimedAuto = false;
+	public final boolean isSmartPlayAuto = false;
 	
 	// FILE OUTPUT PATH
-	public final String outputPath = "/home/lvuser"; //"/U"; //  /home/lvuser"; // USB output path: /U
+	public final String outputPath = "/home/lvuser"; //"/U";
 	
 	// FILE NAMES
-	public final String LEFT_LeftSwitch = "LEFT_LSwitch";
-	public final String LEFT_Scale = "LEFT_Scale";
-	public final String LEFT_RightSwitch = "LEFT_RSwitch";
-	public final String LEFT_SwitchAndScale = "LEFT_SwitchScale";
-	public final String RIGHT_RightSwitch = "RIGHT_RSwitch";
-	public final String RIGHT_Scale = "RIGHT_Scale";
-	public final String RIGHT_LeftSwitch = "RIGHT_LSwitch";
-	public final String RIGHT_SwitchAndScale = "RIGHT_SwitchScale";
-	public final String MID_RightSwitch = "MID_RSwitch";
-	public final String MID_LeftSwitch = "MID_LSwitch";
-	public final String driveBaseline = "Baseline";
+	public final String LEFT_LeftSwitch = "LEFT_LSwitch.txt";
+	public final String LEFT_Scale = "LEFT_Scale.txt";
+	public final String LEFT_RightSwitch = "LEFT_RSwitch.txt";
+	public final String LEFT_SwitchAndScale = "LEFT_SwitchScale.txt";
+	public final String RIGHT_RightSwitch = "RIGHT_RSwitch.txt";
+	public final String RIGHT_Scale = "RIGHT_Scale.txt";
+	public final String RIGHT_LeftSwitch = "RIGHT_LSwitch.txt";
+	public final String RIGHT_SwitchAndScale = "RIGHT_SwitchScale.txt";
+	public final String MID_RightSwitch = "MID_RSwitch.txt";
+	public final String MID_LeftSwitch = "MID_LSwitch.txt";
+	public final String driveBaseline = "Baseline.txt";
 	
 	// Auto Delay Time
 	// This is the time that the robot will wait before executing the selected auto in an EDGECASE situation.
@@ -61,7 +63,6 @@ public interface Constants {
 	public final double practiceBotRightWheelRadius = 2;//Update with real measurements
 	public final double competitonBotLeftWheelRadius = 2;//Update with real measurements
 	public final double competitonBotRightWheelRadius = 2;//Update with real measurements
-
 	
 	public final double testVoltage = 8.0;//Subject to change
 	public final double practiceBotLeftFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
@@ -85,10 +86,11 @@ public interface Constants {
 	public final ControlMode PERCENT_VBUS_MODE = ControlMode.PercentOutput;
 	public final NeutralMode BRAKE_MODE = NeutralMode.Brake;
 	
-	// ENCODERS STUFF
-	public final double countsPerRev = 4096; // what is this actually supposed to be?
-	public final FeedbackDevice encoder = FeedbackDevice.CTRE_MagEncoder_Relative;
-	
+	// VP Integrated Encoder
+	public final double countsPerRev = 1024;
+	public final FeedbackDevice magEncoder = FeedbackDevice.CTRE_MagEncoder_Relative;
+
+	//TIMED AUTO
 	public final double timedDrivePercent = -0.75;//DO NOT CHANGE
 	//This is a multiplier that will be computed manually distanceMultiplier * time = distanceDriven (When Robot driving at timedDrivePercent)
 	public final double timedDistanceMultiplier = 38.58;// (in/s)
@@ -105,11 +107,11 @@ public interface Constants {
 	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
 	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier;
 
-	
-	// ELEVATOR LENGTHS
+	// ELEVATOR LENGTHS 
+	// CALIBRATE THESE- ALL ARE IN INCHES
 	public final double spindleDiameter = 2; //placeholder
 	public final double spindleCircum = Math.PI * spindleDiameter;
-	public final double elevatorHeight = 86;  
+	public final double elevatorHeight = 78;  
 	public final double elevatorTolerance = 1;
 	public final double switchHeight = 24; //set this in encoder units today...
 	public final double scaleHeight = 70; 
@@ -119,6 +121,46 @@ public interface Constants {
 	public final double elevator_kI = 0;
 	public final double elevator_kD = 0;
 	public final int timeout = 10;
+	
+	//DRIVETRAIN PROFILE FOLLWING PID GAINS
+	//Need to be tuned stolen from the cheesy poofs 2015 code
+	//Deduced that the poofs were using the same wheel diameter via
+	//picture of their wheels and cross refferencing their omnis wheels with vex Pro
+	//Turning may need to be tuned the most, poofs used omni's on front and rear of 
+	//their bot in 2015, whereas we use colsons this year.
+	
+    // DriveStraightController gains
+	//Tune to 2cim + gear ratio spec
+    public static double kDriveMaxSpeedInchesPerSec = 120.0;
+    public static double kDriveMaxAccelInchesPerSec2 = 107.0;
+    //Looks ok
+    public static double kDrivePositionKp = 0.7;
+    public static double kDrivePositionKi = 0;
+    public static double kDrivePositionKd = 0;
+    public static double kDriveStraightKp = 3.0;
+    public static double kDriveStraightKi = 0;
+    public static double kDriveStraightKd = 0;
+    //May become unused
+    public static double kDrivePositionKv = 0.008;
+    public static double kDrivePositionKa = 0.0017;
+    //May need to to something more realistic
+    public static double kDriveOnTargetError = 0.75;
+    //Looks ok
+    public static double kDrivePathHeadingFollowKp = 0.01;
+
+    // TurnInPlaceController gains
+	//Tune to 2cim + gear ratio spec
+    public static double kTurnMaxSpeedRadsPerSec = 5.25;
+    public static double kTurnMaxAccelRadsPerSec2 = 5.25;
+    //Looks ok
+    public static double kTurnKp = 3.0;
+    public static double kTurnKi = 0.18;
+    public static double kTurnKd = 0.23;
+    //May become unused
+    public static double kTurnKv = 0.085;
+    public static double kTurnKa = 0.075;
+    //May need to to something more realistic
+    public static double kTurnOnTargetError = 0.0225;
 	
 	/*********
 	 * PORTS *
@@ -136,8 +178,8 @@ public interface Constants {
 	public final int RIGHT_Drive_Slave2 = 4;
 	
 	// INTAKE MOTORS	
-	public final int LEFT_Intake = 1;//(isCompetitionRobot? 11:11);// compBot:practiceBot
-	public final int RIGHT_Intake = 0;///(isCompetitionRobot? 10:10);// compBot:practiceBot
+	public final int LEFT_Intake = 1;
+	public final int RIGHT_Intake = 0;
 	
 	// ELEVATOR MOTORS
 	public final int Elevator_Master = 8;
@@ -148,8 +190,8 @@ public interface Constants {
 	public final int PCM_Port2 = 2;
 	
 	// INTAKE PNEUMATICS
-	public final int INTAKE_EXT = 7;//(isCompetitionRobot? 0:0);// compBot:practiceBot
-	public final int INTAKE_RET = 0;//(isCompetitionRobot? 1:1);// compBot:practiceBot	
+	public final int INTAKE_EXT = 7;
+	public final int INTAKE_RET = 0;
 	public final int TILT_EXT = (isCompetitionRobot? 6:1);// compBot:practiceBot
 	public final int TILT_RET = (isCompetitionRobot? 1:6);// compBot:practiceBot
 	
@@ -157,14 +199,6 @@ public interface Constants {
 	public final int SHIFTER_EXT = (isCompetitionRobot? 5:2);// compBot:practiceBot
 	public final int SHIFTER_RET = (isCompetitionRobot? 2:5);// compBot:practiceBot
 	
-	// CLIMB AND RELATED PNEUMATICS
-//	public final int PTO_EXT = 6;
-//	public final int PTO_RET = 7;
-//	public final int FORK_EXT = 1;
-//	public final int FORK_RET = 2;
-//	public final int HOOK_EXT = 3;
-//	public final int HOOK_RET = 4;
-//	
 	// SWITCHES
 	public final int STAGE1_Bottom = 0;
 	public final int STAGE1_Top = 1;

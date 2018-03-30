@@ -1,9 +1,6 @@
 package main.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
-
 import Util.DriveHelper;
 import Util.EncoderHelper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
