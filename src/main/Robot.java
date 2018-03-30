@@ -393,7 +393,10 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putBoolean("Second Stage Bottom", !stage2BottomSwitch.get());
 		SmartDashboard.putBoolean("Second Stage Top", !stage2TopSwitch.get());
 		SmartDashboard.putBoolean("Switch Height", switchHeightSwitch.get());
-		
+		// Elevator encoder
+		SmartDashboard.putNumber("Elevator encoder in units", el.getTicksTravelled());
+		SmartDashboard.putNumber("El. encoder inches", el.getDistanceTravelled());
+		SmartDashboard.putNumber("Elevator speed in units", el.getElevatorVelocity());
 		
 		// Knowing where you're at
 		if(!isCompetitionMatch) {

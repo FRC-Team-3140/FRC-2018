@@ -1,48 +1,23 @@
 package main.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+
 import Util.DriveHelper;
 import Util.EncoderHelper;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.elevator.MoveWithJoystick;
 
 public class Elevator extends ImprovedSubsystem {
-	/*
-	// GET F-GAIN
-	// TEST ERROR AND CALCULATE P
-	// TEST FOR COASTING- BRAKE MODE WORKS GREAT
 	
-	// ELEVATOR LENGTHS
-	public final double spindleDiameter = 2; //placeholder
-	public final double spindleCircum = Math.PI * spindleDiameter;
-	public final double elevatorHeight = 86;  
-	public final double elevatorTolerance = 2;
-	public final double switchHeight = 24; //set this in encoder units today...
-	public final double scaleHeight = 70; 
-	public final double nearSetpoint = 12;
-	public final double nearSetpointDown = 36;
-		
-	// ELEVATOR SPEEDS
-	public final double defaultElevatorSpeed = 0.8;
-	public final double slowElevatorSpeed = 0.2;
-	public final int maxVelocity = 100523; //GET THIS VALUE PLEASE
-	public final int cruiseVelocity = maxVelocity * 3/4; 
-	public final int acceleration = 6250; //native units of encoder per 100 ms per second- PLACEHOLDER
-	
-	// MOTION MAGIC ELEVATOR STUFF
-	public final int elevatorIdx = 0;
-	public final int pidIdx = 0;
-	public final double fGain = 1023 / maxVelocity ;// 1023/max speed
-	public final double elevator_kP = 0;
-	public final double elevator_kI = 0;
-	public final double elevator_kD = 0;
-			
-	private EncoderHelper encoderHelper = new EncoderHelper();*/
+	private EncoderHelper encoderHelper = new EncoderHelper();
 	private DriveHelper driveHelper = new DriveHelper(7.5);
 	
-	//max velocity was 100523u/100ms	
 	public Elevator() {
 		setElevatorDefaults();
+		configSensors();
+		setMotionMagicDefaults();
 	}
 	
 	/************************
@@ -50,22 +25,23 @@ public class Elevator extends ImprovedSubsystem {
 	 ************************
 	 * This is to make a trapezoidal motion profile for the elevator... Hopefully it will work.
 	 */
-	/*
+	
 	private void setStatusFrames() {
-		//something goes here but idk what
+		elevatorMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, timeout);
+		elevatorMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, timeout);
 	}
 		
 	private void setAccelAndVeloDefaults() {
-		elevatorMaster.configMotionCruiseVelocity(cruiseVelocity, 10);
-		elevatorMaster.configMotionAcceleration(acceleration, 10);
+		elevatorMaster.configMotionCruiseVelocity(cruiseVelocity, timeout);
+		elevatorMaster.configMotionAcceleration(acceleration, timeout);
 	}
 	
 	private void setPIDValues() {
 		elevatorMaster.selectProfileSlot(elevatorIdx, pidIdx);
-		elevatorMaster.config_kF(elevatorIdx, fGain, 10);
-		elevatorMaster.config_kP(elevatorIdx, elevator_kP, 10);
-		elevatorMaster.config_kI(elevatorIdx, elevator_kI, 10);
-		elevatorMaster.config_kD(elevatorIdx, elevator_kD, 10);
+		elevatorMaster.config_kF(elevatorIdx, fGain, timeout);
+		elevatorMaster.config_kP(elevatorIdx, elevator_kP, timeout);
+		elevatorMaster.config_kI(elevatorIdx, elevator_kI, timeout);
+		elevatorMaster.config_kD(elevatorIdx, elevator_kD, timeout);
 	}
 	
 	private void setMotionMagicDefaults() {
@@ -73,11 +49,17 @@ public class Elevator extends ImprovedSubsystem {
 		setAccelAndVeloDefaults();
 		setPIDValues();
 	}
-	*/
+	
 	
 	/*************************
 	 * TALON SUPPORT METHODS *
 	 ************************/
+	private void configSensors() {
+		elevatorMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
+		elevatorMaster.setSensorPhase(true);
+		zeroSensors();
+	}
+	
 	private void setBrakeMode() {
 		elevatorMaster.setNeutralMode(BRAKE_MODE);
 		elevatorSlave.setNeutralMode(BRAKE_MODE);
@@ -114,7 +96,7 @@ public class Elevator extends ImprovedSubsystem {
 	 **************************/
 	
 	public void zeroSensors() {
-		//elevatorMaster.getSensorCollection().setQuadraturePosition(0, 10);
+		elevatorMaster.getSensorCollection().setQuadraturePosition(0, 0);
 	}
 	
 	// Checks if the intake is at bottom
@@ -126,44 +108,29 @@ public class Elevator extends ImprovedSubsystem {
 	public boolean isArmAtTop() {
 		return !stage1TopSwitch.get() && !stage2TopSwitch.get();
 	}
-	
-	// Checks to see if the intake is at the height needed to dump into the switch
+		
 	public boolean isArmAtSwitch() {
-		return switchHeightSwitch.get();
+		return isIntakeAtPos(switchHeight);
 	}
 	
 	// Sets encoders to 0 if the arm is at the bottom (this helps to avoid offset)
 	public void check() {
-		/*if (isArmAtBottom())
-			zeroSensors();*/
+		if (isArmAtBottom())
+			zeroSensors();
 	}
-	/*
+	
 	// Returns whether or not the intake has reached the set position. Pos is in inches
 	public boolean isIntakeAtPos(double pos) {
-		if (getDistanceFromPos(pos) < elevatorTolerance && getDistanceFromPos(pos) > -1 * elevatorTolerance) {
+		if (Math.abs(getDistanceFromPos(pos)) < elevatorTolerance) {
 			return true;
 		}
-		else return false;
-	}
-	
-	// Returns whether or not the elevator is close to set position
-	private boolean isIntakeNearPos(double pos, double near) {
-		if (getDistanceFromPos(pos) < near && getDistanceFromPos(pos) > -1* near) {
-			return true;
-		}
-		else return false;
-	}
-	
-	// Returns if the intake is currently below the desired position or not
-	private boolean isIntakeBelowPos(double pos) {
-		if (getDistanceFromPos(pos) > 0) return true;
 		else return false;
 	}
 	
 	/**********************
 	 * ENC OUTPUT METHODS *
 	 **********************/
-	/*
+	
 	public double getElevatorVelocity() {
 		return elevatorMaster.getSensorCollection().getQuadratureVelocity();
 	}
@@ -173,12 +140,13 @@ public class Elevator extends ImprovedSubsystem {
 		return elevatorMaster.getSensorCollection().getQuadraturePosition() / countsPerRev;
 	}
 	
+	// Returns the distance travelled in native encoder units
 	public double getTicksTravelled() {
 		return elevatorMaster.getSensorCollection().getQuadraturePosition();
 	}
 	
-	// Get the distance the elevator has travelled
-	private double getDistanceTravelled() {
+	// Get the distance the elevator has travelled in inches
+	public double getDistanceTravelled() {
 		return getElevatorRevs() * spindleCircum;
 	}
 	
@@ -190,11 +158,11 @@ public class Elevator extends ImprovedSubsystem {
 	/**********************
 	 * CONVERSION METHODS *
 	 **********************/
-	/*
+	
 	private double inchesToElevatorEncoderTicks(double inches) {
 		return encoderHelper.inchesToEncoderTicks(inches, spindleCircum, countsPerRev);
 	}
-	*/
+	
 	/***************
 	 * RECORD/PLAY *
 	 ***************/
@@ -214,89 +182,35 @@ public class Elevator extends ImprovedSubsystem {
 		else
 			elevatorMaster.set(voltage/12);
 	}*/
-	/*
+	
 	public void moveToPosPID(double pos) {
-		setMotionMagicDefaults();
 		elevatorMaster.set(ControlMode.MotionMagic, inchesToElevatorEncoderTicks(pos));
 	}
-	*/
+	
 	public void moveWithJoystick(double throttle) {
-		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
+		if ((isArmAtTop() && throttle > 0) || (isArmAtBottom() && throttle < 0))
 			throttle = 0.0;
-		//if(driveHelper.handleDeadband(throttle, elevatorDeadband) == 0 || (throttle < 0 && !isArmAtTop()) || (throttle > 0 && !isArmAtBottom()))
-			if (isCompetitionRobot)
-				elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, elevatorDeadband)));
-			else
-				elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+		if (isCompetitionRobot)
+			elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+		else
+			elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
 	}
 	
 	public void move(double throttle) {
-		//if(throttle == 0 || (throttle > 0 && !isArmAtTop()) || (throttle < 0 && !isArmAtBottom()))
-			//elevatorMaster.set(throttle);
-		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
+		if((isArmAtTop() && throttle > 0) || (isArmAtBottom() && throttle < 0))
 			throttle = 0.0;
 		if (isCompetitionRobot)
-			elevatorMaster.set(-throttle);
+			elevatorMaster.set(throttle);
 		else
 			elevatorMaster.set(throttle);
 	}
-	/*
-	// Moves fast to a position if far away, slows down when it gets closer, and stops when it reaches
-	// the position within a tolerance.
-	public void moveToPos(double pos) {
-//		if(isIntakeAtPos(pos)) {
-//			elevatorMaster.set(0);
-//		}
-		if (isIntakeNearPos(pos, nearSetpoint)) {
-			if (isIntakeBelowPos(pos)) elevatorMaster.set(slowElevatorSpeed);
-			else elevatorMaster.set(-1 * slowElevatorSpeed);
-		}
-		else {
-			if (isIntakeBelowPos(pos)) elevatorMaster.set(defaultElevatorSpeed);
-			else elevatorMaster.set(defaultElevatorSpeed * -1); 
-		}
+	
+	public void moveToPosDumb(double pos) {
+		double posTicks = inchesToElevatorEncoderTicks(pos);
+		if(posTicks - getTicksTravelled() > 0) move(0.8);
+		else if(posTicks - getTicksTravelled() < 0) move(-0.8);
 	}
 
-	public void moveDown() {
-		/*if (isArmAtBottom()) {
-			elevatorMaster.set(PERCENT_VBUS_MODE, 0);
-		}
-		else if (isIntakeNearPos(0, nearSetpointDown)) {
-			elevatorMaster.set(getDistanceTravelled() * (-1/36));
-		}
-		else {
-			elevatorMaster.set(-1 * defaultElevatorSpeed);
-		}
-	}
-	
-	public void moveUp() {
-		/*if (isArmAtTop()) {
-			elevatorMaster.set(0);
-		}
-		else if(isIntakeNearPos(elevatorHeight, nearSetpoint)) {
-			elevatorMaster.set(slowElevatorSpeed);
-		}
-		else {
-			elevatorMaster.set(defaultElevatorSpeed);
-		}
-	}*/
-	
-	/*****************
-	 * DUMMY METHODS *
-	 *****************/
-	/*
-	public void up() {
-		elevatorMaster.set(-1.0);
-	}
-	
-	public void down() {
-		elevatorMaster.set(1.0);
-	}
-	
-	public void stop() {
-		elevatorMaster.set(0);
-	}*/
-	
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new MoveWithJoystick());

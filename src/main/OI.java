@@ -1,6 +1,7 @@
 package main;
 
 import interfacesAndAbstracts.ImprovedClass;
+
 import lib.joystick.XboxController;
 import main.commands.commandgroups.cubeManipulator.DropCube;
 import main.commands.commandgroups.cubeManipulator.DropCubeOff;
@@ -10,9 +11,10 @@ import main.commands.commandgroups.cubeManipulator.PushOutCube;
 import main.commands.commandgroups.cubeManipulator.PushOutCubeOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
-import main.commands.elevator.MoveToBottom;
-import main.commands.elevator.MoveToSwitch;
-import main.commands.elevator.MoveToTop;
+import main.commands.elevator.MoveFullThrottle;
+import main.commands.elevator.MoveToPosDumb;
+import main.commands.elevator.MoveToPosPID;
+import main.commands.elevator.StopElevator;
 import main.commands.elevator.TimedLift;
 import main.commands.intake.DeployIntake;
 import main.commands.intake.DeployIntakeOff;
@@ -39,6 +41,10 @@ public class OI extends ImprovedClass {
 		//xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
 		//xbox.y.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));
 		//xbox.x.whenPressed(new TimedLift(timedLiftPercent, timedLiftFullHeightTime));
+		xbox.x.whenPressed(new MoveToPosPID(switchHeight));
+		xbox.y.whenPressed(new MoveToPosPID(elevatorBottom));
+		xbox.b.whenPressed(new MoveToPosPID(elevatorHeight));
+
 		
 		//xbox2.rightTrigger.whileHeld(new SpinOut());
 		//xbox2.rightTrigger.whenReleased(new SpinOff());
@@ -55,9 +61,11 @@ public class OI extends ImprovedClass {
 		//xbox2.b.whenReleased(new DropCubeOff());
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
-		xbox2.x.whenPressed(new MoveToBottom(3));
-		xbox2.y.whenPressed(new MoveToSwitch(3));
-		xbox2.b.whenPressed(new MoveToTop(5));
+		xbox2.x.whenPressed(new MoveToPosDumb(switchHeight));
+		xbox2.y.whenPressed(new MoveToPosDumb(elevatorBottom));
+		xbox2.b.whenPressed(new MoveToPosDumb(elevatorHeight));
+		xbox2.a.whenPressed(new MoveFullThrottle());
+		xbox2.a.whenReleased(new StopElevator());
 		//xbox2.rightBumper.whenPressed(new TiltDown());
 		//xbox2.rightBumper.whenReleased(new TiltUp());
 		//xbox2.b.whenReleased(new DropCubeOff());
@@ -77,16 +85,6 @@ public class OI extends ImprovedClass {
 		xbox.check();
 		xbox2.check();
 	}
-	
-	/*public void DoNothing() {
-		Robot.robot_act = Robot.RobotAction.DO_Nothing;
-	}
-	public void Baseline() {
-		Robot.robot_act = Robot.RobotAction.Baseline;
-	}
-	public void Switch() {
-		Robot.robot_act = Robot.RobotAction.Switch;
-	}*/
 
 	/**************
 	 * PLAY/RECORD *

@@ -18,7 +18,7 @@ public interface Constants {
 	public final boolean isSmartPlayAuto = false;
 	
 	// FILE OUTPUT PATH
-	public final String outputPath = "/home/lvuser"; //"/U"; //  /home/lvuser"; // USB output path: /U
+	public final String outputPath = "/home/lvuser"; //"/U";
 	
 	// FILE NAMES
 	public final String LEFT_LeftSwitch = "LEFT_LSwitch.txt";
@@ -63,7 +63,6 @@ public interface Constants {
 	public final double practiceBotRightWheelRadius = 2;//Update with real measurements
 	public final double competitonBotLeftWheelRadius = 2;//Update with real measurements
 	public final double competitonBotRightWheelRadius = 2;//Update with real measurements
-
 	
 	public final double testVoltage = 8.0;//Subject to change
 	public final double practiceBotLeftFreeRPMAtTestVoltage = 1000.0;//Update with real measurement (+ value only)
@@ -87,12 +86,9 @@ public interface Constants {
 	public final ControlMode PERCENT_VBUS_MODE = ControlMode.PercentOutput;
 	public final NeutralMode BRAKE_MODE = NeutralMode.Brake;
 	
-	// ENCODERS STUFF
 	// VP Integrated Encoder
 	public final double countsPerRev = 1024;
 	public final FeedbackDevice magEncoder = FeedbackDevice.CTRE_MagEncoder_Relative;
-	public final int pidIdx = 0;
-	public final int timeout = 10;
 
 	//TIMED AUTO
 	public final double timedDrivePercent = -0.75;//DO NOT CHANGE
@@ -111,29 +107,27 @@ public interface Constants {
 	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
 	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier;
 
-	
-	// ELEVATOR LENGTHS
-	/*public final double spindleDiameter = 2; //placeholder
+	// ELEVATOR LENGTHS 
+	// CALIBRATE THESE- ALL ARE IN INCHES
+	public final double spindleDiameter = 2; //placeholder
 	public final double spindleCircum = Math.PI * spindleDiameter;
-	public final double elevatorHeight = 86;  
-	public final double elevatorTolerance = 2;
-	public final double switchHeight = 24; //set this in encoder units today...
-	public final double scaleHeight = 70; 
-	public final double nearSetpoint = 12;
-	
-	// ELEVATOR SPEEDS
-	public final double defaultElevatorSpeed = 0.8;
-	public final double slowElevatorSpeed = 0.2;
-	public final int cruiseVelocity = 125000; //native units of encoder per 100 ms
-	public final int acceleration = 62500; //native units of encoder per 100 ms per second
-	
+	public final double elevatorHeight = 78;  
+	public final double elevatorTolerance = 1;
+	public final double switchHeight = 36;
+//	public final double scaleHeight = 70; 
+	public final double elevatorBottom = 0;
+		
 	// MOTION MAGIC ELEVATOR STUFF
 	public final int elevatorIdx = 0;
 	public final int pidIdx = 0;
-	public final double fGain = 0.01066 ;// 1023/max speed
+	public final double elevatorFullThrottle = 125000;
+	public final double fGain = 1023 / elevatorFullThrottle ;// 1023/max speed
 	public final double elevator_kP = 0;
 	public final double elevator_kI = 0;
-	public final double elevator_kD = 0;*/
+	public final double elevator_kD = 0;
+	public final int cruiseVelocity = 125000; //native units of encoder per 100 ms
+	public final int acceleration = 62500; //native units of encoder per 100 ms per second
+	public final int timeout = 10;
 	
 	//DRIVETRAIN PROFILE FOLLWING PID GAINS
 	//Need to be tuned stolen from the cheesy poofs 2015 code
@@ -192,8 +186,8 @@ public interface Constants {
 	public final int RIGHT_Drive_Slave2 = 4;
 	
 	// INTAKE MOTORS	
-	public final int LEFT_Intake = 1;//(isCompetitionRobot? 11:11);// compBot:practiceBot
-	public final int RIGHT_Intake = 0;///(isCompetitionRobot? 10:10);// compBot:practiceBot
+	public final int LEFT_Intake = 1;
+	public final int RIGHT_Intake = 0;
 	
 	// ELEVATOR MOTORS
 	public final int Elevator_Master = 8;
@@ -204,8 +198,8 @@ public interface Constants {
 	public final int PCM_Port2 = 2;
 	
 	// INTAKE PNEUMATICS
-	public final int INTAKE_EXT = 7;//(isCompetitionRobot? 0:0);// compBot:practiceBot
-	public final int INTAKE_RET = 0;//(isCompetitionRobot? 1:1);// compBot:practiceBot	
+	public final int INTAKE_EXT = 7;
+	public final int INTAKE_RET = 0;
 	public final int TILT_EXT = (isCompetitionRobot? 6:1);// compBot:practiceBot
 	public final int TILT_RET = (isCompetitionRobot? 1:6);// compBot:practiceBot
 	
@@ -213,14 +207,6 @@ public interface Constants {
 	public final int SHIFTER_EXT = (isCompetitionRobot? 5:2);// compBot:practiceBot
 	public final int SHIFTER_RET = (isCompetitionRobot? 2:5);// compBot:practiceBot
 	
-	// CLIMB AND RELATED PNEUMATICS
-//	public final int PTO_EXT = 6;
-//	public final int PTO_RET = 7;
-//	public final int FORK_EXT = 1;
-//	public final int FORK_RET = 2;
-//	public final int HOOK_EXT = 3;
-//	public final int HOOK_RET = 4;
-//	
 	// SWITCHES
 	public final int STAGE1_Bottom = 0;
 	public final int STAGE1_Top = 1;
