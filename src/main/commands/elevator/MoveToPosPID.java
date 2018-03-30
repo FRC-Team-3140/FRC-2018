@@ -1,22 +1,23 @@
 package main.commands.elevator;
 
 import interfacesAndAbstracts.ImprovedCommand;
-import main.Robot;
 
 public class MoveToPosPID extends ImprovedCommand {
-	private int pos;
+	private double targetPos;
 	
-	public MoveToPosPID(int pos) {
-		this.pos = pos;
+	public MoveToPosPID(double targetPos) {
+		this.targetPos = targetPos;
 	}
 	
 	protected void execute() {
-		Robot.el.moveToPosPID(pos);
+		
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return true;
+		//TODO
+		return false;
 	}
+	
 
 }

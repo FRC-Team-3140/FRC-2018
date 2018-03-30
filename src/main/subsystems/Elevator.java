@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 
 import Util.DriveHelper;
 import Util.EncoderHelper;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.elevator.MoveWithJoystick;
 
@@ -17,39 +18,7 @@ public class Elevator extends ImprovedSubsystem {
 	public Elevator() {
 		setElevatorDefaults();
 		configSensors();
-		setMotionMagicDefaults();
 	}
-	
-	/************************
-	 * MOTION MAGIC METHODS *
-	 ************************
-	 * This is to make a trapezoidal motion profile for the elevator... Hopefully it will work.
-	 */
-	
-	private void setStatusFrames() {
-		elevatorMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, timeout);
-		elevatorMaster.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, timeout);
-	}
-		
-	private void setAccelAndVeloDefaults() {
-		elevatorMaster.configMotionCruiseVelocity(cruiseVelocity, 10);
-		elevatorMaster.configMotionAcceleration(acceleration, 10);
-	}
-	
-	private void setPIDValues() {
-		elevatorMaster.selectProfileSlot(elevatorIdx, pidIdx);
-		elevatorMaster.config_kF(elevatorIdx, fGain, 10);
-		elevatorMaster.config_kP(elevatorIdx, elevator_kP, 10);
-		elevatorMaster.config_kI(elevatorIdx, elevator_kI, 10);
-		elevatorMaster.config_kD(elevatorIdx, elevator_kD, 10);
-	}
-	
-	private void setMotionMagicDefaults() {
-		setStatusFrames();
-		setAccelAndVeloDefaults();
-		setPIDValues();
-	}
-	
 	
 	/*************************
 	 * TALON SUPPORT METHODS *
@@ -183,10 +152,6 @@ public class Elevator extends ImprovedSubsystem {
 			elevatorMaster.set(voltage/12);
 	}*/
 	
-	public void moveToPosPID(double pos) {
-		elevatorMaster.set(ControlMode.MotionMagic, inchesToElevatorEncoderTicks(pos));
-	}
-	
 	public void moveWithJoystick(double throttle) {
 		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
 			throttle = 0.0;
@@ -205,10 +170,32 @@ public class Elevator extends ImprovedSubsystem {
 			elevatorMaster.set(throttle);
 	}
 	
-	public void moveToPosDumb(double pos) {
-		double posTicks = inchesToElevatorEncoderTicks(pos);
-		if(posTicks - getTicksTravelled() > 0) move(-0.8);
-		else if(posTicks - getTicksTravelled() < 0) move(0.8);
+	/*****************
+	 * PID MOVEMENTS *
+	 *****************/
+	public void pushPIDGainsToSDB() {
+		SmartDashboard.putNumber("Elevator Pos: P", elevator_kP);
+		SmartDashboard.putNumber("Elevator Pos: I", elevator_kI);
+		SmartDashboard.putNumber("Elevator Pos: D", elevator_kD);
+	}
+	
+	public void moveWithPID(double targetPos) {
+		double lastIntegral = 0;
+		double lastError = 0;
+		
+		double kP = SmartDashboard.getNumber("Elevator Pos: P", elevator_kP);
+		double kI = SmartDashboard.getNumber("Elevator Pos: I", elevator_kI);
+		double kD = SmartDashboard.getNumber("Elevator Pos: D", elevator_kD);
+		
+		double error = targetPos - getDistanceTravelled();
+		double integral = lastIntegral + error*kLooperDt;
+		double derivative = (error - lastError) / kLooperDt;
+		double PIDOutput = kP*error + kI*integral + kD*derivative;
+		
+		move(PIDOutput);
+		
+		lastError = error;
+		lastIntegral = integral;
 	}
 
 	@Override

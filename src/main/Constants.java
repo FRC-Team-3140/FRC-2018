@@ -113,19 +113,12 @@ public interface Constants {
 	public final double elevatorTolerance = 1;
 	public final double switchHeight = 24; //set this in encoder units today...
 	public final double scaleHeight = 70; 
-	
-	// ELEVATOR SPEEDS
-	public final int cruiseVelocity = 125000; //native units of encoder per 100 ms
-	public final int acceleration = 62500; //native units of encoder per 100 ms per second
-	
-	// MOTION MAGIC ELEVATOR STUFF
-	public final int elevatorIdx = 0;
+
 	public final int pidIdx = 0;
-	public final double fGain = 0.01066 ;// 1023/max speed
 	public final double elevator_kP = 0;
 	public final double elevator_kI = 0;
 	public final double elevator_kD = 0;
-	public int timeout = 10;
+	public final int timeout = 10;
 	
 	/*********
 	 * PORTS *
