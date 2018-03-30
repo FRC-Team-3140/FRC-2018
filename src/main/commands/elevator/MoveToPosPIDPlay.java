@@ -3,21 +3,21 @@ package main.commands.elevator;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class MoveToPosDumb extends ImprovedCommand {
-	private double pos;
-	public MoveToPosDumb(double pos) {
-		this.pos = pos;
+public class MoveToPosPIDPlay extends ImprovedCommand{
+	double targetPos;
+	
+	public MoveToPosPIDPlay(double targetPos) {
 		requires(Robot.el);
+		this.targetPos = targetPos;
 	}
 	
 	protected void execute() {
-		Robot.el.moveToPosDumb(pos);
+		Robot.el.moveWithPID(targetPos);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.el.isIntakeAtPos(pos);
+		return true;
 	}
-	
 
 }
