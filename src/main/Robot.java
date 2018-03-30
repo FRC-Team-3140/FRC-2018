@@ -387,6 +387,15 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("Left Slave Voltage", dt.getLeftSlaveVoltage());
 		SmartDashboard.putNumber("Right Master Voltage", dt.getRightMasterVoltage());
 		SmartDashboard.putNumber("Right Slave Voltage", dt.getRightSlaveVoltage());
+		// DriveTrain Encoders
+		SmartDashboard.putNumber("DriveTrain Left Encoder Ticks", dt.getLeftEncoderTicksTravelled());
+		SmartDashboard.putNumber("DriveTrain Left Encoder Distance", dt.getLeftEncoderDistanceTravelled());
+		SmartDashboard.putNumber("DriveTrain Left Encoder Velocity", dt.getLeftEncoderVelocity());
+		SmartDashboard.putNumber("DriveTrain Right Encoder Ticks", dt.getRightEncoderTicksTravelled());
+		SmartDashboard.putNumber("DriveTrain Right Encoder Distance", dt.getRightEncoderDistanceTravelled());
+		SmartDashboard.putNumber("DriveTrain Right Encoder Velocity", dt.getRightEncoderVelocity());
+		// DriveTrain Gyro
+		SmartDashboard.putNumber("NavX Heading", dt.getHeading());
 		// Limit Switch States
 		SmartDashboard.putBoolean("First Stage Bottom", !stage1BottomSwitch.get());
 		SmartDashboard.putBoolean("First Stage Top", !stage1TopSwitch.get());
@@ -395,7 +404,7 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putBoolean("Switch Height", switchHeightSwitch.get());
 		// Elevator encoder
 		SmartDashboard.putNumber("Elevator encoder in units", el.getTicksTravelled());
-		SmartDashboard.putNumber("El. encoder inches", el.getDistanceTravelled());
+		SmartDashboard.putNumber("Elevator encoder inches", el.getDistanceTravelled());
 		SmartDashboard.putNumber("Elevator speed in units", el.getElevatorVelocity());
 		
 		// Knowing where you're at
