@@ -40,7 +40,7 @@ public class OI extends ImprovedClass {
 		//xbox.y.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));
 		//xbox.x.whenPressed(new TimedLift(timedLiftPercent, timedLiftFullHeightTime));
 		xbox.x.whenPressed(new MoveToPosPID(switchHeight));
-		xbox.y.whenPressed(new MoveToPosPID(elevatorBottom));
+		xbox.y.whenPressed(new MoveToPosPID(0));
 		xbox.b.whenPressed(new MoveToPosPID(elevatorHeight));
 
 		
