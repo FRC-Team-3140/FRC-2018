@@ -3,10 +3,10 @@ package main.commands.elevator;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class MoveToPosPID extends ImprovedCommand {
-	private double targetPos;
+public class MoveToPosPIDPlay extends ImprovedCommand{
+	double targetPos;
 	
-	public MoveToPosPID(double targetPos) {
+	public MoveToPosPIDPlay(double targetPos) {
 		requires(Robot.el);
 		this.targetPos = targetPos;
 	}
@@ -17,8 +17,7 @@ public class MoveToPosPID extends ImprovedCommand {
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.el.isIntakeAtPos(targetPos);
+		return true;
 	}
-	
 
 }
