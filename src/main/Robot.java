@@ -265,7 +265,7 @@ public class Robot extends ImprovedRobot {
 			}
 		
 			if(fileToPlay != null) {// && !delayedSwitch) {
-				competitionFilePicker = new FilePicker(fileToPlay);
+				competitionFilePicker = new FilePicker(fileToPlay, true);
 				competitionFilePicker.start(); // Changes path to the chosen file
 				competitionPlayCommand = new StartPlay();
 				System.out.println("File selected: " + fileToPlay);
@@ -330,7 +330,7 @@ public class Robot extends ImprovedRobot {
 		if (lg.getFiles(outputPath).length != lastNumOfFiles) {
 			for (File file : lg.getFiles(outputPath))
 				if (!fileNameInListOfFiles(listOfFiles, file)) {
-					fileChooser.addObject(file.getName(), new FilePicker(file.getPath()));
+					fileChooser.addObject(file.getName(), new FilePicker(file.getPath(), false));
 					listOfFiles.add(file);
 				}
 			lastNumOfFiles = lg.getFiles(outputPath).length;
