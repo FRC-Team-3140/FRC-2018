@@ -13,6 +13,7 @@ public class StartRecord extends ImprovedCommand {
     	Robot.dt.enableVoltageComp(true);
     	Robot.dt.zeroSensors();
     	Robot.lg.resetForWrite();
+    	Record.reachedFirstNonZero(false);
     	Record.okToRecord(true);
     }
 
