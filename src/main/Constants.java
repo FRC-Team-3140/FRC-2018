@@ -16,20 +16,20 @@ public interface Constants {
 	public final boolean isCompetitionRobot = false;
 	
 	// FILE OUTPUT PATH
-	public final String outputPath = "/home/lvuser"; //"/U"; //  /home/lvuser"; // USB output path: /U
+	public final String outputPath = "/home/lvuser"; //"/U";
 	
 	// FILE NAMES
-	public final String LEFT_LeftSwitch = "LEFT_LSwitch";
-	public final String LEFT_Scale = "LEFT_Scale";
-	public final String LEFT_RightSwitch = "LEFT_RSwitch";
-	public final String LEFT_SwitchAndScale = "LEFT_SwitchScale";
-	public final String RIGHT_RightSwitch = "RIGHT_RSwitch";
-	public final String RIGHT_Scale = "RIGHT_Scale";
-	public final String RIGHT_LeftSwitch = "RIGHT_LSwitch";
-	public final String RIGHT_SwitchAndScale = "RIGHT_SwitchScale";
-	public final String MID_RightSwitch = "MID_RSwitch";
-	public final String MID_LeftSwitch = "MID_LSwitch";
-	public final String driveBaseline = "Baseline";
+	public final String LEFT_LeftSwitch = "LEFT_LSwitch.txt";
+	public final String LEFT_Scale = "LEFT_Scale.txt";
+	public final String LEFT_RightSwitch = "LEFT_RSwitch.txt";
+	public final String LEFT_SwitchAndScale = "LEFT_SwitchScale.txt";
+	public final String RIGHT_RightSwitch = "RIGHT_RSwitch.txt";
+	public final String RIGHT_Scale = "RIGHT_Scale.txt";
+	public final String RIGHT_LeftSwitch = "RIGHT_LSwitch.txt";
+	public final String RIGHT_SwitchAndScale = "RIGHT_SwitchScale.txt";
+	public final String MID_RightSwitch = "MID_RSwitch.txt";
+	public final String MID_LeftSwitch = "MID_LSwitch.txt";
+	public final String driveBaseline = "Baseline.txt";
 	
 	// Auto Delay Time
 	// This is the time that the robot will wait before executing the selected auto in an EDGECASE situation.
