@@ -169,8 +169,8 @@ public class Elevator extends ImprovedSubsystem {
 		double kD = SmartDashboard.getNumber("Elevator Pos: D", elevator_kD);
 		//Calculate Error With PID
 		double error = targetPos - getDistanceTravelled();
-		integralAccum = integralAccum + error*kLooperDt;
-		double derivative = (error - lastEncPosError) / kLooperDt;
+		integralAccum += (error*kLooperDt);
+		double derivative = (error - lastEncPosError)/kLooperDt;
 		double PIDOutput = kP*error + kI*integralAccum + kD*derivative;
 		lastEncPosError = error;
 		//Move Based on PID Output

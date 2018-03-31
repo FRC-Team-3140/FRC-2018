@@ -3,7 +3,7 @@ package main.commands.elevator;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class MoveToPosPIDPlay extends ImprovedCommand{
+public class MoveToPosPIDPlay extends ImprovedCommand {
 	double targetPos;
 	
 	public MoveToPosPIDPlay(double targetPos) {
@@ -19,5 +19,4 @@ public class MoveToPosPIDPlay extends ImprovedCommand{
 	protected boolean isFinished() {
 		return true;
 	}
-
 }

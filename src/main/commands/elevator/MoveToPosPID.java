@@ -11,6 +11,12 @@ public class MoveToPosPID extends ImprovedCommand {
 		this.targetPos = targetPos;
 	}
 	
+	// Called just before this Command runs the first time
+    protected void initialize() {
+    	Robot.el.enableVoltageComp(true);
+    	Robot.el.zeroPIDVariables();
+    }
+	
 	protected void execute() {
 		Robot.el.moveWithPID(targetPos);
 	}
@@ -20,5 +26,12 @@ public class MoveToPosPID extends ImprovedCommand {
 		return Robot.el.isIntakeAtPos(targetPos);
 	}
 	
-
+	protected void end() {
+		Robot.el.enableVoltageComp(false);
+    	Robot.el.zeroPIDVariables();
+	}
+	
+	protected void interupted() {
+		end();
+	}
 }
