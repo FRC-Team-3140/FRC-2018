@@ -38,6 +38,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 	    }
 		
 		setTalonDefaults();
+		configTalonEncoders();
+		zeroSensors();
 		pushPIDGainsToSmartDashboard();
 	}
 	
@@ -73,16 +75,16 @@ public class Drivetrain extends ImprovedSubsystem  {
 			rightVoltage = Math.signum(rightVoltage) * (Math.abs(rightVoltage) + rightVoltageBias);
 		*/
 		//APPLY {-1:1} DOMAIN TO COMPUTED VALUES BEFORE PASSING TO DRIVETRAIN
-			double leftValue = ((Math.abs(leftVoltage) > voltageCompensationVoltage) ? Math.signum(leftVoltage) : leftVoltage/voltageCompensationVoltage);
+			double leftValue = ((Math.abs(leftVoltage) > voltageCompensationVoltageDriveTrain) ? Math.signum(leftVoltage) : leftVoltage/voltageCompensationVoltageDriveTrain);
 			// Negate one side so that the robot won't drive in circles
-			double rightValue = -((Math.abs(rightVoltage)  > voltageCompensationVoltage) ? Math.signum(rightVoltage) : rightVoltage/voltageCompensationVoltage);	
+			double rightValue = -((Math.abs(rightVoltage)  > voltageCompensationVoltageDriveTrain) ? Math.signum(rightVoltage) : rightVoltage/voltageCompensationVoltageDriveTrain);	
 	
 		driveTrain.tankDrive(leftValue, rightValue, false);// Don't square inputs as this will affect accuracy
 	}
 	
 	//Drive for testing the drivetrain so that the needed constants to compute the bias voltages may be derived
 	public void driveVoltageTankTest(double leftVoltage, double rightVoltage) {
-		driveTrain.tankDrive(leftVoltage/voltageCompensationVoltage, rightVoltage/voltageCompensationVoltage, false);
+		driveTrain.tankDrive(leftVoltage/voltageCompensationVoltageDriveTrain, rightVoltage/voltageCompensationVoltageDriveTrain, false);
 	}
 	
 	//Push Default Gains To SmartDashboard
@@ -133,7 +135,8 @@ public class Drivetrain extends ImprovedSubsystem  {
         SmartDashboard.putNumber("Heading: Error", angleDiff);
         
         //Drive!!!
-		driveTrain.tankDrive(leftPIDOutput + turn, rightPIDOutput - turn, false);
+		driveTrain.tankDrive(driveHelper.handleOverPower(leftPIDOutput + turn),
+							driveHelper.handleOverPower(rightPIDOutput - turn), false);
 	}
 	public void timedTurn(TurnMode mode, double throttle) {
 		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle, false);
@@ -225,21 +228,20 @@ public class Drivetrain extends ImprovedSubsystem  {
 		reverseTalons(false);
 		setBrakeMode(BRAKE_MODE);
 		setCtrlMode();
-		setVoltageComp(false, voltageCompensationVoltage, 10);
-		configTalonEncoders();
+		setVoltageComp(false, voltageCompensationVoltageDriveTrain, 10);
 	}
 	
 	public void enableVoltageComp(boolean enable) {
 		if(enable) {
-			setVoltageComp(true, voltageCompensationVoltage, 10);
-			System.out.println("Set Voltage Compensation To: " + voltageCompensationVoltage + " Volts.");
+			setVoltageComp(true, voltageCompensationVoltageDriveTrain, 10);
+			System.out.println("DriveTrain:");
+			System.out.println("Set Voltage Compensation To: " + voltageCompensationVoltageDriveTrain + " Volts.");
 		}
 		else {
-			setVoltageComp(false, voltageCompensationVoltage, 10);
+			setVoltageComp(false, voltageCompensationVoltageDriveTrain, 10);
+			System.out.println("DriveTrain:");
 			System.out.println("Turned Voltage Compensation Off.");
 		}
-
-
 	}	
 
 	public AHRS getGyro(){

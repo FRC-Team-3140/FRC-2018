@@ -53,7 +53,8 @@ public interface Constants {
 //	public final int cubeSensor = 0;
 	
 	// TALON VOLTAGE COMPENSATION
-	public final double voltageCompensationVoltage = 10.5;//Subject to change
+	public final double voltageCompensationVoltageDriveTrain = 12;//Subject to change
+	public final double voltageCompensationVoltageElevator = 12.0;
 
 	// LOOPER CONSTANTS
 	public final double kLooperDt = 0.005;// 0.005
@@ -87,7 +88,7 @@ public interface Constants {
 	public final NeutralMode BRAKE_MODE = NeutralMode.Brake;
 	
 	// VP Integrated Encoder
-	public final double countsPerRev = 1024;
+	public final double countsPerRev = 4096;
 	public final FeedbackDevice magEncoder = FeedbackDevice.CTRE_MagEncoder_Relative;
 
 	//TIMED AUTO

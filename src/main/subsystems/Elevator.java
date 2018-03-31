@@ -1,29 +1,31 @@
 package main.subsystems;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import Util.DriveHelper;
-import Util.EncoderHelper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.elevator.MoveWithJoystick;
 
 public class Elevator extends ImprovedSubsystem {
-	
-	private EncoderHelper encoderHelper = new EncoderHelper();
 	private DriveHelper driveHelper = new DriveHelper(7.5);
+	
+	//ProfilePIDVariables
+	private static double lastEncPosError = 0.0;
+	//ProfilePIDIntegralAccumulators
+	private static double integralAccum = 0.0;
 	
 	public Elevator() {
 		setElevatorDefaults();
 		configSensors();
+		zeroSensors();
+		pushPIDGainsToSDB();
 	}
 	
 	/*************************
 	 * TALON SUPPORT METHODS *
 	 ************************/
 	private void configSensors() {
-		elevatorMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, pidIdx, timeout);
+		elevatorMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
 		elevatorMaster.setSensorPhase(true);
-		zeroSensors();
 	}
 	
 	private void setBrakeMode() {
@@ -35,7 +37,7 @@ public class Elevator extends ImprovedSubsystem {
 		elevatorSlave.follow(elevatorMaster);
 	}
 	
-	public void setVoltageMode(boolean set, double voltage, int timeout) {
+	private void setVoltageComp(boolean set, double voltage, int timeout) {
 		elevatorMaster.enableVoltageCompensation(set);
 		elevatorSlave.enableVoltageCompensation(set);
 		elevatorMaster.configVoltageCompSaturation(voltage, timeout);
@@ -54,8 +56,21 @@ public class Elevator extends ImprovedSubsystem {
 	private void setElevatorDefaults() {
 		setCtrlMode();
 		setBrakeMode();
-		setVoltageMode(true, 12, 10);
+		setVoltageComp(false, voltageCompensationVoltageElevator, 10);
 	}
+	
+	public void enableVoltageComp(boolean enable) {
+		if(enable) {
+			setVoltageComp(true, voltageCompensationVoltageDriveTrain, 10);
+			System.out.println("Elevator:");
+			System.out.println("Set Voltage Compensation To: " + voltageCompensationVoltageElevator + " Volts.");
+		}
+		else {
+			setVoltageComp(false, voltageCompensationVoltageElevator, 10);
+			System.out.println("Elevator:");
+			System.out.println("Turned Voltage Compensation Off.");
+		}
+	}	
 
 	/**************************
 	 * SENSOR SUPPORT METHODS *
@@ -73,11 +88,6 @@ public class Elevator extends ImprovedSubsystem {
 	// Checks if intake is at the top
 	public boolean isArmAtTop() {
 		return !stage1TopSwitch.get() && !stage2TopSwitch.get();
-	}
-	
-	// Checks to see if the intake is at the height needed to dump into the switch
-	public boolean isArmAtSwitch() {
-		return switchHeightSwitch.get();
 	}
 	
 	// Sets encoders to 0 if the arm is at the bottom (this helps to avoid offset)
@@ -120,35 +130,11 @@ public class Elevator extends ImprovedSubsystem {
 	private double getDistanceFromPos(double pos) {
 		return pos - getDistanceTravelled();
 	}
-	
-	/**********************
-	 * CONVERSION METHODS *
-	 **********************/
-	
-	private double inchesToElevatorEncoderTicks(double inches) {
-		return encoderHelper.inchesToEncoderTicks(inches, spindleCircum, countsPerRev);
-	}
-	
-	/***************
-	 * RECORD/PLAY *
-	 ***************/
-	public double getElevatorVoltage() {
-		return (elevatorMaster.getMotorOutputVoltage()); //+ elevatorSlave.getMotorOutputVoltage())/2;
-	}
-	
+		
 	/********************
 	 * MOVEMENT METHODS *
 	 ********************/
-	/*
-	public void moveFromPlay(double voltage) {
-		//if(voltage == 0 || (voltage > 0 && !isArmAtTop()) || (voltage < 0 && !isArmAtBottom()))
-			//elevatorMaster.set(voltage/12);
-		if((isArmAtTop() && voltage/12 < 0) || (isArmAtBottom() && voltage/12 > 0))
-			voltage = 0.0;
-		else
-			elevatorMaster.set(voltage/12);
-	}*/
-	
+		
 	public void moveWithJoystick(double throttle) {
 		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
 			throttle = 0.0;
@@ -162,9 +148,9 @@ public class Elevator extends ImprovedSubsystem {
 		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
 			throttle = 0.0;
 		if (isCompetitionRobot)
-			elevatorMaster.set(-throttle);
+			elevatorMaster.set(-driveHelper.handleOverPower(throttle));
 		else
-			elevatorMaster.set(throttle);
+			elevatorMaster.set(driveHelper.handleOverPower(throttle));
 	}
 	
 	/*****************
@@ -177,27 +163,29 @@ public class Elevator extends ImprovedSubsystem {
 	}
 	
 	public void moveWithPID(double targetPos) {
-		double lastIntegral = 0;
-		double lastError = 0;
-		
+		//Grab PID Vars
 		double kP = SmartDashboard.getNumber("Elevator Pos: P", elevator_kP);
 		double kI = SmartDashboard.getNumber("Elevator Pos: I", elevator_kI);
 		double kD = SmartDashboard.getNumber("Elevator Pos: D", elevator_kD);
-		
+		//Calculate Error With PID
 		double error = targetPos - getDistanceTravelled();
-		double integral = lastIntegral + error*kLooperDt;
-		double derivative = (error - lastError) / kLooperDt;
-		double PIDOutput = kP*error + kI*integral + kD*derivative;
-		
-		move(PIDOutput);
-		
-		lastError = error;
-		lastIntegral = integral;
+		integralAccum = integralAccum + error*kLooperDt;
+		double derivative = (error - lastEncPosError) / kLooperDt;
+		double PIDOutput = kP*error + kI*integralAccum + kD*derivative;
+		lastEncPosError = error;
+		//Move Based on PID Output
+		move(PIDOutput);		
 	}
 
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new MoveWithJoystick());
 	}
-
+	
+	public void zeroPIDVariables() {
+		//Clear Previous Errors
+		lastEncPosError = 0.0;
+		//Clear Integral Accumulators
+	    integralAccum = 0.0;
+	}
 }
