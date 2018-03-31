@@ -35,11 +35,9 @@ public class StartPlay extends ImprovedCommand {
     	Play.okToPlay(false);
     	Robot.oi.setInternalControl(false);
     	Play.reset();
-    	Robot.el.enableVoltageComp(false);
-    	Robot.el.zeroSensors();
     	Robot.el.zeroPIDVariables();
+    	Robot.el.enableVoltageComp(false);
     	Robot.dt.zeroPIDVariables();
-    	Robot.dt.zeroSensors();
     	Robot.dt.enableVoltageComp(false);
     }
 

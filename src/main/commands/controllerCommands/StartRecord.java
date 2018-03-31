@@ -32,8 +32,6 @@ public class StartRecord extends ImprovedCommand {
     protected void end() {
     	Record.okToRecord(false);
     	Robot.el.enableVoltageComp(false);
-    	Robot.el.zeroSensors();
-    	Robot.dt.zeroSensors();
     	Robot.dt.enableVoltageComp(false);
     }
 
