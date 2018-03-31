@@ -61,7 +61,7 @@ public class Elevator extends ImprovedSubsystem {
 	
 	public void enableVoltageComp(boolean enable) {
 		if(enable) {
-			setVoltageComp(true, voltageCompensationVoltageDriveTrain, 10);
+			setVoltageComp(true, voltageCompensationVoltageElevator, 10);
 			System.out.println("Elevator:");
 			System.out.println("Set Voltage Compensation To: " + voltageCompensationVoltageElevator + " Volts.");
 		}
