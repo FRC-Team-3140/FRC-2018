@@ -53,7 +53,8 @@ public interface Constants {
 //	public final int cubeSensor = 0;
 	
 	// TALON VOLTAGE COMPENSATION
-	public final double voltageCompensationVoltage = 10.5;//Subject to change
+	public final double voltageCompensationVoltageDriveTrain = 12;//Subject to change
+	public final double voltageCompensationVoltageElevator = 12.0;
 
 	// LOOPER CONSTANTS
 	public final double kLooperDt = 0.005;// 0.005
@@ -87,7 +88,7 @@ public interface Constants {
 	public final NeutralMode BRAKE_MODE = NeutralMode.Brake;
 	
 	// VP Integrated Encoder
-	public final double countsPerRev = 1024;
+	public final double countsPerRev = 4096;
 	public final FeedbackDevice magEncoder = FeedbackDevice.CTRE_MagEncoder_Relative;
 
 	//TIMED AUTO
@@ -113,20 +114,13 @@ public interface Constants {
 	public final double spindleCircum = Math.PI * spindleDiameter;
 	public final double elevatorHeight = 78;  
 	public final double elevatorTolerance = 1;
-	public final double switchHeight = 36;
-//	public final double scaleHeight = 70; 
-	public final double elevatorBottom = 0;
-		
-	// MOTION MAGIC ELEVATOR STUFF
-	public final int elevatorIdx = 0;
+	public final double switchHeight = 24; //set this in encoder units today...
+	public final double scaleHeight = 70; 
+
 	public final int pidIdx = 0;
-	public final double elevatorFullThrottle = 125000;
-	public final double fGain = 1023 / elevatorFullThrottle ;// 1023/max speed
 	public final double elevator_kP = 0;
 	public final double elevator_kI = 0;
 	public final double elevator_kD = 0;
-	public final int cruiseVelocity = 125000; //native units of encoder per 100 ms
-	public final int acceleration = 62500; //native units of encoder per 100 ms per second
 	public final int timeout = 10;
 	
 	//DRIVETRAIN PROFILE FOLLWING PID GAINS
@@ -136,7 +130,6 @@ public interface Constants {
 	//Turning may need to be tuned the most, poofs used omni's on front and rear of 
 	//their bot in 2015, whereas we use colsons this year.
 	
-
     // DriveStraightController gains
 	//Tune to 2cim + gear ratio spec
     public static double kDriveMaxSpeedInchesPerSec = 120.0;

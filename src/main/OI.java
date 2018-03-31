@@ -1,7 +1,6 @@
 package main;
 
 import interfacesAndAbstracts.ImprovedClass;
-
 import lib.joystick.XboxController;
 import main.commands.commandgroups.cubeManipulator.DropCube;
 import main.commands.commandgroups.cubeManipulator.DropCubeOff;
@@ -12,7 +11,6 @@ import main.commands.commandgroups.cubeManipulator.PushOutCubeOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
 import main.commands.elevator.MoveFullThrottle;
-import main.commands.elevator.MoveToPosDumb;
 import main.commands.elevator.MoveToPosPID;
 import main.commands.elevator.StopElevator;
 import main.commands.elevator.TimedLift;
@@ -41,9 +39,9 @@ public class OI extends ImprovedClass {
 		//xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
 		//xbox.y.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));
 		//xbox.x.whenPressed(new TimedLift(timedLiftPercent, timedLiftFullHeightTime));
-		xbox.x.whenPressed(new MoveToPosPID(switchHeight));
-		xbox.y.whenPressed(new MoveToPosPID(elevatorBottom));
-		xbox.b.whenPressed(new MoveToPosPID(elevatorHeight));
+		//xbox.x.whenPressed(new MoveToPosPID(switchHeight));
+		//xbox.y.whenPressed(new MoveToPosPID(0));
+		//xbox.b.whenPressed(new MoveToPosPID(elevatorHeight));
 
 		
 		//xbox2.rightTrigger.whileHeld(new SpinOut());
@@ -61,11 +59,9 @@ public class OI extends ImprovedClass {
 		//xbox2.b.whenReleased(new DropCubeOff());
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
-		xbox2.x.whenPressed(new MoveToPosDumb(switchHeight));
-		xbox2.y.whenPressed(new MoveToPosDumb(elevatorBottom));
-		xbox2.b.whenPressed(new MoveToPosDumb(elevatorHeight));
-		xbox2.a.whenPressed(new MoveFullThrottle());
-		xbox2.a.whenReleased(new StopElevator());
+//		xbox2.x.whenPressed(new MoveToPosDumb(switchHeight));
+//		xbox2.y.whenPressed(new MoveToPosDumb(elevatorBottom));
+//		xbox2.b.whenPressed(new MoveToPosDumb(elevatorHeight));
 		//xbox2.rightBumper.whenPressed(new TiltDown());
 		//xbox2.rightBumper.whenReleased(new TiltUp());
 		//xbox2.b.whenReleased(new DropCubeOff());

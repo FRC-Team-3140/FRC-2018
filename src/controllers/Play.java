@@ -7,6 +7,7 @@ import main.Constants;
 import main.Robot;
 import main.commands.drivetrain.DriveFromPlayer;
 import main.commands.drivetrain.DriveFromPlayerWithSensors;
+import main.commands.elevator.MoveToPosPIDPlay;
 import main.commands.intake.IntakeFromPlayer;
 
 public class Play implements Loop, Constants {
@@ -38,7 +39,7 @@ public class Play implements Loop, Constants {
 		if((line) != null) { 
 			String[] robotState = line.split(",");
 			
-			if(robotState.length == 31 && robotState != null) {
+			if(robotState.length == 32 && robotState != null) {
 				System.out.println("Playing");
 				
 				double leftDriveVoltage = Double.parseDouble(robotState[0]);
@@ -75,10 +76,11 @@ public class Play implements Loop, Constants {
 				double leftEncoderDistanceTravelled = Double.parseDouble(robotState[28]);
 				double rightEncoderDistanceTravelled = Double.parseDouble(robotState[29]);
 				double heading = Double.parseDouble(robotState[30]);
+				double elevatorEncoderDistanceTravelled = Double.parseDouble(robotState[31]);
 			
 				Command drive;
 				Command intake = new IntakeFromPlayer(leftIntakeWheelValue, rightIntakeWheelValue);
-				//Command lift?
+				Command lift = new MoveToPosPIDPlay(elevatorEncoderDistanceTravelled);
 				
 				if(!isSmartPlayAuto) {
 					drive = new DriveFromPlayer(leftDriveVoltage, rightDriveVoltage);
@@ -90,6 +92,7 @@ public class Play implements Loop, Constants {
 				
 				drive.start();
 				intake.start();
+				lift.start();
 				
 				Robot.oi.setButtonValues(a, b, x, y, leftBumper, rightBumper, select, start, leftJoystickPress, rightJoystickPress, leftTrigger, rightTrigger);
 				Robot.oi.setButtonValues2(a2, b2, x2, y2, leftBumper2, rightBumper2, select2, start2, leftJoystickPress2, rightJoystickPress2, leftTrigger2, rightTrigger2);

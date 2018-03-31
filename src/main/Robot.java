@@ -265,7 +265,7 @@ public class Robot extends ImprovedRobot {
 			}
 		
 			if(fileToPlay != null) {// && !delayedSwitch) {
-				competitionFilePicker = new FilePicker(fileToPlay, true);
+				competitionFilePicker = new FilePicker(outputPath + "/" + fileToPlay, false);
 				competitionFilePicker.start(); // Changes path to the chosen file
 				competitionPlayCommand = new StartPlay();
 				System.out.println("File selected: " + fileToPlay);
@@ -297,7 +297,7 @@ public class Robot extends ImprovedRobot {
 			//autoCommand.cancel();
 		
 		if(isCompetitionMatch)
-			if(competitionPlayCommand.isRunning()) 
+			if(competitionPlayCommand != null && competitionPlayCommand.isRunning()) 
 				competitionPlayCommand.cancel();
 
 		if(!isCompetitionMatch)
