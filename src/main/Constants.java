@@ -107,11 +107,18 @@ public interface Constants {
 	public final double timedLiftTime = 28.5/timedLiftMultiplier;
 	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
 	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier;
+	
+	// DRIVETRAIN
+	//Place Holder Meaning for every gearRatio turns of the encoder the wheel rotates 1 turn
+	public final double lowGearDriveTrainGearRatio = 1.0;
+	public final double highGearDriveTrainGearRatio = 1.0;
 
 	// ELEVATOR LENGTHS 
 	// CALIBRATE THESE- ALL ARE IN INCHES
 	public final double spindleDiameter = 2; //placeholder
 	public final double spindleCircum = Math.PI * spindleDiameter;
+	//Place Holder Meaning for every gearRatio turns of the encoder the elevator drum rotates 1 turn
+	public final double elevatorGearRatio = 1.0; 
 	public final double elevatorHeight = 78;  
 	public final double elevatorTolerance = 1;
 	public final double switchHeight = 24; //set this in encoder units today...

@@ -9,6 +9,7 @@ import Util.DriveHelper;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
+import main.Robot;
 import main.commands.drivetrain.Drive;
 
 public class Drivetrain extends ImprovedSubsystem  {
@@ -273,10 +274,17 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	// Get the distance the elevator has traveled in inches
 	public double getLeftEncoderDistanceTravelled() {
-		if(isCompetitionRobot)
-			return getLeftEncoderRevs() * 2 * Math.PI * competitonBotLeftWheelRadius;
+		if(Robot.pn.isLowGear())
+			if(isCompetitionRobot)
+				return getLeftEncoderRevs() * 2 * Math.PI * competitonBotLeftWheelRadius  / lowGearDriveTrainGearRatio;
+			else
+				return getLeftEncoderRevs() * 2 * Math.PI * practiceBotLeftWheelRadius / lowGearDriveTrainGearRatio;
 		else
-			return getLeftEncoderRevs() * 2 * Math.PI * practiceBotLeftWheelRadius;
+			if(isCompetitionRobot)
+				return getLeftEncoderRevs() * 2 * Math.PI * competitonBotLeftWheelRadius  / highGearDriveTrainGearRatio;
+			else
+				return getLeftEncoderRevs() * 2 * Math.PI * practiceBotLeftWheelRadius / highGearDriveTrainGearRatio;
+		
 	}
 	
 	public double getRightEncoderVelocity() {
@@ -295,10 +303,16 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	// Get the distance the elevator has traveled in inches
 	public double getRightEncoderDistanceTravelled() {
-		if(isCompetitionRobot)
-			return getRightEncoderRevs() * 2 * Math.PI * competitonBotRightWheelRadius;
+		if(Robot.pn.isLowGear())
+			if(isCompetitionRobot)
+				return getRightEncoderRevs() * 2 * Math.PI * competitonBotRightWheelRadius / lowGearDriveTrainGearRatio;
+			else
+				return getRightEncoderRevs() * 2 * Math.PI * practiceBotRightWheelRadius / lowGearDriveTrainGearRatio;
 		else
-			return getRightEncoderRevs() * 2 * Math.PI * practiceBotRightWheelRadius;
+			if(isCompetitionRobot)
+				return getRightEncoderRevs() * 2 * Math.PI * competitonBotRightWheelRadius / highGearDriveTrainGearRatio;
+			else
+				return getRightEncoderRevs() * 2 * Math.PI * practiceBotRightWheelRadius / highGearDriveTrainGearRatio;
 	}
 	
 	public void zeroEncoders() {
