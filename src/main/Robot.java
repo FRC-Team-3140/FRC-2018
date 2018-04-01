@@ -150,7 +150,7 @@ public class Robot extends ImprovedRobot {
 			
 		//Robot Self Test
 		SmartDashboard.putData("Robot Self Test", new RobotSelfTest());
-		SmartDashboard.putData("DriveTrain Test Voltage Command", new DriveVoltageTestCommand());
+		//SmartDashboard.putData("DriveTrain Test Voltage Command", new DriveVoltageTestCommand());
 	}
 	
 	@Override
@@ -369,31 +369,33 @@ public class Robot extends ImprovedRobot {
 		oi.check();
 		
 		// Grab the Runtime so that system resources can be monitored
-		Runtime runtime = Runtime.getRuntime();
+		//Runtime runtime = Runtime.getRuntime();
 		// System
-		SmartDashboard.putNumber("Free memory", runtime.freeMemory());
-		SmartDashboard.putNumber("Total memory", runtime.totalMemory());
+		//SmartDashboard.putNumber("Free memory", runtime.freeMemory());
+		//SmartDashboard.putNumber("Total memory", runtime.totalMemory());
 		// Scheduler
 		SmartDashboard.putData(Scheduler.getInstance());
 		// Subsystems
 		SmartDashboard.putData("DriveTrain: ", dt);
 		SmartDashboard.putData("Elevator: ", el);
 		SmartDashboard.putData("Intake: ", in);
-		SmartDashboard.putData("Pnuematics", pn);
+		//SmartDashboard.putData("Pnuematics", pn);
 		// Pressure
 		SmartDashboard.putNumber("Pressure: ", HardwareAdapter.analogPressureSensor1.value());
 		// Drive Voltages
-		SmartDashboard.putNumber("Left Master Voltage", dt.getLeftMasterVoltage());
-		SmartDashboard.putNumber("Left Slave Voltage", dt.getLeftSlaveVoltage());
-		SmartDashboard.putNumber("Right Master Voltage", dt.getRightMasterVoltage());
-		SmartDashboard.putNumber("Right Slave Voltage", dt.getRightSlaveVoltage());
+		//SmartDashboard.putNumber("Left Master Voltage", dt.getLeftMasterVoltage());
+		//SmartDashboard.putNumber("Left Slave Voltage", dt.getLeftSlaveVoltage());
+		//SmartDashboard.putNumber("Right Master Voltage", dt.getRightMasterVoltage());
+		//SmartDashboard.putNumber("Right Slave Voltage", dt.getRightSlaveVoltage());
 		// DriveTrain Encoders
 		SmartDashboard.putNumber("DriveTrain Left Encoder Ticks", dt.getLeftEncoderTicksTravelled());
 		SmartDashboard.putNumber("DriveTrain Left Encoder Distance", dt.getLeftEncoderDistanceTravelled());
 		SmartDashboard.putNumber("DriveTrain Left Encoder Velocity", dt.getLeftEncoderVelocity());
+		SmartDashboard.putNumber("DriveTrain Left Master Input", leftDriveMaster.get());
 		SmartDashboard.putNumber("DriveTrain Right Encoder Ticks", dt.getRightEncoderTicksTravelled());
 		SmartDashboard.putNumber("DriveTrain Right Encoder Distance", dt.getRightEncoderDistanceTravelled());
 		SmartDashboard.putNumber("DriveTrain Right Encoder Velocity", dt.getRightEncoderVelocity());
+		SmartDashboard.putNumber("DriveTrain Right Master Input", rightDriveMaster.get());
 		// DriveTrain Gyro
 		SmartDashboard.putNumber("NavX Heading", dt.getHeading());
 		// Limit Switch States
@@ -401,11 +403,12 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putBoolean("First Stage Top", !stage1TopSwitch.get());
 		SmartDashboard.putBoolean("Second Stage Bottom", !stage2BottomSwitch.get());
 		SmartDashboard.putBoolean("Second Stage Top", !stage2TopSwitch.get());
-		SmartDashboard.putBoolean("Switch Height", switchHeightSwitch.get());
+		//SmartDashboard.putBoolean("Switch Height", switchHeightSwitch.get());
 		// Elevator encoder
 		SmartDashboard.putNumber("Elevator encoder in units", el.getTicksTravelled());
 		SmartDashboard.putNumber("Elevator encoder inches", el.getDistanceTravelled());
 		SmartDashboard.putNumber("Elevator speed in units", el.getElevatorVelocity());
+		SmartDashboard.putNumber("Elevator Master Input", elevatorMaster.get());
 		
 		// Knowing where you're at
 		if(!isCompetitionMatch) {
