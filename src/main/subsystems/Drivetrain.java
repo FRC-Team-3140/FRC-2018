@@ -135,9 +135,24 @@ public class Drivetrain extends ImprovedSubsystem  {
         SmartDashboard.putNumber("Heading: Target", targetHeading);
         SmartDashboard.putNumber("Heading: Error", angleDiff);
         
-        //Drive!!!
-		tankDrive(driveHelper.handleOverPower(leftPIDOutput + turn),
-							driveHelper.handleOverPower(rightPIDOutput - turn), false);
+        boolean invertPIDHeadingCorrection = false;
+        
+        if(!invertPIDHeadingCorrection) {
+        	SmartDashboard.putNumber("PID Correction to Left Drive", turn);
+        	SmartDashboard.putNumber("PID Correction To Right Drive", -turn);
+        
+        	//Drive!!!
+        	tankDrive(driveHelper.handleOverPower(leftPIDOutput + turn),
+        			driveHelper.handleOverPower(rightPIDOutput - turn), false);
+        }
+        else {
+        	SmartDashboard.putNumber("PID Correction to Left Drive", -turn);
+        	SmartDashboard.putNumber("PID Correction To Right Drive", turn);
+        
+        	//Drive!!!
+        	tankDrive(driveHelper.handleOverPower(leftPIDOutput - turn),
+        			driveHelper.handleOverPower(rightPIDOutput + turn), false);
+        }
 	}
 	
 	public void tankDrive(double left, double right, boolean squaredInput) {
