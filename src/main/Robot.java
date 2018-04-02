@@ -391,11 +391,9 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("DriveTrain Left Encoder Ticks", dt.getLeftEncoderTicksTravelled());
 		SmartDashboard.putNumber("DriveTrain Left Encoder Distance", dt.getLeftEncoderDistanceTravelled());
 		SmartDashboard.putNumber("DriveTrain Left Encoder Velocity", dt.getLeftEncoderVelocity());
-		SmartDashboard.putNumber("DriveTrain Left Master Input", leftDriveMaster.get());
 		SmartDashboard.putNumber("DriveTrain Right Encoder Ticks", dt.getRightEncoderTicksTravelled());
 		SmartDashboard.putNumber("DriveTrain Right Encoder Distance", dt.getRightEncoderDistanceTravelled());
 		SmartDashboard.putNumber("DriveTrain Right Encoder Velocity", dt.getRightEncoderVelocity());
-		SmartDashboard.putNumber("DriveTrain Right Master Input", rightDriveMaster.get());
 		// DriveTrain Gyro
 		SmartDashboard.putNumber("NavX Heading", dt.getHeading());
 		// Limit Switch States
@@ -408,7 +406,6 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("Elevator encoder in units", el.getTicksTravelled());
 		SmartDashboard.putNumber("Elevator encoder inches", el.getDistanceTravelled());
 		SmartDashboard.putNumber("Elevator speed in units", el.getElevatorVelocity());
-		SmartDashboard.putNumber("Elevator Master Input", elevatorMaster.get());
 		
 		// Knowing where you're at
 		if(!isCompetitionMatch) {

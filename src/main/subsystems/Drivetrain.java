@@ -80,12 +80,12 @@ public class Drivetrain extends ImprovedSubsystem  {
 			// Negate one side so that the robot won't drive in circles
 			double rightValue = -((Math.abs(rightVoltage)  > voltageCompensationVoltageDriveTrain) ? Math.signum(rightVoltage) : rightVoltage/voltageCompensationVoltageDriveTrain);	
 	
-		driveTrain.tankDrive(leftValue, rightValue, false);// Don't square inputs as this will affect accuracy
+		tankDrive(leftValue, rightValue, false);// Don't square inputs as this will affect accuracy
 	}
 	
 	//Drive for testing the drivetrain so that the needed constants to compute the bias voltages may be derived
 	public void driveVoltageTankTest(double leftVoltage, double rightVoltage) {
-		driveTrain.tankDrive(leftVoltage/voltageCompensationVoltageDriveTrain, rightVoltage/voltageCompensationVoltageDriveTrain, false);
+		tankDrive(leftVoltage/voltageCompensationVoltageDriveTrain, rightVoltage/voltageCompensationVoltageDriveTrain, false);
 	}
 	
 	//Push Default Gains To SmartDashboard
@@ -136,16 +136,22 @@ public class Drivetrain extends ImprovedSubsystem  {
         SmartDashboard.putNumber("Heading: Error", angleDiff);
         
         //Drive!!!
-		driveTrain.tankDrive(driveHelper.handleOverPower(leftPIDOutput + turn),
+		tankDrive(driveHelper.handleOverPower(leftPIDOutput + turn),
 							driveHelper.handleOverPower(rightPIDOutput - turn), false);
 	}
+	
+	public void tankDrive(double left, double right, boolean squaredInput) {
+		SmartDashboard.putNumber("TankDrive Left Input", left);
+		SmartDashboard.putNumber("TankDrive Right Input", right);
+		driveTrain.tankDrive(left, right, squaredInput);
+	}
 	public void timedTurn(TurnMode mode, double throttle) {
-		if (mode == TurnMode.Left) driveTrain.tankDrive(-throttle, throttle, false);
-		if (mode == TurnMode.Right) driveTrain.tankDrive(throttle, -throttle, false);
+		if (mode == TurnMode.Left) tankDrive(-throttle, throttle, false);
+		if (mode == TurnMode.Right) tankDrive(throttle, -throttle, false);
 	}
 	
 	public void turnOff() {
-		driveTrain.tankDrive(0.0, 0.0);
+		tankDrive(0.0, 0.0, false);
 	}
 	
 	/***********************

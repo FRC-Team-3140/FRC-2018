@@ -136,15 +136,11 @@ public class Elevator extends ImprovedSubsystem {
 	 ********************/
 		
 	public void moveWithJoystick(double throttle) {
-		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
-			throttle = 0.0;
-			if (isCompetitionRobot)
-				elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, elevatorDeadband)));
-			else
-				elevatorMaster.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+		move(driveHelper.handleDeadband(throttle, elevatorDeadband));
 	}
 	
 	public void move(double throttle) {
+		SmartDashboard.putNumber("Elevator Input", throttle);
 		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
 			throttle = 0.0;
 		if (isCompetitionRobot)
