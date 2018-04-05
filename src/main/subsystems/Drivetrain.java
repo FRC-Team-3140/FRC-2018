@@ -3,7 +3,6 @@ package main.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;
 
-import Util.AutoBalance;
 import Util.DriveHelper;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
@@ -16,7 +15,7 @@ import main.commands.drivetrain.Drive;
 
 public class Drivetrain extends ImprovedSubsystem  {
 	private static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
-	private static AHRS NavX;
+	public static AHRS NavX;
 	private static final double kOffBalanceAngleThresholdDegrees = 10;
 	private static final double kOonBalanceAngleThresholdDegrees  = 5;
     boolean autoBalanceXMode;
@@ -232,8 +231,10 @@ public class Drivetrain extends ImprovedSubsystem  {
             System.out.println("Balancing y by: " + yAxisRate);
         }
         
-        //Robot.dt.driveVelocity(xAxisRate, yAxisRate);
-        
+        if (autoBalanceXMode || autoBalanceYMode) {
+        	//Robot.dt.driveVelocity(xAxisRate, yAxisRate);
+        	System.out.println("Balancing");
+        }
         //myRobot.mecanumDrive_Cartesian(xAxisRate, yAxisRate, xbox.getTwist(),0);
         Timer.delay(0.05);		// wait for a motor update time, originally 0.005
     }
