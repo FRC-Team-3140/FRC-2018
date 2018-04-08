@@ -124,8 +124,8 @@ public interface Constants {
 	
 	// DRIVETRAIN
 	//Place Holder Meaning for every gearRatio turns of the encoder the wheel rotates 1 turn
-	public final double lowGearDriveTrainGearRatio = 1.0;
-	public final double highGearDriveTrainGearRatio = 1.0;
+	public final double lowGearDriveTrainGearRatio = 12.86;//If it turn out to be a 14:40 initial stage 12.24
+	public final double highGearDriveTrainGearRatio = 4.4;//If it turns out to be a 14+40 initial stage 4.19
 
 	// ELEVATOR LENGTHS 
 	// CALIBRATE THESE- ALL ARE IN INCHES
