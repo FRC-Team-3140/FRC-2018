@@ -100,7 +100,8 @@ public class Elevator extends ImprovedSubsystem {
 	 **************************/
 	
 	public void zeroSensors() {
-		elevatorMaster.getSensorCollection().setQuadraturePosition(0, 10);
+		//elevatorMaster.getSensorCollection().setQuadraturePosition(0, 10);
+		elevatorMaster.setSelectedSensorPosition(0, pidIdx, timeout);
 	}
 	
 	// Checks if the intake is at bottom
@@ -133,21 +134,24 @@ public class Elevator extends ImprovedSubsystem {
 	 **********************/
 	
 	public double getElevatorVelocity() {
-		return elevatorMaster.getSensorCollection().getQuadratureVelocity();
+		//return elevatorMaster.getSensorCollection().getQuadratureVelocity();
+		return elevatorMaster.getSelectedSensorVelocity(pidIdx);
 	}
 	
 	// Gets the number of revolutions of the encoder
 	private double getElevatorRevs() {
-		return elevatorMaster.getSensorCollection().getQuadraturePosition() / countsPerRev;
+		//return elevatorMaster.getSensorCollection().getQuadraturePosition() / quadConversionFactor;
+		return elevatorMaster.getSelectedSensorPosition(pidIdx) / quadConversionFactor;
 	}
 	
 	public double getTicksTravelled() {
-		return elevatorMaster.getSensorCollection().getQuadraturePosition();
+		//return elevatorMaster.getSensorCollection().getQuadraturePosition();
+		return elevatorMaster.getSelectedSensorPosition(pidIdx);
 	}
 	
-	// Get the distance the elevator has travelled in inches
+	// Get the distance the elevator has traveled in inches
 	public double getDistanceTravelled() {
-		return getElevatorRevs() * spindleCircum / elevatorGearRatio;
+		return 2 * getElevatorRevs() * spindleCircum / elevatorGearRatio;
 	}
 	
 	// Returns distance from a set position

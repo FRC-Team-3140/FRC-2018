@@ -302,17 +302,21 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	public double getLeftEncoderVelocity() {
-		return leftDriveMaster.getSensorCollection().getQuadratureVelocity();
+		//return leftDriveMaster.getSensorCollection().getQuadratureVelocity();
+		return leftDriveMaster.getSelectedSensorVelocity(pidIdx);
 	}
 	
 	// Gets the number of revolutions of the encoder
 	private double getLeftEncoderRevs() {
-		return leftDriveMaster.getSensorCollection().getQuadraturePosition() / countsPerRev;
+		//return leftDriveMaster.getSensorCollection().getQuadraturePosition() / quadConversionFactor;
+		return leftDriveMaster.getSelectedSensorPosition(pidIdx) / quadConversionFactor;
+
 	}
 	
 	// Returns the distance traveled in native encoder units
 	public double getLeftEncoderTicksTravelled() {
-		return leftDriveMaster.getSensorCollection().getQuadraturePosition();
+		//return leftDriveMaster.getSensorCollection().getQuadraturePosition();
+		return leftDriveMaster.getSelectedSensorPosition(pidIdx);
 	}
 	
 	// Get the distance the elevator has traveled in inches
@@ -331,17 +335,20 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	public double getRightEncoderVelocity() {
-		return rightDriveMaster.getSensorCollection().getQuadratureVelocity();
+		//return rightDriveMaster.getSensorCollection().getQuadratureVelocity();
+		return rightDriveMaster.getSelectedSensorVelocity(pidIdx);
 	}
 	
 	// Gets the number of revolutions of the encoder
 	private double getRightEncoderRevs() {
-		return rightDriveMaster.getSensorCollection().getQuadraturePosition() / countsPerRev;
+		//return rightDriveMaster.getSensorCollection().getQuadraturePosition() / quadConversionFactor;
+		return rightDriveMaster.getSelectedSensorPosition(pidIdx) / quadConversionFactor;
 	}
 	
 	// Returns the distance traveled in native encoder units
 	public double getRightEncoderTicksTravelled() {
-		return rightDriveMaster.getSensorCollection().getQuadraturePosition();
+		//return rightDriveMaster.getSensorCollection().getQuadraturePosition();
+		return rightDriveMaster.getSelectedSensorPosition(pidIdx);
 	}
 	
 	// Get the distance the elevator has traveled in inches
@@ -359,8 +366,10 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	public void zeroEncoders() {
-		leftDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
-		rightDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
+		//leftDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
+		leftDriveMaster.setSelectedSensorPosition(0, pidIdx, timeout);
+		//rightDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
+		rightDriveMaster.setSelectedSensorPosition(0, pidIdx, timeout);
 	}
 
 	@Override

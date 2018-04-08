@@ -101,7 +101,8 @@ public interface Constants {
 	public final NeutralMode BRAKE_MODE = NeutralMode.Brake;
 	
 	// VP Integrated Encoder
-	public final double countsPerRev = 4096;
+	public final double countsPerRev = 1024;
+	public final double quadConversionFactor = countsPerRev * 4;
 	public final FeedbackDevice magEncoder = FeedbackDevice.CTRE_MagEncoder_Relative;
 
 	//TIMED AUTO
