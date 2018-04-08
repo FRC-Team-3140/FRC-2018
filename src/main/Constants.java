@@ -15,7 +15,7 @@ public interface Constants {
 	public final boolean isCompetitionMatch = true;
 	public final boolean isCompetitionRobot = false;
 	public final boolean isTimedAuto = false;
-	public final boolean isSmartPlayAuto = false;
+	public final boolean isSensorPlayRecordAuto = false;
 	
 	// FILE OUTPUT PATH
 	public final String outputPath = "/home/lvuser"; //"/U";
@@ -32,6 +32,11 @@ public interface Constants {
 	public final String MID_RightSwitch = "MID_RSwitch.txt";
 	public final String MID_LeftSwitch = "MID_LSwitch.txt";
 	public final String driveBaseline = "Baseline.txt";
+	
+	// ROBOT OPERATION MODE
+	public enum RobotOperationMode {
+		Normal, Recording, Playing, SensorRecording, SensorPlaying, DefaultVoltComp;
+	}
 	
 	// Auto Delay Time
 	// This is the time that the robot will wait before executing the selected auto in an EDGECASE situation.
@@ -53,8 +58,16 @@ public interface Constants {
 //	public final int cubeSensor = 0;
 	
 	// TALON VOLTAGE COMPENSATION
-	public final double voltageCompensationVoltageDriveTrain = 12;//Subject to change
-	public final double voltageCompensationVoltageElevator = 12.0;
+	//Play and Record without sensor feedback
+	public final double voltageCompensationVoltageDriveTrainRecordAndPlay = 10.5;
+	public final double voltageCompensationVoltageElevatorRecordAndPlay = 12; 
+	//Play and Record with sensor feedback
+	public final double voltageCompensationVoltageDriveTrainSensorRecord = 10.5;//Subject to change
+	public final double voltageCompensationVoltageDriveTrainSensorPlay = 12.0;
+	public final double voltageCompensationVoltageElevatorSensorRecord = 11.0;//Subject to change
+	public final double voltageCompensationVoltageElevatorSensorPlay = 12.0;
+	//Default Voltage Compensation Voltage
+	public final double defaultVoltageCompensationVoltage = 12.0;
 
 	// LOOPER CONSTANTS
 	public final double kLooperDt = 0.005;// 0.005
@@ -210,9 +223,6 @@ public interface Constants {
 	// SWITCHES
 	public final int STAGE1_Bottom = 0;
 	public final int STAGE1_Top = 1;
-	public final int STAGE2_Bottom = 2;
-	public final int STAGE2_Top = 3;
-	public final int SWITCH_Limit = 4;
 //	public final int INTAKE_Switch = 5;
 
 	//Driver Alert

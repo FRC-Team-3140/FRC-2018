@@ -82,7 +82,7 @@ public class Play implements Loop, Constants {
 				Command intake = new IntakeFromPlayer(leftIntakeWheelValue, rightIntakeWheelValue);
 				Command lift = new MoveToPosPIDPlay(elevatorEncoderDistanceTravelled);
 				
-				if(!isSmartPlayAuto) {
+				if(!isSensorPlayRecordAuto) {
 					drive = new DriveFromPlayer(leftDriveVoltage, rightDriveVoltage);
 					
 				}

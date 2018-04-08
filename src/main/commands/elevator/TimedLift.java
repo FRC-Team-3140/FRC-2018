@@ -18,7 +18,7 @@ public class TimedLift extends TimedCommand {
 	
 	// Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-//        return Robot.el.isArmAtTop();
-    	return false;
+    	//return Robot.el.isArmAtTop();
+    	return true;
     }
 }

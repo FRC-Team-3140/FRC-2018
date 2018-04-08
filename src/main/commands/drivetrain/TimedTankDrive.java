@@ -1,24 +1,27 @@
-package main.commands.pneumatics.shift;
+package main.commands.drivetrain;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import interfacesAndAbstracts.ImprovedCommand;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import main.Robot;
 
-public class Shift extends ImprovedCommand {
-	private DoubleSolenoid.Value v;
+public class TimedTankDrive extends TimedCommand {
+	double left, right;
+	boolean squareInputs;
 	
-    public Shift(DoubleSolenoid.Value v) {
-    	requires(Robot.pn);
-    	this.v = v;
-    }
-
+	public TimedTankDrive(double left, double right, boolean squareInputs, double time) {
+		super(time);
+		requires(Robot.dt);
+		this.left = left;
+		this.right = right;
+		this.squareInputs = squareInputs;
+	}
+	
     // Called just before this Command runs the first time
     protected void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.pn.shift(v);
+    	Robot.dt.tankDrive(left, right, squareInputs);
     }
 
     // Make this return true when this Command no longer needs to run execute()

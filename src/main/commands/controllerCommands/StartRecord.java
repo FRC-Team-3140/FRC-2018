@@ -10,12 +10,14 @@ public class StartRecord extends ImprovedCommand {
 
 	// Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.dt.enableVoltageComp(true);
     	Robot.dt.zeroSensors();
-    	Robot.el.enableVoltageComp(true);
     	Robot.el.zeroSensors();
     	Robot.lg.resetForWrite();
     	Record.reachedFirstNonZero(false);
+    	if(isSensorPlayRecordAuto)
+    		Robot.setRobotOperationMode(RobotOperationMode.SensorRecording);
+    	else
+    		Robot.setRobotOperationMode(RobotOperationMode.Recording);
     	Record.okToRecord(true);
     }
 
@@ -31,8 +33,7 @@ public class StartRecord extends ImprovedCommand {
     // Called once after isFinished returns true
     protected void end() {
     	Record.okToRecord(false);
-    	Robot.el.enableVoltageComp(false);
-    	Robot.dt.enableVoltageComp(false);
+    	Robot.setRobotOperationMode(RobotOperationMode.Normal);
     }
 
     // Called when another command which requires one or more of the same

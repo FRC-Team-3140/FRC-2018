@@ -3,6 +3,8 @@ package main.subsystems;
 import Util.DriveHelper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
+import main.Robot;
+import main.Constants.RobotOperationMode;
 import main.commands.elevator.MoveWithJoystick;
 
 public class Elevator extends ImprovedSubsystem {
@@ -56,19 +58,40 @@ public class Elevator extends ImprovedSubsystem {
 	private void setElevatorDefaults() {
 		setCtrlMode();
 		setBrakeMode();
-		setVoltageComp(false, voltageCompensationVoltageElevator, 10);
+		updateVoltageComp();
 	}
 	
-	public void enableVoltageComp(boolean enable) {
-		if(enable) {
-			setVoltageComp(true, voltageCompensationVoltageElevator, 10);
-			System.out.println("Elevator:");
-			System.out.println("Set Voltage Compensation To: " + voltageCompensationVoltageElevator + " Volts.");
-		}
-		else {
-			setVoltageComp(false, voltageCompensationVoltageElevator, 10);
-			System.out.println("Elevator:");
-			System.out.println("Turned Voltage Compensation Off.");
+	public void updateVoltageComp() {
+		if(Robot.getLastRobotOperationMode() == null)//Check that we won't get a null pointer
+			if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.Normal)//Robot has just initialized
+				setVoltageComp(false, 0.0, 10);
+		else if(Robot.getCurrentRobotOperationMode() != Robot.getLastRobotOperationMode()) {
+			if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.Normal) {
+				setVoltageComp(false, 0.0, 10);
+				System.out.println("Elevator Turned Voltage Compensation Off");
+			}
+			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.Recording) {
+				setVoltageComp(true, voltageCompensationVoltageElevatorRecordAndPlay, 10);
+				System.out.println("Elevator Changed Voltage Compensation To: " + voltageCompensationVoltageElevatorRecordAndPlay);
+			}
+			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.Playing) {
+				setVoltageComp(true, voltageCompensationVoltageElevatorRecordAndPlay, 10);
+				System.out.println("Elevator Changed Voltage Compensation To: " + voltageCompensationVoltageElevatorRecordAndPlay);
+			}
+			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.SensorRecording) {
+				setVoltageComp(true, voltageCompensationVoltageElevatorSensorRecord, 10);
+				System.out.println("Elevator Changed Voltage Compensation To: " + voltageCompensationVoltageElevatorSensorRecord);
+			}
+			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.SensorPlaying) {
+				setVoltageComp(true, voltageCompensationVoltageElevatorSensorPlay, 10);
+				System.out.println("Elevator Changed Voltage Compensation To: " + voltageCompensationVoltageElevatorSensorPlay);
+			}
+			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.DefaultVoltComp) {
+				setVoltageComp(true, defaultVoltageCompensationVoltage, 10);
+				System.out.println("Elevator Changed Voltage Compensation To: " + defaultVoltageCompensationVoltage);
+			}
+			else
+				System.err.println("Elevator Error in getting Robot Operation Mode!");
 		}
 	}	
 
@@ -82,18 +105,19 @@ public class Elevator extends ImprovedSubsystem {
 	
 	// Checks if the intake is at bottom
 	public boolean isArmAtBottom() {
-		return !stage1BottomSwitch.get() && !stage2BottomSwitch.get();
+		return !stage1BottomSwitch.get();
 	}
 	
 	// Checks if intake is at the top
 	public boolean isArmAtTop() {
-		return !stage1TopSwitch.get() && !stage2TopSwitch.get();
+		return !stage1TopSwitch.get();
 	}
 	
 	// Sets encoders to 0 if the arm is at the bottom (this helps to avoid offset)
 	public void check() {
 		if (isArmAtBottom())
 			zeroSensors();
+		updateVoltageComp();
 	}
 	
 	// Returns whether or not the intake has reached the set position. Pos is in inches

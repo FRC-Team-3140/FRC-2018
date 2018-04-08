@@ -12,7 +12,7 @@ public class MoveFullThrottle extends ImprovedCommand {
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return true;
 	}
 
 }

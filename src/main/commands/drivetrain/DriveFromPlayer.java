@@ -19,7 +19,7 @@ public class DriveFromPlayer extends ImprovedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.dt.driveVoltageTank(leftVoltage, rightVoltage);
+    	Robot.dt.driveVoltageTank(leftVoltage, rightVoltage, voltageCompensationVoltageDriveTrainRecordAndPlay);
     }
     
     protected boolean isFinished() {

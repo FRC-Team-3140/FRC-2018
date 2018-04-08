@@ -10,13 +10,15 @@ public class StartPlay extends ImprovedCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.dt.enableVoltageComp(true);
     	Robot.dt.zeroSensors();
     	Robot.dt.zeroPIDVariables();
-    	Robot.el.enableVoltageComp(true);
     	Robot.el.zeroSensors();
     	Robot.el.zeroPIDVariables();
     	Robot.lg.resetForRead();
+    	if(isSensorPlayRecordAuto)
+    		Robot.setRobotOperationMode(RobotOperationMode.SensorPlaying);
+    	else
+    		Robot.setRobotOperationMode(RobotOperationMode.Playing);
     	Robot.oi.setInternalControl(true);
     	Play.okToPlay(true); 
     }
@@ -34,11 +36,10 @@ public class StartPlay extends ImprovedCommand {
     protected void end() {
     	Play.okToPlay(false);
     	Robot.oi.setInternalControl(false);
+    	Robot.setRobotOperationMode(RobotOperationMode.Normal);
     	Play.reset();
     	Robot.el.zeroPIDVariables();
-    	Robot.el.enableVoltageComp(false);
     	Robot.dt.zeroPIDVariables();
-    	Robot.dt.enableVoltageComp(false);
     }
 
     // Called when another command which requires one or more of the same
