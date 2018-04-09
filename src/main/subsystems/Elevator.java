@@ -4,7 +4,6 @@ import Util.DriveHelper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.Robot;
-import main.Constants.RobotOperationMode;
 import main.commands.elevator.MoveWithJoystick;
 
 public class Elevator extends ImprovedSubsystem {
@@ -39,12 +38,19 @@ public class Elevator extends ImprovedSubsystem {
 		elevatorSlave.follow(elevatorMaster);
 	}
 	
-	private void setVoltageComp(boolean set, double voltage, int timeout) {
+	public void setVoltageComp(boolean set, double voltage, int timeout) {
+		if(set)
+			System.out.println("Elevator Changed Voltage Compensation To: " + voltage);
+		else
+			System.out.println("Elevator Turned Voltage Compensation Off");	
+		
+		//Voltage Compensation On/Off
 		elevatorMaster.enableVoltageCompensation(set);
 		elevatorSlave.enableVoltageCompensation(set);
+		//Config Voltage Compensation
 		elevatorMaster.configVoltageCompSaturation(voltage, timeout);
 		elevatorSlave.configVoltageCompSaturation(voltage, timeout);
-
+		//Nominal and peak outputs
 		elevatorMaster.configPeakOutputForward(1.0, timeout);
 		elevatorMaster.configNominalOutputForward(0, timeout);
 		elevatorMaster.configPeakOutputReverse(-1.0, timeout);
@@ -52,48 +58,14 @@ public class Elevator extends ImprovedSubsystem {
 		elevatorSlave.configPeakOutputForward(1.0, timeout);
 		elevatorSlave.configNominalOutputForward(0, timeout);
 		elevatorSlave.configPeakOutputReverse(-1, timeout);
-		elevatorSlave.configNominalOutputReverse(0, timeout);
+		elevatorSlave.configNominalOutputReverse(0, timeout);		
 	}
 	
 	private void setElevatorDefaults() {
 		setCtrlMode();
 		setBrakeMode();
-		updateVoltageComp();
+		setVoltageComp(false, 0.0, timeout);
 	}
-	
-	public void updateVoltageComp() {
-		if(Robot.getLastRobotOperationMode() == null)//Check that we won't get a null pointer
-			if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.Normal)//Robot has just initialized
-				setVoltageComp(false, 0.0, 10);
-		else if(Robot.getCurrentRobotOperationMode() != Robot.getLastRobotOperationMode()) {
-			if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.Normal) {
-				setVoltageComp(false, 0.0, 10);
-				System.out.println("Elevator Turned Voltage Compensation Off");
-			}
-			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.Recording) {
-				setVoltageComp(true, voltageCompensationVoltageElevatorRecordAndPlay, 10);
-				System.out.println("Elevator Changed Voltage Compensation To: " + voltageCompensationVoltageElevatorRecordAndPlay);
-			}
-			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.Playing) {
-				setVoltageComp(true, voltageCompensationVoltageElevatorRecordAndPlay, 10);
-				System.out.println("Elevator Changed Voltage Compensation To: " + voltageCompensationVoltageElevatorRecordAndPlay);
-			}
-			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.SensorRecording) {
-				setVoltageComp(true, voltageCompensationVoltageElevatorSensorRecord, 10);
-				System.out.println("Elevator Changed Voltage Compensation To: " + voltageCompensationVoltageElevatorSensorRecord);
-			}
-			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.SensorPlaying) {
-				setVoltageComp(true, voltageCompensationVoltageElevatorSensorPlay, 10);
-				System.out.println("Elevator Changed Voltage Compensation To: " + voltageCompensationVoltageElevatorSensorPlay);
-			}
-			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.DefaultVoltComp) {
-				setVoltageComp(true, defaultVoltageCompensationVoltage, 10);
-				System.out.println("Elevator Changed Voltage Compensation To: " + defaultVoltageCompensationVoltage);
-			}
-			else
-				System.err.println("Elevator Error in getting Robot Operation Mode!");
-		}
-	}	
 
 	/**************************
 	 * SENSOR SUPPORT METHODS *
@@ -118,7 +90,6 @@ public class Elevator extends ImprovedSubsystem {
 	public void check() {
 		if (isArmAtBottom())
 			zeroSensors();
-		updateVoltageComp();
 	}
 	
 	// Returns whether or not the intake has reached the set position. Pos is in inches

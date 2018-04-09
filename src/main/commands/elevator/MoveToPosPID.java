@@ -13,7 +13,7 @@ public class MoveToPosPID extends ImprovedCommand {
 	
 	// Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.setRobotOperationMode(RobotOperationMode.DefaultVoltComp);
+    	Robot.el.setVoltageComp(true, defaultVoltageCompensationVoltage, timeout);
     	Robot.el.zeroPIDVariables();
     }
 	
@@ -27,7 +27,7 @@ public class MoveToPosPID extends ImprovedCommand {
 	}
 	
 	protected void end() {
-    	Robot.setRobotOperationMode(RobotOperationMode.Normal);
+		Robot.el.setVoltageComp(false, 0.0, timeout);
     	Robot.el.zeroPIDVariables();
 	}
 	

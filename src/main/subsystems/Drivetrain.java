@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.Robot;
-import main.Constants.RobotOperationMode;
 import main.commands.drivetrain.Drive;
 
 public class Drivetrain extends ImprovedSubsystem  {
@@ -210,13 +209,18 @@ public class Drivetrain extends ImprovedSubsystem  {
 		leftDriveSlave1.follow(leftDriveMaster);
 		rightDriveSlave1.follow(rightDriveMaster);
 	}
-	
-	private void setVoltageComp(boolean set, double voltage, int timeout) {
-		//Voltage Compensation
+	public void setVoltageComp(boolean set, double voltage, int timeout) {		
+		if(set)
+			System.out.println("DriveTrain Changed Voltage Compensation To: " + voltage);
+		else
+			System.out.println("DriveTrain Turned Voltage Compensation Off");	
+		
+		//Voltage Compensation On/Off
 		leftDriveMaster.enableVoltageCompensation(set);
 		leftDriveSlave1.enableVoltageCompensation(set);
 		rightDriveMaster.enableVoltageCompensation(set);
 		rightDriveSlave1.enableVoltageCompensation(set);
+		//Config Voltage Compensation
 		leftDriveMaster.configVoltageCompSaturation(voltage, timeout);
 		leftDriveSlave1.configVoltageCompSaturation(voltage, timeout);
 		rightDriveMaster.configVoltageCompSaturation(voltage, timeout);
@@ -251,43 +255,9 @@ public class Drivetrain extends ImprovedSubsystem  {
 		reverseTalons(false);
 		setBrakeMode(BRAKE_MODE);
 		setCtrlMode();
-		updateVoltageComp();
+		setVoltageComp(false, 0.0, timeout);
 	}
 	
-	public void updateVoltageComp() {
-		if(Robot.getLastRobotOperationMode() == null)//Check that we won't get a null pointer
-			if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.Normal)//Robot has just initialized
-				setVoltageComp(false, 0.0, 10);
-		else if(Robot.getCurrentRobotOperationMode() != Robot.getLastRobotOperationMode()) {
-			if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.Normal) {
-				setVoltageComp(false, 0.0, 10);
-				System.out.println("DriveTrain Turned Voltage Compensation Off");
-			}
-			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.Recording) {
-				setVoltageComp(true, voltageCompensationVoltageDriveTrainRecordAndPlay, 10);
-				System.out.println("DriveTrain Changed Voltage Compensation To: " + voltageCompensationVoltageDriveTrainRecordAndPlay);
-			}
-			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.Playing) {
-				setVoltageComp(true, voltageCompensationVoltageDriveTrainRecordAndPlay, 10);
-				System.out.println("DriveTrain Changed Voltage Compensation To: " + voltageCompensationVoltageDriveTrainRecordAndPlay);
-			}
-			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.SensorRecording) {
-				setVoltageComp(true, voltageCompensationVoltageDriveTrainSensorRecord, 10);
-				System.out.println("DriveTrain Changed Voltage Compensation To: " + voltageCompensationVoltageDriveTrainSensorRecord);
-			}
-			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.SensorPlaying) {
-				setVoltageComp(true, voltageCompensationVoltageDriveTrainSensorPlay, 10);
-				System.out.println("DriveTrain Changed Voltage Compensation To: " + voltageCompensationVoltageDriveTrainSensorPlay);
-			}
-			else if(Robot.getCurrentRobotOperationMode() == RobotOperationMode.DefaultVoltComp) {
-				setVoltageComp(true, defaultVoltageCompensationVoltage, 10);
-				System.out.println("DriveTrain Changed Voltage Compensation To: " + defaultVoltageCompensationVoltage);
-			}
-			else
-				System.err.println("DriveTrain Error in getting Robot Operation Mode!");
-		}
-	}	
-
 	public AHRS getGyro(){
 		return NavX;
 	}
@@ -379,7 +349,6 @@ public class Drivetrain extends ImprovedSubsystem  {
 
 	@Override
 	public void check() {
-		updateVoltageComp();
 	}
 
 	@Override

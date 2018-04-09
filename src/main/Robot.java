@@ -73,17 +73,9 @@ public class Robot extends ImprovedRobot {
 	private String fileToPlay = null;
 	private static Command competitionPlayCommand;
 	//private static Command autoCommand;
-	
-	// Robot Operation Mode
-	private static RobotOperationMode mode;
-	private static RobotOperationMode lastMode;
-	
-	@Override
-	public void robotInit() {
-		//Set Robot Operation Mode
-		//Must come before subsystems are instantiated
-		mode = RobotOperationMode.Normal;
 		
+	@Override
+	public void robotInit() {	
 		// OI must be at end
 		dt = new Drivetrain();
 		pn = new Pneumatics();
@@ -422,19 +414,5 @@ public class Robot extends ImprovedRobot {
 	
 	public static String getNewFileName() {
 		return newFileName;
-	}
-	
-	public static void setRobotOperationMode(RobotOperationMode newMode) {
-		lastMode = mode;
-		mode = newMode;
-		System.out.println("Robot Operation Mode Changed To: " + mode.toString());
-	}
-	
-	public static RobotOperationMode getCurrentRobotOperationMode() {
-		return mode;
-	}
-	
-	public static RobotOperationMode getLastRobotOperationMode() {
-		return lastMode;
 	}
 }

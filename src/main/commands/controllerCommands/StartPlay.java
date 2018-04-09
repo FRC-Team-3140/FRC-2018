@@ -15,10 +15,14 @@ public class StartPlay extends ImprovedCommand {
     	Robot.el.zeroSensors();
     	Robot.el.zeroPIDVariables();
     	Robot.lg.resetForRead();
-    	if(isSensorPlayRecordAuto)
-    		Robot.setRobotOperationMode(RobotOperationMode.SensorPlaying);
-    	else
-    		Robot.setRobotOperationMode(RobotOperationMode.Playing);
+    	if(isSensorPlayRecordAuto) {
+    		Robot.dt.setVoltageComp(true, voltageCompensationVoltageDriveTrainSensorPlay, timeout);
+    		Robot.el.setVoltageComp(true, voltageCompensationVoltageDriveTrainSensorPlay, timeout);
+    	}
+    	else {
+    		Robot.dt.setVoltageComp(true, voltageCompensationVoltageDriveTrainRecordAndPlay, timeout);
+    		Robot.el.setVoltageComp(true, voltageCompensationVoltageElevatorRecordAndPlay, timeout);
+    	}
     	Robot.oi.setInternalControl(true);
     	Play.okToPlay(true); 
     }
@@ -36,7 +40,8 @@ public class StartPlay extends ImprovedCommand {
     protected void end() {
     	Play.okToPlay(false);
     	Robot.oi.setInternalControl(false);
-    	Robot.setRobotOperationMode(RobotOperationMode.Normal);
+    	Robot.dt.setVoltageComp(false, 0.0, timeout);
+    	Robot.el.setVoltageComp(false, 0.0, timeout);
     	Play.reset();
     	Robot.el.zeroPIDVariables();
     	Robot.dt.zeroPIDVariables();

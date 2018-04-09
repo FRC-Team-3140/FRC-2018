@@ -33,11 +33,6 @@ public interface Constants {
 	public final String MID_LeftSwitch = "MID_LSwitch.txt";
 	public final String driveBaseline = "Baseline.txt";
 	
-	// ROBOT OPERATION MODE
-	public enum RobotOperationMode {
-		Normal, Recording, Playing, SensorRecording, SensorPlaying, DefaultVoltComp;
-	}
-	
 	// Auto Delay Time
 	// This is the time that the robot will wait before executing the selected auto in an EDGECASE situation.
 	public final int autoDelay = 5; 

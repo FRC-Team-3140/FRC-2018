@@ -10,7 +10,7 @@ public class DriveVoltageTestCommand extends ImprovedCommand {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.setRobotOperationMode(RobotOperationMode.DefaultVoltComp);
+    	Robot.dt.setVoltageComp(true, defaultVoltageCompensationVoltage, timeout);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -24,7 +24,7 @@ public class DriveVoltageTestCommand extends ImprovedCommand {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.setRobotOperationMode(RobotOperationMode.Normal);
+    	Robot.dt.setVoltageComp(false, 0.0, timeout);
     	//No need to turn off the drivetrain, because the default command Drive
     	//will take over and set the drivetain to 0, because the joystick is default
     	//0.0, 0.0 at its neutral postion.
