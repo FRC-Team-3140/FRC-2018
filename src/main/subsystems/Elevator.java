@@ -129,6 +129,14 @@ public class Elevator extends ImprovedSubsystem {
 	private double getDistanceFromPos(double pos) {
 		return pos - getDistanceTravelled();
 	}
+	
+	public double getElevatorMasterVoltage() {
+		return (elevatorMaster.getMotorOutputVoltage());
+	}
+	
+	public double getElevatorSlaveVoltage() {
+		return (elevatorSlave.getMotorOutputVoltage());
+	}
 		
 	/********************
 	 * MOVEMENT METHODS *

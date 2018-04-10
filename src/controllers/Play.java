@@ -39,44 +39,45 @@ public class Play implements Loop, Constants {
 		if((line) != null) { 
 			String[] robotState = line.split(",");
 			
-			if(robotState.length == 32 && robotState != null) {
+			if(robotState.length == 33 && robotState != null) {
 				System.out.println("Playing");
 				
 				double leftDriveVoltage = Double.parseDouble(robotState[0]);
 				double rightDriveVoltage = Double.parseDouble(robotState[1]);
-				double leftIntakeWheelValue = Double.parseDouble(robotState[2]);
-				double rightIntakeWheelValue = Double.parseDouble(robotState[3]);
+				double elevatorDriveVoltage = Double.parseDouble(robotState[2]);//Unused but necessary to record
+				double leftIntakeWheelValue = Double.parseDouble(robotState[3]);
+				double rightIntakeWheelValue = Double.parseDouble(robotState[4]);
 				
-				boolean a = Boolean.parseBoolean(robotState[4]);
-				boolean b = Boolean.parseBoolean(robotState[5]);
-				boolean x = Boolean.parseBoolean(robotState[6]);
-				boolean y = Boolean.parseBoolean(robotState[7]);
-				boolean leftBumper = Boolean.parseBoolean(robotState[8]);
-				boolean rightBumper = Boolean.parseBoolean(robotState[9]);
-				boolean select = Boolean.parseBoolean(robotState[10]);
-				boolean start = Boolean.parseBoolean(robotState[11]);
-				boolean leftJoystickPress = Boolean.parseBoolean(robotState[12]);
-				boolean rightJoystickPress = Boolean.parseBoolean(robotState[13]);
-				boolean leftTrigger = Boolean.parseBoolean(robotState[14]);
-				boolean rightTrigger = Boolean.parseBoolean(robotState[15]);
+				boolean a = Boolean.parseBoolean(robotState[5]);
+				boolean b = Boolean.parseBoolean(robotState[6]);
+				boolean x = Boolean.parseBoolean(robotState[7]);
+				boolean y = Boolean.parseBoolean(robotState[8]);
+				boolean leftBumper = Boolean.parseBoolean(robotState[9]);
+				boolean rightBumper = Boolean.parseBoolean(robotState[10]);
+				boolean select = Boolean.parseBoolean(robotState[11]);
+				boolean start = Boolean.parseBoolean(robotState[12]);
+				boolean leftJoystickPress = Boolean.parseBoolean(robotState[13]);
+				boolean rightJoystickPress = Boolean.parseBoolean(robotState[14]);
+				boolean leftTrigger = Boolean.parseBoolean(robotState[15]);
+				boolean rightTrigger = Boolean.parseBoolean(robotState[16]);
 				
-				boolean a2 = Boolean.parseBoolean(robotState[16]);
-				boolean b2 = Boolean.parseBoolean(robotState[17]);
-				boolean x2 = Boolean.parseBoolean(robotState[18]);
-				boolean y2 = Boolean.parseBoolean(robotState[19]);
-				boolean leftBumper2 = Boolean.parseBoolean(robotState[20]);
-				boolean rightBumper2 = Boolean.parseBoolean(robotState[21]);
-				boolean select2 = Boolean.parseBoolean(robotState[22]);
-				boolean start2 = Boolean.parseBoolean(robotState[23]);
-				boolean leftJoystickPress2 = Boolean.parseBoolean(robotState[24]);
-				boolean rightJoystickPress2 = Boolean.parseBoolean(robotState[25]);
-				boolean leftTrigger2 = Boolean.parseBoolean(robotState[26]);
-				boolean rightTrigger2 = Boolean.parseBoolean(robotState[27]);
+				boolean a2 = Boolean.parseBoolean(robotState[17]);
+				boolean b2 = Boolean.parseBoolean(robotState[18]);
+				boolean x2 = Boolean.parseBoolean(robotState[19]);
+				boolean y2 = Boolean.parseBoolean(robotState[20]);
+				boolean leftBumper2 = Boolean.parseBoolean(robotState[21]);
+				boolean rightBumper2 = Boolean.parseBoolean(robotState[22]);
+				boolean select2 = Boolean.parseBoolean(robotState[23]);
+				boolean start2 = Boolean.parseBoolean(robotState[24]);
+				boolean leftJoystickPress2 = Boolean.parseBoolean(robotState[25]);
+				boolean rightJoystickPress2 = Boolean.parseBoolean(robotState[26]);
+				boolean leftTrigger2 = Boolean.parseBoolean(robotState[27]);
+				boolean rightTrigger2 = Boolean.parseBoolean(robotState[28]);
 				
-				double leftEncoderDistanceTravelled = Double.parseDouble(robotState[28]);
-				double rightEncoderDistanceTravelled = Double.parseDouble(robotState[29]);
-				double heading = Double.parseDouble(robotState[30]);
-				double elevatorEncoderDistanceTravelled = Double.parseDouble(robotState[31]);
+				double leftEncoderDistanceTravelled = Double.parseDouble(robotState[29]);
+				double rightEncoderDistanceTravelled = Double.parseDouble(robotState[30]);
+				double heading = Double.parseDouble(robotState[31]);
+				double elevatorEncoderDistanceTravelled = Double.parseDouble(robotState[32]);
 			
 				Command drive;
 				Command intake = new IntakeFromPlayer(leftIntakeWheelValue, rightIntakeWheelValue);

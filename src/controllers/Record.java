@@ -39,7 +39,7 @@ public class Record implements Loop, Constants {
 	private void execute() {
 		System.out.println("Recording");
 		
-		if(!reachedFirstNonZero && (Robot.dt.getLeftMasterVoltage() != 0 || Robot.dt.getRightMasterVoltage() != 0 || Robot.in.getLeftIntakeWheelValue() != 0 || Robot.in.getRightIntakeWheelValue() != 0 ||
+		if(!reachedFirstNonZero && (Robot.dt.getLeftMasterVoltage() != 0 || Robot.dt.getRightMasterVoltage() != 0 || Robot.el.getElevatorMasterVoltage() != 0 || Robot.in.getLeftIntakeWheelValue() != 0 || Robot.in.getRightIntakeWheelValue() != 0 ||
 				controller.a.get() || controller.b.get() || controller.x.get() || controller.y.get() || controller.leftBumper.get() ||
 				controller.rightBumper.get() || controller.select.get() || controller.start.get() || controller.leftJoystickPress.get() ||
 				controller.rightJoystickPress.get() || controller.leftTrigger.get() || controller.rightTrigger.get() || controller2.a.get() ||
@@ -51,7 +51,7 @@ public class Record implements Loop, Constants {
 		}
 		
 		if(reachedFirstNonZero) {
-			Robot.lg.writeLine(Robot.dt.getLeftMasterVoltage() + "," + Robot.dt.getRightMasterVoltage() + "," + Robot.in.getLeftIntakeWheelValue() + "," + Robot.in.getRightIntakeWheelValue()
+			Robot.lg.writeLine(Robot.dt.getLeftMasterVoltage() + "," + Robot.dt.getRightMasterVoltage() + "," + Robot.el.getElevatorMasterVoltage() + ","  + Robot.in.getLeftIntakeWheelValue() + "," + Robot.in.getRightIntakeWheelValue()
 							+ "," + controller.a.get() + "," + controller.b.get() + "," + controller.x.get() + "," + controller.y.get() + "," + controller.leftBumper.get() 
 							+ "," + controller.rightBumper.get() + "," + controller.select.get() + "," + controller.start.get() + "," + controller.leftJoystickPress.get() 
 							+ "," + controller.rightJoystickPress.get() + "," + controller.leftTrigger.get() + "," + controller.rightTrigger.get() + "," + controller2.a.get()
