@@ -17,7 +17,7 @@ public class StartPlay extends ImprovedCommand {
     	Robot.lg.resetForRead();
     	if(isSensorPlayRecordAuto) {
     		Robot.dt.setVoltageComp(true, voltageCompensationVoltageDriveTrainSensorPlay, timeout);
-    		Robot.el.setVoltageComp(true, voltageCompensationVoltageDriveTrainSensorPlay, timeout);
+    		Robot.el.setVoltageComp(true, voltageCompensationVoltageElevatorSensorPlay, timeout);
     	}
     	else {
     		Robot.dt.setVoltageComp(true, voltageCompensationVoltageDriveTrainRecordAndPlay, timeout);

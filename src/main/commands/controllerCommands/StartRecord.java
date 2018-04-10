@@ -16,7 +16,7 @@ public class StartRecord extends ImprovedCommand {
     	Record.reachedFirstNonZero(false);
     	if(isSensorPlayRecordAuto) {
     		Robot.dt.setVoltageComp(true, voltageCompensationVoltageDriveTrainSensorRecord, timeout);
-    		Robot.el.setVoltageComp(true, voltageCompensationVoltageDriveTrainSensorRecord, timeout);
+    		Robot.el.setVoltageComp(true, voltageCompensationVoltageElevatorSensorRecord, timeout);
     	}
     	else {
     		Robot.dt.setVoltageComp(true, voltageCompensationVoltageDriveTrainRecordAndPlay, timeout);

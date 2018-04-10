@@ -117,7 +117,7 @@ public class Robot extends ImprovedRobot {
     		 * EDGECASE_SwitchFromBehind- Robot will act upon given game data except in the Edge Case; in which case it drives around 
     		 * 							the back of the switch to prevent collision and then places the cube in the switch.
     		 */
-		
+    		/*
     		SmartDashboard.putString("Do nothing", "Doesn't move during auto");
     		SmartDashboard.putString("Edgecases", "When the robot is in the left or right starting position and both the scale" + 
     									"and switch are in the opposite position");
@@ -126,6 +126,7 @@ public class Robot extends ImprovedRobot {
     		SmartDashboard.putString("If edgecase occurs", "If the edgecase occurs, then the robot will either do nothing," +
     									"cross baseline, or score in the switch from behind depending on the edgecase" +
     									"mode that is chosen");
+    		*/
     		/*
 			// Auto modes
 			autoChooser = new SendableChooser<>();
@@ -151,7 +152,7 @@ public class Robot extends ImprovedRobot {
 		//Robot Self Test
 		SmartDashboard.putData("Robot Self Test", new RobotSelfTest());
 		SmartDashboard.putData("Robot Drive Train Test", new RobotDriveTrainTest());
-		//SmartDashboard.putData("DriveTrain Test Voltage Command", new DriveVoltageTestCommand());
+		SmartDashboard.putData("DriveTrain Test Voltage Command", new DriveVoltageTestCommand());
 	}
 	
 	@Override
@@ -377,9 +378,9 @@ public class Robot extends ImprovedRobot {
 		// Scheduler
 		SmartDashboard.putData(Scheduler.getInstance());
 		// Subsystems
-		SmartDashboard.putData("DriveTrain: ", dt);
-		SmartDashboard.putData("Elevator: ", el);
-		SmartDashboard.putData("Intake: ", in);
+		//SmartDashboard.putData("DriveTrain: ", dt);
+		//SmartDashboard.putData("Elevator: ", el);
+		//SmartDashboard.putData("Intake: ", in);
 		//SmartDashboard.putData("Pnuematics", pn);
 		// Pressure
 		SmartDashboard.putNumber("Pressure: ", HardwareAdapter.analogPressureSensor1.value());
@@ -389,21 +390,21 @@ public class Robot extends ImprovedRobot {
 		//SmartDashboard.putNumber("Right Master Voltage", dt.getRightMasterVoltage());
 		//SmartDashboard.putNumber("Right Slave Voltage", dt.getRightSlaveVoltage());
 		// DriveTrain Encoders
-		SmartDashboard.putNumber("DriveTrain Left Encoder Ticks", dt.getLeftEncoderTicksTravelled());
+		//SmartDashboard.putNumber("DriveTrain Left Encoder Ticks", dt.getLeftEncoderTicksTravelled());
 		SmartDashboard.putNumber("DriveTrain Left Encoder Distance", dt.getLeftEncoderDistanceTravelled());
-		SmartDashboard.putNumber("DriveTrain Left Encoder Velocity", dt.getLeftEncoderVelocity());
-		SmartDashboard.putNumber("DriveTrain Right Encoder Ticks", dt.getRightEncoderTicksTravelled());
+		//SmartDashboard.putNumber("DriveTrain Left Encoder Velocity", dt.getLeftEncoderVelocity());
+		//SmartDashboard.putNumber("DriveTrain Right Encoder Ticks", dt.getRightEncoderTicksTravelled());
 		SmartDashboard.putNumber("DriveTrain Right Encoder Distance", dt.getRightEncoderDistanceTravelled());
-		SmartDashboard.putNumber("DriveTrain Right Encoder Velocity", dt.getRightEncoderVelocity());
+		//SmartDashboard.putNumber("DriveTrain Right Encoder Velocity", dt.getRightEncoderVelocity());
 		// DriveTrain Gyro
 		SmartDashboard.putNumber("NavX Heading", dt.getHeading());
 		// Limit Switch States
 		SmartDashboard.putBoolean("First Stage Bottom", !stage1BottomSwitch.get());
 		SmartDashboard.putBoolean("First Stage Top", !stage1TopSwitch.get());
 		// Elevator encoder
-		SmartDashboard.putNumber("Elevator encoder in units", el.getTicksTravelled());
+		//SmartDashboard.putNumber("Elevator encoder in units", el.getTicksTravelled());
 		SmartDashboard.putNumber("Elevator encoder inches", el.getDistanceTravelled());
-		SmartDashboard.putNumber("Elevator speed in units", el.getElevatorVelocity());
+		//SmartDashboard.putNumber("Elevator speed in units", el.getElevatorVelocity());
 		
 		// Knowing where you're at
 		if(!isCompetitionMatch) {

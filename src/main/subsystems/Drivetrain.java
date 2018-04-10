@@ -245,7 +245,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	private void configTalonEncoders() {
-		leftDriveMaster.setSensorPhase(true);
+		leftDriveMaster.setSensorPhase(false);
 		leftDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
 		rightDriveMaster.setSensorPhase(true);
 		rightDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
@@ -336,10 +336,10 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	public void zeroEncoders() {
-		//leftDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
-		leftDriveMaster.setSelectedSensorPosition(0, pidIdx, timeout);
-		//rightDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
-		rightDriveMaster.setSelectedSensorPosition(0, pidIdx, timeout);
+		leftDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
+		//leftDriveMaster.setSelectedSensorPosition(0, pidIdx, timeout);
+		rightDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
+		//rightDriveMaster.setSelectedSensorPosition(0, pidIdx, timeout);
 	}
 
 	@Override

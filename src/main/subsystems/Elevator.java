@@ -26,7 +26,7 @@ public class Elevator extends ImprovedSubsystem {
 	 ************************/
 	private void configSensors() {
 		elevatorMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
-		elevatorMaster.setSensorPhase(true);
+		elevatorMaster.setSensorPhase(false);
 	}
 	
 	private void setBrakeMode() {
@@ -72,8 +72,8 @@ public class Elevator extends ImprovedSubsystem {
 	 **************************/
 	
 	public void zeroSensors() {
-		//elevatorMaster.getSensorCollection().setQuadraturePosition(0, 10);
-		elevatorMaster.setSelectedSensorPosition(0, pidIdx, timeout);
+		elevatorMaster.getSensorCollection().setQuadraturePosition(0, 10);
+		//elevatorMaster.setSelectedSensorPosition(0, pidIdx, timeout);
 	}
 	
 	// Checks if the intake is at bottom
