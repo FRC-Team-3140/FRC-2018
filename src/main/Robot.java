@@ -33,6 +33,7 @@ import main.commands.controllerCommands.FilePicker;
 import main.commands.controllerCommands.StartPlay;
 import main.commands.controllerCommands.StartRecord;
 import main.commands.drivetrain.DriveVoltageTestCommand;
+import main.commands.drivetrain.TimedTankDriveStraight;
 import main.subsystems.DriverAlerts;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
@@ -152,6 +153,7 @@ public class Robot extends ImprovedRobot {
 		//Robot Self Test
 		SmartDashboard.putData("Robot Self Test", new RobotSelfTest());
 		SmartDashboard.putData("Robot Drive Train Test", new RobotDriveTrainTest());
+		SmartDashboard.putData("Robot Drive Straight Test", new TimedTankDriveStraight(-0.4, 0.4, 5));
 		SmartDashboard.putData("DriveTrain Test Voltage Command", new DriveVoltageTestCommand());
 	}
 	
@@ -392,9 +394,11 @@ public class Robot extends ImprovedRobot {
 		// DriveTrain Encoders
 		//SmartDashboard.putNumber("DriveTrain Left Encoder Ticks", dt.getLeftEncoderTicksTravelled());
 		SmartDashboard.putNumber("DriveTrain Left Encoder Distance", dt.getLeftEncoderDistanceTravelled());
+		SmartDashboard.putNumber("DriveTrain Left Input", leftDriveMaster.get());
 		//SmartDashboard.putNumber("DriveTrain Left Encoder Velocity", dt.getLeftEncoderVelocity());
 		//SmartDashboard.putNumber("DriveTrain Right Encoder Ticks", dt.getRightEncoderTicksTravelled());
 		SmartDashboard.putNumber("DriveTrain Right Encoder Distance", dt.getRightEncoderDistanceTravelled());
+		SmartDashboard.putNumber("DriveTrain Right Input", rightDriveMaster.get());
 		//SmartDashboard.putNumber("DriveTrain Right Encoder Velocity", dt.getRightEncoderVelocity());
 		// DriveTrain Gyro
 		SmartDashboard.putNumber("NavX Heading", dt.getHeading());

@@ -42,6 +42,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		configTalonEncoders();
 		zeroSensors();
 		pushPIDGainsToSmartDashboard();
+		pushNormallyUnusedToSmartDashboard();
 	}
 	
 	// DRIVE FOR TELEOP
@@ -96,13 +97,27 @@ public class Drivetrain extends ImprovedSubsystem  {
         SmartDashboard.putNumber("Heading: PGain", kDrivePathHeadingFollowKp);
 	}
 	
+	//Post All Other Normally Empty Strings To SmarDashboard
+	private void pushNormallyUnusedToSmartDashboard() {
+        SmartDashboard.putNumber("Left: FollowerSensor", 0.0);
+        SmartDashboard.putNumber("Left: FollowerGoal", 0.0);
+        SmartDashboard.putNumber("Left: FollowerError", 0.0);
+        SmartDashboard.putNumber("Right: FollowerSensor", 0.0);
+        SmartDashboard.putNumber("Right: FollowerGoal", 0.0);
+        SmartDashboard.putNumber("Right: FollowerError", 0.0);        
+        SmartDashboard.putNumber("Heading: Sensor", 0.0);
+        SmartDashboard.putNumber("Heading: Target", 0.0);
+        SmartDashboard.putNumber("Heading: Error", 0.0);
+        SmartDashboard.putNumber("Heading PID Correction to Left Drive", 0.0);
+        SmartDashboard.putNumber("Heading PID Correction To Right Drive", 0.0);
+	}
+	
 	//Drive for Playback utilizing sensors for real-time path correction
 	public void driveProfileWithPid(double leftEncTargetPos, double rightEncTargetPos, double targetHeading) {	
 		//Grab PID Vars
 		double PGain = SmartDashboard.getNumber("Pos: PGain", kDrivePositionKp);
 		double IGain = SmartDashboard.getNumber("Pos: IGain", kDrivePositionKi);
 		double DGain = SmartDashboard.getNumber("Pos: DGain", kDrivePositionKd);
-		double headingGain = SmartDashboard.getNumber("Heading: PGain", kDrivePathHeadingFollowKp);
 		
         //Calculate left driveTrain side error with PID
         double leftError = leftEncTargetPos - getLeftEncoderDistanceTravelled();
@@ -126,6 +141,12 @@ public class Drivetrain extends ImprovedSubsystem  {
         SmartDashboard.putNumber("Right: FollowerGoal", rightEncTargetPos);
         SmartDashboard.putNumber("Right: FollowerError", rightError);
         
+        driveWithGyroCorrection(leftPIDOutput, rightPIDOutput, targetHeading);
+	}
+	
+	public void driveWithGyroCorrection(double throttleLeft, double throttleRight, double targetHeading) {
+		double headingGain = SmartDashboard.getNumber("Heading: PGain", kDrivePathHeadingFollowKp);
+		
         //Compute Turning, Well Built FRC Robots drive in virtually a straight line so no need
         //For PID just a simple proportional value to keep it on track
         double angleDiff = ChezyMath.getDifferenceInAngleDegrees(getHeading(), targetHeading);
@@ -134,32 +155,29 @@ public class Drivetrain extends ImprovedSubsystem  {
         SmartDashboard.putNumber("Heading: Sensor", getHeading());
         SmartDashboard.putNumber("Heading: Target", targetHeading);
         SmartDashboard.putNumber("Heading: Error", angleDiff);
-        
-        boolean invertPIDHeadingCorrection = false;
-        
+                
         if(!invertPIDHeadingCorrection) {
-        	SmartDashboard.putNumber("PID Correction to Left Drive", turn);
-        	SmartDashboard.putNumber("PID Correction To Right Drive", -turn);
+        	SmartDashboard.putNumber("Heading PID Correction to Left Drive", turn);
+        	SmartDashboard.putNumber("Heading PID Correction To Right Drive", -turn);
         
         	//Drive!!!
-        	tankDrive(driveHelper.handleOverPower(leftPIDOutput + turn),
-        			driveHelper.handleOverPower(rightPIDOutput - turn), false);
+        	tankDrive(driveHelper.handleOverPower(throttleLeft + turn),
+        			driveHelper.handleOverPower(throttleRight - turn), false);
         }
         else {
-        	SmartDashboard.putNumber("PID Correction to Left Drive", -turn);
-        	SmartDashboard.putNumber("PID Correction To Right Drive", turn);
+        	SmartDashboard.putNumber("Heading PID Correction to Left Drive", -turn);
+        	SmartDashboard.putNumber("Heading PID Correction To Right Drive", turn);
         
         	//Drive!!!
-        	tankDrive(driveHelper.handleOverPower(leftPIDOutput - turn),
-        			driveHelper.handleOverPower(rightPIDOutput + turn), false);
+        	tankDrive(driveHelper.handleOverPower(throttleLeft - turn),
+        			driveHelper.handleOverPower(throttleRight + turn), false);
         }
 	}
 	
 	public void tankDrive(double left, double right, boolean squaredInput) {
-		SmartDashboard.putNumber("TankDrive Left Input", left);
-		SmartDashboard.putNumber("TankDrive Right Input", right);
 		driveTrain.tankDrive(left, right, squaredInput);
 	}
+	
 	public void timedTurn(TurnMode mode, double throttle) {
 		if (mode == TurnMode.Left) tankDrive(-throttle, throttle, false);
 		if (mode == TurnMode.Right) tankDrive(throttle, -throttle, false);
