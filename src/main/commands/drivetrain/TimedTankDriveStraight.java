@@ -21,12 +21,7 @@ public class TimedTankDriveStraight extends TimedCommand {
     protected void execute() {
     	Robot.dt.driveWithGyroCorrection(left, right, 0.0);
     }
-
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return true;
-    }
-
+    
     // Called once after isFinished returns true
     protected void end() {
     }
