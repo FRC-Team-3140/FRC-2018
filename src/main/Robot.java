@@ -153,7 +153,7 @@ public class Robot extends ImprovedRobot {
 		//Robot Self Test
 		SmartDashboard.putData("Robot Self Test", new RobotSelfTest());
 		SmartDashboard.putData("Robot Drive Train Test", new RobotDriveTrainTest());
-		SmartDashboard.putData("Robot Drive Straight Test", new TimedTankDriveStraight(-0.4, 0.4, 5));
+		SmartDashboard.putData("Robot Drive Straight Test", new TimedTankDriveStraight(-1, 1, 5));
 		SmartDashboard.putData("DriveTrain Test Voltage Command", new DriveVoltageTestCommand());
 	}
 	

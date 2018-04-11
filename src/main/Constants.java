@@ -121,7 +121,7 @@ public interface Constants {
 	//Place Holder Meaning for every gearRatio turns of the encoder the wheel rotates 1 turn
 	public final double lowGearDriveTrainGearRatio = 12.86;//If it turn out to be a 14:40 initial stage 12.24
 	public final double highGearDriveTrainGearRatio = 4.4;//If it turns out to be a 14+40 initial stage 4.19
-    public final boolean invertPIDHeadingCorrection = true;
+    public final boolean invertPIDHeadingCorrection = false;
 
 	// ELEVATOR LENGTHS 
 	// CALIBRATE THESE- ALL ARE IN INCHES
@@ -135,7 +135,7 @@ public interface Constants {
 	public final double scaleHeight = 70; 
 
 	public final int pidIdx = 0;
-	public final double elevator_kP = 0;
+	public final double elevator_kP = 0.1;
 	public final double elevator_kI = 0;
 	public final double elevator_kD = 0;
 	public final int timeout = 10;
@@ -152,7 +152,7 @@ public interface Constants {
     public static double kDriveMaxSpeedInchesPerSec = 120.0;
     public static double kDriveMaxAccelInchesPerSec2 = 107.0;
     //Looks ok
-    public static double kDrivePositionKp = 0.7;
+    public static double kDrivePositionKp = 0.028;
     public static double kDrivePositionKi = 0;
     public static double kDrivePositionKd = 0;
     public static double kDriveStraightKp = 3.0;
