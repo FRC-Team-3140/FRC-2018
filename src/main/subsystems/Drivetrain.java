@@ -113,7 +113,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	//Drive for Playback utilizing sensors for real-time path correction
-	public void driveProfileWithPid(double leftEncTargetPos, double rightEncTargetPos, double targetHeading) {	
+	public void driveProfileWithPid(double leftEncTargetPos, double rightEncTargetPos, double prevLeftEncTargetPos,
+			double prevRightEncTargetPos, double targetHeading) {	
 		//Grab PID Vars
 		double PGain = SmartDashboard.getNumber("Pos: PGain", kDrivePositionKp);
 		double IGain = SmartDashboard.getNumber("Pos: IGain", kDrivePositionKi);
@@ -121,14 +122,16 @@ public class Drivetrain extends ImprovedSubsystem  {
 		
         //Calculate left driveTrain side error with PID
         double leftError = leftEncTargetPos - getLeftEncoderDistanceTravelled();
-        leftIntegralAccum += (leftError*kLooperDt);
+        double leftErrorToCurrentPoint = prevLeftEncTargetPos - getLeftEncoderDistanceTravelled();
+        leftIntegralAccum += (leftErrorToCurrentPoint*kLooperDt);
         double leftDerivative = (leftError - lastLeftEncPosError)/kLooperDt;
         double leftPIDOutput = PGain*leftError + IGain*leftIntegralAccum + DGain*leftDerivative;        	    
         lastLeftEncPosError = leftError;
         
         //Calculate right driveTrain side error with PID
         double rightError = rightEncTargetPos - getRightEncoderDistanceTravelled();
-        rightIntegralAccum += (rightError*kLooperDt);
+        double rightErrorToCurrentPoint = prevRightEncTargetPos - getRightEncoderDistanceTravelled();
+        rightIntegralAccum += (rightErrorToCurrentPoint*kLooperDt);
         double rightDerivative = (rightError - lastRightEncPosError)/kLooperDt;
         double rightPIDOutput = PGain*rightError + IGain*rightIntegralAccum + DGain*rightDerivative;        	    
         lastRightEncPosError = rightError;
