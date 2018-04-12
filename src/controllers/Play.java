@@ -80,7 +80,7 @@ public class Play implements Loop, Constants {
 				double elevatorEncoderDistanceTravelled = Double.parseDouble(robotState[32]);
 			
 				Command drive;
-				Command intake = new IntakeFromPlayer(leftIntakeWheelValue, rightIntakeWheelValue);
+				Command intake = new IntakeFromPlayer(leftIntakeWheelValue, -rightIntakeWheelValue);
 				Command lift = new MoveToPosPIDPlay(elevatorEncoderDistanceTravelled);
 				
 				if(!isSensorPlayRecordAuto) {
