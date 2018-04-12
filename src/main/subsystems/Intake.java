@@ -1,10 +1,7 @@
 package main.subsystems;
 
 import interfacesAndAbstracts.ImprovedSubsystem;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import Util.DriveHelper;
-import Util.EncoderHelper;
-import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.intake.ShootWithJoystick;
 
 
@@ -14,13 +11,8 @@ public class Intake extends ImprovedSubsystem {
 	}
 	
 	private DriveHelper driveHelper = new DriveHelper(7.5);
-	// NOT SURE IF WE SHOULD USE AN ENUM- TESTING SWITCH METHODS FIRST
-//	public static enum CubeInIntake {
-//		HasCube, NoCube
-//	}
 	
 	public static WheelStates wheelStates = WheelStates.Off;
-	//public static CubeInIntake cubeInIntake = CubeInIntake.NoCube;
 	
 	public Intake() {
 		leftIntakeMotor.setSafetyEnabled(false);
@@ -58,10 +50,6 @@ public class Intake extends ImprovedSubsystem {
 		rightIntakeMotor.set(rightIntakeWheelValue);
 	}
 	
-//	public boolean isCubeInIntake() {
-//		return intakeSwitch.get();
-//	}
-//	
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ShootWithJoystick());
