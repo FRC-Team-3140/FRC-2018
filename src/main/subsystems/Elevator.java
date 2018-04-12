@@ -13,6 +13,7 @@ public class Elevator extends ImprovedSubsystem {
 	private static double lastEncPosError = 0.0;
 	//ProfilePIDIntegralAccumulators
 	private static double integralAccum = 0.0;
+	private static double prevTargetPos = 0;
 	
 	public Elevator() {
 		setElevatorDefaults();
@@ -172,12 +173,14 @@ public class Elevator extends ImprovedSubsystem {
 		double kD = SmartDashboard.getNumber("Elevator Pos: D", elevator_kD);
 		//Calculate Error With PID
 		double error = targetPos - getDistanceTravelled();
-		integralAccum += (error*kLooperDt);
+		double errorToPrevPos = prevTargetPos - getDistanceTravelled();
+		integralAccum += (errorToPrevPos*kLooperDt);
 		double derivative = (error - lastEncPosError)/kLooperDt;
 		double PIDOutput = kP*error + kI*integralAccum + kD*derivative;
 		lastEncPosError = error;
 		//Move Based on PID Output
-		move(PIDOutput);		
+		move(PIDOutput);	
+		
 	}
 
 	@Override
@@ -190,5 +193,6 @@ public class Elevator extends ImprovedSubsystem {
 		lastEncPosError = 0.0;
 		//Clear Integral Accumulators
 	    integralAccum = 0.0;
+	    prevTargetPos = 0;
 	}
 }

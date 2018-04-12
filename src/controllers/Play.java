@@ -13,19 +13,11 @@ import main.commands.intake.IntakeFromPlayer;
 public class Play implements Loop, Constants {
 	private static boolean playOK = false;
 	private static boolean finished = false;
-	private static double lastLeftValue = 0;
-	private static double lastRightValue = 0;
 	
 	public static void okToPlay(boolean okToPlay) {
 		playOK = okToPlay;
 		if(playOK) System.out.println("Ok To Play");
 		else System.out.println("Not Ok To Play");
-	}
-	
-	public static void resetValues() {
-		lastLeftValue = 0;
-		lastRightValue = 0;
-		System.out.println("Resetted lastLeftValue and lastRightValue variables");
 	}
 	
 	@Override
@@ -96,8 +88,7 @@ public class Play implements Loop, Constants {
 					
 				}
 				else {
-					drive  = new DriveFromPlayerWithSensors(leftEncoderDistanceTravelled, rightEncoderDistanceTravelled, 
-							lastLeftValue, lastRightValue, heading);
+					drive  = new DriveFromPlayerWithSensors(leftEncoderDistanceTravelled, rightEncoderDistanceTravelled, heading);
 				}
 				
 				drive.start();
@@ -106,9 +97,6 @@ public class Play implements Loop, Constants {
 				
 				Robot.oi.setButtonValues(a, b, x, y, leftBumper, rightBumper, select, start, leftJoystickPress, rightJoystickPress, leftTrigger, rightTrigger);
 				Robot.oi.setButtonValues2(a2, b2, x2, y2, leftBumper2, rightBumper2, select2, start2, leftJoystickPress2, rightJoystickPress2, leftTrigger2, rightTrigger2);
-				
-				lastLeftValue = leftEncoderDistanceTravelled;
-				lastRightValue = rightEncoderDistanceTravelled;
 			}
 		}
 		else {
