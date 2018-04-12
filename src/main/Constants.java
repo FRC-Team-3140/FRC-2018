@@ -120,6 +120,7 @@ public interface Constants {
 	public final double lowGearDriveTrainGearRatio = 12.86;//If it turn out to be a 14:40 initial stage 12.24
 	public final double highGearDriveTrainGearRatio = 4.4;//If it turns out to be a 14+40 initial stage 4.19
     public final boolean invertPIDHeadingCorrection = false;
+    public final double turningScaleFactor = 0.8;
 
 	// ELEVATOR LENGTHS 
 	// CALIBRATE THESE- ALL ARE IN INCHES
