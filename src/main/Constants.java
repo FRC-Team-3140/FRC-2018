@@ -12,9 +12,7 @@ public interface Constants {
 	/*************
 	 * VARIABLES *
 	 *************/
-	public final boolean isCompetitionMatch = false;
 	public final boolean isCompetitionRobot = false;
-	public final boolean isTimedAuto = false;
 	public final boolean isSensorPlayRecordAuto = true;
 	
 	// FILE OUTPUT PATH

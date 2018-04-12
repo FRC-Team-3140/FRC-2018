@@ -92,63 +92,60 @@ public class Robot extends ImprovedRobot {
 
 		
         //**************************************************SmartDashboard
-    	if(!isCompetitionMatch) {
-    		SmartDashboard.putData("Record", new StartRecord());
-			SmartDashboard.putData("Play", new StartPlay());
-    		// File adder
-    		SmartDashboard.putString("New File Name", "");
-    		SmartDashboard.putData("Create a new file", new FileCreator()); 
-    		// File deleter
-    		SmartDashboard.putData("Delete a file", new FileDeletor());
-    		//FileSelector
-        	fileChooser = new SendableChooser<>();
-        	fileChooser.addDefault("", new DoNothing());
-        	SmartDashboard.putData("File Selector", fileChooser);
-    		
-    		SmartDashboard.putString("NOTICE:", "Whenever you redeploy code you must restart shuffleboard; And whenever you "
-					+ "delete a file you must restart robot code.");
-    	}
     	
-    	else {
-    		/* AUTO EXPLAINATION:
-    		 * EDGECASE- The case where the robot is in the left or right position and neither the switch nor the scale line up.
-    		 * Do Nothing- Robot won't move during auto
-    		 * EDGECASE_DoNothing- Robot will act upon given game data except in the Edge Case; in which case it does nothing.
-    		 * EDGECASE_Baseline- Robot will act upon given game data except in the Edge Case; in which case it crosses the baseline.
-    		 * EDGECASE_SwitchFromBehind- Robot will act upon given game data except in the Edge Case; in which case it drives around 
-    		 * 							the back of the switch to prevent collision and then places the cube in the switch.
-    		 */
-    		/*
-    		SmartDashboard.putString("Do nothing", "Doesn't move during auto");
-    		SmartDashboard.putString("Edgecases", "When the robot is in the left or right starting position and both the scale" + 
-    									"and switch are in the opposite position");
-    		SmartDashboard.putString("No edgecase", "If edgecase doesn't occur, the robot will do an auto depending on starting" +
-    									"position and switch/scale lineup as long as Do Nothing is NOT chosen");
-    		SmartDashboard.putString("If edgecase occurs", "If the edgecase occurs, then the robot will either do nothing," +
-    									"cross baseline, or score in the switch from behind depending on the edgecase" +
-    									"mode that is chosen");
-    		*/
-    		/*
-			// Auto modes
-			autoChooser = new SendableChooser<>();
-			autoChooser.addDefault("Do Nothing", RobotAction.DO_NOTHING);
-			autoChooser.addObject("Baseline", RobotAction.BASELINE);
-			autoChooser.addObject("Switch", RobotAction.SWITCH);
-			*/
-			autoChooser = new SendableChooser<>();
-			autoChooser.addDefault("Do Nothing", RobotAction.DO_Nothing);
-			autoChooser.addObject("Go Robot Go!: EdgeCase_DoNothing", RobotAction.EDGECASE_DoNothing);
-			autoChooser.addObject("Go Robot Go!: EdgeCase_BaseLine", RobotAction.EDGECASE_Baseline);
-			autoChooser.addObject("Go Robot Go!: EdgeCase_DelayedSwitch", RobotAction.EDGECASE_SwitchFromBehind);
-			SmartDashboard.putData("Auto Mode", autoChooser);
-			
-			// Starting Pos
-			startPos = new SendableChooser<>();
-			startPos.addDefault("Left", StartPos.LEFT);
-			startPos.addObject("Center", StartPos.CENTER);
-			startPos.addObject("Right", StartPos.RIGHT);
-			SmartDashboard.putData("Starting Position", startPos);
-		}
+    	SmartDashboard.putData("Record", new StartRecord());
+		SmartDashboard.putData("Play", new StartPlay());
+    	// File adder
+    	SmartDashboard.putString("New File Name", "");
+    	SmartDashboard.putData("Create a new file", new FileCreator()); 
+    	// File deleter
+    	SmartDashboard.putData("Delete a file", new FileDeletor());
+    	//FileSelector
+        fileChooser = new SendableChooser<>();
+        fileChooser.addDefault("", new DoNothing());
+        SmartDashboard.putData("File Selector", fileChooser);
+    	
+    	SmartDashboard.putString("NOTICE:", "Whenever you redeploy code you must restart shuffleboard; And whenever you "
+				+ "delete a file you must restart robot code.");
+    	    	/* AUTO EXPLAINATION:
+    	 * EDGECASE- The case where the robot is in the left or right position and neither the switch nor the scale line up.
+    	 * Do Nothing- Robot won't move during auto
+    	 * EDGECASE_DoNothing- Robot will act upon given game data except in the Edge Case; in which case it does nothing.
+    	 * EDGECASE_Baseline- Robot will act upon given game data except in the Edge Case; in which case it crosses the baseline.
+    	 * EDGECASE_SwitchFromBehind- Robot will act upon given game data except in the Edge Case; in which case it drives around 
+    	 * 							the back of the switch to prevent collision and then places the cube in the switch.
+    	 */
+    	/*
+    	SmartDashboard.putString("Do nothing", "Doesn't move during auto");
+    	SmartDashboard.putString("Edgecases", "When the robot is in the left or right starting position and both the scale" + 
+    								"and switch are in the opposite position");
+    	SmartDashboard.putString("No edgecase", "If edgecase doesn't occur, the robot will do an auto depending on starting" +
+    								"position and switch/scale lineup as long as Do Nothing is NOT chosen");
+    	SmartDashboard.putString("If edgecase occurs", "If the edgecase occurs, then the robot will either do nothing," +
+    								"cross baseline, or score in the switch from behind depending on the edgecase" +
+    								"mode that is chosen");
+    	*/
+    	/*
+		// Auto modes
+		autoChooser = new SendableChooser<>();
+		autoChooser.addDefault("Do Nothing", RobotAction.DO_NOTHING);
+		autoChooser.addObject("Baseline", RobotAction.BASELINE);
+		autoChooser.addObject("Switch", RobotAction.SWITCH);
+		*/
+		autoChooser = new SendableChooser<>();
+		autoChooser.addDefault("Do Nothing", RobotAction.DO_Nothing);
+		autoChooser.addObject("Go Robot Go!: EdgeCase_DoNothing", RobotAction.EDGECASE_DoNothing);
+		autoChooser.addObject("Go Robot Go!: EdgeCase_BaseLine", RobotAction.EDGECASE_Baseline);
+		autoChooser.addObject("Go Robot Go!: EdgeCase_DelayedSwitch", RobotAction.EDGECASE_SwitchFromBehind);
+		SmartDashboard.putData("Auto Mode", autoChooser);
+		
+		// Starting Pos
+		startPos = new SendableChooser<>();
+		startPos.addDefault("Left", StartPos.LEFT);
+		startPos.addObject("Center", StartPos.CENTER);
+		startPos.addObject("Right", StartPos.RIGHT);
+		SmartDashboard.putData("Starting Position", startPos);
+		
 			
 		//Robot Self Test
 		SmartDashboard.putData("Robot Self Test", new RobotSelfTest());
@@ -161,7 +158,7 @@ public class Robot extends ImprovedRobot {
 	public void disabledInit() {
 		//if(autoCommand != null && autoCommand.isRunning())
 			//autoCommand.cancel();
-		if(isCompetitionMatch && competitionPlayCommand != null) {
+		if(competitionPlayCommand != null) {
 			if(competitionPlayCommand.isRunning()) competitionPlayCommand.cancel();
 		}
 		autoLooper.stop();//Had been commented out in testing			
@@ -297,15 +294,9 @@ public class Robot extends ImprovedRobot {
 
 	@Override
 	public void teleopInit() {
-		//if(autoCommand != null && autoCommand.isRunning())
-			//autoCommand.cancel();
-		
-		if(isCompetitionMatch)
-			if(competitionPlayCommand != null && competitionPlayCommand.isRunning()) 
-				competitionPlayCommand.cancel();
-
-		if(!isCompetitionMatch)
-			autoLooper.start();
+		if(competitionPlayCommand != null && competitionPlayCommand.isRunning()) 
+			competitionPlayCommand.cancel();
+		autoLooper.start();
 		new ResetForTeleop().start();
 	}	
 
@@ -321,7 +312,7 @@ public class Robot extends ImprovedRobot {
 	}
 	
 	private void checkForSmartDashboardUpdates() {
-		if (!isCompetitionMatch && !newFileName.equals(SmartDashboard.getString("New File Name", ""))) {
+		if (!newFileName.equals(SmartDashboard.getString("New File Name", ""))) {
 			newFileName = SmartDashboard.getString("New File Name", "");
 			System.out.println(newFileName);
 		}
@@ -359,9 +350,8 @@ public class Robot extends ImprovedRobot {
 	
 	public void allPeriodic() {
 		SmartDashboard.updateValues();
-		if(!isCompetitionMatch) {
-			checkForSmartDashboardUpdates();
-		}
+		checkForSmartDashboardUpdates();
+
 		// Push Loop Dt to SmartDashboard
 		autoLooper.outputToSmartDashboard();
 		
@@ -411,10 +401,8 @@ public class Robot extends ImprovedRobot {
 		//SmartDashboard.putNumber("Elevator speed in units", el.getElevatorVelocity());
 		
 		// Knowing where you're at
-		if(!isCompetitionMatch) {
-			SmartDashboard.putString("Working File", lg.getWorkingFile());
-			SmartDashboard.putString("Working Path", outputPath);
-		}
+		SmartDashboard.putString("Working File", lg.getWorkingFile());
+		SmartDashboard.putString("Working Path", outputPath);
 	}
 	
 	public static String getNewFileName() {
