@@ -12,11 +12,11 @@ import main.commands.elevator.MoveToTop;
 public class AltRightToRightScale extends ImprovedCommandGroup {
 	public AltRightToRightScale() {
 		// distance from start to scale  minus robot length
-		addSequential(new DistanceDriveStraight((260-robotLength/2)));
-		addSequential(new TurnToAngle(-45));
+		addSequential(new DistanceDriveStraight((296-robotLength/2)));
+		addSequential(new TurnToAngle(-72));
 		addSequential(new WaitCommand(0.25));
+		addSequential(new DistanceDriveStraight(-2));
 		addSequential(new MoveToTop(3));
-		addSequential(new DistanceDriveStraight((60.5 - safetyFactor)));
 		addSequential(new WaitCommand(0.1));
 		addSequential(new DropCube());
 		addSequential(new WaitCommand(1));

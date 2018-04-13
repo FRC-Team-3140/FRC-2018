@@ -9,6 +9,13 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedRobot;
+import main.commands.altermativeAuto.AltBaseline;
+import main.commands.altermativeAuto.AltCenterToLeftSwitch;
+import main.commands.altermativeAuto.AltCenterToRightSwitch;
+import main.commands.altermativeAuto.AltLeftToLeftScale;
+import main.commands.altermativeAuto.AltLeftToLeftSwitch;
+import main.commands.altermativeAuto.AltRightToRightScale;
+import main.commands.altermativeAuto.AltRightToRightSwitch;
 import main.commands.auto.Baseline;
 import main.commands.auto.CenterToLeftSwitch;
 import main.commands.auto.CenterToRightSwitch;
@@ -120,20 +127,20 @@ public class Robot extends ImprovedRobot {
 			if(start_pos == StartPos.LEFT) {
 				if(leftSwitch) {
 					isSwitch = true;
-					autoCommand = new LeftToLeftSwitch();
+					autoCommand = new AltLeftToLeftSwitch();
 				}
 				//else if(leftScale) autoCommand = new LeftToLeftScale();
-				else autoCommand = new Baseline();					
+				else autoCommand = new AltBaseline();					
 			}
 			else if(start_pos == StartPos.CENTER) {
 				isSwitch = true;
-				if(leftSwitch) autoCommand = new CenterToLeftSwitch();
-				else autoCommand = new CenterToRightSwitch();
+				if(leftSwitch) autoCommand = new AltCenterToLeftSwitch();
+				else autoCommand = new AltCenterToRightSwitch();
 			}
 			else if(start_pos == StartPos.RIGHT) {
 				if(!leftSwitch) {
 					isSwitch = true;
-					autoCommand = new RightToRightSwitch();
+					autoCommand = new AltRightToRightSwitch();
 				}
 				//else if(!leftScale) autoCommand = new RightToRightScale();
 				else autoCommand = new Baseline();					
@@ -141,25 +148,25 @@ public class Robot extends ImprovedRobot {
 		}
 		else {//Priority Scale
 			if(start_pos == StartPos.LEFT) {
-				if(leftScale) autoCommand = new LeftToLeftScale();
+				if(leftScale) autoCommand = new AltLeftToLeftScale();
 				else if(leftSwitch) {
 					isSwitch = true;
-					autoCommand = new LeftToLeftSwitch();
+					autoCommand = new AltLeftToLeftSwitch();
 				}
-				else autoCommand = new Baseline();					
+				else autoCommand = new AltBaseline();					
 			}
 			else if(start_pos == StartPos.CENTER) {
 				isSwitch = true;
-				if(leftSwitch) autoCommand = new CenterToLeftSwitch();
+				if(leftSwitch) autoCommand = new AltCenterToLeftSwitch();
 				else autoCommand = new CenterToRightSwitch();
 			}
 			else if(start_pos == StartPos.RIGHT) {
-				if(!leftScale) autoCommand = new RightToRightScale();
+				if(!leftScale) autoCommand = new AltRightToRightScale();
 				else if(!leftSwitch) {
 					isSwitch = true;
-					autoCommand = new RightToRightSwitch();
+					autoCommand = new AltRightToRightSwitch();
 				}
-				else autoCommand = new Baseline();				
+				else autoCommand = new AltBaseline();				
 			}
 		}
 		
