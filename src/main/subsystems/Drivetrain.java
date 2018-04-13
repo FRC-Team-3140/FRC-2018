@@ -287,13 +287,23 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	public boolean isDriveTrainAtDistance(double distance) {
-		double distanceTravelled = (-getLeftEncoderDistanceTravelled() + getRightEncoderDistanceTravelled()) / 2;
+		double distanceTravelled = (getLeftEncoderDistanceTravelled() + getRightEncoderDistanceTravelled()) / 2;
 		return Math.abs(distance - distanceTravelled) < driveTrainDistanceTolerance;
 	}
 	
 	public boolean isDriveTrainAtAngle(double angle) {
 		double currentAngle = getHeading();
 		return Math.abs(angle - currentAngle) < driveTrainAngleTolerance;
+	}
+	
+	public boolean isDriveAtAngleGreaterThan(double angle) {
+		double currentAngle = getHeading();
+		return Math.abs(currentAngle) > Math.abs(angle); 
+	}
+	
+	public boolean isDriveAtAngleLessThan(double angle) {
+		double currentAngle = getHeading();
+		return Math.abs(currentAngle) < Math.abs(angle); 
 	}
 
 	@Override

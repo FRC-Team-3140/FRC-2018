@@ -42,7 +42,8 @@ public class OI extends ImprovedClass {
 		xbox.a.whenPressed(new MoveToBottom(1.5));
 		xbox.y.whenPressed(new MoveToSwitch(1.5));
 		xbox.rightBumper.whenPressed(new MoveToTop(3));
-		xbox.leftBumper.whenPressed(new DistanceDriveStraight(18));
+		xbox.leftBumper.whenPressed(new AltRightToRightSwitch());
+
 		
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));

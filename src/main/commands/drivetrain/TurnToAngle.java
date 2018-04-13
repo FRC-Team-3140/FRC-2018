@@ -18,10 +18,27 @@ public class TurnToAngle extends ImprovedCommand {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(angle < 0)
-    		Robot.dt.timedTurn(TurnMode.Left, 0.5);//Turning is the same between both robots
+    		if(Robot.dt.isDriveAtAngleGreaterThan(angle/2))
+    			Robot.dt.timedTurn(TurnMode.Left, 0.35);
+    		else if(Robot.dt.isDriveAtAngleGreaterThan(angle/1.75))
+    			Robot.dt.timedTurn(TurnMode.Left, 0.3);
+    		else if(Robot.dt.isDriveAtAngleGreaterThan(angle/1.5))
+    			Robot.dt.timedTurn(TurnMode.Left, 0.22);
+    		else if(Robot.dt.isDriveAtAngleGreaterThan(angle/1.25))
+    			Robot.dt.timedTurn(TurnMode.Left, 0.18);
+    		else
+    			Robot.dt.timedTurn(TurnMode.Left, 0.4);
     	else
-    		Robot.dt.timedTurn(TurnMode.Right, 0.5);//Turning is the same between both robots
-
+    		if(Robot.dt.isDriveAtAngleGreaterThan(angle/2))
+    			Robot.dt.timedTurn(TurnMode.Right, 0.35);
+    		else if(Robot.dt.isDriveAtAngleGreaterThan(angle/1.75))
+    			Robot.dt.timedTurn(TurnMode.Right, 0.3);
+    		else if(Robot.dt.isDriveAtAngleGreaterThan(angle/1.5))
+    			Robot.dt.timedTurn(TurnMode.Right, 0.22);
+    		else if(Robot.dt.isDriveAtAngleGreaterThan(angle/1.25))
+    			Robot.dt.timedTurn(TurnMode.Right, 0.18);
+    		else
+    			Robot.dt.timedTurn(TurnMode.Right, 0.4);
     }
     
     // Make this return true when this Command no longer needs to run execute()

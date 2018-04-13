@@ -14,7 +14,7 @@ public class MoveToSwitch extends TimedCommand implements Constants {
 	
     // Called just before this Command runs the first time
     public void initialize() {
-    	//Robot.el.moveToPosPID(switchHeight);
+    	Robot.el.zeroSensors();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,11 +25,13 @@ public class MoveToSwitch extends TimedCommand implements Constants {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	return Robot.el.isIntakeAtPos(switchHeight) || Robot.el.isArmAtTop();
+    	//return Robot.el.isIntakeAbovePosition(switchHeight);
     	//return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.el.move(0.0);
     }
 
     // Called when another command which requires one or more of the same

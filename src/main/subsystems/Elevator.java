@@ -89,6 +89,9 @@ public class Elevator extends ImprovedSubsystem {
 		return Math.abs(getDistanceFromPos(pos)) < elevatorTolerance;
 	}
 	
+	public boolean isIntakeAbovePosition(double pos) {
+		return getDistanceFromPos(pos) < 0;
+	}
 	/**********************
 	 * ENC OUTPUT METHODS *
 	 **********************/
