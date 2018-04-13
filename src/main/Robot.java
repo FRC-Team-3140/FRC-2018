@@ -183,12 +183,7 @@ public class Robot extends ImprovedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		Runtime runtime = Runtime.getRuntime();
-		// SmartDashboard stuff goes here
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Free memory", runtime.freeMemory());
-		SmartDashboard.putNumber("Total memory", runtime.totalMemory());
-		SmartDashboard.putNumber("Pressure: ", HardwareAdapter.analogPressureSensor1.value());
 		allPeriodic();
 	}
 	
@@ -198,15 +193,30 @@ public class Robot extends ImprovedRobot {
 	}
 	
 	public void allPeriodic() {
+		Runtime runtime = Runtime.getRuntime();
 		SmartDashboard.updateValues();
 		dt.check();
 		pn.check();
 		in.check();
 		el.check();
 		oi.check();
-		//SmartDashboard.putNumber("Left voltage", dt.getLeftVoltage());
-		//SmartDashboard.putNumber("Right voltage", dt.getRightVoltage());
+		SmartDashboard.putNumber("Free memory", runtime.freeMemory());
+		SmartDashboard.putNumber("Total memory", runtime.totalMemory());
+		SmartDashboard.putData(Scheduler.getInstance());
+		//Pressure
+		SmartDashboard.putNumber("Pressure: ", HardwareAdapter.analogPressureSensor1.value());
+		// DriveTrain Encoders
+		SmartDashboard.putNumber("DriveTrain Left Encoder Distance", dt.getLeftEncoderDistanceTravelled());
+		SmartDashboard.putNumber("DriveTrain Left Input", leftDriveMaster.get());
+		SmartDashboard.putNumber("DriveTrain Right Encoder Distance", dt.getRightEncoderDistanceTravelled());
+		SmartDashboard.putNumber("DriveTrain Right Input", rightDriveMaster.get());
+		// DriveTrain Gyro
+		SmartDashboard.putNumber("NavX Heading", dt.getHeading());
+		// Limit Switch States
 		SmartDashboard.putBoolean("First Stage Bottom", !stage1BottomSwitch.get());
 		SmartDashboard.putBoolean("First Stage Top", !stage1TopSwitch.get());
+		// Elevator encoder
+		SmartDashboard.putNumber("Elevator encoder inches", el.getDistanceTravelled());
+		SmartDashboard.putNumber("Elevator Input", elevatorMaster.get());
 	}
 }

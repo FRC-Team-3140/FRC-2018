@@ -3,8 +3,15 @@ package main;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
 import main.Constants.TurnMode;
+import main.commands.altermativeAuto.AltLeftToLeftSwitch;
+import main.commands.altermativeAuto.AltRightToRightSwitch;
+import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
+import main.commands.drivetrain.TurnToAngle;
+import main.commands.elevator.MoveToBottom;
+import main.commands.elevator.MoveToSwitch;
+import main.commands.elevator.MoveToTop;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.arm.SwitchArm;
@@ -28,7 +35,15 @@ public class OI extends ImprovedClass {
 		xbox.a.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
 		xbox.x.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
 		xbox.y.whenPressed(new TimedDrive(timedDrivePercent, 2.5));
-	    */		
+	    */	
+		
+		xbox.x.whenPressed(new TurnToAngle(-45));
+		xbox.b.whenPressed(new TurnToAngle(90));
+		xbox.a.whenPressed(new MoveToBottom(1.5));
+		xbox.y.whenPressed(new MoveToSwitch(1.5));
+		xbox.rightBumper.whenPressed(new MoveToTop(3));
+		xbox.leftBumper.whenPressed(new DistanceDriveStraight(18));
+		
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
 	}
