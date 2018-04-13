@@ -13,7 +13,7 @@ public class ResetForTeleop extends ImprovedCommandGroup {
 		addSequential(new ArmOpen());
 		addSequential(new SpinOff());
 		if(moveDown) {
-			addSequential(new TiltDown());
+			//addSequential(new TiltDown());
 			addSequential(new DistanceDriveStraight(-30));//Drive backwards
 			addSequential(new MoveToBottom(1.5));//Let Elevator Down
 		}
