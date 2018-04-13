@@ -2,7 +2,6 @@ package main.commands.drivetrain;
 
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
-import main.Constants.TurnMode;
 
 public class DistanceDriveStraight extends ImprovedCommand {
 	private double distance;

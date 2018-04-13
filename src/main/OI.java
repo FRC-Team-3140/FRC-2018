@@ -2,16 +2,9 @@ package main;
 
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
-import main.Constants.TurnMode;
-import main.commands.altermativeAuto.AltLeftToLeftSwitch;
-import main.commands.altermativeAuto.AltRightToRightSwitch;
-import main.commands.drivetrain.DistanceDriveStraight;
-import main.commands.drivetrain.TimedDrive;
-import main.commands.drivetrain.TimedTurn;
 import main.commands.drivetrain.TurnToAngle;
 import main.commands.elevator.MoveToBottom;
 import main.commands.elevator.MoveToSwitch;
-import main.commands.elevator.MoveToTop;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.arm.SwitchArm;

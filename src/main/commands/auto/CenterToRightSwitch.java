@@ -2,14 +2,11 @@ package main.commands.auto;
 
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import interfacesAndAbstracts.ImprovedCommandGroup;
-import main.Constants.TurnMode;
 import main.commands.commandGroups.cubeManipulator.DropCube;
 import main.commands.commandGroups.cubeManipulator.DropCubeOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
-import main.commands.elevator.MoveToSwitch;
 import main.commands.elevator.MoveToTop;
-import main.commands.elevator.TimedLift;
 
 public class CenterToRightSwitch extends ImprovedCommandGroup {
 	//x, y & z will be the number of inches that the robot needs to drive/ alex will fill this in a couple of hours
