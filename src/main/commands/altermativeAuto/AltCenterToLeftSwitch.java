@@ -4,26 +4,19 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import interfacesAndAbstracts.ImprovedCommandGroup;
 import main.commands.commandGroups.cubeManipulator.DropCube;
 import main.commands.commandGroups.cubeManipulator.DropCubeOff;
-import main.commands.drivetrain.TimedDrive;
-import main.commands.drivetrain.TimedTurn;
+import main.commands.drivetrain.DistanceDriveStraight;
+import main.commands.drivetrain.TurnToAngle;
 import main.commands.elevator.MoveToSwitch;
-import main.commands.elevator.MoveToTop;
-import main.commands.elevator.TimedLift;
 
 public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
-	//x, y & z will be the number of inches that the robot needs to drive/ alex will fill this in a couple of hours
 	public AltCenterToLeftSwitch() {
-		addSequential(new TimedDrive(timedDrivePercent, 30.375/timedDistanceMultiplier)); //(Break away from wall so there is no resistance on the first turn)
-		addSequential(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
-		addSequential(new TimedDrive(timedDrivePercent, 69.5/timedDistanceMultiplier));
-		addSequential(new TimedTurn(TurnMode.Right, timedTurnPercent, timedTurn90degTime));
+		addSequential(new DistanceDriveStraight(30.375)); //(Break away from wall so there is no resistance on the first turn)
+		addSequential(new TurnToAngle(-90));
+		addSequential(new DistanceDriveStraight(69.5));
+		addSequential(new TurnToAngle(90));
 		addSequential(new WaitCommand(0.25));
-
-		//addSequential(new WaitCommand(1));
-		//addSequential(new TimedLift(timedLiftPercent, timedLiftTime));
-		addSequential(new MoveToTop(3));
-		//addSequential(new MoveToSwitch(5));
-		addSequential(new TimedDrive(timedDrivePercent, 90.375/timedDistanceMultiplier));
+		addSequential(new MoveToSwitch(1.5));
+		addSequential(new DistanceDriveStraight(90.375));
 		addSequential(new WaitCommand(0.1));
 		addSequential(new DropCube());
 		addSequential(new WaitCommand(1));

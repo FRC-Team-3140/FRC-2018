@@ -285,6 +285,16 @@ public class Drivetrain extends ImprovedSubsystem  {
 		leftDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
 		rightDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
 	}
+	
+	public boolean isDriveTrainAtDistance(double distance) {
+		double distanceTravelled = (getLeftEncoderDistanceTravelled() + getRightEncoderDistanceTravelled()) / 2;
+		return Math.abs(distance - distanceTravelled) < driveTrainDistanceTolerance;
+	}
+	
+	public boolean isDriveTrainAtAngle(double angle) {
+		double currentAngle = getHeading();
+		return Math.abs(angle - currentAngle) < driveTrainAngleTolerance;
+	}
 
 	@Override
 	protected void initDefaultCommand() {

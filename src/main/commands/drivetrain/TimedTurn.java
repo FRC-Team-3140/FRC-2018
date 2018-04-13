@@ -18,5 +18,4 @@ public class TimedTurn extends TimedCommand implements Constants {
 	protected void execute() {
 		Robot.dt.timedTurn(mode, throttle);//Turning is the same between both robots
 	}
-
 }
