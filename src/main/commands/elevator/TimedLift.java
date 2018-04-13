@@ -13,7 +13,7 @@ public class TimedLift extends TimedCommand {
 	}
 	
 	protected void execute() {
-//		Robot.el.move(throttle);
+		Robot.el.move(throttle);
 	}
 	
 	// Make this return true when this Command no longer needs to run execute()

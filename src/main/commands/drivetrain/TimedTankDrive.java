@@ -1,40 +1,40 @@
-package main.commands.controllerCommands;
+package main.commands.drivetrain;
 
-import controllers.Play;
-import interfacesAndAbstracts.ImprovedCommand;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import main.Robot;
 
-public class StartPlay extends ImprovedCommand {
-	public StartPlay() {
-    }
-
+public class TimedTankDrive extends TimedCommand {
+	double left, right;
+	boolean squareInputs;
+	
+	public TimedTankDrive(double left, double right, boolean squareInputs, double time) {
+		super(time);
+		requires(Robot.dt);
+		this.left = left;
+		this.right = right;
+		this.squareInputs = squareInputs;
+	}
+	
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//Robot.lg.resetForRead();
-    	//Robot.oi.setInternalControl(true);
-    	//Play.okToPlay(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.dt.tankDrive(left, right, squareInputs);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        //return Play.isFinished();
-    	return true;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	//Play.okToPlay(false);
-    	//Robot.oi.setInternalControl(false);
-    	//Play.reset();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

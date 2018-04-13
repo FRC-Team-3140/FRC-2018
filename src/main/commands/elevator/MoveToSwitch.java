@@ -1,14 +1,14 @@
 package main.commands.elevator;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
+import main.Constants;
 import main.Robot;
 
-public class MoveToSwitch extends TimedCommand {
-	//public final double switchHeight = 24; //set this in encoder units today... //TODO Should be pulled from constants
+public class MoveToSwitch extends TimedCommand implements Constants {
 	
 	public MoveToSwitch(double timeout) {//1.5 recommended timeout
 		super(timeout);//Timeout forced to a maximum of 1.5, this is for the emergency case that a limit switch breaks
-				//So that the elevator will not continue to drive up.
+						//So that the elevator will not continue to drive up.
 		requires(Robot.el);
 	}
 	
@@ -24,8 +24,7 @@ public class MoveToSwitch extends TimedCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	//return Robot.el.isIntakeAtPos(switchHeight);
-    	return Robot.el.isArmAtSwitch() || Robot.el.isArmAtTop();
+    	return Robot.el.isIntakeAtPos(switchHeight) || Robot.el.isArmAtTop();
     	//return false;
     }
 

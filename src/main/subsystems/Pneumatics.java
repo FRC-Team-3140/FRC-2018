@@ -34,6 +34,7 @@ public class Pneumatics extends ImprovedSubsystem {
 	//Default Robot State at start of match.
 	public static boolean armClose = true;
 	public static boolean tiltUp = true;
+	public static boolean lowGear = true;
 
 	/*******************
 	 * COMMAND METHODS *
@@ -45,6 +46,8 @@ public class Pneumatics extends ImprovedSubsystem {
 	 * @param v - Desired shifting value (Uses default shifting values)
 	 */
 	public void shift(DoubleSolenoid.Value v) {
+		if (v == EXT) lowGear = true;
+		else if (v == RET) lowGear = false;
 		shifter.set(v);
 	}
 
@@ -68,6 +71,10 @@ public class Pneumatics extends ImprovedSubsystem {
 	
 	public boolean isTiltUp() {
 		return tiltUp;
+	}
+	
+	public boolean isLowGear() {
+		return lowGear;
 	}
 //	
 //	public void shiftPTO(DoubleSolenoid.Value v) {

@@ -14,7 +14,7 @@ public class DriveTrainOff extends ImprovedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.dt.driveVoltageTankTest(0.0, 0.0);
+    	Robot.dt.driveVoltageTankTest(0.0, 0.0, voltageCompensationVoltage);
     }
     
     protected boolean isFinished() {

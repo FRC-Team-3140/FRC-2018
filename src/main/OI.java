@@ -3,22 +3,8 @@ package main;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
 import main.Constants.TurnMode;
-import main.commands.commandgroups.cubeManipulator.DropCube;
-import main.commands.commandgroups.cubeManipulator.DropCubeOff;
-import main.commands.commandgroups.cubeManipulator.IntakeCube;
-import main.commands.commandgroups.cubeManipulator.IntakeCubeOff;
-import main.commands.commandgroups.cubeManipulator.PushOutCube;
-import main.commands.commandgroups.cubeManipulator.PushOutCubeOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
-import main.commands.elevator.MoveToBottom;
-import main.commands.elevator.MoveToSwitch;
-import main.commands.elevator.MoveToTop;
-import main.commands.elevator.TimedLift;
-import main.commands.intake.DeployIntake;
-import main.commands.intake.DeployIntakeOff;
-import main.commands.intake.SpinOff;
-import main.commands.intake.SpinOut;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.arm.SwitchArm;
@@ -42,41 +28,9 @@ public class OI extends ImprovedClass {
 		xbox.a.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
 		xbox.x.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
 		xbox.y.whenPressed(new TimedDrive(timedDrivePercent, 2.5));
-	*/
-		
-		//xbox.rightBumper.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));
-		//xbox.b.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
-		//xbox.y.whenPressed(new TimedLift(timedLiftPercent, timedLiftTime));
-		//xbox.x.whenPressed(new TimedLift(timedLiftPercent, timedLiftFullHeightTime));
-		
-		//xbox2.rightTrigger.whileHeld(new SpinOut());
-		//xbox2.rightTrigger.whenReleased(new SpinOff());
-		//xbox2.y.whenReleased(new IntakeCubeOff());
-		//xbox2.leftTrigger.whenPressed(new DeployIntake());
-		//xbox2.leftTrigger.whenReleased(new DeployIntakeOff());
-		//xbox2.start.whenPressed(new MoveToSwitch(5));
-		//xbox2.select.whenPressed(new MoveToScale(5));
-		//xbox2.y.whenReleased(new IntakeCubeOff());
-		//xbox2.y.whileHeld(new IntakeCube());
-		//xbox2.x.whileHeld(new PushOutCube());
-		//xbox2.x.whenReleased(new PushOutCubeOff());
-		//xbox2.b.whileHeld(new DropCube());
-		//xbox2.b.whenReleased(new DropCubeOff());
+	    */		
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
-		/*
-		xbox2.x.whenPressed(new MoveToBottom(1.5));
-		xbox2.b.whenPressed(new MoveToTop(3));
-		*/
-		//xbox2.y.whenPressed(new MoveToSwitch(3));
-		//xbox2.x.whenPressed(new MoveToBottom(3));
-		//xbox2.y.whenPressed(new MoveToSwitch(3));
-		//xbox2.b.whenPressed(new MoveToTop(5));
-		//xbox2.rightBumper.whenPressed(new TiltDown());
-		//xbox2.rightBumper.whenReleased(new TiltUp());
-		//xbox2.b.whenReleased(new DropCubeOff());
-		//xbox2.rightBumper.whenPressed(new TiltDown());
-		//xbox2.rightBumper.whenReleased(new TiltUp());
 	}
 	
 	public static XboxController getXbox() {
@@ -92,16 +46,6 @@ public class OI extends ImprovedClass {
 		xbox2.check();
 	}
 	
-	/*public void DoNothing() {
-		Robot.robot_act = Robot.RobotAction.DO_Nothing;
-	}
-	public void Baseline() {
-		Robot.robot_act = Robot.RobotAction.Baseline;
-	}
-	public void Switch() {
-		Robot.robot_act = Robot.RobotAction.Switch;
-	}*/
-
 	/**************
 	 * PLAY/RECORD *
 	 ***************/

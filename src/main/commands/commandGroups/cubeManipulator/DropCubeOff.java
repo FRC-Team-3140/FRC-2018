@@ -1,4 +1,4 @@
-package main.commands.commandgroups.cubeManipulator;
+package main.commands.commandGroups.cubeManipulator;
 
 import interfacesAndAbstracts.ImprovedCommandGroup;
 import main.commands.pneumatics.arm.ArmClose;

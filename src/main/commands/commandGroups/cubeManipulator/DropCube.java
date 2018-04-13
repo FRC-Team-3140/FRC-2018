@@ -1,4 +1,4 @@
-package main.commands.commandgroups.cubeManipulator;
+package main.commands.commandGroups.cubeManipulator;
 
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import interfacesAndAbstracts.ImprovedCommandGroup;
@@ -12,4 +12,3 @@ public class DropCube extends ImprovedCommandGroup {
 		addSequential(new ArmOpen());
 	}
 }
-
