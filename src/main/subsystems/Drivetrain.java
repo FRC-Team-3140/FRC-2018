@@ -287,7 +287,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	public boolean isDriveTrainAtDistance(double distance) {
-		double distanceTravelled = (getLeftEncoderDistanceTravelled() + getRightEncoderDistanceTravelled()) / 2;
+		double distanceTravelled = (-getLeftEncoderDistanceTravelled() + getRightEncoderDistanceTravelled()) / 2;
 		return Math.abs(distance - distanceTravelled) < driveTrainDistanceTolerance;
 	}
 	

@@ -108,7 +108,7 @@ public class Elevator extends ImprovedSubsystem {
 	
 	// Get the distance the elevator has traveled in inches
 	public double getDistanceTravelled() {
-		return 2 * getElevatorRevs() * spindleCircum / elevatorGearRatio;
+		return -2 * getElevatorRevs() * spindleCircum / elevatorGearRatio;
 	}
 	
 	// Returns distance from a set position
