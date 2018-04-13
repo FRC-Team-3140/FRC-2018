@@ -18,6 +18,7 @@ import main.commands.auto.LeftToLeftSwitch;
 import main.commands.auto.ResetForTeleop;
 import main.commands.auto.RightToRightScale;
 import main.commands.auto.RightToRightSwitch;
+import main.commands.drivetrain.TimedTankDriveStraight;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
 import main.subsystems.Elevator;
@@ -73,6 +74,8 @@ public class Robot extends ImprovedRobot {
 		
 		//Robot Self Test
 		SmartDashboard.putData("Robot Self Test", new RobotSelfTest());
+		SmartDashboard.putData("Robot Drive Train Test", new RobotDriveTrainTest());
+		SmartDashboard.putData("Robot Drive Straight Test", new TimedTankDriveStraight(1, 1, 5));
 	}
 	
 	@Override

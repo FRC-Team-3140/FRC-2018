@@ -18,7 +18,8 @@ public class DistanceDriveStraight extends ImprovedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.dt.driveVelocity(timedDrivePercent * Math.signum(distance), 0.0);
+    	double throttle = timedDrivePercent * Math.signum(distance);
+    	Robot.dt.driveWithGyroCorrection(throttle, throttle, 0.0);
     }
     
     // Make this return true when this Command no longer needs to run execute()
