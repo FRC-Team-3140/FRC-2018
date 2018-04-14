@@ -17,14 +17,8 @@ import main.commands.altermativeAuto.AltLeftToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightScale;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
 import main.commands.auto.Baseline;
-import main.commands.auto.CenterToLeftSwitch;
-import main.commands.auto.CenterToRightSwitch;
 import main.commands.auto.DoNothing;
-import main.commands.auto.LeftToLeftScale;
-import main.commands.auto.LeftToLeftSwitch;
 import main.commands.auto.ResetForTeleop;
-import main.commands.auto.RightToRightScale;
-import main.commands.auto.RightToRightSwitch;
 import main.commands.drivetrain.TimedTankDriveStraight;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
@@ -129,7 +123,7 @@ public class Robot extends ImprovedRobot {
 					isSwitch = true;
 					autoCommand = new AltLeftToLeftSwitch();
 				}
-				//else if(leftScale) autoCommand = new LeftToLeftScale();
+				else if(leftScale) autoCommand = new AltLeftToLeftScale();
 				else autoCommand = new AltBaseline();					
 			}
 			else if(start_pos == StartPos.CENTER) {
@@ -142,7 +136,7 @@ public class Robot extends ImprovedRobot {
 					isSwitch = true;
 					autoCommand = new AltRightToRightSwitch();
 				}
-				//else if(!leftScale) autoCommand = new RightToRightScale();
+				else if(!leftScale) autoCommand = new AltRightToRightScale();
 				else autoCommand = new Baseline();					
 			}
 		}
@@ -158,7 +152,7 @@ public class Robot extends ImprovedRobot {
 			else if(start_pos == StartPos.CENTER) {
 				isSwitch = true;
 				if(leftSwitch) autoCommand = new AltCenterToLeftSwitch();
-				else autoCommand = new CenterToRightSwitch();
+				else autoCommand = new AltCenterToRightSwitch();
 			}
 			else if(start_pos == StartPos.RIGHT) {
 				if(!leftScale) autoCommand = new AltRightToRightScale();
@@ -200,16 +194,16 @@ public class Robot extends ImprovedRobot {
 	}
 	
 	public void allPeriodic() {
-		Runtime runtime = Runtime.getRuntime();
+		//Runtime runtime = Runtime.getRuntime();
 		SmartDashboard.updateValues();
 		dt.check();
 		pn.check();
 		in.check();
 		el.check();
 		oi.check();
-		SmartDashboard.putNumber("Free memory", runtime.freeMemory());
-		SmartDashboard.putNumber("Total memory", runtime.totalMemory());
-		SmartDashboard.putData(Scheduler.getInstance());
+		//SmartDashboard.putNumber("Free memory", runtime.freeMemory());
+		//SmartDashboard.putNumber("Total memory", runtime.totalMemory());
+		//SmartDashboard.putData(Scheduler.getInstance());
 		//Pressure
 		SmartDashboard.putNumber("Pressure: ", HardwareAdapter.analogPressureSensor1.value());
 		// DriveTrain Encoders

@@ -71,7 +71,6 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	//Post All Other Normally Empty Strings To SmarDashboard
 	private void pushNormallyUnusedToSmartDashboard() {   
-        SmartDashboard.putNumber("Heading: Sensor", 0.0);
         SmartDashboard.putNumber("Heading: Target", 0.0);
         SmartDashboard.putNumber("Heading: Error", 0.0);
         SmartDashboard.putNumber("Heading PID Correction to Left Drive", 0.0);
@@ -86,7 +85,6 @@ public class Drivetrain extends ImprovedSubsystem  {
         double angleDiff = ChezyMath.getDifferenceInAngleDegrees(getHeading(), targetHeading);
         double turn = headingGain * angleDiff;
         
-        SmartDashboard.putNumber("Heading: Sensor", getHeading());
         SmartDashboard.putNumber("Heading: Target", targetHeading);
         SmartDashboard.putNumber("Heading: Error", angleDiff);
                 
