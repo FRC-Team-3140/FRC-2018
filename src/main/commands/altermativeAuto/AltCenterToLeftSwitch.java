@@ -7,6 +7,7 @@ import main.commands.commandGroups.cubeManipulator.DropCubeOff;
 import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.TurnToAngle;
 import main.commands.elevator.MoveToSwitch;
+import main.commands.pneumatics.arm.ArmOpen;
 
 public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 	public AltCenterToLeftSwitch() {
@@ -21,5 +22,11 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 		addSequential(new DropCube());
 		addSequential(new WaitCommand(1));
 		addSequential(new DropCubeOff());
+		addSequential(new WaitCommand(0.2));
+		addSequential(new DistanceDriveStraight(-60));
+		addSequential(new TurnToAngle(90));
+		addSequential(new DistanceDriveStraight(48));
+		addSequential(new TurnToAngle(-90));
+		addSequential(new ArmOpen());
 	}
 }

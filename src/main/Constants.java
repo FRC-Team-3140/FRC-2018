@@ -48,7 +48,7 @@ public interface Constants {
 	public final double lowGearDriveTrainGearRatio = 12.86;//If it turn out to be a 14:40 initial stage 12.24
 	public final double highGearDriveTrainGearRatio = 4.4;//If it turns out to be a 14+40 initial stage 4.19
 	public final boolean invertPIDHeadingCorrection = false;
-    public static double straightDriveKp = 0.01;
+    public static double straightDriveKp = 0.025;
 	// ELEVATOR LENGTHS 
 	// CALIBRATE THESE- ALL ARE IN INCHES
 	public final double spindleDiameter = 2; //placeholder
@@ -57,7 +57,7 @@ public interface Constants {
 	public final double elevatorGearRatio = 1.0; 
 	public final double elevatorHeight = 78;  
 	public final double elevatorTolerance = 1;
-	public final double switchHeight = 24;
+	public final double switchHeight = 28; //Originally 24
 	public final double scaleHeight = 70; 
 			
 	/*************
@@ -73,7 +73,7 @@ public interface Constants {
 	public final ControlMode PERCENT_VBUS_MODE = ControlMode.PercentOutput;
 	public final NeutralMode BRAKE_MODE = NeutralMode.Brake;
 	
-	public final double timedDrivePercent = -0.75;//DO NOT CHANGE
+	public final double timedDrivePercent = -1;//DO NOT CHANGE
 	//This is a multiplier that will be computed manually distanceMultiplier * time = distanceDriven (When Robot driving at timedDrivePercent)
 	public final double timedDistanceMultiplier = 42.414;//38.58;// (in/s)
 	public final double driveTrainDistanceTolerance = 1;
