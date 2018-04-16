@@ -40,7 +40,7 @@ public class OI extends ImprovedClass {
 		xbox.x.whenPressed(new TurnToAngle(-45));
 		xbox.b.whenPressed(new TurnToAngle(90));
 		xbox.a.whenPressed(new DistanceDriveStraight(-12));
-		xbox.y.whenPressed(new DistanceDriveStraight(48));
+		xbox.y.whenPressed(new DistanceDriveStraight(120));
 		//xbox.rightBumper.whenPressed(new MoveToTop(3));
 		//xbox.leftBumper.whenPressed(new AltRightToRightSwitch());
 

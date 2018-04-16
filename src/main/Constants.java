@@ -75,11 +75,11 @@ public interface Constants {
 	public final NeutralMode BRAKE_MODE = NeutralMode.Brake;
 	
 	public final double timedDrivePercent = -1;//DO NOT CHANGE
-	public final double minimumDriveThrottle = 0.1;//Needs to be modified
+	public final double minimumDriveThrottle = 0.25;//Needs to be modified
 	//This is a multiplier that will be computed manually distanceMultiplier * time = distanceDriven (When Robot driving at timedDrivePercent)
 	public final double timedDistanceMultiplier = 42.414;//38.58;// (in/s)
-	public final double driveTrainDistanceTolerance = 1;
-	public final double driveTrainAngleTolerance = 2.5;
+	public final double driveTrainDistanceTolerance = 0.1;
+	public final double driveTrainAngleTolerance = 1;
 	
 	public static enum TurnMode {Right, Left};
 	public final double timedTurnPercent = 0.5;//DO NOT CHANGE

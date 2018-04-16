@@ -19,7 +19,7 @@ public class DistanceDriveStraight extends ImprovedCommand {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Original
-    	//double throttle = -timedDrivePercent * Math.signum(distance);
+    	double throttle = -timedDrivePercent * Math.signum(distance);
     	/*
     	if(Robot.dt.isDriveAtDistanceGreaterThan(distance * 0.5))
         	Robot.dt.driveWithGyroCorrection(throttle*0.75, throttle *0.75, 0.0);
@@ -33,21 +33,21 @@ public class DistanceDriveStraight extends ImprovedCommand {
 	    	Robot.dt.driveWithGyroCorrection(throttle, throttle, 0.0);
 	    */
     	//Corrected
-    	/*
-    	if(Robot.dt.isDriveAtDistanceGreaterThan(distance * 0.9))
+    	
+    	if(Robot.dt.isDriveAtDistanceGreaterThan(distance * 0.75))
 	    	Robot.dt.driveWithGyroCorrection(throttle*0.27, throttle*0.27, 0.0);
-    	else if(Robot.dt.isDriveAtDistanceGreaterThan(distance * .85))
+    	else if(Robot.dt.isDriveAtDistanceGreaterThan(distance * .7))
 	    	Robot.dt.driveWithGyroCorrection(throttle*0.40, throttle*0.40, 0.0);
-    	else if(Robot.dt.isDriveAtDistanceGreaterThan(distance * 0.75))
+    	else if(Robot.dt.isDriveAtDistanceGreaterThan(distance * 0.45))
 	    	Robot.dt.driveWithGyroCorrection(throttle*0.55, throttle*0.55, 0.0);
-    	else if(Robot.dt.isDriveAtDistanceGreaterThan(distance * 0.5))
+    	else if(Robot.dt.isDriveAtDistanceGreaterThan(distance * 0.3))
         	Robot.dt.driveWithGyroCorrection(throttle*0.75, throttle *0.75, 0.0);
 		else
 	    	Robot.dt.driveWithGyroCorrection(throttle, throttle, 0.0);
-	    */
+	    
     	//Improved
-    	double throttle = -Math.abs(Robot.dt.getDistancePercentError(distance)) * Math.signum(distance) + minimumDriveThrottle;
-    	Robot.dt.driveWithGyroCorrection(throttle, throttle, 0.0);
+    	//double throttle = -Math.abs(Robot.dt.getDistancePercentError(distance)) * Math.signum(distance) + minimumDriveThrottle;
+    	//Robot.dt.driveWithGyroCorrection(throttle, throttle, 0.0);
     }
     
     // Make this return true when this Command no longer needs to run execute()

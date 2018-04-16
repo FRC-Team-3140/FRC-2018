@@ -42,7 +42,7 @@ public class TurnToAngle extends ImprovedCommand {
     			Robot.dt.timedTurn(TurnMode.Right, 0.4);
     	*/
     	//Corrected
-    	/*
+    	
     	if(angle < 0)
     		if(Robot.dt.isDriveAtAngleGreaterThan(angle * 0.9))
     			Robot.dt.timedTurn(TurnMode.Left, 0.18);
@@ -65,10 +65,10 @@ public class TurnToAngle extends ImprovedCommand {
     			Robot.dt.timedTurn(TurnMode.Right, 0.35);
     		else
     			Robot.dt.timedTurn(TurnMode.Right, 0.4);
-    	*/
+    	
     	//Improved
-    	double throttle = Math.abs(Robot.dt.getAnglePercentError(angle)) + minimumTurnThrottle;
-    	Robot.dt.timedTurn(angle < 0 ? TurnMode.Left : TurnMode.Right, throttle);
+    	//double throttle = Math.abs(Robot.dt.getAnglePercentError(angle)) + minimumTurnThrottle;
+    	//Robot.dt.timedTurn(angle < 0 ? TurnMode.Left : TurnMode.Right, throttle);
     }
     
     // Make this return true when this Command no longer needs to run execute()
