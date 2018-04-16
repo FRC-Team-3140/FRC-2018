@@ -4,6 +4,8 @@ import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
 import main.Constants.TurnMode;
 import main.commands.altermativeAuto.AltLeftToLeftSwitch;
+import main.commands.altermativeAuto.AltLeftToRightSwitch;
+import main.commands.altermativeAuto.AltRightToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
 import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.TimedDrive;
@@ -37,10 +39,12 @@ public class OI extends ImprovedClass {
 		xbox.y.whenPressed(new TimedDrive(timedDrivePercent, 2.5));
 	    */	
 		
-		xbox.x.whenPressed(new TurnToAngle(-45));
-		xbox.b.whenPressed(new TurnToAngle(90));
-		xbox.a.whenPressed(new MoveToBottom(1.5));
-		xbox.y.whenPressed(new MoveToSwitch(1.5));
+		xbox.x.whenPressed(new AltLeftToRightSwitch());
+		xbox.b.whenPressed(new AltRightToLeftSwitch());
+
+		//xbox.b.whenPressed(new TurnToAngle(90));
+		//xbox.a.whenPressed(new MoveToBottom(1.5));
+		//xbox.y.whenPressed(new MoveToSwitch(1.5));
 		//xbox.rightBumper.whenPressed(new MoveToTop(3));
 		//xbox.leftBumper.whenPressed(new AltRightToRightSwitch());
 
