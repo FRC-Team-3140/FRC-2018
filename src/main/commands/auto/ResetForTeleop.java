@@ -5,7 +5,6 @@ import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.elevator.MoveToBottom;
 import main.commands.intake.SpinOff;
 import main.commands.pneumatics.arm.ArmOpen;
-import main.commands.pneumatics.tilt.TiltDown;
 import main.commands.pneumatics.tilt.TiltUp;
 
 public class ResetForTeleop extends ImprovedCommandGroup {
