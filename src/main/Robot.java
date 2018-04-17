@@ -14,6 +14,8 @@ import main.commands.altermativeAuto.AltCenterToLeftSwitch;
 import main.commands.altermativeAuto.AltCenterToRightSwitch;
 import main.commands.altermativeAuto.AltLeftToLeftScale;
 import main.commands.altermativeAuto.AltLeftToLeftSwitch;
+import main.commands.altermativeAuto.AltLeftToRightSwitch;
+import main.commands.altermativeAuto.AltRightToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightScale;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
 import main.commands.auto.Baseline;
@@ -72,6 +74,9 @@ public class Robot extends ImprovedRobot {
 		startPos.addObject("Right", StartPos.RIGHT);
 		SmartDashboard.putData("Starting Position", startPos);
 		SmartDashboard.putData("Auto Mode", autoChooser);
+		//Auto Features to Disable
+		SmartDashboard.putBoolean("Disable Scale Auto", false);
+		SmartDashboard.putBoolean("Disable Switch From Behind", false);
 		
 		//Robot Self Test
 		SmartDashboard.putData("Robot Self Test", new RobotSelfTest());
@@ -108,6 +113,8 @@ public class Robot extends ImprovedRobot {
 
 		boolean leftSwitch = gmsg.charAt(0) == 'L';
 		boolean leftScale = gmsg.charAt(1) == 'L';
+		boolean scaleDisabled = SmartDashboard.getBoolean("Disable Scale Auto", false);
+		boolean behindSwitchDisabled = SmartDashboard.getBoolean("Disable Switch From Behind", false);
 			
 		boolean isSwitch = false;
 		start_pos = startPos.getSelected();
@@ -116,14 +123,18 @@ public class Robot extends ImprovedRobot {
 		if(robot_act == RobotAction.DO_NOTHING)//Do Nothing
 			autoCommand = new DoNothing();
 		else if(robot_act == RobotAction.BASELINE)//Baseline
-			autoCommand = new Baseline();
+			autoCommand = new AltBaseline();
 		else if(robot_act == RobotAction.SWITCH){//Priority Switch
 			if(start_pos == StartPos.LEFT) {
 				if(leftSwitch) {
 					isSwitch = true;
 					autoCommand = new AltLeftToLeftSwitch();
 				}
-				else if(leftScale) autoCommand = new AltLeftToLeftScale();
+				else if(!behindSwitchDisabled) {
+					isSwitch = true;
+					autoCommand = new AltLeftToRightSwitch();
+				}
+				else if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
 				else autoCommand = new AltBaseline();					
 			}
 			else if(start_pos == StartPos.CENTER) {
@@ -136,16 +147,24 @@ public class Robot extends ImprovedRobot {
 					isSwitch = true;
 					autoCommand = new AltRightToRightSwitch();
 				}
-				else if(!leftScale) autoCommand = new AltRightToRightScale();
-				else autoCommand = new Baseline();					
+				else if(!behindSwitchDisabled) {
+					isSwitch = true;
+					autoCommand = new AltRightToLeftSwitch();
+				}
+				else if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
+				else autoCommand = new AltBaseline();					
 			}
 		}
 		else {//Priority Scale
 			if(start_pos == StartPos.LEFT) {
-				if(leftScale) autoCommand = new AltLeftToLeftScale();
+				if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
 				else if(leftSwitch) {
 					isSwitch = true;
 					autoCommand = new AltLeftToLeftSwitch();
+				}
+				else if(!behindSwitchDisabled) {
+					isSwitch = true;
+					autoCommand = new AltLeftToRightSwitch();
 				}
 				else autoCommand = new AltBaseline();					
 			}
@@ -155,10 +174,14 @@ public class Robot extends ImprovedRobot {
 				else autoCommand = new AltCenterToRightSwitch();
 			}
 			else if(start_pos == StartPos.RIGHT) {
-				if(!leftScale) autoCommand = new AltRightToRightScale();
+				if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
 				else if(!leftSwitch) {
 					isSwitch = true;
 					autoCommand = new AltRightToRightSwitch();
+				}
+				else if(!behindSwitchDisabled) {
+					isSwitch = true;
+					autoCommand = new AltRightToLeftSwitch();
 				}
 				else autoCommand = new AltBaseline();				
 			}

@@ -2,10 +2,13 @@ package main;
 
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import interfacesAndAbstracts.ImprovedCommandGroup;
+import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.DriveTrainOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
+import main.commands.drivetrain.TurnToAngle;
 import main.commands.elevator.MoveToBottom;
+import main.commands.elevator.MoveToSwitch;
 import main.commands.elevator.MoveToTop;
 import main.commands.intake.SpinIn;
 import main.commands.intake.SpinOff;
@@ -100,6 +103,31 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		//Stop & Wait
 		addSequential(new DriveTrainOff());
 		addSequential(new WaitCommand(0.5));
+		
+		//Drive Distance
+		addSequential(new DistanceDriveStraight(4));
+		addSequential(new WaitCommand(0.5));
+		addSequential(new DistanceDriveStraight(-4));
+		
+		//Stop & Wait
+		addSequential(new DriveTrainOff());
+		addSequential(new WaitCommand(0.5));
+				
+		//Turn To Angle
+		addSequential(new TurnToAngle(45));
+		addSequential(new WaitCommand(0.5));
+		addSequential(new TurnToAngle(-45));
+		addSequential(new WaitCommand(0.5));
+		addSequential(new TurnToAngle(-90));
+		addSequential(new WaitCommand(0.5));
+		addSequential(new TurnToAngle(90));
+				
+		//Stop & Wait
+		addSequential(new DriveTrainOff());
+		addSequential(new WaitCommand(0.5));
+		
+		//Wait (Allow alex to get out of the way)
+		addSequential(new WaitCommand(3));
 				
 		/***********************
 		 * Pneumatics System Test
@@ -136,21 +164,20 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		/***********************
 		 * Elevator System Test
 		 */
-		/*
+		//Tilt Down to Prevent Collision
+		addSequential(new TiltDown());					
+		
 		//Lift To Switch Height
-		addSequential(new MoveToSwitch(3));
+		addSequential(new MoveToSwitch(1.5));
 		
 		//Wait
 		addSequential(new WaitCommand(0.5));
 		
 		//Elevator To Bottom
-		addSequential(new MoveToBottom(3));
-		*/
-		//Wait
-		addSequential(new WaitCommand(0.5));
+		addSequential(new MoveToBottom(1.5));
 		
-		//Tilt Down to Prevent Collision
-		addSequential(new TiltDown());		
+		//Wait
+		addSequential(new WaitCommand(0.5));			
 		
 		//Lift To Max Height
 		addSequential(new MoveToTop(3));

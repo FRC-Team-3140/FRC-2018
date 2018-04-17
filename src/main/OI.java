@@ -39,8 +39,8 @@ public class OI extends ImprovedClass {
 		xbox.y.whenPressed(new TimedDrive(timedDrivePercent, 2.5));
 	    */	
 		
-		xbox.x.whenPressed(new AltLeftToRightSwitch());
-		xbox.b.whenPressed(new AltRightToLeftSwitch());
+		//xbox.x.whenPressed(new AltLeftToRightSwitch());
+		//xbox.b.whenPressed(new AltRightToLeftSwitch());
 
 		//xbox.b.whenPressed(new TurnToAngle(90));
 		//xbox.a.whenPressed(new MoveToBottom(1.5));

@@ -12,7 +12,7 @@ public interface Constants {
 	/*************
 	 * VARIABLES *
 	 *************/
-	public final boolean isCompetitionRobot = false;
+	public final boolean isCompetitionRobot = true;
 	
 	// Auto Delay Time
 	// This is the time that the robot will wait before executing the selected auto in an EDGECASE situation.
