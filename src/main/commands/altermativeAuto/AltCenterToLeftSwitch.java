@@ -23,9 +23,9 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 		addSequential(new DistanceDriveStraight(60.5));
 		addSequential(new TurnToAngle(-90));
 		addSequential(new WaitCommand(0.25));*/
-		addSequential(new TurnToAngle(-30));
+		addSequential(new TurnToAngle(-35.75));
 		addParallel(new MoveToSwitch(1.5));
-		addSequential(new DistanceDriveStraight(85));
+		addSequential(new DistanceDriveStraight(90));//Might be 90 or less needs testing
 		//addSequential(new DistanceDriveStraight(90.375));
 		addSequential(new DropCube());
 		addSequential(new WaitCommand(0.5));
@@ -41,7 +41,7 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 		addSequential(new TimedDrive(-1, 0.75));
 		addSequential(new WaitCommand(0.1));
 		addSequential(new ArmClose());
-		addSequential(new WaitCommand(0.1));
+		addSequential(new WaitCommand(0.25));
 		addSequential(new TiltUp());
 		addSequential(new DistanceDriveStraight(-35));
 		addSequential(new TurnToAngle(-75));

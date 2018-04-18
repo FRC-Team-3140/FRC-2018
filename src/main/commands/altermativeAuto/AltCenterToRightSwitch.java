@@ -42,7 +42,7 @@ public class AltCenterToRightSwitch extends ImprovedCommandGroup {
 		addSequential(new TimedDrive(-1, 0.75));
 		addSequential(new WaitCommand(0.1));
 		addSequential(new ArmClose());
-		addSequential(new WaitCommand(0.1));
+		addSequential(new WaitCommand(0.25));
 		addSequential(new TiltUp());
 		addSequential(new DistanceDriveStraight(-35));
 		addSequential(new TurnToAngle(75));
