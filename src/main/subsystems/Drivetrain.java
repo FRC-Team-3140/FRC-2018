@@ -41,7 +41,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	// DRIVE FOR TELEOP
 	public void driveVelocity(double throttle, double heading) {
 		if (isCompetitionRobot) {
-			driveTrain.arcadeDrive(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, throttleDeadband)),
+			driveTrain.arcadeDrive(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, throttleDeadband)),
 					driveHelper.handleOverPower(driveHelper.handleDeadband(-heading, headingDeadband)));
 		}
 		else {
@@ -82,7 +82,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		
         //Compute Turning, Well Built FRC Robots drive in virtually a straight line so no need
         //For PID just a simple proportional value to keep it on track
-        double angleDiff = ChezyMath.getDifferenceInAngleDegrees(getHeading(), targetHeading);
+        double angleDiff = ChezyMath.getDifferenceInAngleDegrees(targetHeading, getHeading());
         double turn = headingGain * angleDiff;
         
         SmartDashboard.putNumber("Heading: Target", targetHeading);
@@ -214,7 +214,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	public void zeroGyro() {
 		NavX.reset();
-		NavX.zeroYaw();
+		//NavX.zeroYaw();
 	}
 	
 	public double getHeading() {
@@ -263,6 +263,10 @@ public class Drivetrain extends ImprovedSubsystem  {
 	// Returns the distance traveled in native encoder units
 	public double getRightEncoderTicksTravelled() {
 		return rightDriveMaster.getSelectedSensorPosition(pidIdx);
+	}
+	
+	public double getDistanceTravelled() {
+		return (getLeftEncoderDistanceTravelled() + getRightEncoderDistanceTravelled()) / 2;
 	}
 	
 	// Get the distance the elevator has traveled in inches

@@ -13,6 +13,7 @@ public class TurnToAngle extends ImprovedCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.dt.zeroGyro();
+    	System.out.println("Turning Init");
     }           
 
     // Called repeatedly when this Command is scheduled to run

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedRobot;
-import main.commands.altermativeAuto.AltBaseline;
+import main.commands.auto.Baseline;
 import main.commands.altermativeAuto.AltCenterToLeftSwitch;
 import main.commands.altermativeAuto.AltCenterToRightSwitch;
 import main.commands.altermativeAuto.AltLeftToLeftScale;
@@ -18,7 +18,6 @@ import main.commands.altermativeAuto.AltLeftToRightSwitch;
 import main.commands.altermativeAuto.AltRightToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightScale;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
-import main.commands.auto.Baseline;
 import main.commands.auto.DoNothing;
 import main.commands.auto.ResetForTeleop;
 import main.commands.drivetrain.TimedTankDriveStraight;
@@ -75,8 +74,8 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putData("Starting Position", startPos);
 		SmartDashboard.putData("Auto Mode", autoChooser);
 		//Auto Features to Disable
-		SmartDashboard.putBoolean("Disable Scale Auto", false);
-		SmartDashboard.putBoolean("Disable Switch From Behind", false);
+		SmartDashboard.putBoolean("Disable Scale Auto", true);
+		SmartDashboard.putBoolean("Disable Switch From Behind", true);
 		
 		//Robot Self Test
 		SmartDashboard.putData("Robot Self Test", new RobotSelfTest());
@@ -113,8 +112,8 @@ public class Robot extends ImprovedRobot {
 
 		boolean leftSwitch = gmsg.charAt(0) == 'L';
 		boolean leftScale = gmsg.charAt(1) == 'L';
-		boolean scaleDisabled = SmartDashboard.getBoolean("Disable Scale Auto", false);
-		boolean behindSwitchDisabled = SmartDashboard.getBoolean("Disable Switch From Behind", false);
+		boolean scaleDisabled = SmartDashboard.getBoolean("Disable Scale Auto", true);
+		boolean behindSwitchDisabled = SmartDashboard.getBoolean("Disable Switch From Behind", true);
 			
 		boolean isSwitch = false;
 		start_pos = startPos.getSelected();
@@ -123,7 +122,7 @@ public class Robot extends ImprovedRobot {
 		if(robot_act == RobotAction.DO_NOTHING)//Do Nothing
 			autoCommand = new DoNothing();
 		else if(robot_act == RobotAction.BASELINE)//Baseline
-			autoCommand = new AltBaseline();
+			autoCommand = new Baseline();
 		else if(robot_act == RobotAction.SWITCH){//Priority Switch
 			if(start_pos == StartPos.LEFT) {
 				if(leftSwitch) {
@@ -135,7 +134,7 @@ public class Robot extends ImprovedRobot {
 					autoCommand = new AltLeftToRightSwitch();
 				}
 				else if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
-				else autoCommand = new AltBaseline();					
+				else autoCommand = new Baseline();					
 			}
 			else if(start_pos == StartPos.CENTER) {
 				isSwitch = true;
@@ -152,7 +151,7 @@ public class Robot extends ImprovedRobot {
 					autoCommand = new AltRightToLeftSwitch();
 				}
 				else if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
-				else autoCommand = new AltBaseline();					
+				else autoCommand = new Baseline();					
 			}
 		}
 		else {//Priority Scale
@@ -166,7 +165,7 @@ public class Robot extends ImprovedRobot {
 					isSwitch = true;
 					autoCommand = new AltLeftToRightSwitch();
 				}
-				else autoCommand = new AltBaseline();					
+				else autoCommand = new Baseline();					
 			}
 			else if(start_pos == StartPos.CENTER) {
 				isSwitch = true;
@@ -183,7 +182,7 @@ public class Robot extends ImprovedRobot {
 					isSwitch = true;
 					autoCommand = new AltRightToLeftSwitch();
 				}
-				else autoCommand = new AltBaseline();				
+				else autoCommand = new Baseline();				
 			}
 		}
 		
@@ -234,6 +233,7 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("DriveTrain Left Input", leftDriveMaster.get());
 		SmartDashboard.putNumber("DriveTrain Right Encoder Distance", dt.getRightEncoderDistanceTravelled());
 		SmartDashboard.putNumber("DriveTrain Right Input", rightDriveMaster.get());
+		SmartDashboard.putNumber("DriveTrain Distance", dt.getDistanceTravelled());
 		// DriveTrain Gyro
 		SmartDashboard.putNumber("NavX Heading", dt.getHeading());
 		// Limit Switch States

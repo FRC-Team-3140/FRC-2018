@@ -8,12 +8,14 @@ import main.commands.altermativeAuto.AltLeftToLeftSwitch;
 import main.commands.altermativeAuto.AltLeftToRightSwitch;
 import main.commands.altermativeAuto.AltRightToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
+import main.commands.altermativeAuto.TestAutoTurning;
 import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
 import main.commands.drivetrain.TurnToAngle;
 import main.commands.elevator.MoveToBottom;
 import main.commands.elevator.MoveToSwitch;
+import main.commands.elevator.MoveToTop;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.arm.SwitchArm;
@@ -32,16 +34,23 @@ public class OI extends ImprovedClass {
 		xbox.leftJoystickPress.whenPressed(new ShiftUp());
 		xbox.leftJoystickPress.whenReleased(new ShiftDown());
 		
+		//xbox.a.whenPressed(new DistanceDriveStraight(600));
 		/*
 		// auto testing calibration
 		xbox.a.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
 		xbox.x.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
 		xbox.y.whenPressed(new TimedDrive(timedDrivePercent, 2.5));
-	    */	
+	    */
 		
-		//xbox.x.whenPressed(new AltLeftToRightSwitch());
-		//xbox.b.whenPressed(new AltRightToLeftSwitch());
-
+		//xbox.x.whenPressed(new DistanceDriveStraight(84));
+		//xbox.b.whenPressed(new DistanceDriveStraight(-12));
+		xbox.a.whenPressed(new TurnToAngle(90));
+		xbox.y.whenPressed(new TestAutoTurning());
+		/*
+		xbox2.a.whenPressed(new MoveToBottom(1.5));
+		xbox2.b.whenPressed(new MoveToSwitch(1.5));
+		xbox2.y.whenPressed(new MoveToTop(3));
+	*/
 		//xbox.b.whenPressed(new TurnToAngle(90));
 		//xbox.a.whenPressed(new MoveToBottom(1.5));
 		//xbox.y.whenPressed(new MoveToSwitch(1.5));
