@@ -112,8 +112,8 @@ public class Robot extends ImprovedRobot {
 
 		boolean leftSwitch = gmsg.charAt(0) == 'L';
 		boolean leftScale = gmsg.charAt(1) == 'L';
-		boolean scaleDisabled = SmartDashboard.getBoolean("Disable Scale Auto", true);
-		boolean behindSwitchDisabled = SmartDashboard.getBoolean("Disable Switch From Behind", true);
+		boolean scaleDisabled = true;
+		boolean behindSwitchDisabled = false;
 			
 		boolean isSwitch = false;
 		start_pos = startPos.getSelected();
