@@ -9,7 +9,6 @@ import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TurnToAngle;
 import main.commands.elevator.MoveToBottom;
 import main.commands.elevator.MoveToSwitch;
-import main.commands.intake.SpinIn;
 import main.commands.intake.SpinOff;
 import main.commands.intake.SpinOut;
 import main.commands.pneumatics.arm.ArmClose;
