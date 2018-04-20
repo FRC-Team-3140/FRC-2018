@@ -112,7 +112,7 @@ public class Robot extends ImprovedRobot {
 
 		boolean leftSwitch = gmsg.charAt(0) == 'L';
 		boolean leftScale = gmsg.charAt(1) == 'L';
-		boolean scaleDisabled = true;
+		boolean scaleDisabled = false;
 		boolean behindSwitchDisabled = false;
 			
 		boolean isSwitch = false;

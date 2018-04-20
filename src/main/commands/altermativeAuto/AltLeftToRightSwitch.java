@@ -15,7 +15,7 @@ public class AltLeftToRightSwitch extends ImprovedCommandGroup {
 	public AltLeftToRightSwitch() {
 		// distance from start to scale  minus robot length
 		addSequential(new DistanceDriveStraight(222));
-		addSequential(new TurnToAngle(83));
+		addSequential(new TurnToAngle(80));
 		addSequential(new WaitCommand(0.25));
 		addSequential(new DistanceDriveStraight(175));
 		addSequential(new TurnToAngle(75));
