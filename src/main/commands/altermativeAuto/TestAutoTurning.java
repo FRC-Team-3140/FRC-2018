@@ -1,6 +1,5 @@
 package main.commands.altermativeAuto;
 
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import interfacesAndAbstracts.ImprovedCommandGroup;
 import main.commands.drivetrain.TurnToAngle;
 
