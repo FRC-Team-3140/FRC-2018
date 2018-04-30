@@ -14,13 +14,13 @@ import main.commands.pneumatics.tilt.TiltUp;
 public class AltLeftToRightSwitch extends ImprovedCommandGroup {
 	public AltLeftToRightSwitch() {
 		// distance from start to scale  minus robot length
-		addSequential(new DistanceDriveStraight(222));
-		addSequential(new TurnToAngle(80));
+		addSequential(new DistanceDriveStraight(219));
+		addSequential(new TurnToAngle(90));
 		addSequential(new WaitCommand(0.25));
 		addSequential(new DistanceDriveStraight(175));
-		addSequential(new TurnToAngle(75));
 		addSequential(new MoveToSwitch(1.5));
-		addSequential(new DistanceDriveStraight(18));
+		addSequential(new TurnToAngle(90), 2);
+		addSequential(new DistanceDriveStraight(18), 2);
 		//addSequential(new TiltDown());
 		addSequential(new WaitCommand(0.3));
 		addSequential(new TiltDown());

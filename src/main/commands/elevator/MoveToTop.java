@@ -21,7 +21,7 @@ public class MoveToTop extends TimedCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.el.isArmAtTop();
+        return Robot.el.isArmAtTop() && Robot.el.isIntakeAbovePosition(36);
     	//return false;
     }
 

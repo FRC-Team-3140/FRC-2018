@@ -75,7 +75,7 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putData("Auto Mode", autoChooser);
 		//Auto Features to Disable
 		SmartDashboard.putBoolean("Disable Scale Auto", true);
-		SmartDashboard.putBoolean("Disable Switch From Behind", true);
+		SmartDashboard.putBoolean("Disable Switch From Behind", false);
 		
 		//Robot Self Test
 		SmartDashboard.putData("Robot Self Test", new RobotSelfTest());
@@ -112,7 +112,7 @@ public class Robot extends ImprovedRobot {
 
 		boolean leftSwitch = gmsg.charAt(0) == 'L';
 		boolean leftScale = gmsg.charAt(1) == 'L';
-		boolean scaleDisabled = false;
+		boolean scaleDisabled = true;
 		boolean behindSwitchDisabled = false;
 			
 		boolean isSwitch = false;

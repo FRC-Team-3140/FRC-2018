@@ -18,11 +18,11 @@ public class AltRightToRightScale extends ImprovedCommandGroup {
 		addSequential(new TurnToAngle(-35));
 		addSequential(new WaitCommand(0.25));
 		addSequential(new DistanceDriveStraight(-3));
+		//addSequential(new TiltDown());
 		addSequential(new MoveToTop(3));
 		addSequential(new DistanceDriveStraight(4));
-		//addSequential(new TiltDown());
-		addSequential(new WaitCommand(0.3));
 		addSequential(new TiltDown());
+		addSequential(new WaitCommand(0.3));
 		addSequential(new ArmOpen());
 		addSequential(new WaitCommand(0.5));
 		addSequential(new TiltUp());

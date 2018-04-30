@@ -23,19 +23,19 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 		addSequential(new DistanceDriveStraight(60.5));
 		addSequential(new TurnToAngle(-90));
 		addSequential(new WaitCommand(0.25));*/
-		addSequential(new TurnToAngle(-35.75));
+		addSequential(new TurnToAngle(-32));
 		addParallel(new MoveToSwitch(1.5));
-		addSequential(new DistanceDriveStraight(90));//Might be 90 or less needs testing
+		addSequential(new DistanceDriveStraight(112));//Might be 90 or less needs testing
 		//addSequential(new DistanceDriveStraight(90.375));
 		addSequential(new DropCube());
 		addSequential(new WaitCommand(0.5));
 		addSequential(new DropCubeOff());
-		addSequential(new DistanceDriveStraight(-60));
+		addSequential(new DistanceDriveStraight(-48));
 		addParallel(new MoveToBottom(1.5));
 		addSequential(new ArmOpen());
 		addSequential(new TiltDown());
 		addSequential(new SpinOut());
-		addSequential(new TurnToAngle(50));
+		addSequential(new TurnToAngle(60));
 		//addSequential(new DistanceDriveStraight(38));
 		//addSequential(new TurnToAngle(90));
 		addSequential(new TimedDrive(-1, 0.75));
@@ -43,11 +43,11 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 		addSequential(new ArmClose());
 		addSequential(new WaitCommand(0.25));
 		addSequential(new TiltUp());
-		addSequential(new DistanceDriveStraight(-35));
+		addSequential(new DistanceDriveStraight(-40));
 		addSequential(new TurnToAngle(-75));
 		addSequential(new SpinOff());
 		addParallel(new MoveToSwitch(1.5));
-		addSequential(new DistanceDriveStraight(80));
+		addSequential(new DistanceDriveStraight(82), 1.5);
 		addSequential(new DropCube());
 		//addSequential(new WaitCommand(0.25));
 		//addSequential(new DropCubeOff());

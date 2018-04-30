@@ -105,9 +105,9 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		addSequential(new WaitCommand(0.5));
 		
 		//Drive Distance
-		addSequential(new DistanceDriveStraight(4));
+		addSequential(new DistanceDriveStraight(48));
 		addSequential(new WaitCommand(0.5));
-		addSequential(new DistanceDriveStraight(-4));
+		addSequential(new DistanceDriveStraight(-48));
 		
 		//Stop & Wait
 		addSequential(new DriveTrainOff());
@@ -118,9 +118,9 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		addSequential(new WaitCommand(0.5));
 		addSequential(new TurnToAngle(-45));
 		addSequential(new WaitCommand(0.5));
-		addSequential(new TurnToAngle(-90));
-		addSequential(new WaitCommand(0.5));
 		addSequential(new TurnToAngle(90));
+		addSequential(new WaitCommand(0.5));
+		addSequential(new TurnToAngle(-90));
 				
 		//Stop & Wait
 		addSequential(new DriveTrainOff());

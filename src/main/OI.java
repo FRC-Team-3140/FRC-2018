@@ -2,7 +2,9 @@ package main;
 
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
-
+import main.commands.elevator.MoveToTop;
+import main.commands.intake.SpinIn;
+import main.commands.intake.SpinOut;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.arm.SwitchArm;
@@ -20,6 +22,7 @@ public class OI extends ImprovedClass {
 		// Shoots out without elevator
 		xbox.leftJoystickPress.whenPressed(new ShiftUp());
 		xbox.leftJoystickPress.whenReleased(new ShiftDown());
+		//xbox.a.whenPressed(new SpinIn());
 		
 		//xbox.a.whenPressed(new DistanceDriveStraight(600));
 		/*
