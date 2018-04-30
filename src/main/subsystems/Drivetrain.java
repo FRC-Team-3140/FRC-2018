@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import Util.ChezyMath;
 import Util.DriveHelper;
+import Util.EncoderHelper;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
@@ -13,6 +14,7 @@ import main.Robot;
 import main.commands.drivetrain.Drive;
 
 public class Drivetrain extends ImprovedSubsystem  {
+	private static int slotIdx = 0;
 	private static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
 	
 	//TELEOP DRIVING
@@ -36,6 +38,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		zeroSensors();
 		pushPIDGainsToSmartDashboard();
 		pushNormallyUnusedToSmartDashboard();
+		setPIDDefaults();
 	}
 	
 	// DRIVE FOR TELEOP
@@ -117,6 +120,10 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	public void turnOff() {
 		tankDrive(0.0, 0.0, false);
+	}
+	
+	public void driveStraightPID(double inches) {
+		
 	}
 	
 	/***********************
@@ -201,6 +208,20 @@ public class Drivetrain extends ImprovedSubsystem  {
 		rightDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
 	}
 	
+	private void setPIDDefaults() {
+		leftDriveMaster.config_kP(slotIdx, 0, 10);		
+		leftDriveMaster.config_kI(slotIdx, 0, 10);
+		leftDriveMaster.config_kD(slotIdx, 0, 10);
+		leftDriveMaster.config_kF(slotIdx, 0, 10);
+		leftDriveMaster.selectProfileSlot(slotIdx, 0);
+		
+		rightDriveMaster.config_kP(slotIdx, 0, 10);
+		rightDriveMaster.config_kI(slotIdx, 0, 10);
+		rightDriveMaster.config_kD(slotIdx, 0, 10);
+		rightDriveMaster.config_kF(slotIdx, 0, 10);
+		rightDriveMaster.selectProfileSlot(slotIdx, 0);
+	}
+	
 	public void setTalonDefaults() {
 		reverseTalons(false);
 		setBrakeMode(BRAKE_MODE);
@@ -228,7 +249,6 @@ public class Drivetrain extends ImprovedSubsystem  {
 	// Gets the number of revolutions of the encoder
 	private double getLeftEncoderRevs() {
 		return leftDriveMaster.getSelectedSensorPosition(pidIdx) / quadConversionFactor;
-
 	}
 	
 	// Returns the distance traveled in native encoder units
@@ -248,7 +268,6 @@ public class Drivetrain extends ImprovedSubsystem  {
 				return getLeftEncoderRevs() * 2 * Math.PI * competitonBotLeftWheelRadius  / highGearDriveTrainGearRatio;
 			else
 				return getLeftEncoderRevs() * 2 * Math.PI * practiceBotLeftWheelRadius / highGearDriveTrainGearRatio;
-		
 	}
 	
 	public double getRightEncoderVelocity() {
@@ -286,6 +305,10 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public void zeroEncoders() {
 		leftDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
 		rightDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
+	}
+	
+	private int distanceToTicks(double distanceInches) {
+		return EncoderHelper.inchesToEncoderTicks(distanceInches, spindleCircum, quadConversionFactor);
 	}
 	
 	public boolean isDriveTrainAtDistance(double distance) {

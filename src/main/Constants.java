@@ -34,6 +34,7 @@ public interface Constants {
 	public final double practiceBotRightWheelRadius = 2;//Update with real measurements
 	public final double competitonBotLeftWheelRadius = 2;//Update with real measurements
 	public final double competitonBotRightWheelRadius = 2;//Update with real measurements	
+	public final double wheelCircum = 2 * practiceBotLeftWheelRadius * Math.PI;
 	public final double testVoltage = 8.0;//Subject to change
 	
 	// VP Integrated Encoder

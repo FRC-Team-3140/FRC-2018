@@ -1,6 +1,9 @@
 package main.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import Util.DriveHelper;
+import Util.EncoderHelper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.elevator.MoveWithJoystick;
@@ -8,10 +11,16 @@ import main.commands.elevator.MoveWithJoystick;
 public class Elevator extends ImprovedSubsystem {
 	private DriveHelper driveHelper = new DriveHelper(7.5);
 	
+	private int slotIdx = 0;
+	private double kP = 0;
+	private double kI = 0;
+	private double kD = 0;
+	
 	public Elevator() {
 		setElevatorDefaults();
 		configSensors();
 		zeroSensors();
+		setPIDDefaults();
 	}
 	
 	/*************************
@@ -29,6 +38,17 @@ public class Elevator extends ImprovedSubsystem {
 	
 	private void setCtrlMode() {
 		elevatorSlave.follow(elevatorMaster);
+	}
+	
+	private void setPIDDefaults() {
+		//elevatorMaster.configClosedloopRamp(0.2, timeout); use this??
+		
+		elevatorMaster.configAllowableClosedloopError(slotIdx, 0, timeout);
+		elevatorMaster.config_kF(slotIdx, 0, timeout);
+		elevatorMaster.config_kP(slotIdx, kP, timeout);
+		elevatorMaster.config_kI(slotIdx, kI, timeout);
+		elevatorMaster.config_kD(slotIdx, kD, timeout);
+		elevatorMaster.selectProfileSlot(slotIdx, pidIdx);
 	}
 	
 	public void setVoltageComp(boolean set, double voltage, int timeout) {
@@ -127,10 +147,16 @@ public class Elevator extends ImprovedSubsystem {
 		return (elevatorSlave.getMotorOutputVoltage());
 	}
 		
+	private int distanceToTicks(double distanceInches) {
+		return (int) (EncoderHelper.inchesToEncoderTicks(distanceInches, spindleCircum, quadConversionFactor) * elevatorGearRatio / 2);
+	}
 	/********************
 	 * MOVEMENT METHODS *
 	 ********************/
-		
+	public void movePID(double distanceInches) {
+		elevatorMaster.set(ControlMode.Position, distanceToTicks(distanceInches));
+	}
+			
 	public void moveWithJoystick(double throttle) {
 		move(driveHelper.handleDeadband(throttle, elevatorDeadband));
 	}
