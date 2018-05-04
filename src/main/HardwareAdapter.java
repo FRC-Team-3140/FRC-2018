@@ -19,6 +19,5 @@ public interface HardwareAdapter extends Constants{
 	public static WPI_TalonSRX rightDriveSlave1 = new WPI_TalonSRX(RIGHT_Drive_Slave1);
 	 
 	//PNEUMATICS
-	public static DoubleSolenoid shifter = new DoubleSolenoid(PCM_Port1, SHIFTER_EXT, SHIFTER_RET);
 	public static Compressor comp = new Compressor(PCM_Port1);
 }
