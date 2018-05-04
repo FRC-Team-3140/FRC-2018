@@ -28,8 +28,6 @@ public interface Constants {
 	//ROBOT BIAS TEST CONSTANTS
 	public final double practiceBotLeftWheelRadius = 2;//Update with real measurements
 	public final double practiceBotRightWheelRadius = 2;//Update with real measurements
-	public final double competitonBotLeftWheelRadius = 2;//Update with real measurements
-	public final double competitonBotRightWheelRadius = 2;//Update with real measurements	
 	public final double testVoltage = 8.0;//Subject to change
 	
 	// VP Integrated Encoder

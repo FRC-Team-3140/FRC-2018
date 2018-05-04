@@ -32,10 +32,10 @@ public class Drivetrain extends ImprovedSubsystem  {
 	    }
 		
 		setTalonDefaults();
-		configTalonEncoders();
-		zeroSensors();
-		pushPIDGainsToSmartDashboard();
-		pushNormallyUnusedToSmartDashboard();
+		//configTalonEncoders();
+		//zeroSensors();
+		//pushPIDGainsToSmartDashboard();
+		//pushNormallyUnusedToSmartDashboard();
 	}
 	
 	// DRIVE FOR TELEOP
@@ -108,11 +108,6 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	public void tankDrive(double left, double right, boolean squaredInput) {
 		driveTrain.tankDrive(left, right, squaredInput);
-	}
-	
-	public void timedTurn(TurnMode mode, double throttle) {
-		if (mode == TurnMode.Left) tankDrive(-throttle, throttle, false);
-		if (mode == TurnMode.Right) tankDrive(throttle, -throttle, false);
 	}
 	
 	public void turnOff() {
@@ -235,22 +230,12 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public double getLeftEncoderTicksTravelled() {
 		return leftDriveMaster.getSelectedSensorPosition(pidIdx);
 	}
-	
+
 	// Get the distance the elevator has traveled in inches
 	public double getLeftEncoderDistanceTravelled() {
-		if(Robot.pn.isLowGear())
-			if(isCompetitionRobot)
-				return getLeftEncoderRevs() * 2 * Math.PI * competitonBotLeftWheelRadius  / lowGearDriveTrainGearRatio;
-			else
-				return getLeftEncoderRevs() * 2 * Math.PI * practiceBotLeftWheelRadius / lowGearDriveTrainGearRatio;
-		else
-			if(isCompetitionRobot)
-				return getLeftEncoderRevs() * 2 * Math.PI * competitonBotLeftWheelRadius  / highGearDriveTrainGearRatio;
-			else
-				return getLeftEncoderRevs() * 2 * Math.PI * practiceBotLeftWheelRadius / highGearDriveTrainGearRatio;
-		
+		return getLeftEncoderRevs() * 2 * Math.PI * practiceBotLeftWheelRadius / lowGearDriveTrainGearRatio;
 	}
-	
+
 	public double getRightEncoderVelocity() {
 		return rightDriveMaster.getSelectedSensorVelocity(pidIdx);
 	}
@@ -271,18 +256,9 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	// Get the distance the elevator has traveled in inches
 	public double getRightEncoderDistanceTravelled() {
-		if(Robot.pn.isLowGear())
-			if(isCompetitionRobot)
-				return getRightEncoderRevs() * 2 * Math.PI * competitonBotRightWheelRadius / lowGearDriveTrainGearRatio;
-			else
-				return getRightEncoderRevs() * 2 * Math.PI * practiceBotRightWheelRadius / lowGearDriveTrainGearRatio;
-		else
-			if(isCompetitionRobot)
-				return getRightEncoderRevs() * 2 * Math.PI * competitonBotRightWheelRadius / highGearDriveTrainGearRatio;
-			else
-				return getRightEncoderRevs() * 2 * Math.PI * practiceBotRightWheelRadius / highGearDriveTrainGearRatio;
+		return getRightEncoderRevs() * 2 * Math.PI * practiceBotRightWheelRadius / lowGearDriveTrainGearRatio;
 	}
-	
+
 	public void zeroEncoders() {
 		leftDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
 		rightDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
