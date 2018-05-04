@@ -9,7 +9,7 @@ import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
 public class Robot extends ImprovedRobot {
 	public static Drivetrain dt;
-	public static DriverCamera dc;
+	//public static DriverCamera dc;
 	public static OI oi;
 	
 	@Override
@@ -17,9 +17,7 @@ public class Robot extends ImprovedRobot {
 		// OI must be at end
 		dt = new Drivetrain();
 		oi = new OI();
-		dc = new DriverCamera();
-		//Robot Self Test
-		SmartDashboard.putData("Robot Drive Train Test", new RobotDriveTrainTest());
+		//dc = new DriverCamera();
 	}
 	
 	@Override
@@ -64,8 +62,6 @@ public class Robot extends ImprovedRobot {
 		//SmartDashboard.putNumber("Free memory", runtime.freeMemory());
 		//SmartDashboard.putNumber("Total memory", runtime.totalMemory());
 		//SmartDashboard.putData(Scheduler.getInstance());
-		//Pressure
-		SmartDashboard.putNumber("Pressure: ", HardwareAdapter.analogPressureSensor1.value());
 		// DriveTrain Encoders
 		SmartDashboard.putNumber("DriveTrain Left Encoder Distance", dt.getLeftEncoderDistanceTravelled());
 		SmartDashboard.putNumber("DriveTrain Left Input", leftDriveMaster.get());
