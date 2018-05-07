@@ -36,17 +36,11 @@ public class Drivetrain extends ImprovedSubsystem  {
 		//pushPIDGainsToSmartDashboard();
 		//pushNormallyUnusedToSmartDashboard();
 	}
-	
+
 	// DRIVE FOR TELEOP
 	public void driveVelocity(double throttle, double heading) {
-		if (isCompetitionRobot) {
-			driveTrain.arcadeDrive(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, throttleDeadband)),
-					driveHelper.handleOverPower(driveHelper.handleDeadband(-heading, headingDeadband)));
-		}
-		else {
-			driveTrain.arcadeDrive(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, throttleDeadband)),
-					driveHelper.handleOverPower(driveHelper.handleDeadband(-heading, headingDeadband)));
-		}
+		driveTrain.arcadeDrive(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, throttleDeadband)),
+				driveHelper.handleOverPower(driveHelper.handleDeadband(heading, headingDeadband)));
 	}
 
 	//Drive for playing back
@@ -197,7 +191,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	public void setTalonDefaults() {
 		reverseTalons(false);
-		setBrakeMode(BRAKE_MODE);
+		setBrakeMode(COAST_MODE);
 		setCtrlMode();
 		setVoltageComp(true, voltageCompensationVoltage, timeout);
 	}

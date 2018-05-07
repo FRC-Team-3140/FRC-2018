@@ -48,6 +48,7 @@ public interface Constants {
 	public final ControlMode SLAVE_MODE = ControlMode.Follower;
 	public final ControlMode PERCENT_VBUS_MODE = ControlMode.PercentOutput;
 	public final NeutralMode BRAKE_MODE = NeutralMode.Brake;
+	public final NeutralMode COAST_MODE = NeutralMode.Coast;
 
 	public final double driveTrainDistanceTolerance = 1;
 	public final double driveTrainAngleTolerance = 2.5;
@@ -68,8 +69,6 @@ public interface Constants {
 	public final int LEFT_Drive_Slave1 = 6;
 	public final int RIGHT_Drive_Master = 12;
 	public final int RIGHT_Drive_Slave1 = 5;
-	public final int LEFT_Drive_Slave2 = 9;
-	public final int RIGHT_Drive_Slave2 = 4;
 	
 	// PNEUMATICS CONTROL MODULE
 	public final int PCM_Port1 = 1;
