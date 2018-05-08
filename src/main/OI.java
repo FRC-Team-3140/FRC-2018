@@ -2,7 +2,7 @@ package main;
 
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
-
+import main.commands.elevator.MovePID;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.arm.SwitchArm;
@@ -47,6 +47,9 @@ public class OI extends ImprovedClass {
 		
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
+		
+		xbox2.x.whileHeld(new MovePID(switchHeight));
+		xbox2.a.whileHeld(new MovePID(0));
 	}
 	
 	public static XboxController getXbox() {

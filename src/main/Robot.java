@@ -241,6 +241,8 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putBoolean("First Stage Top", !stage1TopSwitch.get());
 		// Elevator encoder
 		SmartDashboard.putNumber("Elevator encoder inches", el.getDistanceTravelled());
+		SmartDashboard.putNumber("is this number right?", el.distanceToTicks(el.getTicksTravelled()));
+		SmartDashboard.putNumber("Elevator encoder ticks", el.getTicksTravelled());
 		SmartDashboard.putNumber("Elevator Input", elevatorMaster.get());
 	}
 }

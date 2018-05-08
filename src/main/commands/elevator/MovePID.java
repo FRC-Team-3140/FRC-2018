@@ -18,7 +18,8 @@ public class MovePID extends ImprovedCommand {
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.el.isIntakeAtPos(inches);
+		//return Robot.el.isIntakeAtPos(inches);
+		return true;
 	}
 	
 	protected void end() {

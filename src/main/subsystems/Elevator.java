@@ -12,7 +12,7 @@ public class Elevator extends ImprovedSubsystem {
 	private DriveHelper driveHelper = new DriveHelper(7.5);
 	
 	private int slotIdx = 0;
-	private double kP = 0;
+	private double kP = 3.5;
 	private double kI = 0;
 	private double kD = 0;
 	
@@ -147,7 +147,7 @@ public class Elevator extends ImprovedSubsystem {
 		return (elevatorSlave.getMotorOutputVoltage());
 	}
 		
-	private int distanceToTicks(double distanceInches) {
+	public int distanceToTicks(double distanceInches) {
 		return (int) (EncoderHelper.inchesToEncoderTicks(distanceInches, spindleCircum, quadConversionFactor) * elevatorGearRatio / 2);
 	}
 	/********************
