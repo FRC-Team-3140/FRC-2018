@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import interfacesAndAbstracts.ImprovedCommandGroup;
 import main.commands.commandGroups.cubeManipulator.DropCube;
 import main.commands.commandGroups.cubeManipulator.DropCubeOff;
-import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TurnToAngle;
 import main.commands.elevator.MoveToBottom;
@@ -18,19 +17,19 @@ import main.commands.pneumatics.tilt.TiltUp;
 
 public class AltCenterToRightSwitch extends ImprovedCommandGroup {
 	public AltCenterToRightSwitch() {
-		addSequential(new DistanceDriveStraight(30.375)); //(Break away from wall so there is no resistance on the first turn)
+//		addSequential(new DistanceDriveStraight(30.375)); //(Break away from wall so there is no resistance on the first turn)
 		/*addSequential(new TurnToAngle(90));
 		addSequential(new DistanceDriveStraight(60.5));
 		addSequential(new TurnToAngle(-90));
 		addSequential(new WaitCommand(0.25));*/
 		addSequential(new TurnToAngle(30));
 		addParallel(new MoveToSwitch(1.5));
-		addSequential(new DistanceDriveStraight(98));
+//		addSequential(new DistanceDriveStraight(98));
 		//addSequential(new DistanceDriveStraight(90.375));
 		addSequential(new DropCube());
 		addSequential(new WaitCommand(0.5));
 		addSequential(new DropCubeOff());
-		addSequential(new DistanceDriveStraight(-60));
+//		addSequential(new DistanceDriveStraight(-60));
 		addParallel(new MoveToBottom(1.5));
 		addSequential(new ArmOpen());
 		addSequential(new TiltDown());
@@ -43,11 +42,11 @@ public class AltCenterToRightSwitch extends ImprovedCommandGroup {
 		addSequential(new ArmClose());
 		addSequential(new WaitCommand(0.25));
 		addSequential(new TiltUp());
-		addSequential(new DistanceDriveStraight(-35));
+//		addSequential(new DistanceDriveStraight(-35));
 		addSequential(new TurnToAngle(65));
 		addSequential(new SpinOff());
 		addParallel(new MoveToSwitch(1.5));
-		addSequential(new DistanceDriveStraight(80));
+//		addSequential(new DistanceDriveStraight(80));
 		addSequential(new DropCube());
 		//addSequential(new WaitCommand(0.25));
 		//addSequential(new DropCubeOff());
