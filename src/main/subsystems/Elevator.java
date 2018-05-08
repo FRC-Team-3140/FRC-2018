@@ -12,9 +12,9 @@ public class Elevator extends ImprovedSubsystem {
 	private DriveHelper driveHelper = new DriveHelper(7.5);
 	
 	private int slotIdx = 0;
-	private double kP = 3.5;
+	private double kP = 9.91;
 	private double kI = 0;
-	private double kD = 0;
+	private double kD = 32.5;
 	
 	public Elevator() {
 		setElevatorDefaults();

@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedRobot;
-import main.commands.auto.Baseline;
 import main.commands.altermativeAuto.AltCenterToLeftSwitch;
 import main.commands.altermativeAuto.AltCenterToRightSwitch;
 import main.commands.altermativeAuto.AltLeftToLeftScale;
@@ -18,9 +17,6 @@ import main.commands.altermativeAuto.AltLeftToRightSwitch;
 import main.commands.altermativeAuto.AltRightToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightScale;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
-import main.commands.auto.DoNothing;
-import main.commands.auto.ResetForTeleop;
-import main.commands.drivetrain.TimedTankDriveStraight;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
 import main.subsystems.Elevator;
@@ -44,12 +40,12 @@ public class Robot extends ImprovedRobot {
 	private static SendableChooser<StartPos> startPos;
 	private static Command autoCommand;
 	
-	class AutoCommandGroup extends CommandGroup {
+/*	class AutoCommandGroup extends CommandGroup {
 		public AutoCommandGroup(Command auto, boolean reset, boolean moveDown) {
 			addSequential(auto);
 			if(reset) addSequential(new ResetForTeleop(moveDown));
 		}
-	}
+	}*/
 	
 	@Override
 	public void robotInit() {
@@ -80,7 +76,6 @@ public class Robot extends ImprovedRobot {
 		//Robot Self Test
 		SmartDashboard.putData("Robot Self Test", new RobotSelfTest());
 		SmartDashboard.putData("Robot Drive Train Test", new RobotDriveTrainTest());
-		SmartDashboard.putData("Robot Drive Straight Test", new TimedTankDriveStraight(1, 1, 5));
 	}
 	
 	@Override
@@ -96,7 +91,7 @@ public class Robot extends ImprovedRobot {
 
 	@Override
 	public void autonomousInit() {		
-		String gmsg = DriverStation.getInstance().getGameSpecificMessage();
+		/*String gmsg = DriverStation.getInstance().getGameSpecificMessage();
 		while (gmsg == null || gmsg.length() != 3) {
 			gmsg = DriverStation.getInstance().getGameSpecificMessage();
 			try {
@@ -189,7 +184,7 @@ public class Robot extends ImprovedRobot {
 		if(autoCommand != null)
 			(autoCommand = new AutoCommandGroup(
 					autoCommand, !(autoCommand instanceof Baseline || 
-					autoCommand instanceof DoNothing), isSwitch)).start();		
+					autoCommand instanceof DoNothing), isSwitch)).start();*/
 	}
 	
 	@Override

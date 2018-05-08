@@ -2,7 +2,6 @@ package main;
 
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import interfacesAndAbstracts.ImprovedCommandGroup;
-import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.DriveTrainOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
@@ -103,12 +102,7 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		//Stop & Wait
 		addSequential(new DriveTrainOff());
 		addSequential(new WaitCommand(0.5));
-		
-		//Drive Distance
-		addSequential(new DistanceDriveStraight(4));
-		addSequential(new WaitCommand(0.5));
-		addSequential(new DistanceDriveStraight(-4));
-		
+
 		//Stop & Wait
 		addSequential(new DriveTrainOff());
 		addSequential(new WaitCommand(0.5));

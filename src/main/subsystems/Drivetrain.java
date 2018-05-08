@@ -1,5 +1,6 @@
 package main.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;//NavX import
 import edu.wpi.first.wpilibj.DriverStation;
@@ -15,6 +16,18 @@ import main.commands.drivetrain.Drive;
 
 public class Drivetrain extends ImprovedSubsystem  {
 	private static int slotIdx = 0;
+	private static double kPHeading = 0;
+	private static double kIHeading = 0;
+	private static double kDHeading = 0; //push to sdb
+	
+	private static double kPLeft = 0;
+	private static double kILeft = 0;
+	private static double kDLeft = 0;
+	
+	private static double kPRight = 0;
+	private static double kIRight = 0;	
+	private static double kDRight = 0;
+	
 	private static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
 	
 	//TELEOP DRIVING
@@ -80,35 +93,6 @@ public class Drivetrain extends ImprovedSubsystem  {
         SmartDashboard.putNumber("Heading PID Correction To Right Drive", 0.0);
 	}
 	
-	public void driveWithGyroCorrection(double throttleLeft, double throttleRight, double targetHeading) {
-		double headingGain = SmartDashboard.getNumber("Heading: PGain", straightDriveKp);
-		
-        //Compute Turning, Well Built FRC Robots drive in virtually a straight line so no need
-        //For PID just a simple proportional value to keep it on track
-        double angleDiff = ChezyMath.getDifferenceInAngleDegrees(targetHeading, getHeading());
-        double turn = headingGain * angleDiff;
-        
-        SmartDashboard.putNumber("Heading: Target", targetHeading);
-        SmartDashboard.putNumber("Heading: Error", angleDiff);
-                
-        if(!invertPIDHeadingCorrection) {
-        	SmartDashboard.putNumber("Heading PID Correction to Left Drive", turn);
-        	SmartDashboard.putNumber("Heading PID Correction To Right Drive", -turn);
-        
-        	//Drive!!!
-        	tankDrive(driveHelper.handleOverPower(throttleLeft + turn),
-        			driveHelper.handleOverPower(throttleRight - turn), false);
-        }
-        else {
-        	SmartDashboard.putNumber("Heading PID Correction to Left Drive", -turn);
-        	SmartDashboard.putNumber("Heading PID Correction To Right Drive", turn);
-        
-        	//Drive!!!
-        	tankDrive(driveHelper.handleOverPower(throttleLeft - turn),
-        			driveHelper.handleOverPower(throttleRight + turn), false);
-        }
-	}
-	
 	public void tankDrive(double left, double right, boolean squaredInput) {
 		driveTrain.tankDrive(left, right, squaredInput);
 	}
@@ -122,8 +106,13 @@ public class Drivetrain extends ImprovedSubsystem  {
 		tankDrive(0.0, 0.0, false);
 	}
 	
-	public void driveStraightPID(double inches) {
-		
+	public void driveStraightPID(double inches) { //add gyro correction
+		int ticks = distanceToTicks(inches);
+//		double heading = getHeading();
+//		double integral = 
+//		double gyroCorrection = heading * kPHeading;
+		rightDriveMaster.set(ControlMode.Position, ticks);
+		leftDriveMaster.set(ControlMode.Position, ticks);
 	}
 	
 	/***********************
@@ -220,6 +209,9 @@ public class Drivetrain extends ImprovedSubsystem  {
 		rightDriveMaster.config_kD(slotIdx, 0, 10);
 		rightDriveMaster.config_kF(slotIdx, 0, 10);
 		rightDriveMaster.selectProfileSlot(slotIdx, 0);
+		
+		leftDriveMaster.configAllowableClosedloopError(slotIdx, 0, timeout);
+		rightDriveMaster.configAllowableClosedloopError(slotIdx, 0, timeout);
 	}
 	
 	public void setTalonDefaults() {
@@ -308,7 +300,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	private int distanceToTicks(double distanceInches) {
-		return EncoderHelper.inchesToEncoderTicks(distanceInches, spindleCircum, quadConversionFactor);
+		return (int) Math.round(EncoderHelper.inchesToEncoderTicks(distanceInches, spindleCircum, quadConversionFactor) * lowGearDriveTrainGearRatio);
 	}
 	
 	public boolean isDriveTrainAtDistance(double distance) {
