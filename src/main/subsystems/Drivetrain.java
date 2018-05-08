@@ -1,6 +1,7 @@
 package main.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;//NavX import
 import edu.wpi.first.wpilibj.DriverStation;
@@ -32,6 +33,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private static double lastHeadingIntegral = 0;
 	private static double lastHeading = 0;
 	private static double lastTime = 0;
+	private boolean okayToPID = false;
 	
 	private static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
 	
@@ -113,23 +115,44 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public void turnOff() {
 		tankDrive(0.0, 0.0, false);
 	}
-	
-	public void driveStraightPID(double inches) { //add gyro correction
+
+	public void driveStraightPID(double inches) { // add gyro correction
 		int ticks = distanceToTicks(inches);
-		double thisTime = Timer.getFPGATimestamp();
-		double timeElapsed = thisTime - lastTime;
-		
-		double heading = getHeading();
-		double derivative = (heading - lastHeading) / timeElapsed;
-		double integral = lastHeadingIntegral + (heading * timeElapsed);
-		double gyroCorrection = heading * kPHeading + integral * kIHeading + derivative * kDHeading;
-		
-		rightDriveMaster.set(ControlMode.Position, ticks);
-		leftDriveMaster.set(ControlMode.Position, ticks);
-		
-		lastHeading = heading;
-		lastHeadingIntegral = integral;
-		lastTime = thisTime;
+
+		if(okayToPID) {
+			double thisTime = Timer.getFPGATimestamp();
+			double timeElapsed = thisTime - lastTime;
+
+			double heading = getHeading();
+			double derivative = (heading - lastHeading) / timeElapsed;
+			double integral = lastHeadingIntegral + (heading * timeElapsed);
+			double gyroCorrection = heading * kPHeading + integral * kIHeading + derivative * kDHeading;
+
+			rightDriveMaster.set(ControlMode.Position, ticks, DemandType.ArbitraryFeedForward, gyroCorrection);
+			leftDriveMaster.set(ControlMode.Position, ticks, DemandType.ArbitraryFeedForward, -gyroCorrection);
+
+			lastHeading = heading;
+			lastHeadingIntegral = integral;
+			lastTime = thisTime;
+		}
+		else {
+			rightDriveMaster.set(0);
+			leftDriveMaster.set(0);
+		}
+	}
+	
+	public void drivePID(double inches) {
+		int ticks = distanceToTicks(inches);
+
+		if(okayToPID) {
+			leftDriveMaster.set(ControlMode.Position, ticks);
+			rightDriveMaster.set(ControlMode.Position, ticks);
+		}
+		else turnOff();
+	}
+	
+	public void okayToPID(boolean okayToPID) {
+		this.okayToPID = okayToPID;
 	}
 	
 	/***********************

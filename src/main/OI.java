@@ -2,6 +2,9 @@ package main;
 
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
+import main.commands.drivetrain.DriveDistancePID;
+import main.commands.drivetrain.EndPID;
+import main.commands.drivetrain.InitPID;
 import main.commands.elevator.MovePID;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
@@ -50,6 +53,9 @@ public class OI extends ImprovedClass {
 		
 		xbox2.x.whileHeld(new MovePID(switchHeight));
 		xbox2.a.whileHeld(new MovePID(0));
+		xbox2.y.whenPressed(new InitPID());
+		xbox2.y.whileHeld(new DriveDistancePID(120));
+		xbox2.y.whenReleased(new EndPID());
 	}
 	
 	public static XboxController getXbox() {
