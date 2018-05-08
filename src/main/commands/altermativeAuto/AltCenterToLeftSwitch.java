@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import interfacesAndAbstracts.ImprovedCommandGroup;
 import main.commands.commandGroups.cubeManipulator.DropCube;
 import main.commands.commandGroups.cubeManipulator.DropCubeOff;
+import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TurnToAngle;
 import main.commands.elevator.MoveToBottom;
@@ -16,7 +17,7 @@ import main.commands.pneumatics.tilt.TiltDown;
 import main.commands.pneumatics.tilt.TiltUp;
 
 public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
-	public AltCenterToLeftSwitch() {/*
+	public AltCenterToLeftSwitch() {
 		addSequential(new DistanceDriveStraight(30.375)); //(Break away from wall so there is no resistance on the first turn)
 		addSequential(new TurnToAngle(-35.75));
 		addParallel(new MoveToSwitch(1.5));
@@ -47,6 +48,6 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 		//addSequential(new WaitCommand(0.25));
 		//addSequential(new DropCubeOff());
 		//addSequential(new WaitCommand(0.2));
-		*/
+		
 	}
 }

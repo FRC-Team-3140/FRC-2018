@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;//NavX import
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 import Util.ChezyMath;
 import Util.DriveHelper;
 import Util.EncoderHelper;
@@ -27,6 +28,10 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private static double kPRight = 0;
 	private static double kIRight = 0;	
 	private static double kDRight = 0;
+	
+	private static double lastHeadingIntegral = 0;
+	private static double lastHeading = 0;
+	private static double lastTime = 0;
 	
 	private static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
 	
@@ -82,7 +87,10 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	//Push Default Gains To SmartDashboard
 	private void pushPIDGainsToSmartDashboard() {
-		SmartDashboard.putNumber("Heading: PGain", straightDriveKp);
+		//SmartDashboard.putNumber("Heading: PGain", straightDriveKp);
+		SmartDashboard.putNumber("Heading: kP", kPHeading);
+		SmartDashboard.putNumber("Heading: kI", kIHeading);
+		SmartDashboard.putNumber("Heading: kD", kDHeading);
 	}
 	
 	//Post All Other Normally Empty Strings To SmarDashboard
@@ -108,11 +116,20 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	public void driveStraightPID(double inches) { //add gyro correction
 		int ticks = distanceToTicks(inches);
-//		double heading = getHeading();
-//		double integral = 
-//		double gyroCorrection = heading * kPHeading;
+		double thisTime = Timer.getFPGATimestamp();
+		double timeElapsed = thisTime - lastTime;
+		
+		double heading = getHeading();
+		double derivative = (heading - lastHeading) / timeElapsed;
+		double integral = lastHeadingIntegral + (heading * timeElapsed);
+		double gyroCorrection = heading * kPHeading + integral * kIHeading + derivative * kDHeading;
+		
 		rightDriveMaster.set(ControlMode.Position, ticks);
 		leftDriveMaster.set(ControlMode.Position, ticks);
+		
+		lastHeading = heading;
+		lastHeadingIntegral = integral;
+		lastTime = thisTime;
 	}
 	
 	/***********************
@@ -137,6 +154,12 @@ public class Drivetrain extends ImprovedSubsystem  {
 	/*************************
 	 * DRIVE SUPPORT METHODS *
 	 *************************/
+	public void resetForPID() {
+		lastHeading = 0;
+		lastHeadingIntegral = 0;
+		lastTime = 0;
+	}
+	
 	private void reverseTalons(boolean isInverted) {
 		leftDriveMaster.setInverted(isInverted);
 		rightDriveMaster.setInverted(isInverted);
@@ -198,15 +221,15 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	private void setPIDDefaults() {
-		leftDriveMaster.config_kP(slotIdx, 0, 10);		
-		leftDriveMaster.config_kI(slotIdx, 0, 10);
-		leftDriveMaster.config_kD(slotIdx, 0, 10);
+		leftDriveMaster.config_kP(slotIdx, kPLeft, 10);		
+		leftDriveMaster.config_kI(slotIdx, kILeft, 10);
+		leftDriveMaster.config_kD(slotIdx, kDLeft, 10);
 		leftDriveMaster.config_kF(slotIdx, 0, 10);
 		leftDriveMaster.selectProfileSlot(slotIdx, 0);
 		
-		rightDriveMaster.config_kP(slotIdx, 0, 10);
-		rightDriveMaster.config_kI(slotIdx, 0, 10);
-		rightDriveMaster.config_kD(slotIdx, 0, 10);
+		rightDriveMaster.config_kP(slotIdx, kPRight, 10);
+		rightDriveMaster.config_kI(slotIdx, kIRight, 10);
+		rightDriveMaster.config_kD(slotIdx, kDRight, 10);
 		rightDriveMaster.config_kF(slotIdx, 0, 10);
 		rightDriveMaster.selectProfileSlot(slotIdx, 0);
 		
