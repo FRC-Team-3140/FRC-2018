@@ -8,6 +8,7 @@ import main.commands.drivetrain.DriveRightPID;
 import main.commands.drivetrain.EndPID;
 import main.commands.drivetrain.InitPID;
 import main.commands.elevator.MovePID;
+import main.commands.elevator.MoveVelocityPID;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.arm.SwitchArm;
@@ -52,6 +53,7 @@ public class OI extends ImprovedClass {
 		xbox.y.whileHeld(new DriveRightPID(12)); 
 		xbox.a.whileHeld(new DriveLeftPID(12));
 //		xbox2.y.whenReleased(new EndPID());
+		xbox2.b.whileHeld(new MoveVelocityPID(2));
 	}
 	
 	public static XboxController getXbox() {

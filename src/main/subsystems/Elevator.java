@@ -156,6 +156,15 @@ public class Elevator extends ImprovedSubsystem {
 	public void movePID(double distanceInches) {
 		elevatorMaster.set(ControlMode.Position, distanceToTicks(distanceInches));
 	}
+	
+	public void moveVelocityPID(double velocityInchesPerSecond) {
+		double velocityTicksPer100Ms = distanceToTicks(velocityInchesPerSecond) * 10;
+		elevatorMaster.set(ControlMode.Velocity, velocityTicksPer100Ms);
+	}
+	
+	public void moveTrapezoidalProfile(double distance) {
+		
+	}
 			
 	public void moveWithJoystick(double throttle) {
 		move(driveHelper.handleDeadband(throttle, elevatorDeadband));
