@@ -14,6 +14,24 @@ public interface Constants {
 	 *************/
 	public final boolean isCompetitionRobot = true;
 	
+	// FILE OUTPUT PATH
+	public final String outputPath = "/home/lvuser"; //"/U";
+	
+	// FILE NAMES
+	public final String LEFT_LeftSwitch = "LEFT_LSwitch.txt";
+	public final String LEFT_Scale = "LEFT_Scale.txt";
+	public final String LEFT_RightSwitch = "LEFT_RSwitch.txt";
+	public final String LEFT_SwitchAndScale = "LEFT_SwitchScale.txt";
+	public final String RIGHT_RightSwitch = "RIGHT_RSwitch.txt";
+	public final String RIGHT_Scale = "RIGHT_Scale.txt";
+	public final String RIGHT_LeftSwitch = "RIGHT_LSwitch.txt";
+	public final String RIGHT_SwitchAndScale = "RIGHT_SwitchScale.txt";
+	public final String MID_RightSwitch = "MID_RSwitch.txt";
+	public final String MID_LeftSwitch = "MID_LSwitch.txt";
+	public final String driveBaseline = "Baseline.txt";
+	
+	public final double kLooperDt = .005;
+	
 	// Auto Delay Time
 	// This is the time that the robot will wait before executing the selected auto in an EDGECASE situation.
 	public final int autoDelay = 5; 
