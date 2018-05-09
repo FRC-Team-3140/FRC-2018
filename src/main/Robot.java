@@ -26,6 +26,10 @@ import main.commands.altermativeAuto.AltRightToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightScale;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
 import main.commands.altermativeAuto.DoNothing;
+import main.commands.controllerCommands.FileCreator;
+import main.commands.controllerCommands.FileDeletor;
+import main.commands.controllerCommands.StartPlay;
+import main.commands.controllerCommands.StartRecord;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
 import main.subsystems.Elevator;
@@ -86,6 +90,21 @@ public class Robot extends ImprovedRobot {
 		autoLooper = new Looper(kLooperDt);
 		autoLooper.register(new Record());
 		autoLooper.register(new Play()); 
+		
+		SmartDashboard.putData("Record", new StartRecord());
+		SmartDashboard.putData("Play", new StartPlay());
+		// File adder
+		SmartDashboard.putString("New File Name", "");
+		SmartDashboard.putData("Create a new file", new FileCreator()); 
+		// File deleter
+		SmartDashboard.putData("Delete a file", new FileDeletor());
+		//FileSelector
+    	fileChooser = new SendableChooser<>();
+    	fileChooser.addDefault("", new DoNothing());
+    	SmartDashboard.putData("File Selector", fileChooser);
+		
+		SmartDashboard.putString("NOTICE:", "Whenever you redeploy code you must restart shuffleboard; And whenever you "
+				+ "delete a file you must restart robot code.");
 		
 		// Auto modes
 		autoChooser = new SendableChooser<>();
