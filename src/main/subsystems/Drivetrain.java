@@ -34,9 +34,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private static double lastHeading = 0;
 	private static double lastTime = 0;
 	private boolean okayToPID = false;
-	
-	private static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
-	
+		
 	//TELEOP DRIVING
 	private DriveHelper driveHelper = new DriveHelper(7.5);
 	
@@ -64,12 +62,12 @@ public class Drivetrain extends ImprovedSubsystem  {
 	// DRIVE FOR TELEOP
 	public void driveVelocity(double throttle, double heading) {
 		if (isCompetitionRobot) {
-			driveTrain.arcadeDrive(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, throttleDeadband)),
-					driveHelper.handleOverPower(driveHelper.handleDeadband(-heading, headingDeadband)));
+			arcadeDrive(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, throttleDeadband)),
+					driveHelper.handleOverPower(driveHelper.handleDeadband(-heading, headingDeadband)), true);
 		}
 		else {
-			driveTrain.arcadeDrive(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, throttleDeadband)),
-					driveHelper.handleOverPower(driveHelper.handleDeadband(-heading, headingDeadband)));
+			arcadeDrive(driveHelper.handleOverPower(driveHelper.handleDeadband(-throttle, throttleDeadband)),
+					driveHelper.handleOverPower(driveHelper.handleDeadband(-heading, headingDeadband)), true);
 		}
 	}
 
@@ -103,8 +101,17 @@ public class Drivetrain extends ImprovedSubsystem  {
         SmartDashboard.putNumber("Heading PID Correction To Right Drive", 0.0);
 	}
 	
+	private void arcadeDrive(double throttle, double heading, boolean squared) {
+		if(squared) {
+			throttle = Math.signum(throttle) * throttle * throttle;
+			heading = Math.signum(heading) * heading * heading;
+		}
+		tankDrive(throttle + heading, throttle - heading, false);
+	}
+		
 	public void tankDrive(double left, double right, boolean squaredInput) {
-		driveTrain.tankDrive(left, right, squaredInput);
+		leftDriveMaster.set(left);
+		rightDriveMaster.set(right);
 	}
 	
 	public void timedTurn(TurnMode mode, double throttle) {
