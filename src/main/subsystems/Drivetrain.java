@@ -22,11 +22,11 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private static double kIHeading = 0;
 	private static double kDHeading = 0; //push to sdb
 	
-	private static double kPLeft = 0;
+	private static double kPLeft = 1;
 	private static double kILeft = 0;
 	private static double kDLeft = 0;
 	
-	private static double kPRight = 0;
+	private static double kPRight = 1;
 	private static double kIRight = 0;	
 	private static double kDRight = 0;
 	
@@ -144,11 +144,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public void drivePID(double inches) {
 		int ticks = distanceToTicks(inches);
 
-		if(okayToPID) {
-			leftDriveMaster.set(ControlMode.Position, ticks);
-			rightDriveMaster.set(ControlMode.Position, ticks);
-		}
-		else turnOff();
+		leftDriveMaster.set(ControlMode.Position, ticks);
+		rightDriveMaster.set(ControlMode.Position, ticks);
 	}
 	
 	public void okayToPID(boolean okayToPID) {
@@ -237,7 +234,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	private void configTalonEncoders() {
-		leftDriveMaster.setSensorPhase(false);
+		leftDriveMaster.setSensorPhase(true);
 		leftDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
 		rightDriveMaster.setSensorPhase(true);
 		rightDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);

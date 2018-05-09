@@ -52,9 +52,9 @@ public class OI extends ImprovedClass {
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
 		
 		xbox2.x.whileHeld(new MovePID(switchHeight));
-		xbox2.a.whileHeld(new MovePID(0));
+		xbox2.a.whileHeld(new MovePID(50));
 		xbox2.y.whenPressed(new InitPID());
-		xbox2.y.whileHeld(new DriveDistancePID(120)); // 10 feet
+		xbox2.y.whileHeld(new DriveDistancePID(12)); 
 		xbox2.y.whenReleased(new EndPID());
 	}
 	

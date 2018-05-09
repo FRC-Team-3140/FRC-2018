@@ -11,8 +11,12 @@ public class DriveDistancePID extends ImprovedCommand {
 		this.inches = inches;
 	}
 	
-	protected void execute() {
+	protected void initialize() {
 		Robot.dt.drivePID(inches);
+	}
+	
+	protected void execute() {
+		//Robot.dt.drivePID(inches);
 	}
 
 	@Override
