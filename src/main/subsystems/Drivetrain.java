@@ -101,7 +101,7 @@ public class Drivetrain extends ImprovedSubsystem  {
         SmartDashboard.putNumber("Heading PID Correction To Right Drive", 0.0);
 	}
 	
-	private void arcadeDrive(double throttle, double heading, boolean squared) {
+	public void arcadeDrive(double throttle, double heading, boolean squared) {
 		if(squared) {
 			throttle = Math.signum(throttle) * throttle * throttle;
 			heading = Math.signum(heading) * heading * heading;
@@ -150,9 +150,14 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	public void drivePID(double inches) {
 		int ticks = distanceToTicks(inches);
-
 		leftDriveMaster.set(ControlMode.Position, ticks);
 		rightDriveMaster.set(ControlMode.Position, ticks);
+	}
+	
+	public void drivePID(double inches, String side) {
+		int ticks = distanceToTicks(inches);
+		if(side.toLowerCase().equals("left")) leftDriveMaster.set(ControlMode.Position, ticks);
+		else if(side.toLowerCase().equals("right")) rightDriveMaster.set(ControlMode.Position, ticks);
 	}
 	
 	public void okayToPID(boolean okayToPID) {

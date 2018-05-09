@@ -3,6 +3,8 @@ package main;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
 import main.commands.drivetrain.DriveDistancePID;
+import main.commands.drivetrain.DriveLeftPID;
+import main.commands.drivetrain.DriveRightPID;
 import main.commands.drivetrain.EndPID;
 import main.commands.drivetrain.InitPID;
 import main.commands.elevator.MovePID;
@@ -25,12 +27,6 @@ public class OI extends ImprovedClass {
 		xbox.leftJoystickPress.whenReleased(new ShiftDown());
 		
 		//xbox.a.whenPressed(new DistanceDriveStraight(600));
-		/*
-		// auto testing calibration
-		xbox.a.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn90degTime));
-		xbox.x.whenPressed(new TimedTurn(TurnMode.Left, timedTurnPercent, timedTurn45degTime));
-		xbox.y.whenPressed(new TimedDrive(timedDrivePercent, 2.5));
-	    */
 		
 		//xbox.x.whenPressed(new DistanceDriveStraight(84));
 		//xbox.b.whenPressed(new DistanceDriveStraight(-12));
@@ -47,15 +43,15 @@ public class OI extends ImprovedClass {
 		//xbox.rightBumper.whenPressed(new MoveToTop(3));
 		//xbox.leftBumper.whenPressed(new AltRightToRightSwitch());
 
-		
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
 		
-		xbox2.x.whileHeld(new MovePID(switchHeight));
-		xbox2.a.whileHeld(new MovePID(50));
-		xbox2.y.whenPressed(new InitPID());
-		xbox2.y.whileHeld(new DriveDistancePID(12)); 
-		xbox2.y.whenReleased(new EndPID());
+//		xbox2.x.whileHeld(new MovePID(switchHeight));
+//		xbox2.a.whileHeld(new MovePID(50));
+//		xbox2.y.whenPressed(new InitPID());
+		xbox.y.whileHeld(new DriveRightPID(12)); 
+		xbox.a.whileHeld(new DriveLeftPID(12));
+//		xbox2.y.whenReleased(new EndPID());
 	}
 	
 	public static XboxController getXbox() {
