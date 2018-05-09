@@ -37,6 +37,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		
 	//TELEOP DRIVING
 	private DriveHelper driveHelper = new DriveHelper(7.5);
+	private Timer timer = new Timer();
 	
 	//SENSORS
 	private static AHRS NavX;	
@@ -106,7 +107,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 			throttle = Math.signum(throttle) * throttle * throttle;
 			heading = Math.signum(heading) * heading * heading;
 		}
-		tankDrive(throttle + heading, throttle - heading, false);
+		tankDrive(throttle + heading, -(throttle - heading), false);
 	}
 		
 	public void tankDrive(double left, double right, boolean squaredInput) {
@@ -123,16 +124,16 @@ public class Drivetrain extends ImprovedSubsystem  {
 		tankDrive(0.0, 0.0, false);
 	}
 
-	public void driveStraightPID(double inches) { // add gyro correction
+	public void driveStraightPID(double inches) {
 		int ticks = distanceToTicks(inches);
 
 		if(okayToPID) {
-			double thisTime = Timer.getFPGATimestamp();
-			double timeElapsed = thisTime - lastTime;
+			double t = timer.get();
+			double dt = t - lastTime;
 
 			double heading = getHeading();
-			double derivative = (heading - lastHeading) / timeElapsed;
-			double integral = lastHeadingIntegral + (heading * timeElapsed);
+			double derivative = (heading - lastHeading) / dt;
+			double integral = lastHeadingIntegral + (heading * dt);
 			double gyroCorrection = heading * kPHeading + integral * kIHeading + derivative * kDHeading;
 
 			rightDriveMaster.set(ControlMode.Position, ticks, DemandType.ArbitraryFeedForward, gyroCorrection);
@@ -140,7 +141,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 
 			lastHeading = heading;
 			lastHeadingIntegral = integral;
-			lastTime = thisTime;
+			lastTime = t;
 		}
 		else {
 			rightDriveMaster.set(0);
@@ -162,6 +163,16 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	public void okayToPID(boolean okayToPID) {
 		this.okayToPID = okayToPID;
+	}
+	
+	public void startTimer() {
+		timer.reset();
+		timer.start();
+	}
+	
+	public void stopTimer() {
+		timer.stop();
+		timer.reset();
 	}
 	
 	/***********************

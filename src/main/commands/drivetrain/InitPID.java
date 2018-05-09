@@ -12,6 +12,10 @@ public class InitPID extends ImprovedCommand {
 	protected void initialize() {
 		Robot.dt.zeroSensors();
 		Robot.dt.resetForPID();
+	}
+	
+	protected void end() {
+		Robot.dt.startTimer();
 		Robot.dt.okayToPID(true);
 	}
 
