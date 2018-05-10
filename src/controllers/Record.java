@@ -39,7 +39,7 @@ public class Record implements Loop, Constants {
 	private void execute() {
 		System.out.println("Recording");
 		
-		if(!reachedFirstNonZero && (Robot.dt.getLeftMasterVoltage() != 0 || Robot.dt.getRightMasterVoltage() != 0 || Robot.in.getLeftIntakeWheelValue() != 0 || Robot.in.getRightIntakeWheelValue() != 0 ||
+		if(!reachedFirstNonZero && (Robot.dt.getLeftMasterVoltage() != 0 || Robot.dt.getRightMasterVoltage() != 0 || Robot.el.getElevatorMasterVoltage() != 0 || Robot.in.getLeftIntakeWheelValue() != 0 || Robot.in.getRightIntakeWheelValue() != 0 ||
 				controller.a.get() || controller.b.get() || controller.x.get() || controller.y.get() || controller.leftBumper.get() ||
 				controller.rightBumper.get() || controller.select.get() || controller.start.get() || controller.leftJoystickPress.get() ||
 				controller.rightJoystickPress.get() || controller.leftTrigger.get() || controller.rightTrigger.get() || controller2.a.get() ||
@@ -57,7 +57,7 @@ public class Record implements Loop, Constants {
 							+ "," + controller.rightJoystickPress.get() + "," + controller.leftTrigger.get() + "," + controller.rightTrigger.get() + "," + controller2.a.get()
 							+ "," + controller2.b.get() + "," + controller2.x.get() + "," + controller2.y.get() + "," + controller2.leftBumper.get() + "," + controller2.rightBumper.get()
 							+ "," + controller2.select.get() + ","  + controller2.start.get() + "," + controller2.leftJoystickPress.get() + "," + controller2.rightJoystickPress.get() 
-							+ "," + controller2.leftTrigger.get() + "," + controller2.rightTrigger.get());
+							+ "," + controller2.leftTrigger.get() + "," + controller2.rightTrigger.get() + "," + Robot.el.getTicksTravelled() + "," + Robot.el.getElevatorVelocity());
 		}
 	}
 }

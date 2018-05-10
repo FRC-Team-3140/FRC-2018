@@ -1,6 +1,7 @@
 package main.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 
 import Util.DriveHelper;
 import Util.EncoderHelper;
@@ -10,11 +11,14 @@ import main.commands.elevator.MoveWithJoystick;
 
 public class Elevator extends ImprovedSubsystem {
 	private DriveHelper driveHelper = new DriveHelper(7.5);
+	private int toleranceTicks = 30;
 	
 	private int slotIdx = 0;
 	private double kP = 9.91;
 	private double kI = 0;
 	private double kD = 32.5;
+	private double veloFeedForward = 0;
+	private boolean playFinished = false;
 	
 	public Elevator() {
 		setElevatorDefaults();
@@ -150,6 +154,14 @@ public class Elevator extends ImprovedSubsystem {
 	public int distanceToTicks(double distanceInches) {
 		return (int) (EncoderHelper.inchesToEncoderTicks(distanceInches, spindleCircum, quadConversionFactor) * elevatorGearRatio / 2);
 	}
+	
+	public boolean isPlayFinished() {
+		return playFinished;
+	}
+	
+	public void setPlayFinished(boolean finished) {
+		playFinished = finished;
+	}
 	/********************
 	 * MOVEMENT METHODS *
 	 ********************/
@@ -160,6 +172,13 @@ public class Elevator extends ImprovedSubsystem {
 	public void moveVelocityPID(double velocityInchesPerSecond) {
 		double velocityTicksPer100Ms = distanceToTicks(velocityInchesPerSecond) * 10;
 		elevatorMaster.set(ControlMode.Velocity, velocityTicksPer100Ms);
+	}
+	
+	public void playbackPID(double velocityTicks100Ms, double distanceTicks) {
+		double feedForward = veloFeedForward * velocityTicks100Ms;
+		elevatorMaster.set(ControlMode.Position, distanceTicks, DemandType.ArbitraryFeedForward, feedForward);
+		// if this doesnt work i will cry
+		if(Math.abs(getTicksTravelled() - distanceTicks) < toleranceTicks) playFinished = true;
 	}
 	
 	public void moveTrapezoidalProfile(double distance) {
