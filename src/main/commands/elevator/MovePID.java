@@ -1,7 +1,6 @@
 package main.commands.elevator;
 
 import edu.wpi.first.wpilibj.command.TimedCommand;
-import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
 // FIXME fix this

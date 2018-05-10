@@ -4,18 +4,11 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import interfacesAndAbstracts.ImprovedCommandGroup;
 import main.commands.drivetrain.AltDistanceDriveStraight;
 import main.commands.drivetrain.DistanceDriveStraight;
-import main.commands.drivetrain.DrivePIDWithPulse;
-import main.commands.drivetrain.TurnToAngle;
 import main.commands.drivetrain.TurnToAngleGyro;
 import main.commands.elevator.MovePID;
 import main.commands.elevator.MoveToBottom;
-import main.commands.elevator.MoveToTop;
-import main.commands.intake.SpinOff;
-import main.commands.intake.SpinOut;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
-import main.commands.pneumatics.arm.SwitchArm;
-import main.commands.pneumatics.tilt.SwitchTilt;
 import main.commands.pneumatics.tilt.TiltDown;
 import main.commands.pneumatics.tilt.TiltUp;
 

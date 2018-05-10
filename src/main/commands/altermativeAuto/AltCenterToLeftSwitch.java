@@ -2,18 +2,11 @@ package main.commands.altermativeAuto;
 
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import interfacesAndAbstracts.ImprovedCommandGroup;
-import main.commands.commandGroups.cubeManipulator.DropCube;
-import main.commands.commandGroups.cubeManipulator.DropCubeOff;
 import main.commands.drivetrain.AltDistanceDriveStraight;
 import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.DriveLeftPID;
-import main.commands.drivetrain.DriveRightPID;
 import main.commands.drivetrain.TurnToAngleGyro;
-import main.commands.elevator.MovePID;
-import main.commands.elevator.MoveToBottom;
 import main.commands.elevator.MoveToSwitch;
-import main.commands.intake.SpinOff;
-import main.commands.intake.SpinOut;
 import main.commands.intake.SpinOutTime;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
