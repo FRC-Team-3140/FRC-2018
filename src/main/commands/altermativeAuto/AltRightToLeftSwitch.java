@@ -6,7 +6,6 @@ import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.TurnToAngle;
 import main.commands.elevator.MoveToBottom;
 import main.commands.elevator.MoveToSwitch;
-import main.commands.elevator.MoveToTop;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.tilt.TiltDown;
