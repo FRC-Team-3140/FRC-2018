@@ -98,8 +98,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private void pushNormallyUnusedToSmartDashboard() {   
         SmartDashboard.putNumber("Heading: Target", 0.0);
         SmartDashboard.putNumber("Heading: Error", 0.0);
-//        SmartDashboard.putNumber("Heading PID Correction to Left Drive", 0.0);
-//        SmartDashboard.putNumber("Heading PID Correction To Right Drive", 0.0);
+//      SmartDashboard.putNumber("Heading PID Correction to Left Drive", 0.0);
+//      SmartDashboard.putNumber("Heading PID Correction To Right Drive", 0.0);
 	}
 	
 	public void arcadeDrive(double throttle, double heading, boolean squared) {

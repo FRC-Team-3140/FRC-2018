@@ -1,37 +1,14 @@
 
 package controllers;
 
-import edu.wpi.first.wpilibj.command.Command;
-import loopController.Loop;
-import main.Constants;
+import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
 
-public class Play implements Loop, Constants {
-	private static boolean playOK = false;
+public class Play extends ImprovedCommand {
 	private static boolean finished = false;
-	
-	public static void okToPlay(boolean okToPlay) {
-		playOK = okToPlay;
-		if(playOK) System.out.println("Ok To Play");
-		else System.out.println("Not Ok To Play");
-	}
-	
-	@Override
-	public void onStart() {
-	}
 
-	@Override
-	public void onLoop() {
-		if(playOK)
-			execute();
-	}
-	
-	@Override
-	public void onStop() {
-	}
-	
-	private void execute() {
+	protected void initialize() {
 		String line = Robot.lg.readLine();
 		if((line) != null) { 
 			String[] robotState = line.split(",");
@@ -77,6 +54,7 @@ public class Play implements Loop, Constants {
 //				Command intake = new IntakeFromPlayer(leftIntakeWheelValue, rightIntakeWheelValue);
 //				drive.start();
 //				intake.start();
+				Robot.el.playbackPID(elevatorVelocity, elevatorDistance);
 				
 				Robot.oi.setButtonValues(a, b, x, y, leftBumper, rightBumper, select, start, leftJoystickPress, rightJoystickPress, leftTrigger, rightTrigger);
 				Robot.oi.setButtonValues2(a2, b2, x2, y2, leftBumper2, rightBumper2, select2, start2, leftJoystickPress2, rightJoystickPress2, leftTrigger2, rightTrigger2);
@@ -88,12 +66,17 @@ public class Play implements Loop, Constants {
 		}
 	}
 	
-	public static boolean isFinished() {
+	protected boolean isFinished() {
+		return true;
+	}
+	
+	public static boolean finished() {
 		return finished;
 	}
 	
 	public static void reset() {
 		finished = false;
 	}
+	
 }
 

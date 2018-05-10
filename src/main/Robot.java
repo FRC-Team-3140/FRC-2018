@@ -89,7 +89,6 @@ public class Robot extends ImprovedRobot {
 		lg = new Logger();
 		autoLooper = new Looper(kLooperDt);
 		autoLooper.register(new Record());
-		autoLooper.register(new Play()); 
 		
 		SmartDashboard.putData("Record", new StartRecord());
 		SmartDashboard.putData("Play", new StartPlay());
