@@ -98,8 +98,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private void pushNormallyUnusedToSmartDashboard() {   
         SmartDashboard.putNumber("Heading: Target", 0.0);
         SmartDashboard.putNumber("Heading: Error", 0.0);
-        SmartDashboard.putNumber("Heading PID Correction to Left Drive", 0.0);
-        SmartDashboard.putNumber("Heading PID Correction To Right Drive", 0.0);
+//        SmartDashboard.putNumber("Heading PID Correction to Left Drive", 0.0);
+//        SmartDashboard.putNumber("Heading PID Correction To Right Drive", 0.0);
 	}
 	
 	public void arcadeDrive(double throttle, double heading, boolean squared) {
@@ -107,12 +107,12 @@ public class Drivetrain extends ImprovedSubsystem  {
 			throttle = Math.signum(throttle) * throttle * throttle;
 			heading = Math.signum(heading) * heading * heading;
 		}
-		tankDrive(throttle + heading, -(throttle - heading), false);
+		tankDrive(throttle + heading, throttle - heading, false);
 	}
 		
 	public void tankDrive(double left, double right, boolean squaredInput) {
 		leftDriveMaster.set(left);
-		rightDriveMaster.set(right);
+		rightDriveMaster.set(-right);
 	}
 	
 	public void timedTurn(TurnMode mode, double throttle) {
