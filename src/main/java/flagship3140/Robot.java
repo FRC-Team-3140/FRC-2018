@@ -21,6 +21,8 @@ import main.java.flagship3140.commands.auto.DoNothing;
 import main.java.flagship3140.commands.auto.ResetForTeleop;
 import main.java.flagship3140.commands.drivetrain.TimedTankDriveStraight;
 import main.java.flagship3140.interfacesAndAbstracts.ImprovedRobot;
+import main.java.flagship3140.led.LED;
+import main.java.flagship3140.led.commands.LEDOn;
 import main.java.flagship3140.subsystems.DriverCamera;
 import main.java.flagship3140.subsystems.Drivetrain;
 import main.java.flagship3140.subsystems.Elevator;
@@ -34,6 +36,7 @@ public class Robot extends ImprovedRobot {
 	public static Elevator el;
 	public static DriverCamera dc;
 	public static OI oi;
+	public static LED led;
 	
 	// AUTO LOGIC
 	private enum StartPos {LEFT, CENTER, RIGHT}
@@ -60,6 +63,7 @@ public class Robot extends ImprovedRobot {
 		el = new Elevator();
 		oi = new OI();
 		dc = new DriverCamera();
+		led=new LED();
 		// Auto modes
 		autoChooser = new SendableChooser<>();
 		autoChooser.addDefault("Do Nothing", RobotAction.DO_NOTHING);
@@ -202,6 +206,8 @@ public class Robot extends ImprovedRobot {
 	public void teleopInit() {
 		if(autoCommand != null && autoCommand.isRunning())
 			autoCommand.cancel();
+		// TODO test
+		new LEDOn().start();
 	}	
 
 	@Override
