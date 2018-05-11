@@ -1,0 +1,214 @@
+package main.java.flagship3140;
+
+import edu.wpi.first.wpilibj.command.WaitCommand;
+import main.java.flagship3140.commands.drivetrain.DistanceDriveStraight;
+import main.java.flagship3140.commands.drivetrain.DriveTrainOff;
+import main.java.flagship3140.commands.drivetrain.TimedDrive;
+import main.java.flagship3140.commands.drivetrain.TimedTurn;
+import main.java.flagship3140.commands.drivetrain.TurnToAngle;
+import main.java.flagship3140.commands.elevator.MoveToBottom;
+import main.java.flagship3140.commands.elevator.MoveToSwitch;
+import main.java.flagship3140.commands.elevator.MoveToTop;
+import main.java.flagship3140.commands.intake.SpinIn;
+import main.java.flagship3140.commands.intake.SpinOff;
+import main.java.flagship3140.commands.intake.SpinOut;
+import main.java.flagship3140.commands.pneumatics.arm.ArmClose;
+import main.java.flagship3140.commands.pneumatics.arm.ArmOpen;
+import main.java.flagship3140.commands.pneumatics.shift.ShiftDown;
+import main.java.flagship3140.commands.pneumatics.shift.ShiftUp;
+import main.java.flagship3140.commands.pneumatics.tilt.TiltDown;
+import main.java.flagship3140.commands.pneumatics.tilt.TiltUp;
+import main.java.flagship3140.interfacesAndAbstracts.ImprovedCommandGroup;
+
+public class RobotSelfTest extends ImprovedCommandGroup {
+	//In the future this should be improved, such that it implements
+	//sensor checking to determine if motors are at the correct speed, voltage, and current
+	//and that all other sensors, network interfaces, and systems are working properly
+	public RobotSelfTest() {
+		/***********************
+		 * Drive Systems Test
+		 */
+		//Increment Forwards Drive
+		addSequential(new TimedDrive(0.1, 0.5));
+		addSequential(new TimedDrive(0.2, 0.5));
+		addSequential(new TimedDrive(0.3, 0.5));
+		addSequential(new TimedDrive(0.4, 0.5));
+		addSequential(new TimedDrive(0.5, 0.5));
+		addSequential(new TimedDrive(0.6, 0.5));
+		addSequential(new TimedDrive(0.7, 0.5));
+		addSequential(new TimedDrive(0.8, 0.5));
+		addSequential(new TimedDrive(0.9, 0.5));
+		addSequential(new TimedDrive(1.0, 0.5));
+		
+		//Stop & Wait
+		addSequential(new DriveTrainOff());
+		addSequential(new WaitCommand(0.5));
+		
+		//Increment Backwards Drive
+		addSequential(new TimedDrive(-0.1, 0.5));
+		addSequential(new TimedDrive(-0.2, 0.5));
+		addSequential(new TimedDrive(-0.3, 0.5));
+		addSequential(new TimedDrive(-0.4, 0.5));
+		addSequential(new TimedDrive(-0.5, 0.5));
+		addSequential(new TimedDrive(-0.6, 0.5));
+		addSequential(new TimedDrive(-0.7, 0.5));
+		addSequential(new TimedDrive(-0.8, 0.5));
+		addSequential(new TimedDrive(-0.9, 0.5));
+		addSequential(new TimedDrive(-1.0, 0.5));
+		
+		//Stop & Wait
+		addSequential(new DriveTrainOff());
+		addSequential(new WaitCommand(0.5));
+		
+		//Increment Left Turn
+		addSequential(new TimedTurn(TurnMode.Left, 0.1, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.2, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.3, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.4, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.5, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.6, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.7, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.8, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 0.9, 0.5));
+		addSequential(new TimedTurn(TurnMode.Left, 1.0, 0.5));
+		
+		//Stop & Wait
+		addSequential(new DriveTrainOff());
+		addSequential(new WaitCommand(0.5));
+
+		
+		//Increment Right Turn
+		addSequential(new TimedTurn(TurnMode.Right, 0.1, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.2, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.3, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.4, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.5, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.6, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.7, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.8, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 0.9, 0.5));
+		addSequential(new TimedTurn(TurnMode.Right, 1.0, 0.5));
+		
+		//Stop & Wait
+		addSequential(new DriveTrainOff());
+		addSequential(new WaitCommand(0.5));
+
+		//Shifting
+		addSequential(new TimedDrive(1.0, 1));
+		addParallel(new ShiftUp());
+		addSequential(new TimedDrive(1.0, 1));
+		addParallel(new ShiftDown());
+		addSequential(new TimedDrive(1.0, 1));
+		
+		//Stop & Wait
+		addSequential(new DriveTrainOff());
+		addSequential(new WaitCommand(0.5));
+		
+		//Drive Distance
+		addSequential(new DistanceDriveStraight(48));
+		addSequential(new WaitCommand(0.5));
+		addSequential(new DistanceDriveStraight(-48));
+		
+		//Stop & Wait
+		addSequential(new DriveTrainOff());
+		addSequential(new WaitCommand(0.5));
+				
+		//Turn To Angle
+		addSequential(new TurnToAngle(45));
+		addSequential(new WaitCommand(0.5));
+		addSequential(new TurnToAngle(-45));
+		addSequential(new WaitCommand(0.5));
+		addSequential(new TurnToAngle(90));
+		addSequential(new WaitCommand(0.5));
+		addSequential(new TurnToAngle(-90));
+				
+		//Stop & Wait
+		addSequential(new DriveTrainOff());
+		addSequential(new WaitCommand(0.5));
+		
+		//Wait (Allow alex to get out of the way)
+		addSequential(new WaitCommand(3));
+				
+		/***********************
+		 * Pneumatics System Test
+		 */
+		//Intake Tilt Down
+		addSequential(new TiltDown());
+		
+		//Wait
+		addSequential(new WaitCommand(0.25));
+		
+		//Intake Open/Close
+		addSequential(new ArmOpen());
+		addSequential(new WaitCommand(0.25));
+		addSequential(new ArmClose());
+		
+		//Wait
+		addSequential(new WaitCommand(0.25));
+		
+		//Intake Tilt Up
+		addSequential(new TiltUp());
+		
+		//Wait
+		addSequential(new WaitCommand(0.25));
+		
+		//Intake Open/Close
+		addSequential(new ArmOpen());
+		addSequential(new WaitCommand(0.25));
+		addSequential(new ArmClose());
+		
+		//Wait
+		addSequential(new WaitCommand(0.25));
+		
+		
+		/***********************
+		 * Elevator System Test
+		 */
+		//Tilt Down to Prevent Collision
+		addSequential(new TiltDown());					
+		
+		//Lift To Switch Height
+		addSequential(new MoveToSwitch(1.5));
+		
+		//Wait
+		addSequential(new WaitCommand(0.5));
+		
+		//Elevator To Bottom
+		addSequential(new MoveToBottom(1.5));
+		
+		//Wait
+		addSequential(new WaitCommand(0.5));			
+		
+		//Lift To Max Height
+		addSequential(new MoveToTop(3));
+			
+		//Wait
+		addSequential(new WaitCommand(0.5));
+		
+		//ElevatorToBottom
+		addSequential(new MoveToBottom(1.5));
+			
+		//Wait
+		addSequential(new WaitCommand(0.5));				
+		
+		
+		/***********************
+		 * Intake System Test
+		 */
+		//Spin In
+		addSequential(new SpinIn());
+		addSequential(new WaitCommand(1));//Force previous command to run for 1 seconds
+		addSequential(new SpinOff());
+		
+		//Wait
+		addSequential(new WaitCommand(0.5));	
+		
+		//Spin Out
+		addSequential(new SpinOut());
+		addSequential(new WaitCommand(1));//Force previous command to run for 1 seconds
+		addSequential(new SpinOff());
+		
+		//Clean Up and put us Back in Starting Config
+		addSequential(new TiltUp());
+	}
+}
