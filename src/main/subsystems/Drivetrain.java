@@ -22,13 +22,13 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private static double kIHeading = 0;
 	private static double kDHeading = 0; //push to sdb
 	
-	private static double kPLeft = 1;
+	private static double kPLeft = 0.46;
 	private static double kILeft = 0;
-	private static double kDLeft = 0;
+	private static double kDLeft = 9.5;
 	
-	private static double kPRight = 1;
+	private static double kPRight = 0.49;
 	private static double kIRight = 0;	
-	private static double kDRight = 0;
+	private static double kDRight = 9.5;
 	
 	private static double lastHeadingIntegral = 0;
 	private static double lastHeading = 0;
@@ -112,7 +112,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		
 	public void tankDrive(double left, double right, boolean squaredInput) {
 		leftDriveMaster.set(left);
-		rightDriveMaster.set(-right);
+		rightDriveMaster.set(right);
 	}
 	
 	public void timedTurn(TurnMode mode, double throttle) {
@@ -257,9 +257,9 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	private void configTalonEncoders() {
-		leftDriveMaster.setSensorPhase(true);
+		leftDriveMaster.setSensorPhase(false);
 		leftDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
-		rightDriveMaster.setSensorPhase(true);
+		rightDriveMaster.setSensorPhase(false);
 		rightDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
 	}
 	
@@ -285,6 +285,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 		setBrakeMode(BRAKE_MODE);
 		setCtrlMode();
 		setVoltageComp(true, voltageCompensationVoltage, timeout);
+		rightDriveMaster.setInverted(true);
+		rightDriveSlave1.setInverted(true); //TODO move this somewhere else pls
 	}
 	
 	public AHRS getGyro(){
@@ -345,7 +347,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public double getDistanceTravelled() {
 		return (getLeftEncoderDistanceTravelled() + getRightEncoderDistanceTravelled()) / 2;
 	}
-	
+		
 	// Get the distance the elevator has traveled in inches
 	public double getRightEncoderDistanceTravelled() {
 		if(Robot.pn.isLowGear())

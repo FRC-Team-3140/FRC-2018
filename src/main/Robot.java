@@ -311,6 +311,7 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("is this number right?", el.distanceToTicks(el.getTicksTravelled()));
 		SmartDashboard.putNumber("Elevator encoder ticks", el.getTicksTravelled());
 		SmartDashboard.putNumber("Elevator Input", elevatorMaster.get());
+		SmartDashboard.putNumber("Elevator speed ticks", el.getElevatorVelocity());
 		
 		SmartDashboard.putString("Working File", lg.getWorkingFile());
 		SmartDashboard.putString("Working Path", outputPath);

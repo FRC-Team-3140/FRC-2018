@@ -25,6 +25,7 @@ public class Elevator extends ImprovedSubsystem {
 		configSensors();
 		zeroSensors();
 		setPIDDefaults();
+		SmartDashboard.putNumber("Target elevator velocity", 0);
 	}
 	
 	/*************************
@@ -171,6 +172,7 @@ public class Elevator extends ImprovedSubsystem {
 	
 	public void moveVelocityPID(double velocityInchesPerSecond) {
 		double velocityTicksPer100Ms = distanceToTicks(velocityInchesPerSecond) * 10;
+		SmartDashboard.putNumber("Target elevator velocity", velocityTicksPer100Ms);
 		elevatorMaster.set(ControlMode.Velocity, velocityTicksPer100Ms);
 	}
 	
