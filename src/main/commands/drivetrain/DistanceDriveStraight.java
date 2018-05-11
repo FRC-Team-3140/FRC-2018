@@ -12,7 +12,7 @@ public class DistanceDriveStraight extends ImprovedCommand {
 	}
 	
 	protected void execute() {
-		Robot.dt.driveStraightPID(inches);
+		Robot.dt.driveWithAnglePID(inches, 0);
 	}
 
 	@Override
