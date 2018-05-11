@@ -47,12 +47,12 @@ public class OI extends ImprovedClass {
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
 		
-//		xbox2.x.whileHeld(new MovePID(switchHeight));
-//		xbox2.a.whileHeld(new MovePID(50));
-//		xbox2.y.whenPressed(new InitPID());
-		xbox.y.whileHeld(new DriveRightPID(12)); 
-		xbox.a.whileHeld(new DriveLeftPID(12));
-//		xbox2.y.whenReleased(new EndPID());
+		xbox2.x.whileHeld(new MovePID(switchHeight));
+		xbox2.a.whileHeld(new MovePID(50));
+		xbox.b.whenPressed(new InitPID());
+		xbox.x.whileHeld(new DriveRightPID(12)); 
+		xbox.b.whileHeld(new DriveLeftPID(12));
+		xbox.b.whenReleased(new EndPID());
 		xbox2.b.whileHeld(new MoveVelocityPID(2));
 	}
 	
