@@ -23,7 +23,6 @@ public class OI extends ImprovedClass {
 		xbox.setInternalControl(false);
 		xbox2.setInternalControl(false);
 		
-		// Shoots out without elevator
 		xbox.leftJoystickPress.whenPressed(new ShiftUp());
 		xbox.leftJoystickPress.whenReleased(new ShiftDown());
 		
@@ -49,11 +48,15 @@ public class OI extends ImprovedClass {
 		
 		xbox2.x.whileHeld(new MovePID(switchHeight));
 		xbox2.a.whileHeld(new MovePID(50));
+		xbox2.b.whileHeld(new MoveVelocityPID(2));
+		
 		xbox.b.whenPressed(new InitPID());
-		xbox.x.whileHeld(new DriveRightPID(12)); 
 		xbox.b.whileHeld(new DriveLeftPID(12));
 		xbox.b.whenReleased(new EndPID());
-		xbox2.b.whileHeld(new MoveVelocityPID(2));
+		xbox.x.whenPressed(new InitPID());
+		xbox.x.whileHeld(new DriveRightPID(12)); 
+		xbox.x.whenReleased(new EndPID());
+
 	}
 	
 	public static XboxController getXbox() {

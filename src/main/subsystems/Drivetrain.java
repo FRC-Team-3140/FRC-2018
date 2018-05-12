@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.Timer;
 import Util.ChezyMath;
 import Util.DriveHelper;
 import Util.EncoderHelper;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.Robot;
@@ -76,7 +75,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public void driveVoltageTank(double leftVoltage, double rightVoltage, double voltageCompensationVoltage) {
 		double leftValue = ((Math.abs(leftVoltage) > voltageCompensationVoltage) ? Math.signum(leftVoltage) : leftVoltage/voltageCompensationVoltage);
 			// Negate one side so that the robot won't drive in circles
-			double rightValue = -((Math.abs(rightVoltage)  > voltageCompensationVoltage) ? Math.signum(rightVoltage) : rightVoltage/voltageCompensationVoltage);	
+			double rightValue = ((Math.abs(rightVoltage)  > voltageCompensationVoltage) ? Math.signum(rightVoltage) : rightVoltage/voltageCompensationVoltage);	
 	
 		tankDrive(leftValue, rightValue, false);// Don't square inputs as this will affect accuracy
 	}
@@ -137,8 +136,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 			double integral = lastHeadingIntegral + (headingError * dt);
 			double gyroCorrection = headingError * kPHeading + integral * kIHeading + derivative * kDHeading;
 
-			rightDriveMaster.set(ControlMode.Position, ticks, DemandType.ArbitraryFeedForward, -gyroCorrection);
 			leftDriveMaster.set(ControlMode.Position, ticks, DemandType.ArbitraryFeedForward, gyroCorrection);
+			rightDriveMaster.set(ControlMode.Position, ticks, DemandType.ArbitraryFeedForward, -gyroCorrection);
 
 			lastHeadingError = headingError;
 			lastHeadingIntegral = integral;
@@ -160,6 +159,14 @@ public class Drivetrain extends ImprovedSubsystem  {
 		int ticks = distanceToTicks(inches);
 		if(side.toLowerCase().equals("left")) leftDriveMaster.set(ControlMode.Position, ticks);
 		else if(side.toLowerCase().equals("right")) rightDriveMaster.set(ControlMode.Position, ticks);
+	}
+	
+	public void driveFromPlayPID(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms) {
+		//TODO also this
+	}
+	
+	public void driveAngleVeloPID(double velocity, double targetHeading) {
+		//TODO this
 	}
 	
 	public void okayToPID(boolean okayToPID) {
@@ -222,6 +229,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		leftDriveSlave1.follow(leftDriveMaster);
 		rightDriveSlave1.follow(rightDriveMaster);
 	}
+	
 	public void setVoltageComp(boolean set, double voltage, int timeout) {		
 		if(set)
 			System.out.println("DriveTrain Changed Voltage Compensation To: " + voltage);
