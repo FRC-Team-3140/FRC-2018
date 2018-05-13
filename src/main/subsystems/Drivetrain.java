@@ -29,6 +29,9 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private static double kIRight = 0;	
 	private static double kDRight = 9.5;
 	
+	private static double kLeftVeloFeedForward = 0;
+	private static double kRightVeloFeedForward = 0;
+	
 	private static double lastHeadingIntegral = 0;
 	private static double lastHeadingError = 0;
 	private static double lastTime = 0;
@@ -101,6 +104,12 @@ public class Drivetrain extends ImprovedSubsystem  {
 //      SmartDashboard.putNumber("Heading PID Correction To Right Drive", 0.0);
 	}
 	
+	public void updateHeadingGains() {
+		kPHeading = SmartDashboard.getNumber("Heading: kP", kPHeading);
+		kIHeading = SmartDashboard.getNumber("Heading: kI", kIHeading);
+		kDHeading = SmartDashboard.getNumber("Heading: kD", kDHeading);
+	}
+	
 	public void arcadeDrive(double throttle, double heading, boolean squared) {
 		if(squared) {
 			throttle = Math.signum(throttle) * throttle * throttle;
@@ -161,12 +170,23 @@ public class Drivetrain extends ImprovedSubsystem  {
 		else if(side.toLowerCase().equals("right")) rightDriveMaster.set(ControlMode.Position, ticks);
 	}
 	
-	public void driveFromPlayPID(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms) {
-		//TODO also this
+	public void driveFromPlayPID(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double heading) {
+		//TODO gyro correction, but wait until drive to distance is tested
+		double leftVeloFeedForward = kLeftVeloFeedForward * leftVeloTicks100Ms;
+		double rightVeloFeedForward = kRightVeloFeedForward * rightVeloTicks100Ms;
+		
+		double leftFeedForward = leftVeloFeedForward;
+		double rightFeedForward = rightVeloFeedForward;
+		
+		leftDriveMaster.set(POSITION_MODE, leftTicks, ARB_FEED_FORWARD, leftFeedForward);
+		rightDriveMaster.set(POSITION_MODE, rightTicks, ARB_FEED_FORWARD, rightFeedForward);
 	}
 	
-	public void driveAngleVeloPID(double velocity, double targetHeading) {
-		//TODO this
+	public void driveAngleVeloPID(double velocityInchesPerSec, double targetHeading) {
+		double veloTicks100Ms = distanceToTicks(velocityInchesPerSec) * 10;
+		//TODO gyro correction and switching constants for velocity/position modes
+		leftDriveMaster.set(ControlMode.Velocity, veloTicks100Ms);
+		rightDriveMaster.set(ControlMode.Velocity, veloTicks100Ms);
 	}
 	
 	public void okayToPID(boolean okayToPID) {

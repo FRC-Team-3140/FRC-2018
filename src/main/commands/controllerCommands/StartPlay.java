@@ -4,6 +4,8 @@ import controllers.Play;
 import edu.wpi.first.wpilibj.command.Command;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
+import main.commands.drivetrain.EndPID;
+import main.commands.drivetrain.InitPID;
 
 public class StartPlay extends ImprovedCommand {
 	public StartPlay() {
@@ -13,6 +15,8 @@ public class StartPlay extends ImprovedCommand {
     protected void initialize() {
     	Robot.lg.resetForRead();
     	Robot.oi.setInternalControl(true);
+    	Command init = new InitPID();
+    	init.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,6 +32,8 @@ public class StartPlay extends ImprovedCommand {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Command end = new EndPID();
+    	end.start();
     	Robot.oi.setInternalControl(false);
     	Play.reset();
     }

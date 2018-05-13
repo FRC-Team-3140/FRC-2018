@@ -1,6 +1,7 @@
 package main;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
@@ -91,6 +92,8 @@ public interface Constants {
 	public final ControlMode SLAVE_MODE = ControlMode.Follower;
 	public final ControlMode PERCENT_VBUS_MODE = ControlMode.PercentOutput;
 	public final NeutralMode BRAKE_MODE = NeutralMode.Brake;
+	public final ControlMode POSITION_MODE = ControlMode.Position;
+	public final DemandType ARB_FEED_FORWARD = DemandType.ArbitraryFeedForward;
 	
 	public final double timedDrivePercent = -1;//DO NOT CHANGE
 	//This is a multiplier that will be computed manually distanceMultiplier * time = distanceDriven (When Robot driving at timedDrivePercent)

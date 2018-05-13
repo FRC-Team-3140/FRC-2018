@@ -10,6 +10,7 @@ public class InitPID extends ImprovedCommand {
 	}
 	
 	protected void initialize() {
+		Robot.dt.updateHeadingGains();
 		Robot.dt.zeroSensors();
 		Robot.dt.resetForPID();
 	}
