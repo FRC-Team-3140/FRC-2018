@@ -90,7 +90,6 @@ public class Drivetrain extends ImprovedSubsystem  {
 	
 	//Push Default Gains To SmartDashboard
 	private void pushPIDGainsToSmartDashboard() {
-		//SmartDashboard.putNumber("Heading: PGain", straightDriveKp);
 		SmartDashboard.putNumber("Heading: kP", kPHeading);
 		SmartDashboard.putNumber("Heading: kI", kIHeading);
 		SmartDashboard.putNumber("Heading: kD", kDHeading);
@@ -100,8 +99,6 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private void pushNormallyUnusedToSmartDashboard() {   
         SmartDashboard.putNumber("Heading: Target", 0.0);
         SmartDashboard.putNumber("Heading: Error", 0.0);
-//      SmartDashboard.putNumber("Heading PID Correction to Left Drive", 0.0);
-//      SmartDashboard.putNumber("Heading PID Correction To Right Drive", 0.0);
 	}
 	
 	public void updateHeadingGains() {
@@ -141,7 +138,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 			
 			double heading = getHeading();
 			double headingError = ChezyMath.getDifferenceInAngleDegrees(heading, angle);
-			double derivative = (headingError - lastHeadingError) / dt;
+			double derivative = ChezyMath.getDifferenceInAngleDegrees(lastHeadingError, headingError) / dt;
 			double integral = lastHeadingIntegral + (headingError * dt);
 			double gyroCorrection = headingError * kPHeading + integral * kIHeading + derivative * kDHeading;
 
@@ -170,16 +167,28 @@ public class Drivetrain extends ImprovedSubsystem  {
 		else if(side.toLowerCase().equals("right")) rightDriveMaster.set(ControlMode.Position, ticks);
 	}
 	
-	public void driveFromPlayPID(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double heading) {
-		//TODO gyro correction, but wait until drive to distance is tested
+	public void driveFromPlayPID(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double headingTarget) {
+		double heading = getHeading();
+		double headingError = headingTarget - heading;
+		double t = timer.get();
+		double dt = t - lastTime;
+		
 		double leftVeloFeedForward = kLeftVeloFeedForward * leftVeloTicks100Ms;
 		double rightVeloFeedForward = kRightVeloFeedForward * rightVeloTicks100Ms;
 		
-		double leftFeedForward = leftVeloFeedForward;
-		double rightFeedForward = rightVeloFeedForward;
+		double headingDerivative = ChezyMath.getDifferenceInAngleDegrees(lastHeadingError, headingError);
+		double headingIntegral = lastHeadingIntegral + heading * dt;
+		double gyroCorrection = kPHeading * heading + kIHeading * headingIntegral + kDHeading * headingDerivative;
+		
+		double leftFeedForward = leftVeloFeedForward + gyroCorrection;
+		double rightFeedForward = rightVeloFeedForward - gyroCorrection;
 		
 		leftDriveMaster.set(POSITION_MODE, leftTicks, ARB_FEED_FORWARD, leftFeedForward);
 		rightDriveMaster.set(POSITION_MODE, rightTicks, ARB_FEED_FORWARD, rightFeedForward);
+		
+		lastHeadingIntegral = headingIntegral;
+		lastHeadingError = headingError;
+		lastTime = t;
 	}
 	
 	public void driveAngleVeloPID(double velocityInchesPerSec, double targetHeading) {
