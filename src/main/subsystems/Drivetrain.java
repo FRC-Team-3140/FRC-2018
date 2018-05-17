@@ -406,7 +406,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	private int distanceToTicks(double distanceInches) {
-		return (int) Math.round(EncoderHelper.inchesToEncoderTicks(distanceInches, spindleCircum, quadConversionFactor) * lowGearDriveTrainGearRatio);
+		return (int) Math.round(EncoderHelper.inchesToEncoderTicks(distanceInches, spindleCircum, quadConversionFactor) * lowGearDriveTrainGearRatio / 2);
 	}
 	
 	public boolean isDriveTrainAtDistance(double distance) {
