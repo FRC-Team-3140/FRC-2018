@@ -137,27 +137,21 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public void driveWithAnglePID(double inches, double angle) {
 		int ticks = distanceToTicks(inches);
 
-		if(okayToPID) {
-			double t = timer.get();
-			double dt = t - lastTime;
-			
-			double heading = getHeading();
-			double headingError = ChezyMath.getDifferenceInAngleDegrees(heading, angle);
-			double derivative = ChezyMath.getDifferenceInAngleDegrees(lastHeadingError, headingError) / dt;
-			double integral = lastHeadingIntegral + (headingError * dt);
-			double gyroCorrection = headingError * kPHeading + integral * kIHeading + derivative * kDHeading;
+		double t = timer.get();
+		double dt = t - lastTime;
 
-			leftDriveMaster.set(ControlMode.Position, ticks, DemandType.ArbitraryFeedForward, gyroCorrection);
-			rightDriveMaster.set(ControlMode.Position, ticks, DemandType.ArbitraryFeedForward, -gyroCorrection);
+		double heading = getHeading();
+		double headingError = ChezyMath.getDifferenceInAngleDegrees(heading, angle);
+		double derivative = ChezyMath.getDifferenceInAngleDegrees(lastHeadingError, headingError) / dt;
+		double integral = lastHeadingIntegral + (headingError * dt);
+		double gyroCorrection = headingError * kPHeading + integral * kIHeading + derivative * kDHeading;
 
-			lastHeadingError = headingError;
-			lastHeadingIntegral = integral;
-			lastTime = t;
-		}
-		else {
-			rightDriveMaster.set(0);
-			leftDriveMaster.set(0);
-		}
+		leftDriveMaster.set(ControlMode.Position, ticks, DemandType.ArbitraryFeedForward, gyroCorrection);
+		rightDriveMaster.set(ControlMode.Position, ticks, DemandType.ArbitraryFeedForward, -gyroCorrection);
+
+		lastHeadingError = headingError;
+		lastHeadingIntegral = integral;
+		lastTime = t;
 	}
 	
 	public void drivePID(double inches) {

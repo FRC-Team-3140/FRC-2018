@@ -2,6 +2,8 @@ package main;
 
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
+import main.commands.drivetrain.DistanceDriveStraight;
+import main.commands.drivetrain.DriveDistancePID;
 import main.commands.drivetrain.DriveLeftPID;
 import main.commands.drivetrain.DriveRightPID;
 import main.commands.drivetrain.EndPID;
@@ -55,7 +57,9 @@ public class OI extends ImprovedClass {
 		xbox.x.whenPressed(new InitPID());
 		xbox.x.whileHeld(new DriveRightPID(12)); 
 		xbox.x.whenReleased(new EndPID());
-
+		xbox.y.whenPressed(new InitPID());
+		xbox.y.whileHeld(new DistanceDriveStraight(120));
+		xbox.y.whenReleased(new EndPID());
 	}
 	
 	public static XboxController getXbox() {
