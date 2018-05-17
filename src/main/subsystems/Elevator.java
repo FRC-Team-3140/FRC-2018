@@ -166,16 +166,28 @@ public class Elevator extends ImprovedSubsystem {
 	/********************
 	 * MOVEMENT METHODS *
 	 ********************/
+	// Simple move to closed loop position PID
 	public void movePID(double distanceInches) {
 		elevatorMaster.set(ControlMode.Position, distanceToTicks(distanceInches));
 	}
 	
+	/***
+	 * Uses PID to hit a certain target velocity and maintains that velocity until stopped by another command/cancelled.
+	 * @param velocityInchesPerSecond The target velocity in inches per second to hit
+	 */
 	public void moveVelocityPID(double velocityInchesPerSecond) {
 		double velocityTicksPer100Ms = distanceToTicks(velocityInchesPerSecond) * 10;
 		SmartDashboard.putNumber("Target elevator velocity", velocityTicksPer100Ms);
 		elevatorMaster.set(ControlMode.Velocity, velocityTicksPer100Ms);
 	}
 	
+	/**
+	 * Uses a cascaded loop with position closed loop and velocity feed-forward. Used in motion profiles. Velocity
+	 * feed forward helps "skip over" any slowing down before hitting a trajectory point that isn't near the end of
+	 * the motion.
+	 * @param velocityTicks100Ms Velocity in ticks per 100 ms of the trajectory point
+	 * @param distanceTicks      Distance in ticks of the trajectory point.
+	 */
 	public void playbackPID(double velocityTicks100Ms, double distanceTicks) {
 		double feedForward = veloFeedForward * velocityTicks100Ms;
 		elevatorMaster.set(ControlMode.Position, distanceTicks, DemandType.ArbitraryFeedForward, feedForward);

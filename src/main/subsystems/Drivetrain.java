@@ -128,7 +128,12 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public void turnOff() {
 		tankDrive(0.0, 0.0, false);
 	}
-
+	
+	/**
+	 * Uses cascaded loop to drive straight to a certain target position. So far, angle can only be 0
+	 * @param inches inches forward to drive
+	 * @param angle  target angle to end up at
+	 */
 	public void driveWithAnglePID(double inches, double angle) {
 		int ticks = distanceToTicks(inches);
 
