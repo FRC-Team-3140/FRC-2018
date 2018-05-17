@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.kauailabs.navx.frc.AHRS;//NavX import
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
@@ -13,14 +14,19 @@ import util.ChezyMath;
 import util.DriveHelper;
 
 public class Drivetrain extends ImprovedSubsystem  {
+	private static final double OFF_THRESHOLD_DEGREE=10;
+	private static final double ON_THRESHOLD_DEGREE=5;
+	
 	private static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
 	
 	//TELEOP DRIVING
 	private DriveHelper driveHelper = new DriveHelper(7.5);
 	
 	//SENSORS
-	private static AHRS NavX;	
+	private static AHRS NavX;
 
+	private boolean autoBalanceXMode, autoBalanceYMode;
+	
 	public Drivetrain() {
 		try {
 			/* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
@@ -331,5 +337,52 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public void zeroSensors() {
 		zeroEncoders();
 		zeroGyro();
-	}	
+	}
+	
+	public void resetGyro() {
+		NavX.reset();
+		NavX.zeroYaw();
+	}
+	
+	public void autoBalance() {
+		double xAxisRate = Robot.oi.getXbox().getSmoothedAltX();
+		double yAxisRate = Robot.oi.getXbox().getSmoothedMainY();
+		double pitchAngleDegrees = NavX.getPitch();
+		double rollAngleDegrees = NavX.getRoll();
+
+		if (!autoBalanceXMode && (Math.abs(pitchAngleDegrees) >= Math.abs(OFF_THRESHOLD_DEGREE))) {
+			autoBalanceXMode = true;
+		} else if (autoBalanceXMode && (Math.abs(pitchAngleDegrees) <= Math.abs(ON_THRESHOLD_DEGREE))) {
+			autoBalanceXMode = false;
+			xAxisRate = 0;
+		}
+		if (!autoBalanceYMode && (Math.abs(pitchAngleDegrees) >= Math.abs(OFF_THRESHOLD_DEGREE))) {
+			autoBalanceYMode = true;
+		} else if (autoBalanceYMode && (Math.abs(pitchAngleDegrees) <= Math.abs(ON_THRESHOLD_DEGREE))) {
+			autoBalanceYMode = false;
+			yAxisRate = 0;
+		}
+
+		// Control drive system automatically,
+		// driving in reverse direction of pitch/roll angle,
+		// with a magnitude based upon the angle
+
+		if (autoBalanceXMode) {
+			double pitchAngleRadians = pitchAngleDegrees * (Math.PI / 180.0);
+			xAxisRate = Math.sin(pitchAngleRadians) * -1;
+			System.out.println("Balancing x by: " + xAxisRate);
+		}
+		if (autoBalanceYMode) {
+			double rollAngleRadians = rollAngleDegrees * (Math.PI / 180.0);
+			yAxisRate = Math.sin(rollAngleRadians) * -1;
+			System.out.println("Balancing y by: " + yAxisRate);
+		}
+
+		if (autoBalanceXMode || autoBalanceYMode) {
+			// Robot.dt.driveVelocity(xAxisRate, yAxisRate);
+			System.out.println("Balancing");
+		}
+		// myRobot.mecanumDrive_Cartesian(xAxisRate, yAxisRate, xbox.getTwist(),0);
+		Timer.delay(0.05); // wait for a motor update time, originally 0.005
+	}
 }

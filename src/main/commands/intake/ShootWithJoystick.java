@@ -1,7 +1,6 @@
 package main.commands.intake;
 
 import interfacesAndAbstracts.ImprovedCommand;
-import main.OI;
 import main.Robot;
 
 public class ShootWithJoystick extends ImprovedCommand {
@@ -10,7 +9,7 @@ public class ShootWithJoystick extends ImprovedCommand {
 	}
 	
 	protected void execute() {
-		Robot.in.moveWithJoystick(-OI.getXbox2().getSmoothedAltY()); //no negate for other
+		Robot.in.moveWithJoystick(-Robot.oi.getXbox2().getSmoothedAltY()); //no negate for other
 	}
 
 	@Override

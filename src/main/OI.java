@@ -49,11 +49,11 @@ public class OI extends ImprovedClass {
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
 	}
 	
-	public static XboxController getXbox() {
+	public XboxController getXbox() {
 		return xbox;
 	}
 	
-    public static XboxController getXbox2() {
+    public XboxController getXbox2() {
 		return xbox2;
 	}
     

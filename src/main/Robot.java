@@ -207,6 +207,7 @@ public class Robot extends ImprovedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		dt.autoBalance();
 		allPeriodic();
 	}
 	

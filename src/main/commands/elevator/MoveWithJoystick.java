@@ -1,7 +1,6 @@
 package main.commands.elevator;
 
 import interfacesAndAbstracts.ImprovedCommand;
-import main.OI;
 import main.Robot;
 
 public class MoveWithJoystick extends ImprovedCommand {
@@ -10,7 +9,7 @@ public class MoveWithJoystick extends ImprovedCommand {
 	}
 	
 	protected void execute() {
-		Robot.el.moveWithJoystick(OI.getXbox2().getSmoothedMainY()); //no negate for other
+		Robot.el.moveWithJoystick(Robot.oi.getXbox2().getSmoothedMainY()); //no negate for other
 	}
 
 	@Override
