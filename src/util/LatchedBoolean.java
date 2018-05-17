@@ -1,4 +1,4 @@
-package Util;
+package util;
 //Authors: Alexander Peters and Sol Kim
 //Date: 1/17
 

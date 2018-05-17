@@ -2,7 +2,7 @@ package main;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import lib.joystick.XboxController;
-import Util.RevRoboticsAnalogPressureSensor;
+import util.RevRoboticsAnalogPressureSensor;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
