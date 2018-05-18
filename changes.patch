@@ -1,0 +1,384 @@
+From 51d150b61a2b162afe7d93d01722d42c6ca8fc50 Mon Sep 17 00:00:00 2001
+From: Harrison <hhhoytt@gmail.com>
+Date: Mon, 26 Mar 2018 19:52:19 -0400
+Subject: [PATCH 1/5] Created the code, still errors in it
+
+---
+ src/main/Constants.java             |  3 ++
+ src/main/Robot.java                 |  3 ++
+ src/main/subsystems/Drivetrain.java | 84 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 90 insertions(+)
+
+diff --git a/src/main/Constants.java b/src/main/Constants.java
+index c1b37f0..ebd0278 100644
+--- a/src/main/Constants.java
++++ b/src/main/Constants.java
+@@ -39,6 +39,9 @@ public interface Constants {
+ 	// REV ROBOTICS SENSORS
+ 	public final int analogSensor = 0;
+ 	
++	//NAVX SENSOR PORT
++	
++	
+ 	// JOYSTICK DEADBANDS
+ 	public final double throttleDeadband = 0.02;
+ 	public final double headingDeadband = 0.02;
+diff --git a/src/main/Robot.java b/src/main/Robot.java
+index 8cd733f..1c57a4e 100644
+--- a/src/main/Robot.java
++++ b/src/main/Robot.java
+@@ -2,6 +2,8 @@
+ 
+ package main;
+ 
++import com.kauailabs.navx.frc.AHRS;
++
+ import edu.wpi.first.wpilibj.DriverStation;
+ import edu.wpi.first.wpilibj.command.Command;
+ import edu.wpi.first.wpilibj.command.CommandGroup;
+@@ -76,6 +78,7 @@ public class Robot extends ImprovedRobot {
+ 		el = new Elevator();
+ 		oi = new OI();
+ 		dc = new DriverCamera();
++		
+ 		// da = new DriverAlerts();	
+ 		//lg = new Logger();
+ 		//autoLooper = new Looper(kLooperDt);
+diff --git a/src/main/subsystems/Drivetrain.java b/src/main/subsystems/Drivetrain.java
+index e5ef659..da621a4 100644
+--- a/src/main/subsystems/Drivetrain.java
++++ b/src/main/subsystems/Drivetrain.java
+@@ -1,19 +1,43 @@
+ package main.subsystems;
+ 
+ import com.ctre.phoenix.motorcontrol.NeutralMode;
++import com.kauailabs.navx.frc.AHRS;
++
+ import Util.DriveHelper;
++import edu.wpi.first.wpilibj.DriverStation;
++import edu.wpi.first.wpilibj.SPI;
++import edu.wpi.first.wpilibj.Timer;
+ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+ import interfacesAndAbstracts.ImprovedSubsystem;
++import main.Robot;
+ import main.commands.drivetrain.Drive;
+ 
+ public class Drivetrain extends ImprovedSubsystem  {
+ 	private static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
++	private static AHRS NavX;
++	private static final double kOffBalanceAngleThresholdDegrees = 10;
++	private static final double kOonBalanceAngleThresholdDegrees  = 5;
++    boolean autoBalanceXMode;
++    boolean autoBalanceYMode;
++    double xAxisRate;
++    double yAxisRate;
++    double pitchAngleDegrees;
++    double rollAngleDegrees;
+ 	
+ 	//TELEOP DRIVING
+ 	private DriveHelper helper = new DriveHelper(7.5);
+ 
+ 	public Drivetrain() {
+ 		setTalonDefaults();
++		try {
++	        /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
++	        /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
++	        /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
++	        NavX = new AHRS(SPI.Port.kMXP); 
++	    } catch (RuntimeException ex ) {
++	        DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
++	    }
++		resetSensors();
+ 	}
+ 	
+ 	// DRIVE FOR TELEOP
+@@ -149,5 +173,65 @@ public class Drivetrain extends ImprovedSubsystem  {
+ 	public void zeroSensors() {
+ 		// TODO Auto-generated method stub
+ 	}	
++	
++	// EVERYTHING BELOW HERE IS FOR NAVX
++	
++	public void resetSensors() {
++		resetGyro();
++		//In the future, add resetEncoders() here too, look at FRC 2017 for an example
++	}
++	
++	public void resetGyro() {
++		NavX.reset();
++		NavX.zeroYaw();
++	}
++	
++	public void autoBalance() {
++        xAxisRate            = xbox.getX();
++        yAxisRate            = xbox.getY();
++        pitchAngleDegrees    = NavX.getPitch();
++        rollAngleDegrees     = NavX.getRoll();
++        
++        if ( !autoBalanceXMode && 
++             (Math.abs(pitchAngleDegrees) >= 
++              Math.abs(kOffBalanceAngleThresholdDegrees))) {
++            autoBalanceXMode = true;
++        }
++        else if ( autoBalanceXMode && 
++                  (Math.abs(pitchAngleDegrees) <= 
++                   Math.abs(kOonBalanceAngleThresholdDegrees))) {
++            autoBalanceXMode = false;
++        }
++        if ( !autoBalanceYMode && 
++             (Math.abs(pitchAngleDegrees) >= 
++              Math.abs(kOffBalanceAngleThresholdDegrees))) {
++            autoBalanceYMode = true;
++        }
++        else if ( autoBalanceYMode && 
++                  (Math.abs(pitchAngleDegrees) <= 
++                   Math.abs(kOonBalanceAngleThresholdDegrees))) {
++            autoBalanceYMode = false;
++        }
++        
++        // Control drive system automatically, 
++        // driving in reverse direction of pitch/roll angle,
++        // with a magnitude based upon the angle
++        
++        if ( autoBalanceXMode ) {
++            double pitchAngleRadians = pitchAngleDegrees * (Math.PI / 180.0);
++            xAxisRate = Math.sin(pitchAngleRadians) * -1;
++        }
++        if ( autoBalanceYMode ) {
++            double rollAngleRadians = rollAngleDegrees * (Math.PI / 180.0);
++            yAxisRate = Math.sin(rollAngleRadians) * -1;
++        }
++        
++        Robot.dt
++        
++        myRobot.mecanumDrive_Cartesian(xAxisRate, yAxisRate, xbox.getTwist(),0);
++        Timer.delay(0.005);		// wait for a motor update time
++    }
++	
++	
+ }
+ 
+-- 
+2.15.1.windows.2
+
+
+From aaa2ee73830f1b1d32886b6e117922837de1ff5f Mon Sep 17 00:00:00 2001
+From: Harrison <hhhoytt@gmail.com>
+Date: Mon, 26 Mar 2018 19:56:48 -0400
+Subject: [PATCH 2/5] Last push of the day, not sure if the code will work
+
+---
+ src/main/Robot.java                 | 2 ++
+ src/main/subsystems/Drivetrain.java | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/src/main/Robot.java b/src/main/Robot.java
+index 1c57a4e..be6607d 100644
+--- a/src/main/Robot.java
++++ b/src/main/Robot.java
+@@ -413,6 +413,8 @@ public class Robot extends ImprovedRobot {
+ 		SmartDashboard.putBoolean("Second Stage Top", !stage2TopSwitch.get());
+ 		SmartDashboard.putBoolean("Switch Height", switchHeightSwitch.get());
+ 		
++		dt.autoBalance();
++		
+ 		/*
+ 		// Knowing where you're at
+ 		if(!isCompetitionMatch) {
+diff --git a/src/main/subsystems/Drivetrain.java b/src/main/subsystems/Drivetrain.java
+index da621a4..830e647 100644
+--- a/src/main/subsystems/Drivetrain.java
++++ b/src/main/subsystems/Drivetrain.java
+@@ -226,9 +226,9 @@ public class Drivetrain extends ImprovedSubsystem  {
+             yAxisRate = Math.sin(rollAngleRadians) * -1;
+         }
+         
+-        Robot.dt
++        Robot.dt.driveVelocity(xAxisRate, yAxisRate);
+         
+-        myRobot.mecanumDrive_Cartesian(xAxisRate, yAxisRate, xbox.getTwist(),0);
++        //myRobot.mecanumDrive_Cartesian(xAxisRate, yAxisRate, xbox.getTwist(),0);
+         Timer.delay(0.005);		// wait for a motor update time
+     }
+ 	
+-- 
+2.15.1.windows.2
+
+
+From 4407df193b47cd6ccd0dff4d7dc468fd27eabd70 Mon Sep 17 00:00:00 2001
+From: Harrison <hhhoytt@gmail.com>
+Date: Tue, 27 Mar 2018 17:39:45 -0400
+Subject: [PATCH 3/5] Fixed reference to xbox controller
+
+---
+ src/main/subsystems/Drivetrain.java | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/src/main/subsystems/Drivetrain.java b/src/main/subsystems/Drivetrain.java
+index 830e647..262c1a7 100644
+--- a/src/main/subsystems/Drivetrain.java
++++ b/src/main/subsystems/Drivetrain.java
+@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.SPI;
+ import edu.wpi.first.wpilibj.Timer;
+ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+ import interfacesAndAbstracts.ImprovedSubsystem;
++import main.OI;
+ import main.Robot;
+ import main.commands.drivetrain.Drive;
+ 
+@@ -187,8 +188,8 @@ public class Drivetrain extends ImprovedSubsystem  {
+ 	}
+ 	
+ 	public void autoBalance() {
+-        xAxisRate            = xbox.getX();
+-        yAxisRate            = xbox.getY();
++        xAxisRate            = OI.getXbox().getSmoothedAltX();
++        yAxisRate            = OI.getXbox().getSmoothedMainY();
+         pitchAngleDegrees    = NavX.getPitch();
+         rollAngleDegrees     = NavX.getRoll();
+         
+@@ -220,10 +221,12 @@ public class Drivetrain extends ImprovedSubsystem  {
+         if ( autoBalanceXMode ) {
+             double pitchAngleRadians = pitchAngleDegrees * (Math.PI / 180.0);
+             xAxisRate = Math.sin(pitchAngleRadians) * -1;
++            System.out.println("Balancing x by: " + xAxisRate);
+         }
+         if ( autoBalanceYMode ) {
+             double rollAngleRadians = rollAngleDegrees * (Math.PI / 180.0);
+             yAxisRate = Math.sin(rollAngleRadians) * -1;
++            System.out.println("Balancing y by: " + yAxisRate);
+         }
+         
+         Robot.dt.driveVelocity(xAxisRate, yAxisRate);
+-- 
+2.15.1.windows.2
+
+
+From 8ba9c546f7be206b57fec330a457786a9a22c404 Mon Sep 17 00:00:00 2001
+From: Harrison <hhhoytt@gmail.com>
+Date: Thu, 29 Mar 2018 18:20:27 -0400
+Subject: [PATCH 4/5] I would like to test this and see the rate of adjustment
+ before I add movement
+
+---
+ src/main/subsystems/Drivetrain.java | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/src/main/subsystems/Drivetrain.java b/src/main/subsystems/Drivetrain.java
+index 262c1a7..d8fe4d4 100644
+--- a/src/main/subsystems/Drivetrain.java
++++ b/src/main/subsystems/Drivetrain.java
+@@ -3,6 +3,7 @@ package main.subsystems;
+ import com.ctre.phoenix.motorcontrol.NeutralMode;
+ import com.kauailabs.navx.frc.AHRS;
+ 
++import Util.AutoBalance;
+ import Util.DriveHelper;
+ import edu.wpi.first.wpilibj.DriverStation;
+ import edu.wpi.first.wpilibj.SPI;
+@@ -20,8 +21,8 @@ public class Drivetrain extends ImprovedSubsystem  {
+ 	private static final double kOonBalanceAngleThresholdDegrees  = 5;
+     boolean autoBalanceXMode;
+     boolean autoBalanceYMode;
+-    double xAxisRate;
+-    double yAxisRate;
++    public double xAxisRate;
++    public double yAxisRate;
+     double pitchAngleDegrees;
+     double rollAngleDegrees;
+ 	
+@@ -202,6 +203,7 @@ public class Drivetrain extends ImprovedSubsystem  {
+                   (Math.abs(pitchAngleDegrees) <= 
+                    Math.abs(kOonBalanceAngleThresholdDegrees))) {
+             autoBalanceXMode = false;
++            xAxisRate = 0;
+         }
+         if ( !autoBalanceYMode && 
+              (Math.abs(pitchAngleDegrees) >= 
+@@ -212,6 +214,7 @@ public class Drivetrain extends ImprovedSubsystem  {
+                   (Math.abs(pitchAngleDegrees) <= 
+                    Math.abs(kOonBalanceAngleThresholdDegrees))) {
+             autoBalanceYMode = false;
++            yAxisRate = 0;
+         }
+         
+         // Control drive system automatically, 
+@@ -229,10 +232,10 @@ public class Drivetrain extends ImprovedSubsystem  {
+             System.out.println("Balancing y by: " + yAxisRate);
+         }
+         
+-        Robot.dt.driveVelocity(xAxisRate, yAxisRate);
++        //Robot.dt.driveVelocity(xAxisRate, yAxisRate);
+         
+         //myRobot.mecanumDrive_Cartesian(xAxisRate, yAxisRate, xbox.getTwist(),0);
+-        Timer.delay(0.005);		// wait for a motor update time
++        Timer.delay(0.05);		// wait for a motor update time, originally 0.005
+     }
+ 	
+ 	
+-- 
+2.15.1.windows.2
+
+
+From b01544d43e80044164fa58091274c53a443d9c86 Mon Sep 17 00:00:00 2001
+From: Harrison <hhhoytt@gmail.com>
+Date: Thu, 5 Apr 2018 16:45:02 -0400
+Subject: [PATCH 5/5] Smart Dashboard will now display Pitch and Roll for
+ testing
+
+---
+ src/main/Robot.java                 | 3 +++
+ src/main/subsystems/Drivetrain.java | 9 +++++----
+ 2 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/src/main/Robot.java b/src/main/Robot.java
+index be6607d..10fe079 100644
+--- a/src/main/Robot.java
++++ b/src/main/Robot.java
+@@ -413,6 +413,9 @@ public class Robot extends ImprovedRobot {
+ 		SmartDashboard.putBoolean("Second Stage Top", !stage2TopSwitch.get());
+ 		SmartDashboard.putBoolean("Switch Height", switchHeightSwitch.get());
+ 		
++		SmartDashboard.putNumber("NavX Pitch", dt.NavX.getPitch());
++		SmartDashboard.putNumber("NavX Roll", dt.NavX.getRoll());
++		
+ 		dt.autoBalance();
+ 		
+ 		/*
+diff --git a/src/main/subsystems/Drivetrain.java b/src/main/subsystems/Drivetrain.java
+index d8fe4d4..c903d49 100644
+--- a/src/main/subsystems/Drivetrain.java
++++ b/src/main/subsystems/Drivetrain.java
+@@ -3,7 +3,6 @@ package main.subsystems;
+ import com.ctre.phoenix.motorcontrol.NeutralMode;
+ import com.kauailabs.navx.frc.AHRS;
+ 
+-import Util.AutoBalance;
+ import Util.DriveHelper;
+ import edu.wpi.first.wpilibj.DriverStation;
+ import edu.wpi.first.wpilibj.SPI;
+@@ -16,7 +15,7 @@ import main.commands.drivetrain.Drive;
+ 
+ public class Drivetrain extends ImprovedSubsystem  {
+ 	private static DifferentialDrive driveTrain = new DifferentialDrive(leftDriveMaster, rightDriveMaster);
+-	private static AHRS NavX;
++	public static AHRS NavX;
+ 	private static final double kOffBalanceAngleThresholdDegrees = 10;
+ 	private static final double kOonBalanceAngleThresholdDegrees  = 5;
+     boolean autoBalanceXMode;
+@@ -232,8 +231,10 @@ public class Drivetrain extends ImprovedSubsystem  {
+             System.out.println("Balancing y by: " + yAxisRate);
+         }
+         
+-        //Robot.dt.driveVelocity(xAxisRate, yAxisRate);
+-        
++        if (autoBalanceXMode || autoBalanceYMode) {
++        	//Robot.dt.driveVelocity(xAxisRate, yAxisRate);
++        	System.out.println("Balancing");
++        }
+         //myRobot.mecanumDrive_Cartesian(xAxisRate, yAxisRate, xbox.getTwist(),0);
+         Timer.delay(0.05);		// wait for a motor update time, originally 0.005
+     }
+-- 
+2.15.1.windows.2
+
