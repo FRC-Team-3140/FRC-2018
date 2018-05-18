@@ -205,10 +205,10 @@ public class Elevator extends ImprovedSubsystem {
 	
 	public void move(double throttle) {
 		SmartDashboard.putNumber("Elevator Input", throttle);
-		if((isArmAtTop() && throttle < 0) || (isArmAtBottom() && throttle > 0))
+		if((isArmAtTop() && throttle > 0) || (isArmAtBottom() && throttle < 0))
 			throttle = 0.0;
 		if (isCompetitionRobot)
-			elevatorMaster.set(-driveHelper.handleOverPower(throttle));
+			elevatorMaster.set(driveHelper.handleOverPower(throttle));
 		else
 			elevatorMaster.set(driveHelper.handleOverPower(throttle));
 	}
