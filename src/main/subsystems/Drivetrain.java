@@ -26,7 +26,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private static double kDLeft = 9.5;
 	
 	private static double kPRight = 0.49;
-	private static double kIRight = 0;	
+	private static double kIRight = 0;
 	private static double kDRight = 9.5;
 	
 	private static double kLeftVeloFeedForward = 0;
@@ -39,6 +39,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		
 	//TELEOP DRIVING
 	private DriveHelper driveHelper = new DriveHelper(7.5);
+	//Timer for PID
 	private Timer timer = new Timer();
 	
 	//SENSORS
@@ -166,6 +167,19 @@ public class Drivetrain extends ImprovedSubsystem  {
 		else if(side.toLowerCase().equals("right")) rightDriveMaster.set(ControlMode.Position, ticks);
 	}
 	
+	public void turnToAnglePID(double angle) {
+		double heading = getHeading();
+		double headingError = angle - heading;
+		double t = timer.get();
+		double dt = t - lastTime;
+		
+		double headingDerivative = ChezyMath.getDifferenceInAngleDegrees(lastHeadingError, headingError);
+		double headingIntegral = lastHeadingIntegral + headingError * dt;
+		double output = kPHeading * headingError + kIHeading * headingIntegral + kDHeading * headingDerivative;
+		
+		tankDrive(output, -output, false);
+	}
+	
 	public void driveFromPlayPID(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double headingTarget) {
 		double heading = getHeading();
 		double headingError = headingTarget - heading;
@@ -176,8 +190,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 		double rightVeloFeedForward = kRightVeloFeedForward * rightVeloTicks100Ms;
 		
 		double headingDerivative = ChezyMath.getDifferenceInAngleDegrees(lastHeadingError, headingError);
-		double headingIntegral = lastHeadingIntegral + heading * dt;
-		double gyroCorrection = kPHeading * heading + kIHeading * headingIntegral + kDHeading * headingDerivative;
+		double headingIntegral = lastHeadingIntegral + headingError * dt;
+		double gyroCorrection = kPHeading * headingError + kIHeading * headingIntegral + kDHeading * headingDerivative;
 		
 		double leftFeedForward = leftVeloFeedForward + gyroCorrection;
 		double rightFeedForward = rightVeloFeedForward - gyroCorrection;
