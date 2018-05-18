@@ -62,7 +62,7 @@ public class OI extends ImprovedClass {
 		xbox.y.whileHeld(new DistanceDriveStraight(120));
 		xbox.y.whenReleased(new EndPID());
 		xbox.b.whenPressed(new InitPID());
-		xbox.b.whenPressed(new TurnToAnglePID(90));
+		xbox.b.whileHeld(new TurnToAnglePID(90));
 		xbox.b.whenPressed(new EndPID());
 
 	}

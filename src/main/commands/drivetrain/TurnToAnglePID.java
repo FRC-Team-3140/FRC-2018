@@ -11,7 +11,7 @@ public class TurnToAnglePID extends ImprovedCommand {
 	}
 	
 	protected void initialize() {
-		Robot.dt.turnToAnglePID(angle);
+		Robot.dt.turnToAngle(angle);
 	}
 
 	@Override

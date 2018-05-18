@@ -36,6 +36,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private static double lastHeadingError = 0;
 	private static double lastTime = 0;
 	private boolean okayToPID = false;
+	
+	private double kDistanceBetweenWheels = 24; // inches
 		
 	//TELEOP DRIVING
 	private DriveHelper driveHelper = new DriveHelper(7.5);
@@ -167,17 +169,29 @@ public class Drivetrain extends ImprovedSubsystem  {
 		else if(side.toLowerCase().equals("right")) rightDriveMaster.set(ControlMode.Position, ticks);
 	}
 	
-	public void turnToAnglePID(double angle) {
+	public void turnToAngle(double angle) {
 		double heading = getHeading();
 		double headingError = angle - heading;
-		double t = timer.get();
+		/*double t = timer.get();
 		double dt = t - lastTime;
+		
+		System.out.println(headingError);
 		
 		double headingDerivative = ChezyMath.getDifferenceInAngleDegrees(lastHeadingError, headingError);
 		double headingIntegral = lastHeadingIntegral + headingError * dt;
 		double output = kPHeading * headingError + kIHeading * headingIntegral + kDHeading * headingDerivative;
 		
-		tankDrive(output, -output, false);
+		System.out.println(output);
+		
+		tankDrive(output, -output, false);*/
+		double diameter = kDistanceBetweenWheels;
+		double circum = diameter * Math.PI;
+		double fractionOfCircum = headingError/360;
+		double inchesToDrive = circum * fractionOfCircum;
+		
+		int ticks = distanceToTicks(inchesToDrive);
+		leftDriveMaster.set(ControlMode.Position, ticks);
+		rightDriveMaster.set(ControlMode.Position, -ticks);
 	}
 	
 	public void driveFromPlayPID(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double headingTarget) {
