@@ -8,7 +8,7 @@ public class InitPID extends ImprovedCommand {
 	public InitPID() {
 		requires(Robot.dt);
 	}
-	
+		
 	protected void initialize() {
 		Robot.dt.updateHeadingGains();
 		Robot.dt.zeroSensors();

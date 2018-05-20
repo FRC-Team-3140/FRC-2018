@@ -3,15 +3,15 @@ package main.commands.drivetrain;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class TurnToAnglePID extends ImprovedCommand {
+public class TurnToAngleInit extends ImprovedCommand {
 	private double angle;
 	
-	public TurnToAnglePID(double angle) {
+	public TurnToAngleInit(double angle) {
 		this.angle = angle;
 	}
 	
 	protected void initialize() {
-		Robot.dt.turnToAngle(angle);
+		Robot.dt.turnToAngleInit(angle);
 	}
 
 	@Override

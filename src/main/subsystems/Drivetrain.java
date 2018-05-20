@@ -17,7 +17,7 @@ import main.commands.drivetrain.Drive;
 
 public class Drivetrain extends ImprovedSubsystem  {
 	private static int slotIdx = 0;
-	private static double kPHeading = 0;
+	private static double kPHeading = 0.01;
 	private static double kIHeading = 0;
 	private static double kDHeading = 0; //push to sdb
 	
@@ -38,6 +38,11 @@ public class Drivetrain extends ImprovedSubsystem  {
 	private boolean okayToPID = false;
 	
 	private double kDistanceBetweenWheels = 24; // inches
+	private double kTurnCircum = kDistanceBetweenWheels * Math.PI;
+	private double kScrubFactor = 1;
+	private double kMaxTurnRate = 0.5; // percent output
+	
+	public double inchesToTurn = 0;
 		
 	//TELEOP DRIVING
 	private DriveHelper driveHelper = new DriveHelper(7.5);
@@ -169,29 +174,39 @@ public class Drivetrain extends ImprovedSubsystem  {
 		else if(side.toLowerCase().equals("right")) rightDriveMaster.set(ControlMode.Position, ticks);
 	}
 	
-	public void turnToAngle(double angle) {
+	public void drivePID(double leftInches, double rightInches) {
+		int leftTicks = distanceToTicks(leftInches);
+		int rightTicks = distanceToTicks(rightInches);
+		leftDriveMaster.set(ControlMode.Position, leftTicks);
+		rightDriveMaster.set(ControlMode.Position, rightTicks);
+	}
+	
+	public void turnToAngleInit(double angle) {
 		double heading = getHeading();
 		double headingError = angle - heading;
-		/*double t = timer.get();
+		double fractionOfCircum = headingError/360;
+		double inchesToDrive = kTurnCircum * fractionOfCircum * kScrubFactor;
+		inchesToTurn = inchesToDrive;
+	}
+	
+	public void turnToAngleGyro(double angle) {
+		double heading = getHeading();
+		double headingError = angle - heading;
+		double t = timer.get();
 		double dt = t - lastTime;
-		
 		System.out.println(headingError);
 		
-		double headingDerivative = ChezyMath.getDifferenceInAngleDegrees(lastHeadingError, headingError);
+		double headingDerivative = ChezyMath.getDifferenceInAngleDegrees(lastHeadingError, headingError) / dt;
 		double headingIntegral = lastHeadingIntegral + headingError * dt;
 		double output = kPHeading * headingError + kIHeading * headingIntegral + kDHeading * headingDerivative;
+		if(Math.abs(output) > kMaxTurnRate) output = Math.signum(output) * kMaxTurnRate;
 		
 		System.out.println(output);
+		arcadeDrive(0, output, false);
 		
-		tankDrive(output, -output, false);*/
-		double diameter = kDistanceBetweenWheels;
-		double circum = diameter * Math.PI;
-		double fractionOfCircum = headingError/360;
-		double inchesToDrive = circum * fractionOfCircum;
-		
-		int ticks = distanceToTicks(inchesToDrive);
-		leftDriveMaster.set(ControlMode.Position, ticks);
-		rightDriveMaster.set(ControlMode.Position, -ticks);
+		lastHeadingError = headingError;
+		lastHeadingIntegral = headingIntegral;
+		lastTime = t;
 	}
 	
 	public void driveFromPlayPID(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double headingTarget) {
