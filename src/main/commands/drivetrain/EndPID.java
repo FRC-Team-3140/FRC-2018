@@ -12,6 +12,7 @@ public class EndPID extends ImprovedCommand {
 	protected void initialize() {
 		Robot.dt.resetForPID();
 		Robot.dt.okayToPID(false);
+		Robot.dt.stopTimer();
 	}
 
 	@Override
