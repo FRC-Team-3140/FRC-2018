@@ -14,9 +14,9 @@ public class Elevator extends ImprovedSubsystem {
 	private int toleranceTicks = 30;
 	
 	private int slotIdx = 0;
-	private double kP = 9.91;
+	private double kP = 8;
 	private double kI = 0;
-	private double kD = 32.5;
+	private double kD = 60;
 	private double veloFeedForward = 0;
 	private boolean playFinished = false;
 	
@@ -33,7 +33,7 @@ public class Elevator extends ImprovedSubsystem {
 	 ************************/
 	private void configSensors() {
 		elevatorMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
-		elevatorMaster.setSensorPhase(false);
+		elevatorMaster.setSensorPhase(true);
 	}
 	
 	private void setBrakeMode() {
@@ -83,7 +83,9 @@ public class Elevator extends ImprovedSubsystem {
 		setCtrlMode();
 		setBrakeMode();
 		setVoltageComp(true, voltageCompensationVoltage, timeout);
-	}
+		elevatorMaster.setInverted(true);
+		elevatorSlave.setInverted(true);
+		}
 
 	/**************************
 	 * SENSOR SUPPORT METHODS *
@@ -208,7 +210,7 @@ public class Elevator extends ImprovedSubsystem {
 		if((isArmAtTop() && throttle > 0) || (isArmAtBottom() && throttle < 0))
 			throttle = 0.0;
 		if (isCompetitionRobot)
-			elevatorMaster.set(driveHelper.handleOverPower(-throttle));
+			elevatorMaster.set(driveHelper.handleOverPower(throttle));
 		else
 			elevatorMaster.set(driveHelper.handleOverPower(throttle));
 	}
