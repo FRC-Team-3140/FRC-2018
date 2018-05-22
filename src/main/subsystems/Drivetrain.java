@@ -17,17 +17,17 @@ import main.commands.drivetrain.Drive;
 
 public class Drivetrain extends ImprovedSubsystem  {
 	private static int slotIdx = 0;
-	private static double kPHeading = 0.01;
+	private static double kPHeading = 0.067;
 	private static double kIHeading = 0;
-	private static double kDHeading = 0; //push to sdb
+	private static double kDHeading = 0.0029; //push to sdb
 	
-	private static double kPLeft = 0.46;
+	private static double kPLeft = 0.015;
 	private static double kILeft = 0;
-	private static double kDLeft = 9.5;
+	private static double kDLeft = 0.625;
 	
-	private static double kPRight = 0.49;
+	private static double kPRight = 0.015;
 	private static double kIRight = 0;
-	private static double kDRight = 9.5;
+	private static double kDRight = 0.68;
 	
 	private static double kLeftVeloFeedForward = 0;
 	private static double kRightVeloFeedForward = 0;
@@ -196,7 +196,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		double dt = t - lastTime;
 		System.out.println(headingError);
 		
-		double headingDerivative = ChezyMath.getDifferenceInAngleDegrees(lastHeadingError, headingError) / dt;
+		double headingDerivative = (headingError - lastHeadingError) / dt;
 		double headingIntegral = lastHeadingIntegral + headingError * dt;
 		double output = kPHeading * headingError + kIHeading * headingIntegral + kDHeading * headingDerivative;
 		if(Math.abs(output) > kMaxTurnRate) output = Math.signum(output) * kMaxTurnRate;
@@ -207,6 +207,10 @@ public class Drivetrain extends ImprovedSubsystem  {
 		lastHeadingError = headingError;
 		lastHeadingIntegral = headingIntegral;
 		lastTime = t;
+	}
+	
+	public void turn() {
+		arcadeDrive(0, 0.3, false);
 	}
 	
 	public void driveFromPlayPID(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double headingTarget) {
@@ -252,6 +256,20 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public void stopTimer() {
 		timer.stop();
 		timer.reset();
+	}
+	
+	public void initPID() {
+		updateHeadingGains();
+		zeroSensors();
+		resetForPID();
+		okayToPID(true);
+		startTimer();
+	}
+	
+	public void endPID() {
+		Robot.dt.resetForPID();
+		okayToPID(false);
+		stopTimer();
 	}
 	
 	/***********************

@@ -2,10 +2,12 @@ package main;
 
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
+import main.commands.altermativeAuto.AltLeftToLeftScale;
 import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.DriveEachSidePID;
 import main.commands.drivetrain.EndPID;
 import main.commands.drivetrain.InitPID;
+import main.commands.drivetrain.TurnTest;
 import main.commands.drivetrain.TurnToAngleGyro;
 import main.commands.drivetrain.TurnToAngleInit;
 import main.commands.elevator.MovePID;
@@ -57,18 +59,20 @@ public class OI extends ImprovedClass {
 		xbox.x.whenPressed(new InitPID());
 		xbox.x.whileHeld(new DriveRightPID(12)); 
 		xbox.x.whenReleased(new EndPID());*/
-		xbox.y.whenPressed(new InitPID());
-		xbox.y.whileHeld(new DistanceDriveStraight(120));
-		xbox.y.whenReleased(new EndPID());
+	//	xbox.y.whenPressed(new InitPID());
+		xbox.y.whenPressed(new DistanceDriveStraight(230));
+		//xbox.y.whenReleased(new EndPID());
 		
-		xbox.b.whenPressed(new InitPID());
-		xbox.b.whenPressed(new TurnToAngleInit(90));
-		xbox.b.whileHeld(new DriveEachSidePID(Robot.dt.inchesToTurn, -Robot.dt.inchesToTurn));
-		xbox.b.whenPressed(new EndPID());
+//		xbox.b.whenPressed(new InitPID());
+//		xbox.b.whenPressed(new TurnToAngleInit(90));
+		//xbox.b.whileHeld(new TurnTest());
+//		xbox.b.whenPressed(new EndPID());
 		
-		xbox.x.whenPressed(new InitPID());
-		xbox.x.whileHeld(new TurnToAngleGyro(90));
-		xbox.x.whenReleased(new EndPID());
+		xbox.b.whenPressed(new AltLeftToLeftScale());
+		
+		//xbox.x.whenPressed(new InitPID());
+		xbox.x.whenPressed(new TurnToAngleGyro(91));
+		//xbox.x.whenReleased(new EndPID());
 	}
 	
 	public static XboxController getXbox() {

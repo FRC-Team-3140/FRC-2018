@@ -297,9 +297,12 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("Pressure: ", HardwareAdapter.analogPressureSensor1.value());
 		// DriveTrain Encoders
 		SmartDashboard.putNumber("DriveTrain Left Encoder Distance", dt.getLeftEncoderDistanceTravelled());
-		SmartDashboard.putNumber("DriveTrain Left Input", leftDriveMaster.get());
+		SmartDashboard.putNumber("DriveTrain Left Input", leftDriveMaster.getMotorOutputPercent());
+		SmartDashboard.putNumber("DriveTrain Left Input 2", leftDriveSlave1.getMotorOutputPercent());
 		SmartDashboard.putNumber("DriveTrain Right Encoder Distance", dt.getRightEncoderDistanceTravelled());
-		SmartDashboard.putNumber("DriveTrain Right Input", rightDriveMaster.get());
+		SmartDashboard.putNumber("DriveTrain Right Input", rightDriveMaster.getMotorOutputPercent());
+		SmartDashboard.putNumber("DriveTrain Right Input 2", rightDriveSlave1.getMotorOutputPercent());
+
 		SmartDashboard.putNumber("DriveTrain Distance", dt.getDistanceTravelled());
 		// DriveTrain Gyro
 		SmartDashboard.putNumber("NavX Heading", dt.getHeading());

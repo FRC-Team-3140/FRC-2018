@@ -11,13 +11,26 @@ public class DistanceDriveStraight extends ImprovedCommand {
 		this.inches = inches;
 	}
 	
+	protected void initialize() {
+		Robot.dt.initPID();
+		System.out.println("hi");
+	}
+	
 	protected void execute() {
 		Robot.dt.driveWithAnglePID(inches, 0);
+	}
+	
+	protected void end() {
+		Robot.dt.endPID();
+	}
+	
+	protected void interrupted() {
+		end();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return Robot.dt.isDriveTrainAtDistance(inches);
 	}
 
 }
