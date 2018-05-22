@@ -70,14 +70,15 @@ public interface Constants {
 	public final boolean invertPIDHeadingCorrection = true;
 	// ELEVATOR LENGTHS 
 	// CALIBRATE THESE- ALL ARE IN INCHES
-	public final double spindleDiameter = 2; //placeholder
+	public final double spindleDiameter = 2; 
 	public final double spindleCircum = Math.PI * spindleDiameter;
 	//Place Holder Meaning for every gearRatio turns of the encoder the elevator drum rotates 1 turn
 	public final double elevatorGearRatio = 1.0; 
-	public final double elevatorHeight = 78;
+	public final double elevatorHeight = 65;
 	public final double elevatorTolerance = 1;
-	public final double switchHeight = 28; //Originally 24
-	public final double scaleHeight = 70; 
+	public final double switchHeight = 24; 
+	public final double scaleNeutralHeight = 55;
+	public final double scaleUpHeight = 64; 
 			
 	/*************
 	 * CONSTANTS *

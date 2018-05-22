@@ -194,14 +194,14 @@ public class Drivetrain extends ImprovedSubsystem  {
 		double headingError = angle - heading;
 		double t = timer.get();
 		double dt = t - lastTime;
-		System.out.println(headingError);
+		//System.out.println(headingError);
 		
 		double headingDerivative = (headingError - lastHeadingError) / dt;
 		double headingIntegral = lastHeadingIntegral + headingError * dt;
 		double output = kPHeading * headingError + kIHeading * headingIntegral + kDHeading * headingDerivative;
 		if(Math.abs(output) > kMaxTurnRate) output = Math.signum(output) * kMaxTurnRate;
 		
-		System.out.println(output);
+		//System.out.println(output);
 		arcadeDrive(0, output, false);
 		
 		lastHeadingError = headingError;
@@ -267,7 +267,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 	}
 	
 	public void endPID() {
-		Robot.dt.resetForPID();
+		resetForPID();
 		okayToPID(false);
 		stopTimer();
 	}

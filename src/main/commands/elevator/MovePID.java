@@ -12,14 +12,13 @@ public class MovePID extends ImprovedCommand {
 		requires(Robot.el);
 	}
 	
-	protected void initialize() { //or use execute (?)
+	protected void execute() {
 		Robot.el.movePID(inches);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		//return Robot.el.isIntakeAtPos(inches);
-		return true;
+		return Robot.el.isIntakeAtPos(inches);
 	}
 	
 	protected void end() {

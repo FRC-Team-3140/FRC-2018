@@ -51,7 +51,7 @@ public class OI extends ImprovedClass {
 		
 		xbox2.x.whileHeld(new MovePID(switchHeight));
 		xbox2.a.whileHeld(new MovePID(50));
-		xbox2.b.whileHeld(new MoveVelocityPID(2));
+		//xbox2.b.whileHeld(new MoveVelocityPID(2));
 		
 		/*xbox.b.whenPressed(new InitPID());
 		xbox.b.whileHeld(new DriveLeftPID(12));
