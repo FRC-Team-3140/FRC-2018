@@ -1,5 +1,6 @@
 package main;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
 import main.commands.altermativeAuto.AltLeftToLeftScale;
@@ -22,6 +23,10 @@ import main.commands.pneumatics.tilt.TiltDown;
 import main.commands.pneumatics.tilt.TiltUp;
 
 public class OI extends ImprovedClass {	
+	private static double moveEl = 0;
+	private static double driveDt = 0;
+	private static double turnDt = 0;
+	
 	public OI() {
 		xbox.setInternalControl(false);
 		xbox2.setInternalControl(false);
@@ -50,7 +55,7 @@ public class OI extends ImprovedClass {
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
 		
 		xbox2.x.whileHeld(new MovePID(switchHeight));
-		xbox2.a.whileHeld(new MovePID(50));
+		xbox2.a.whileHeld(new MovePID(moveEl));
 		//xbox2.b.whileHeld(new MoveVelocityPID(2));
 		
 		/*xbox.b.whenPressed(new InitPID());
@@ -60,7 +65,7 @@ public class OI extends ImprovedClass {
 		xbox.x.whileHeld(new DriveRightPID(12)); 
 		xbox.x.whenReleased(new EndPID());*/
 	//	xbox.y.whenPressed(new InitPID());
-		xbox.y.whenPressed(new DistanceDriveStraight(230));
+		xbox.y.whenPressed(new DistanceDriveStraight(driveDt));
 		//xbox.y.whenReleased(new EndPID());
 		
 //		xbox.b.whenPressed(new InitPID());
@@ -71,8 +76,12 @@ public class OI extends ImprovedClass {
 		xbox.b.whenPressed(new AltLeftToLeftScale());
 		
 		//xbox.x.whenPressed(new InitPID());
-		xbox.x.whenPressed(new TurnToAngleGyro(91));
+		xbox.x.whenPressed(new TurnToAngleGyro(turnDt));
 		//xbox.x.whenReleased(new EndPID());
+		
+		SmartDashboard.putNumber("Drive for distance", driveDt);
+		SmartDashboard.putNumber("Turn to angle", turnDt);
+		SmartDashboard.putNumber("Move to height", moveEl);
 	}
 	
 	public static XboxController getXbox() {
@@ -86,6 +95,10 @@ public class OI extends ImprovedClass {
 	public void check() {
 		xbox.check();
 		xbox2.check();
+		
+		driveDt = SmartDashboard.getNumber("Drive for distance", driveDt);
+		turnDt = SmartDashboard.getNumber("Turn to angle", turnDt);
+		moveEl = SmartDashboard.getNumber("Move to height", moveEl);
 	}
 	
 	/**************
