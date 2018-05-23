@@ -16,15 +16,19 @@ import main.commands.pneumatics.tilt.TiltUp;
 public class AltLeftToLeftScale extends ImprovedCommandGroup {
 	public AltLeftToLeftScale() {
 		addSequential(new DistanceDriveStraight(230));
-		addSequential(new TurnToAngleGyro(-30));
+		addSequential(new TurnToAngleGyro(-35, 3));
 		addSequential(new WaitCommand(0.3));
-		addSequential(new DistanceDriveStraight(36));
-		addParallel(new MovePID(elevatorHeight));
-		addSequential(new DistanceDriveStraight(6));
+		addSequential(new MovePID(elevatorHeight, 4));
+		addSequential(new DistanceDriveStraight(48));
+		//addSequential(new DistanceDriveStraight(21));
+		addSequential(new WaitCommand(0.5));
 		addSequential(new TiltDown());
 		addSequential(new WaitCommand(0.3));
-		addSequential(new TurnToAngleGyro(10));
+		addSequential(new TurnToAngleGyro(10, 2));
 		addSequential(new WaitCommand(0.3));
 		addSequential(new ArmOpen());
+		addSequential(new ArmOpen());
+		addSequential(new DistanceDriveStraight(-20));
+		addSequential(new MoveToBottom(5));
 	}
 }

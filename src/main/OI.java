@@ -53,9 +53,9 @@ public class OI extends ImprovedClass {
 
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
-		
-		xbox2.x.whileHeld(new MovePID(switchHeight));
-		xbox2.a.whileHeld(new MovePID(moveEl));
+//		
+		xbox2.x.whileHeld(new MovePID(switchHeight, 5));
+//		xbox2.a.whileHeld(new MovePID(moveEl), 5);
 		//xbox2.b.whileHeld(new MoveVelocityPID(2));
 		
 		/*xbox.b.whenPressed(new InitPID());
@@ -76,7 +76,7 @@ public class OI extends ImprovedClass {
 		xbox.b.whenPressed(new AltLeftToLeftScale());
 		
 		//xbox.x.whenPressed(new InitPID());
-		xbox.x.whenPressed(new TurnToAngleGyro(turnDt));
+		xbox.x.whenPressed(new TurnToAngleGyro(90, 5));
 		//xbox.x.whenReleased(new EndPID());
 		
 		SmartDashboard.putNumber("Drive for distance", driveDt);

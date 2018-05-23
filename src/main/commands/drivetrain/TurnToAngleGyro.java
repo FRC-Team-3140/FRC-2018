@@ -1,16 +1,18 @@
 package main.commands.drivetrain;
 
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class TurnToAngleGyro extends ImprovedCommand {
+public class TurnToAngleGyro extends TimedCommand {
 	private double angle;
-	
-	public TurnToAngleGyro(double angle) {
+
+	public TurnToAngleGyro(double angle, double timeout) {
+		super(timeout);
 		requires(Robot.dt);
-		this.angle = angle;
+		this.angle = angle;	
 	}
-	
+
 	protected void initialize() {
 		Robot.dt.initPID();
 	}

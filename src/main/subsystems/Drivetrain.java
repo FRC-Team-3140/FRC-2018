@@ -17,9 +17,9 @@ import main.commands.drivetrain.Drive;
 
 public class Drivetrain extends ImprovedSubsystem  {
 	private static int slotIdx = 0;
-	private static double kPHeading = 0.067;
+	private static double kPHeading = 0.017;
 	private static double kIHeading = 0;
-	private static double kDHeading = 0.0029; //push to sdb
+	private static double kDHeading = 0.0004; //push to sdb
 	
 	private static double kPLeft = 0.015;
 	private static double kILeft = 0;

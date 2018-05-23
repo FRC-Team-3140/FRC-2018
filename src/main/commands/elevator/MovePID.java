@@ -1,16 +1,19 @@
 package main.commands.elevator;
 
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class MovePID extends ImprovedCommand {
+public class MovePID extends TimedCommand {
 	
+	public MovePID(double inches, double timeout) {
+		super(timeout);
+		this.inches = inches;
+		requires(Robot.el);	
+	}
+
 	private double inches;
 	
-	public MovePID(double inches) {
-		this.inches = inches;
-		requires(Robot.el);
-	}
 	
 	protected void execute() {
 		Robot.el.movePID(inches);

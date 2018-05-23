@@ -14,9 +14,9 @@ public class Elevator extends ImprovedSubsystem {
 	private int toleranceTicks = 30;
 	
 	private int slotIdx = 0;
-	private double kP = 8;
+	private double kP = 0.7;
 	private double kI = 0;
-	private double kD = 60;
+	private double kD = 3;
 	private double veloFeedForward = 0;
 	private boolean playFinished = false;
 	
