@@ -5,15 +5,13 @@ import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
 public class MovePID extends TimedCommand {
+	private double inches;
 	
 	public MovePID(double inches, double timeout) {
 		super(timeout);
 		this.inches = inches;
 		requires(Robot.el);	
 	}
-
-	private double inches;
-	
 	
 	protected void execute() {
 		Robot.el.movePID(inches);
