@@ -118,6 +118,11 @@ public class OI extends ImprovedClass {
 		xbox2.setButtonStatus(a, b, x, y, leftBumper, rightBumper, select, start, leftJoystickPress, rightJoystickPress, leftTrigger, rightTrigger);
 	}
 	
+	public void setArmButton(boolean press) {
+		setButtonValues(false, false, false, false, false, press, false, false, false, false, false, false);
+		xbox2.setInternalControl(false);
+	}
+	
 	public void setInternalControl(boolean internalControl) {
 		xbox.setInternalControl(internalControl);
 		xbox2.setInternalControl(internalControl);
