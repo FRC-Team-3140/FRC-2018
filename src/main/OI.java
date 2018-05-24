@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
 import main.commands.altermativeAuto.AltLeftToLeftScale;
+import main.commands.altermativeAuto.AltRightToRightScale;
 import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.DriveEachSidePID;
 import main.commands.drivetrain.EndPID;
@@ -73,7 +74,7 @@ public class OI extends ImprovedClass {
 		//xbox.b.whileHeld(new TurnTest());
 //		xbox.b.whenPressed(new EndPID());
 		
-		xbox.b.whenPressed(new AltLeftToLeftScale());
+		xbox.b.whenPressed(new AltRightToRightScale());
 		
 		//xbox.x.whenPressed(new InitPID());
 		xbox.x.whenPressed(new TurnToAngleGyro(90, 5));

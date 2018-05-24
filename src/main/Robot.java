@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedRobot;
 import loopController.Looper;
+import main.commands.altermativeAuto.AltBaseline;
 import main.commands.altermativeAuto.AltCenterToLeftSwitch;
 import main.commands.altermativeAuto.AltCenterToRightSwitch;
 import main.commands.altermativeAuto.AltLeftToLeftScale;
@@ -62,6 +63,7 @@ public class Robot extends ImprovedRobot {
 	public static RobotAction robot_act;
 	private static SendableChooser<RobotAction> autoChooser;
 	private static SendableChooser<StartPos> startPos;
+	private static Command autoCommand;
 	
 	// Competition Mode: Picking a recording and running it
 	private static Command competitionFilePicker;
@@ -69,12 +71,12 @@ public class Robot extends ImprovedRobot {
 	private static Command competitionPlayCommand;
 	//private static Command autoCommand;
 	
-/*	class AutoCommandGroup extends CommandGroup {
-		public AutoCommandGroup(Command auto, boolean reset, boolean moveDown) {
-			addSequential(auto);
-			if(reset) addSequential(new ResetForTeleop(moveDown));
-		}
-	}*/
+//	class AutoCommandGroup extends CommandGroup {
+//		public AutoCommandGroup(Command auto, boolean reset, boolean moveDown) {
+//			addSequential(auto);
+//			if(reset) addSequential(new ResetForTeleop(moveDown));
+//		}
+//	}
 	
 	@Override
 	public void robotInit() {
@@ -119,7 +121,7 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putData("Starting Position", startPos);
 		SmartDashboard.putData("Auto Mode", autoChooser);
 		//Auto Features to Disable
-		SmartDashboard.putBoolean("Disable Scale Auto", true);
+		SmartDashboard.putBoolean("Disable Scale Auto", false);
 		SmartDashboard.putBoolean("Disable Switch From Behind", true);
 		
 		//Robot Self Test
@@ -141,8 +143,8 @@ public class Robot extends ImprovedRobot {
 	@Override
 	public void autonomousInit() {		
 		autoLooper.start();
-
-		/*String gmsg = DriverStation.getInstance().getGameSpecificMessage();
+		
+		String gmsg = DriverStation.getInstance().getGameSpecificMessage();
 		while (gmsg == null || gmsg.length() != 3) {
 			gmsg = DriverStation.getInstance().getGameSpecificMessage();
 			try {
@@ -159,13 +161,85 @@ public class Robot extends ImprovedRobot {
 		boolean leftSwitch = gmsg.charAt(0) == 'L';
 		boolean leftScale = gmsg.charAt(1) == 'L';
 		boolean scaleDisabled = false;
-		boolean behindSwitchDisabled = false;
+		boolean behindSwitchDisabled = true;
 			
 		boolean isSwitch = false;
 		start_pos = startPos.getSelected();
 		robot_act = autoChooser.getSelected();
 		
 		if(robot_act == RobotAction.DO_NOTHING)//Do Nothing
+			autoCommand = new DoNothing();
+		else if(robot_act == RobotAction.BASELINE)//Baseline
+			autoCommand = new AltBaseline();
+		else if(robot_act == RobotAction.SWITCH){//Priority Switch
+			if(start_pos == StartPos.LEFT) {
+				if(leftSwitch) {
+					isSwitch = true;
+					autoCommand = new AltLeftToLeftSwitch();
+				}
+				else if(!behindSwitchDisabled) {
+					isSwitch = true;
+					autoCommand = new AltLeftToRightSwitch();
+				}
+				else if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
+				else autoCommand = new AltBaseline();					
+			}
+			else if(start_pos == StartPos.CENTER) {
+				isSwitch = true;
+				if(leftSwitch) autoCommand = new AltCenterToLeftSwitch();
+				else autoCommand = new AltCenterToRightSwitch();
+			}
+			else if(start_pos == StartPos.RIGHT) {
+				if(!leftSwitch) {
+					isSwitch = true;
+					autoCommand = new AltRightToRightSwitch();
+				}
+				else if(!behindSwitchDisabled) {
+					isSwitch = true;
+					autoCommand = new AltRightToLeftSwitch();
+				}
+				else if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
+				else autoCommand = new AltBaseline();					
+			}
+		}
+		else {//Priority Scale
+			if(start_pos == StartPos.LEFT) {
+				if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
+				else if(leftSwitch) {
+					isSwitch = true;
+					autoCommand = new AltLeftToLeftSwitch();
+				}
+				else if(!behindSwitchDisabled) {
+					isSwitch = true;
+					autoCommand = new AltLeftToRightSwitch();
+				}
+				else autoCommand = new AltBaseline();					
+			}
+			else if(start_pos == StartPos.CENTER) {
+				isSwitch = true;
+				if(leftSwitch) autoCommand = new AltCenterToLeftSwitch();
+				else autoCommand = new AltCenterToRightSwitch();
+			}
+			else if(start_pos == StartPos.RIGHT) {
+				if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
+				else if(!leftSwitch) {
+					isSwitch = true;
+					autoCommand = new AltRightToRightSwitch();
+				}
+				else if(!behindSwitchDisabled) {
+					isSwitch = true;
+					autoCommand = new AltRightToLeftSwitch();
+				}
+				else autoCommand = new AltBaseline();				
+			}
+		}
+		
+		if(autoCommand != null) autoCommand.start();
+//			(autoCommand = new AutoCommandGroup(
+//					autoCommand, !(autoCommand instanceof AltBaseline || 
+//					autoCommand instanceof DoNothing), isSwitch)).start();	
+		
+		/*if(robot_act == RobotAction.DO_NOTHING)//Do Nothing
 			autoCommand = new DoNothing();
 		else if(robot_act == RobotAction.BASELINE)//Baseline
 			autoCommand = new Baseline();
