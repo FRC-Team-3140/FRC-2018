@@ -7,8 +7,11 @@ import main.commands.commandGroups.cubeManipulator.DropCubeOff;
 import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TurnToAngle;
+import main.commands.drivetrain.TurnToAngleGyro;
+import main.commands.elevator.MovePID;
 import main.commands.elevator.MoveToBottom;
 import main.commands.elevator.MoveToSwitch;
+import main.commands.intake.SpinIn;
 import main.commands.intake.SpinOff;
 import main.commands.intake.SpinOut;
 import main.commands.pneumatics.arm.ArmClose;
@@ -19,8 +22,8 @@ import main.commands.pneumatics.tilt.TiltUp;
 public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 	public AltCenterToLeftSwitch() {
 		addSequential(new DistanceDriveStraight(30.375)); //(Break away from wall so there is no resistance on the first turn)
-		addSequential(new TurnToAngle(-35.75));
-		addParallel(new MoveToSwitch(1.5));
+		addSequential(new TurnToAngleGyro(-35.75, 2));
+		addParallel(new MovePID(switchHeight, 2));
 		addSequential(new DistanceDriveStraight(90));//Might be 90 or less needs testing
 		//addSequential(new DistanceDriveStraight(90.375));
 		addSequential(new DropCube());
@@ -30,17 +33,15 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 		addParallel(new MoveToBottom(1.5));
 		addSequential(new ArmOpen());
 		addSequential(new TiltDown());
-		addSequential(new SpinOut());
-		addSequential(new TurnToAngle(50));
-		//addSequential(new DistanceDriveStraight(38));
-		//addSequential(new TurnToAngle(90));
-		addSequential(new TimedDrive(-1, 0.75));
+		addSequential(new SpinIn());
+		addSequential(new TurnToAngleGyro(50, 2));
+	//	addSequential(new TimedDrive(-1, 0.75)); //used timed or maybe not
 		addSequential(new WaitCommand(0.1));
 		addSequential(new ArmClose());
 		addSequential(new WaitCommand(0.25));
 		addSequential(new TiltUp());
 		addSequential(new DistanceDriveStraight(-35));
-		addSequential(new TurnToAngle(-75));
+		addSequential(new TurnToAngleGyro(-75, 2.5));
 		addSequential(new SpinOff());
 		addParallel(new MoveToSwitch(1.5));
 		addSequential(new DistanceDriveStraight(80));
