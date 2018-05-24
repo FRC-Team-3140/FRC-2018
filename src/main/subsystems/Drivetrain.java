@@ -213,6 +213,24 @@ public class Drivetrain extends ImprovedSubsystem  {
 		arcadeDrive(0, 0.3, false);
 	}
 	
+	public void driveTimeStraight(double throttle) {
+//		double heading = getHeading();
+//		double headingError = 0 - heading;
+//		double t = timer.get();
+//		double dt = t - lastTime;
+//		
+//		double headingDerivative = (headingError - lastHeadingError) / dt;
+//		double headingIntegral = lastHeadingIntegral + headingError * dt;
+//		double output = kPHeading * headingError + kIHeading * headingIntegral + kDHeading * headingDerivative;
+//		if(Math.abs(output) > kMaxTurnRate) output = Math.signum(output) * kMaxTurnRate;
+		
+		arcadeDrive(throttle, 0, false);
+		
+//		lastHeadingError = headingError;
+//		lastHeadingIntegral = headingIntegral;
+//		lastTime = t;
+	}
+	
 	public void driveFromPlayPID(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double headingTarget) {
 		double heading = getHeading();
 		double headingError = headingTarget - heading;

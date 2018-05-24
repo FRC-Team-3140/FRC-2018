@@ -33,7 +33,9 @@ public class AltLeftToLeftScale extends ImprovedCommandGroup {
 		addSequential(new WaitCommand(0.3));
 		addSequential(new TiltUp());
 		addSequential(new WaitCommand(0.3));
-		addSequential(new DistanceDriveStraight(-24));
+		addSequential(new ArmClose());
+		addSequential(new WaitCommand(0.3));
+		addSequential(new DistanceDriveStraight(-30));
 		addSequential(new MoveToBottom(5));
 	}
 }
