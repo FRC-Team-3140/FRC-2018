@@ -1,12 +1,13 @@
 package Util;
 
 import main.Constants;
+import main.subsystems.subsystemConstants.DrivetrainConstants;
 
 /**
  *
  * @author Joseph Grube
  */
-public class DriveHelper implements Constants{
+public class DriveHelper implements Constants, DrivetrainConstants{
     private double negInertiaScalar;
     private double negInertiaAccumulator;
     private double oldTurn;

@@ -14,6 +14,7 @@ public interface Constants {
 	 * VARIABLES *
 	 *************/
 	public final boolean isCompetitionRobot = true;
+	public final boolean invertPIDHeadingCorrection = false;
 	
 	// FILE OUTPUT PATH
 	public final String outputPath = "/home/lvuser"; //"/U";
@@ -40,20 +41,10 @@ public interface Constants {
 	// REV ROBOTICS SENSORS
 	public final int analogSensor = 0;
 	
-	// JOYSTICK DEADBANDS
-	public final double throttleDeadband = 0.02;
-	public final double headingDeadband = 0.02;
-	public final double elevatorDeadband = 0.1;
-	
 	// TALON VOLTAGE COMPENSATION
 	public final double voltageCompensationVoltage = 12.0;
 	
 	//ROBOT BIAS TEST CONSTANTS
-	public final double practiceBotLeftWheelRadius = 2;//Update with real measurements
-	public final double practiceBotRightWheelRadius = 2;//Update with real measurements
-	public final double competitonBotLeftWheelRadius = 2;//Update with real measurements
-	public final double competitonBotRightWheelRadius = 2;//Update with real measurements	
-	public final double wheelCircum = 2 * practiceBotLeftWheelRadius * Math.PI;
 	public final double testVoltage = 8.0;//Subject to change
 	
 	// VP Integrated Encoder
@@ -62,23 +53,7 @@ public interface Constants {
 	public final FeedbackDevice magEncoder = FeedbackDevice.CTRE_MagEncoder_Relative;
 	public final int timeout = 10;
 	public final int pidIdx = 0;
-	
-	// DRIVETRAIN
-	//Place Holder Meaning for every gearRatio turns of the encoder the wheel rotates 1 turn
-	public final double lowGearDriveTrainGearRatio = 12.86;//If it turn out to be a 14:40 initial stage 12.24
-	public final double highGearDriveTrainGearRatio = 4.4;//If it turns out to be a 14+40 initial stage 4.19
-	public final boolean invertPIDHeadingCorrection = true;
-	// ELEVATOR LENGTHS 
-	// CALIBRATE THESE- ALL ARE IN INCHES
-	public final double spindleDiameter = 2; 
-	public final double spindleCircum = Math.PI * spindleDiameter;
-	//Place Holder Meaning for every gearRatio turns of the encoder the elevator drum rotates 1 turn
-	public final double elevatorGearRatio = 1.0; 
-	public final double elevatorHeight = 65;
-	public final double elevatorTolerance = 1;
-	public final double switchHeight = 24; 
-	public final double scaleNeutralHeight = 55;
-	public final double scaleUpHeight = 64; 
+
 			
 	/*************
 	 * CONSTANTS *
@@ -95,23 +70,7 @@ public interface Constants {
 	public final ControlMode POSITION_MODE = ControlMode.Position;
 	public final DemandType ARB_FEED_FORWARD = DemandType.ArbitraryFeedForward;
 	
-	public final double timedDrivePercent = -1;//DO NOT CHANGE
-	//This is a multiplier that will be computed manually distanceMultiplier * time = distanceDriven (When Robot driving at timedDrivePercent)
-	public final double timedDistanceMultiplier = 42.414;//38.58;// (in/s)
-	public final double driveTrainDistanceTolerance = 1;
-	public final double driveTrainAngleTolerance = 2;
-	
 	public static enum TurnMode {Right, Left};
-	public final double timedTurnPercent = 0.5;//DO NOT CHANGE
-	public final double timedTurn90degTime = 0.70;
-	public final double timedTurn45degTime = 0.35;
-	
-	public final double timedLiftPercent = 0.75;//DO NOT CHANGE
-	public final double timedLiftMultiplier = 41.6;// (in/s)
-	//Time to lift the elevator 3ft at timedLiftPercent of available power.
-	public final double timedLiftTime = 28.5/timedLiftMultiplier;
-	//Time to lift the elevator 78" or nearly full height at timedLiftPercent of available power.
-	public final double timedLiftFullHeightTime = 78/timedLiftMultiplier;
 	// length of robot
 	public final double robotLength = 38.5;
 	// subtracted from last move on auto

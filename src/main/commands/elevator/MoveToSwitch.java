@@ -3,8 +3,9 @@ package main.commands.elevator;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import main.Constants;
 import main.Robot;
+import main.subsystems.subsystemConstants.ElevatorConstants;
 
-public class MoveToSwitch extends TimedCommand implements Constants {
+public class MoveToSwitch extends TimedCommand implements Constants, ElevatorConstants {
 	
 	public MoveToSwitch(double timeout) {//1.5 recommended timeout
 		super(timeout);//Timeout forced to a maximum of 1.5, this is for the emergency case that a limit switch breaks

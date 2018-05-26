@@ -8,16 +8,10 @@ import Util.EncoderHelper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.elevator.MoveWithJoystick;
+import main.subsystems.subsystemConstants.ElevatorConstants;
 
-public class Elevator extends ImprovedSubsystem {
+public class Elevator extends ImprovedSubsystem implements ElevatorConstants {
 	private DriveHelper driveHelper = new DriveHelper(7.5);
-	private int toleranceTicks = 30;
-	
-	private int slotIdx = 0;
-	private double kP = 0.7;
-	private double kI = 0;
-	private double kD = 3;
-	private double veloFeedForward = 0;
 	private boolean playFinished = false;
 	
 	public Elevator() {
@@ -90,7 +84,6 @@ public class Elevator extends ImprovedSubsystem {
 	/**************************
 	 * SENSOR SUPPORT METHODS *
 	 **************************/
-	
 	public void zeroSensors() {
 		elevatorMaster.getSensorCollection().setQuadraturePosition(0, 10);
 	}
@@ -122,7 +115,6 @@ public class Elevator extends ImprovedSubsystem {
 	/**********************
 	 * ENC OUTPUT METHODS *
 	 **********************/
-	
 	public double getElevatorVelocity() {
 		return elevatorMaster.getSelectedSensorVelocity(pidIdx);
 	}

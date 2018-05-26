@@ -5,6 +5,8 @@ import Util.DriveHelper;
 import main.commands.intake.ShootWithJoystick;
 
 public class Intake extends ImprovedSubsystem {
+	private static double intakeDeadband = 0.01;
+	
 	public static enum WheelStates {
 		In, Out, Off
 	}
@@ -64,7 +66,7 @@ public class Intake extends ImprovedSubsystem {
 		
 	}
 	public void moveWithJoystick(double throttle) {
-		leftIntakeMotor.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
-		rightIntakeMotor.set(-driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, elevatorDeadband)));
+		leftIntakeMotor.set(driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, intakeDeadband)));
+		rightIntakeMotor.set(-driveHelper.handleOverPower(driveHelper.handleDeadband(throttle, intakeDeadband)));
 	}
 }

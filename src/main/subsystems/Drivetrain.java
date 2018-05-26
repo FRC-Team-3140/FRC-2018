@@ -14,34 +14,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.Robot;
 import main.commands.drivetrain.Drive;
+import main.subsystems.subsystemConstants.DrivetrainConstants;
 
-public class Drivetrain extends ImprovedSubsystem  {
-	private static int slotIdx = 0;
-	private static double kPHeading = 0.017;
-	private static double kIHeading = 0;
-	private static double kDHeading = 0.0004; //push to sdb
-	
-	private static double kPLeft = 0.015;
-	private static double kILeft = 0;
-	private static double kDLeft = 0.625;
-	
-	private static double kPRight = 0.015;
-	private static double kIRight = 0;
-	private static double kDRight = 0.68;
-	
-	private static double kLeftVeloFeedForward = 0;
-	private static double kRightVeloFeedForward = 0;
+public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants {
+	public static double kPHeading = 0.017;
+	public static double kIHeading = 0;
+	public static double kDHeading = 0.0004; //push to sdb
 	
 	private static double lastHeadingIntegral = 0;
 	private static double lastHeadingError = 0;
 	private static double lastTime = 0;
 	private boolean okayToPID = false;
-	
-	private double kDistanceBetweenWheels = 24; // inches
-	private double kTurnCircum = kDistanceBetweenWheels * Math.PI;
-	private double kScrubFactor = 1;
-	private double kMaxTurnRate = 0.5; // percent output
-	
 	public double inchesToTurn = 0;
 		
 	//TELEOP DRIVING
@@ -69,6 +52,9 @@ public class Drivetrain extends ImprovedSubsystem  {
 		pushNormallyUnusedToSmartDashboard();
 		setPIDDefaults();
 	}
+	/*****************
+	 * DRIVE METHODS *
+	 *****************/
 	
 	// DRIVE FOR TELEOP
 	public void driveVelocity(double throttle, double heading) {
@@ -82,7 +68,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		}
 	}
 
-	//Drive for playing back
+	//Drive for voltage playing back
 	public void driveVoltageTank(double leftVoltage, double rightVoltage, double voltageCompensationVoltage) {
 		double leftValue = ((Math.abs(leftVoltage) > voltageCompensationVoltage) ? Math.signum(leftVoltage) : leftVoltage/voltageCompensationVoltage);
 			// Negate one side so that the robot won't drive in circles
@@ -95,44 +81,6 @@ public class Drivetrain extends ImprovedSubsystem  {
 	public void driveVoltageTankTest(double leftVoltage, double rightVoltage, double voltageCompensationVoltage) {
 		tankDrive(leftVoltage/voltageCompensationVoltage, rightVoltage/voltageCompensationVoltage, false);
 	}
-	
-	//Push Default Gains To SmartDashboard
-	private void pushPIDGainsToSmartDashboard() {
-		SmartDashboard.putNumber("Heading: kP", kPHeading);
-		SmartDashboard.putNumber("Heading: kI", kIHeading);
-		SmartDashboard.putNumber("Heading: kD", kDHeading);
-	}
-	
-	//Post All Other Normally Empty Strings To SmarDashboard
-	private void pushNormallyUnusedToSmartDashboard() {   
-        SmartDashboard.putNumber("Heading: Target", 0.0);
-        SmartDashboard.putNumber("Heading: Error", 0.0);
-	}
-	
-	public void updateHeadingGains() {
-		kPHeading = SmartDashboard.getNumber("Heading: kP", kPHeading);
-		kIHeading = SmartDashboard.getNumber("Heading: kI", kIHeading);
-		kDHeading = SmartDashboard.getNumber("Heading: kD", kDHeading);
-	}
-	
-	public void arcadeDrive(double throttle, double heading, boolean squared) {
-		if(squared) {
-			throttle = Math.signum(throttle) * throttle * throttle;
-			heading = Math.signum(heading) * heading * heading;
-		}
-		tankDrive(throttle + heading, throttle - heading, false);
-	}
-		
-	public void tankDrive(double left, double right, boolean squaredInput) {
-		leftDriveMaster.set(left);
-		rightDriveMaster.set(right);
-	}
-	
-	public void timedTurn(TurnMode mode, double throttle) {
-		if (mode == TurnMode.Left) tankDrive(-throttle, throttle, false);
-		if (mode == TurnMode.Right) tankDrive(throttle, -throttle, false);
-	}
-	
 	public void turnOff() {
 		tankDrive(0.0, 0.0, false);
 	}
@@ -162,12 +110,14 @@ public class Drivetrain extends ImprovedSubsystem  {
 		lastTime = t;
 	}
 	
+	// Drives with closed loop position control w/o gyro correction
 	public void drivePID(double inches) {
 		int ticks = distanceToTicks(inches);
 		leftDriveMaster.set(ControlMode.Position, ticks);
 		rightDriveMaster.set(ControlMode.Position, ticks);
 	}
 	
+	// Drives one side of the drivetrain with position closed loop control
 	public void drivePID(double inches, String side) {
 		int ticks = distanceToTicks(inches);
 		if(side.toLowerCase().equals("left")) leftDriveMaster.set(ControlMode.Position, ticks);
@@ -180,15 +130,8 @@ public class Drivetrain extends ImprovedSubsystem  {
 		leftDriveMaster.set(ControlMode.Position, leftTicks);
 		rightDriveMaster.set(ControlMode.Position, rightTicks);
 	}
-	
-	public void turnToAngleInit(double angle) {
-		double heading = getHeading();
-		double headingError = angle - heading;
-		double fractionOfCircum = headingError/360;
-		double inchesToDrive = kTurnCircum * fractionOfCircum * kScrubFactor;
-		inchesToTurn = inchesToDrive;
-	}
-	
+
+	// Turns to angle w/ closed loop control using the gyro's heading
 	public void turnToAngleGyro(double angle) {
 		double heading = getHeading();
 		double headingError = angle - heading;
@@ -209,28 +152,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		lastTime = t;
 	}
 	
-	public void turn() {
-		arcadeDrive(0, 0.3, false);
-	}
-	
-	public void driveTimeStraight(double throttle) {
-//		double heading = getHeading();
-//		double headingError = 0 - heading;
-//		double t = timer.get();
-//		double dt = t - lastTime;
-//		
-//		double headingDerivative = (headingError - lastHeadingError) / dt;
-//		double headingIntegral = lastHeadingIntegral + headingError * dt;
-//		double output = kPHeading * headingError + kIHeading * headingIntegral + kDHeading * headingDerivative;
-//		if(Math.abs(output) > kMaxTurnRate) output = Math.signum(output) * kMaxTurnRate;
-		
-		arcadeDrive(throttle, 0, false);
-		
-//		lastHeadingError = headingError;
-//		lastHeadingIntegral = headingIntegral;
-//		lastTime = t;
-	}
-	
+	// future use
 	public void driveFromPlayPID(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double headingTarget) {
 		double heading = getHeading();
 		double headingError = headingTarget - heading;
@@ -255,11 +177,100 @@ public class Drivetrain extends ImprovedSubsystem  {
 		lastTime = t;
 	}
 	
+	// Future use- velocity closed loop control
 	public void driveAngleVeloPID(double velocityInchesPerSec, double targetHeading) {
 		double veloTicks100Ms = distanceToTicks(velocityInchesPerSec) * 10;
 		//TODO gyro correction and switching constants for velocity/position modes
 		leftDriveMaster.set(ControlMode.Velocity, veloTicks100Ms);
 		rightDriveMaster.set(ControlMode.Velocity, veloTicks100Ms);
+	}
+	
+	public void driveTimeStraight(double throttle) {
+		double heading = getHeading();
+		double headingError = 0 - heading;
+		double t = timer.get();
+		double dt = t - lastTime;
+		//System.out.println(headingError);
+		
+		double headingDerivative = (headingError - lastHeadingError) / dt;
+		double headingIntegral = lastHeadingIntegral + headingError * dt;
+		double gyroCorrection = kPHeading * headingError + kIHeading * headingIntegral + kDHeading * headingDerivative;
+		if(Math.abs(gyroCorrection) > kMaxTurnRate) gyroCorrection = Math.signum(gyroCorrection) * kMaxTurnRate;
+		
+		//System.out.println(output);
+		arcadeDrive(throttle, gyroCorrection, false);
+		
+		lastHeadingError = headingError;
+		lastHeadingIntegral = headingIntegral;
+		lastTime = t;
+	}
+	
+	public void timedTurn(TurnMode mode, double throttle) {
+		if (mode == TurnMode.Left) tankDrive(-throttle, throttle, false);
+		if (mode == TurnMode.Right) tankDrive(throttle, -throttle, false);
+	}
+	
+	// SIMPLE ARCADE DRIVE
+	public void arcadeDrive(double throttle, double heading, boolean squared) {
+		if(squared) {
+			throttle = Math.signum(throttle) * throttle * throttle;
+			heading = Math.signum(heading) * heading * heading;
+		}
+		tankDrive(throttle + heading, throttle - heading, false);
+	}
+		
+	// SIMPLE TANK DRIVE
+	public void tankDrive(double left, double right, boolean squaredInput) {
+		leftDriveMaster.set(left);
+		rightDriveMaster.set(right);
+	}
+	
+	/******************
+	 * SMARTDASHBOARD *
+	 ******************/
+	//Push Default Gains To SmartDashboard
+	private void pushPIDGainsToSmartDashboard() {
+		SmartDashboard.putNumber("Heading: kP", kPHeading);
+		SmartDashboard.putNumber("Heading: kI", kIHeading);
+		SmartDashboard.putNumber("Heading: kD", kDHeading);
+	}
+	
+	//Post All Other Normally Empty Strings To SmarDashboard
+	private void pushNormallyUnusedToSmartDashboard() {   
+        SmartDashboard.putNumber("Heading: Target", 0.0);
+        SmartDashboard.putNumber("Heading: Error", 0.0);
+	}
+	
+	public void updateHeadingGains() {
+		kPHeading = SmartDashboard.getNumber("Heading: kP", kPHeading);
+		kIHeading = SmartDashboard.getNumber("Heading: kI", kIHeading);
+		kDHeading = SmartDashboard.getNumber("Heading: kD", kDHeading);
+	}
+	
+	/***************
+	 * PID SUPPORT *
+	 ***************/
+	private void setPIDDefaults() {
+		leftDriveMaster.config_kP(slotIdx, kPLeft, 10);		
+		leftDriveMaster.config_kI(slotIdx, kILeft, 10);
+		leftDriveMaster.config_kD(slotIdx, kDLeft, 10);
+		leftDriveMaster.config_kF(slotIdx, 0, 10);
+		leftDriveMaster.selectProfileSlot(slotIdx, 0);
+		
+		rightDriveMaster.config_kP(slotIdx, kPRight, 10);
+		rightDriveMaster.config_kI(slotIdx, kIRight, 10);
+		rightDriveMaster.config_kD(slotIdx, kDRight, 10);
+		rightDriveMaster.config_kF(slotIdx, 0, 10);
+		rightDriveMaster.selectProfileSlot(slotIdx, 0);
+		
+		leftDriveMaster.configAllowableClosedloopError(slotIdx, 0, timeout);
+		rightDriveMaster.configAllowableClosedloopError(slotIdx, 0, timeout);
+	}
+	
+	public void resetForPID() {
+		lastHeadingError = 0;
+		lastHeadingIntegral = 0;
+		lastTime = 0;
 	}
 	
 	public void okayToPID(boolean okayToPID) {
@@ -290,9 +301,9 @@ public class Drivetrain extends ImprovedSubsystem  {
 		stopTimer();
 	}
 	
-	/***********************
-	 * PLAY/RECORD METHODS *
-	 ***********************/
+	/*******************
+	 * VOLTAGE METHODS *
+	 *******************/
 	public double getLeftMasterVoltage() {
 		return (leftDriveMaster.getMotorOutputVoltage());
 	}
@@ -312,12 +323,6 @@ public class Drivetrain extends ImprovedSubsystem  {
 	/*************************
 	 * DRIVE SUPPORT METHODS *
 	 *************************/
-	public void resetForPID() {
-		lastHeadingError = 0;
-		lastHeadingIntegral = 0;
-		lastTime = 0;
-	}
-	
 	private void reverseTalons(boolean isInverted) {
 		leftDriveMaster.setInverted(isInverted);
 		rightDriveMaster.setInverted(isInverted);
@@ -371,30 +376,7 @@ public class Drivetrain extends ImprovedSubsystem  {
 		rightDriveMaster.configNominalOutputReverse(0.0, timeout);
 		rightDriveSlave1.configNominalOutputReverse(0.0, timeout);
 	}
-	
-	private void configTalonEncoders() {
-		leftDriveMaster.setSensorPhase(false);
-		leftDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
-		rightDriveMaster.setSensorPhase(false);
-		rightDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
-	}
-	
-	private void setPIDDefaults() {
-		leftDriveMaster.config_kP(slotIdx, kPLeft, 10);		
-		leftDriveMaster.config_kI(slotIdx, kILeft, 10);
-		leftDriveMaster.config_kD(slotIdx, kDLeft, 10);
-		leftDriveMaster.config_kF(slotIdx, 0, 10);
-		leftDriveMaster.selectProfileSlot(slotIdx, 0);
-		
-		rightDriveMaster.config_kP(slotIdx, kPRight, 10);
-		rightDriveMaster.config_kI(slotIdx, kIRight, 10);
-		rightDriveMaster.config_kD(slotIdx, kDRight, 10);
-		rightDriveMaster.config_kF(slotIdx, 0, 10);
-		rightDriveMaster.selectProfileSlot(slotIdx, 0);
-		
-		leftDriveMaster.configAllowableClosedloopError(slotIdx, 0, timeout);
-		rightDriveMaster.configAllowableClosedloopError(slotIdx, 0, timeout);
-	}
+
 	
 	public void setTalonDefaults() {
 		reverseTalons(false);
@@ -405,13 +387,28 @@ public class Drivetrain extends ImprovedSubsystem  {
 		rightDriveSlave1.setInverted(true); //TODO move this somewhere else pls
 	}
 	
+	/***********
+	 * SENSORS *
+	 ***********/
+	private void configTalonEncoders() {
+		leftDriveMaster.setSensorPhase(false);
+		leftDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
+		rightDriveMaster.setSensorPhase(false);
+		rightDriveMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
+	}
+	
+	@Override
+	public void zeroSensors() {
+		zeroEncoders();
+		zeroGyro();
+	}	
+	
 	public AHRS getGyro(){
 		return NavX;
 	}
 	
 	public void zeroGyro() {
 		NavX.reset();
-		//NavX.zeroYaw();
 	}
 	
 	public double getHeading() {
@@ -483,10 +480,17 @@ public class Drivetrain extends ImprovedSubsystem  {
 		rightDriveMaster.getSensorCollection().setQuadraturePosition(0, 0);
 	}
 	
+	/***************
+	 * CONVERSIONS *
+	 ***************/
 	private int distanceToTicks(double distanceInches) {
-		return (int) Math.round(EncoderHelper.inchesToEncoderTicks(distanceInches, spindleCircum, quadConversionFactor) * lowGearDriveTrainGearRatio / 2);
+		return (int) Math.round(EncoderHelper.inchesToEncoderTicks(distanceInches, wheelCircum, quadConversionFactor) * lowGearDriveTrainGearRatio);
+		// TODO CHECK THIS
 	}
 	
+	/*****************
+	 * CHECK METHODS *
+	 *****************/
 	public boolean isDriveTrainAtDistance(double distance) {
 		double distanceTravelled = (getLeftEncoderDistanceTravelled() + getRightEncoderDistanceTravelled()) / 2;
 		return Math.abs(distance - distanceTravelled) < driveTrainDistanceTolerance;
@@ -525,10 +529,4 @@ public class Drivetrain extends ImprovedSubsystem  {
 	@Override
 	public void check() {
 	}
-
-	@Override
-	public void zeroSensors() {
-		zeroEncoders();
-		zeroGyro();
-	}	
 }
