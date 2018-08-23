@@ -5,6 +5,14 @@ import java.util.List;
 
 public class TrapezoidalProfileFactory {
 	
+	/*
+	 * Writes an array of positions and speeds
+	 * Each row in the array has an interval of 10ms
+	 * 
+	 * @param distanceUnits  Distance to drive in native units aka encoder ticks
+	 * @param cruiseVelocity The targeted velocity to cruise at in units per 100 ms
+	 * @param acceleration   The acceleration to hit the target velocity in units per 100ms per second
+	 */
 	public double[][] getProfile(double distanceUnits, double cruiseVelocity, double acceleration) {
 		List<Double> speedList = new ArrayList<Double>();
 		List<Double> posList = new ArrayList<Double>();

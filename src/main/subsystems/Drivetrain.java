@@ -17,9 +17,9 @@ import main.commands.drivetrain.Drive;
 import main.subsystems.subsystemConstants.DrivetrainConstants;
 
 public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants {
-	public static double kPHeading = 0.017;
-	public static double kIHeading = 0;
-	public static double kDHeading = 0.0004; //push to sdb
+	public static double kPHeading = kPHeadingDefault;
+	public static double kIHeading = kIHeadingDefault;
+	public static double kDHeading = kDHeadingDefault; //push to sdb
 	
 	private static double lastHeadingIntegral = 0;
 	private static double lastHeadingError = 0;
@@ -41,7 +41,7 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	        /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
 	        /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
 	        NavX = new AHRS(SPI.Port.kMXP); 
-		} catch (RuntimeException ex ) {
+		} catch (RuntimeException ex) {
 	          DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 	    }
 		
