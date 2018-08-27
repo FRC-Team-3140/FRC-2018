@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
 import main.commands.drivetrain.DistanceDriveStraight;
+import main.commands.drivetrain.TurnToAngleGyro;
 import main.commands.elevator.MovePID;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
@@ -30,7 +31,7 @@ public class OI extends ImprovedClass {
 		
 		//xbox.x.whenPressed(new DistanceDriveStraight(84));
 		//xbox.b.whenPressed(new DistanceDriveStraight(-12));
-		//xbox.a.whenPressed(new TurnToAngle(90));
+		//xbox.b.whenPressed(new TurnToAngle(90));
 		//xbox.y.whenPressed(new TestAutoTurning());
 		/*
 		xbox2.a .whenPressed(new MoveToBottom(1.5));
@@ -67,7 +68,7 @@ public class OI extends ImprovedClass {
 		//xbox.b.whenPressed(new AltRightToRightScale());
 		
 		//xbox.x.whenPressed(new InitPID());
-		//xbox.x.whenPressed(new TurnToAngleGyro(90, 5));
+		xbox.x.whenPressed(new TurnToAngleGyro(90, 5));
 		//xbox.x.whenReleased(new EndPID());
 		
 		SmartDashboard.putNumber("Drive for distance", driveDt);

@@ -24,9 +24,9 @@ public interface DrivetrainConstants {
 	// old constants: 0.015, 0, 0.68
 	
 	// TURNING
-	public static double kPHeadingDefault = 0.02;
+	public static double kPHeadingDefault = 0.0193;
 	public static double kIHeadingDefault = 0;
-	public static double kDHeadingDefault = 0; //push to sdb
+	public static double kDHeadingDefault = 0.00017; //push to sdb
 	// old constants: 0.017, 0.0004
 	
 	// VELOCITY
