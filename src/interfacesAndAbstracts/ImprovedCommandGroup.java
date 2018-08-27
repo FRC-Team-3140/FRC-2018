@@ -7,5 +7,4 @@ import main.subsystems.subsystemConstants.DrivetrainConstants;
 import main.subsystems.subsystemConstants.ElevatorConstants;
 
 public abstract class ImprovedCommandGroup extends CommandGroup implements Constants, HardwareAdapter, DrivetrainConstants, ElevatorConstants {
-
 }
