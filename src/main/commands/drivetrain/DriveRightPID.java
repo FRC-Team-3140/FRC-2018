@@ -12,12 +12,20 @@ public class DriveRightPID extends ImprovedCommand {
 	}
 	
 	protected void initialize() {
+		Robot.dt.initPID();
+	}
+	
+	protected void execute() {
 		Robot.dt.drivePID(inches, "right");
+	}
+	
+	protected void end() {
+		Robot.dt.endPID();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return true;
+		return Robot.dt.isRightDriveAtDistance(inches);
 	}
 
 }

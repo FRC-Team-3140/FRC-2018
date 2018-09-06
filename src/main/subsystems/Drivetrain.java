@@ -301,6 +301,8 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		stopTimer();
 	}
 	
+	
+	
 	/*******************
 	 * VOLTAGE METHODS *
 	 *******************/
@@ -493,6 +495,16 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	 *****************/
 	public boolean isDriveTrainAtDistance(double distance) {
 		double distanceTravelled = (getLeftEncoderDistanceTravelled() + getRightEncoderDistanceTravelled()) / 2;
+		return Math.abs(distance - distanceTravelled) < driveTrainDistanceTolerance;
+	}
+	
+	public boolean isRightDriveAtDistance(double distance) {
+		double distanceTravelled = getRightEncoderDistanceTravelled();
+		return Math.abs(distance - distanceTravelled) < driveTrainDistanceTolerance;
+	}
+	
+	public boolean isLeftDriveAtDistance(double distance) {
+		double distanceTravelled = getLeftEncoderDistanceTravelled();
 		return Math.abs(distance - distanceTravelled) < driveTrainDistanceTolerance;
 	}
 	
