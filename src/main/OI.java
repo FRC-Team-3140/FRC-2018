@@ -37,7 +37,7 @@ public class OI extends ImprovedClass {
 		xbox2.a .whenPressed(new MoveToBottom(1.5));
 		xbox2.b.whenPressed(new MoveToSwitch(1.5));
 		xbox2.y.whenPressed(new MoveToTop(3));
-	*/
+		 */
 		//xbox.b.whenPressed(new TurnToAngle(90));
 		//xbox.a.whenPressed(new MoveToBottom(1.5));
 		//xbox.y.whenPressed(new MoveToSwitch(1.5));

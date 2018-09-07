@@ -43,10 +43,6 @@ public class Intake extends ImprovedSubsystem {
 		rightIntakeMotor.set(rightIntakeWheelValue);
 	}
 	
-//	public boolean isCubeInIntake() {
-//		return intakeSwitch.get();
-//	}
-//	
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new ShootWithJoystick());
