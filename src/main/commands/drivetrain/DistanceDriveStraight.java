@@ -31,5 +31,4 @@ public class DistanceDriveStraight extends ImprovedCommand {
 	protected boolean isFinished() {
 		return Robot.dt.isDriveTrainAtDistance(inches);
 	}
-
 }

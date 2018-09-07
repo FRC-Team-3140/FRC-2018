@@ -12,12 +12,6 @@ public class Pneumatics extends ImprovedSubsystem {
 		tilter.set(OFF);
 		intakeArm.set(EXT);
 		intakeArm.set(OFF);
-//		pto.set(RET);
-//		pto.set(OFF);
-//		forklift.set(EXT);
-//		forklift.set(OFF);
-//		hook.set(EXT);
-//		hook.set(OFF);
 	}
 	
 	public static enum ArmStates {
@@ -76,19 +70,7 @@ public class Pneumatics extends ImprovedSubsystem {
 	public boolean isLowGear() {
 		return lowGear;
 	}
-//	
-//	public void shiftPTO(DoubleSolenoid.Value v) {
-//		pto.set(v);
-//	}
-//	
-//	public void toggleForks(DoubleSolenoid.Value v) {
-//		forklift.set(v);
-//	}
-//	
-//	public void toggleHooks(DoubleSolenoid.Value v) {
-//		hook.set(v);
-//	}
-//	
+	
 	/**
 	 * Toggles the compressor (ON/OFF)
 	 */

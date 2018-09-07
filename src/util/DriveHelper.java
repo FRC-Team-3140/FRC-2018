@@ -87,28 +87,5 @@ public class DriveHelper implements Constants, DrivetrainConstants{
     		return Math.signum(throttle);
     	else 
     		return throttle;
-    }    
-    /*
-    private double lastThrottleValue = 0.0;
-    private int smoothingnum = 0;
-    public double smoothThrottle(double throttle) {
-    	// smoothTrottleDif currently = 0.1
-    	double dif = throttle - lastThrottleValue;
-    	if (dif >= smoothThrottleDif) {
-    		smoothingnum++;
-    		System.out.println("Smoothing " + smoothingnum + " | Throttle: " + throttle);
-    		lastThrottleValue = throttle;
-    		return throttle - dif;
-    	} else {
-    		lastThrottleValue = throttle;
-    		return throttle;
-    	}
     }
-    
-    
-    public double driveSmooth(double throttle) {
-    	double v = handleOverPower(handleDeadband(throttle, throttleDeadband));
-    	return v;
-    }
-    */
 }
