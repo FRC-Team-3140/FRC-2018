@@ -23,10 +23,10 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 	public AltCenterToLeftSwitch() {
 		addSequential(new DistanceDriveStraight(30.375)); //(Break away from wall so there is no resistance on the first turn)
 		addSequential(new TurnToAngleGyro(-30, 2));
-		//addParallel(new MovePID(switchHeight, 2));
+		addParallel(new MovePID(switchHeight, 2));
 		addSequential(new DistanceDriveStraight(110));//Might be 90 or less needs testing
-		//addSequential(new DropCube()); // actually use this one tho
-		addSequential(new SpinOut()); // temporary
+		addSequential(new DropCube()); // actually use this one tho
+		//addSequential(new SpinOut()); // temporary
 		addSequential(new WaitCommand(1));
 		addSequential(new DropCubeOff());
 		addSequential(new DistanceDriveStraight(-60));
