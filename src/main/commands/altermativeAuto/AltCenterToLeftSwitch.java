@@ -5,6 +5,7 @@ import interfacesAndAbstracts.ImprovedCommandGroup;
 import main.commands.commandGroups.cubeManipulator.DropCube;
 import main.commands.commandGroups.cubeManipulator.DropCubeOff;
 import main.commands.drivetrain.DistanceDriveStraight;
+import main.commands.drivetrain.DriveLeftPID;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TurnToAngle;
 import main.commands.drivetrain.TurnToAngleGyro;
@@ -24,7 +25,8 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 		addSequential(new DistanceDriveStraight(30.375)); //(Break away from wall so there is no resistance on the first turn)
 		addSequential(new TurnToAngleGyro(-30, 2));
 		addParallel(new MovePID(switchHeight, 2));
-		addSequential(new DistanceDriveStraight(110));//Might be 90 or less needs testing
+		addSequential(new DistanceDriveStraight(90));//Might be 90 or less needs testing
+		addSequential(new DriveLeftPID(20));
 		addSequential(new DropCube()); // actually use this one tho
 		//addSequential(new SpinOut()); // temporary
 		addSequential(new WaitCommand(1));
