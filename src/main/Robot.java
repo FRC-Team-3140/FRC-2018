@@ -3,17 +3,20 @@
 package main;
 
 /***
- * Stupid scale autos should be working...
+ * Scale autos should be working...
  * 
  * TODO
  * Make sure the stupid elevator is working
  * Make sure moving up/down is in the right direction
  * Make sure the stupid PID on elevator works
- * Re-tune the PID for drivetrain and elevator (doesn't have to be perfect)
- * Scale autos should work. Test those first.
+ * Re-tune the PID for drive train and elevator (doesn't have to be perfect)
+ * Make sure same side switch/scale work
+ * Get 1 cube center switch working on each side
  * Start w/ center to left switch. Try getting 2 cube autos
- * Make sure side switch autos 
- * If there's time: Do opposite side switch and scale?
+ * 
+ * If there's time: 
+ * Do opposite side switch and scale? 
+ * And grab 2nd cube same side autos!
  ****/
 
 import java.io.File;
