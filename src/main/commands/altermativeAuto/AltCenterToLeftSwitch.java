@@ -22,20 +22,19 @@ import main.commands.pneumatics.tilt.TiltUp;
 public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 	public AltCenterToLeftSwitch() {
 		addSequential(new DistanceDriveStraight(30.375)); //(Break away from wall so there is no resistance on the first turn)
-		addSequential(new TurnToAngleGyro(-35.75, 2));
-		addParallel(new MovePID(switchHeight, 2));
-		addSequential(new DistanceDriveStraight(90));//Might be 90 or less needs testing
-		//addSequential(new DistanceDriveStraight(90.375));
-		addSequential(new DropCube());
-		addSequential(new WaitCommand(0.5));
+		addSequential(new TurnToAngleGyro(-30, 2));
+		//addParallel(new MovePID(switchHeight, 2));
+		addSequential(new DistanceDriveStraight(110));//Might be 90 or less needs testing
+		//addSequential(new DropCube()); // actually use this one tho
+		addSequential(new SpinOut()); // temporary
+		addSequential(new WaitCommand(1));
 		addSequential(new DropCubeOff());
 		addSequential(new DistanceDriveStraight(-60));
-		addParallel(new MoveToBottom(1.5));
-		addSequential(new ArmOpen());
+		//addParallel(new MoveToBottom(1.5));
+		/*addSequential(new ArmOpen());
 		addSequential(new TiltDown());
 		addSequential(new SpinIn());
 		addSequential(new TurnToAngleGyro(50, 2));
-	//	addSequential(new TimedDrive(-1, 0.75)); //used timed or maybe not
 		addSequential(new WaitCommand(0.1));
 		addSequential(new ArmClose());
 		addSequential(new WaitCommand(0.25));
@@ -43,9 +42,9 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 		addSequential(new DistanceDriveStraight(-35));
 		addSequential(new TurnToAngleGyro(-75, 2.5));
 		addSequential(new SpinOff());
-		addParallel(new MoveToSwitch(1.5));
+		//addParallel(new MoveToSwitch(1.5));
 		addSequential(new DistanceDriveStraight(80));
-		addSequential(new DropCube());
+		addSequential(new DropCube());*/
 		//addSequential(new WaitCommand(0.25));
 		//addSequential(new DropCubeOff());
 		//addSequential(new WaitCommand(0.2));

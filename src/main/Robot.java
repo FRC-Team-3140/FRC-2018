@@ -2,6 +2,20 @@
 
 package main;
 
+/***
+ * Stupid scale autos should be working...
+ * 
+ * TODO
+ * Make sure the stupid elevator is working
+ * Make sure moving up/down is in the right direction
+ * Make sure the stupid PID on elevator works
+ * Re-tune the PID for drivetrain and elevator (doesn't have to be perfect)
+ * Scale autos should work. Test those first.
+ * Start w/ center to left switch. Try getting 2 cube autos
+ * Make sure side switch autos 
+ * If there's time: Do opposite side switch and scale?
+ ****/
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -169,9 +183,11 @@ public class Robot extends ImprovedRobot {
 		
 		if(robot_act == RobotAction.DO_NOTHING)//Do Nothing
 			autoCommand = new DoNothing();
+		
 		else if(robot_act == RobotAction.BASELINE)//Baseline
 			autoCommand = new AltBaseline();
-		else if(robot_act == RobotAction.SWITCH){//Priority Switch
+		
+		else if(robot_act == RobotAction.SWITCH) {//Priority Switch
 			if(start_pos == StartPos.LEFT) {
 				if(leftSwitch) {
 					isSwitch = true;
