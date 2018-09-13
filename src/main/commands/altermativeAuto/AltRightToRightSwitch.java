@@ -6,19 +6,25 @@ import main.commands.commandGroups.cubeManipulator.DropCube;
 import main.commands.commandGroups.cubeManipulator.DropCubeOff;
 import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.TurnToAngle;
+import main.commands.drivetrain.TurnToAngleGyro;
 import main.commands.elevator.MovePID;
 import main.commands.elevator.MoveToSwitch;
+import main.commands.pneumatics.arm.ArmOpen;
+import main.commands.pneumatics.tilt.TiltDown;
+import main.commands.pneumatics.tilt.TiltUp;
 
 public class AltRightToRightSwitch extends ImprovedCommandGroup {
 	public AltRightToRightSwitch() {
 		addSequential(new DistanceDriveStraight(148.75));
-		addSequential(new TurnToAngle(-90));
+		addSequential(new TurnToAngleGyro(-90, 5));
 		addSequential(new WaitCommand(0.25));
 		addSequential(new MovePID(switchHeight, 1.5));
-		addSequential(new DistanceDriveStraight(43.05));
-		addSequential(new WaitCommand(0.1));
-		addSequential(new DropCube());
-		addSequential(new WaitCommand(1));
-		addSequential(new DropCubeOff());
+		addSequential(new DistanceDriveStraight(35));
+		addSequential(new WaitCommand(0.5));
+		addSequential(new TiltDown());
+		addSequential(new WaitCommand(0.3));
+		addSequential(new ArmOpen());
+		addSequential(new WaitCommand(0.3));
+		addSequential(new TiltUp());
 	}
 }

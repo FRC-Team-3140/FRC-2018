@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
 import main.commands.drivetrain.DistanceDriveStraight;
+import main.commands.drivetrain.TurnToAngle;
 import main.commands.drivetrain.TurnToAngleGyro;
 import main.commands.elevator.MovePID;
 import main.commands.pneumatics.arm.ArmClose;
@@ -28,26 +29,13 @@ public class OI extends ImprovedClass {
 		xbox.leftJoystickPress.whenReleased(new ShiftDown());
 		
 		xbox.a.whenPressed(new DistanceDriveStraight(12*10));
-		
-		//xbox.x.whenPressed(new DistanceDriveStraight(84));
-		//xbox.b.whenPressed(new DistanceDriveStraight(-12));
-		//xbox.b.whenPressed(new TurnToAngle(90));
-		//xbox.y.whenPressed(new TestAutoTurning());
-		/*
-		xbox2.a .whenPressed(new MoveToBottom(1.5));
-		xbox2.b.whenPressed(new MoveToSwitch(1.5));
-		xbox2.y.whenPressed(new MoveToTop(3));*/
-		//xbox.b.whenPressed(new TurnToAngle(90));
-		//xbox.a.whenPressed(new MoveToBottom(1.5));
-		//xbox.y.whenPressed(new MoveToSwitch(1.5));
-		//xbox.rightBumper.whenPressed(new MoveToTop(3));
-		//xbox.leftBumper.whenPressed(new AltRightToRightSwitch());
+
+		xbox.b.whenPressed(new TurnToAngleGyro(90, 5));
 
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
 	
-		xbox2.x.whileHeld(new MovePID(switchHeight, 5));
-//		xbox2.a.whileHeld(new MovePID(moveEl), 5);
+		xbox2.x.whenPressed(new MovePID(elevatorHeight, 5));
 		//xbox2.b.whileHeld(new MoveVelocityPID(2));
 		
 		/*xbox.b.whenPressed(new InitPID());
@@ -68,7 +56,7 @@ public class OI extends ImprovedClass {
 		//xbox.b.whenPressed(new AltRightToRightScale());
 		
 		//xbox.x.whenPressed(new InitPID());
-		xbox.x.whenPressed(new TurnToAngleGyro(90, 5));
+		//xbox.x.whenPressed(new TurnToAngleGyro(90, 5));
 		//xbox.x.whenReleased(new EndPID());
 		
 		SmartDashboard.putNumber("Drive for distance", driveDt);

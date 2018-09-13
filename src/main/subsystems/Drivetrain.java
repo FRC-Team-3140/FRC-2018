@@ -505,6 +505,7 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	
 	public boolean isLeftDriveAtDistance(double distance) {
 		double distanceTravelled = getLeftEncoderDistanceTravelled();
+		System.out.println(Math.abs(distance - distanceTravelled) < driveTrainDistanceTolerance);
 		return Math.abs(distance - distanceTravelled) < driveTrainDistanceTolerance;
 	}
 	

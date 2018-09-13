@@ -23,16 +23,15 @@ import main.commands.pneumatics.tilt.TiltUp;
 public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 	public AltCenterToLeftSwitch() {
 		addSequential(new DistanceDriveStraight(30.375)); //(Break away from wall so there is no resistance on the first turn)
-		addSequential(new TurnToAngleGyro(-30, 2));
-		addParallel(new MovePID(switchHeight, 2));
-		addSequential(new DistanceDriveStraight(90));//Might be 90 or less needs testing
-		addSequential(new DriveLeftPID(20));
-		addSequential(new DropCube()); // actually use this one tho
-		//addSequential(new SpinOut()); // temporary
-		addSequential(new WaitCommand(1));
+		addSequential(new TurnToAngleGyro(-40, 2));
+		addSequential(new DistanceDriveStraight(85));
+		addSequential(new DriveLeftPID(30));
+		addSequential(new DropCube()); // drops the first cube
+		addSequential(new WaitCommand(0.5));
 		addSequential(new DropCubeOff());
-		addSequential(new DistanceDriveStraight(-60));
-		//addParallel(new MoveToBottom(1.5));
+		
+		addSequential(new DistanceDriveStraight(-60)); // backs from switch
+		addParallel(new MoveToBottom(1.5));
 		/*addSequential(new ArmOpen());
 		addSequential(new TiltDown());
 		addSequential(new SpinIn());

@@ -12,15 +12,15 @@ public interface DrivetrainConstants {
 	public static int slotIdx = 0;
 	
 	// LEFT DRIVETRAIN PID CONSTANTS
-	public static double kPLeft = 0.01; // TODO have fun retuning lmfao 
+	public static double kPLeft = 0.015; // TODO have fun retuning lmfao 
 	public static double kILeft = 0;
-	public static double kDLeft = 0;
+	public static double kDLeft = 0.625;
 	// old constants: 0.015, 0, 0.625
 	
 	// RIGHT DRIVETRAIN PID CONSTANTS
-	public static double kPRight = 0.01;
+	public static double kPRight = 0.015;
 	public static double kIRight = 0;
-	public static double kDRight = 0;
+	public static double kDRight = 0.68;
 	// old constants: 0.015, 0, 0.68
 	
 	// TURNING
