@@ -19,10 +19,12 @@ public class MovePID extends TimedCommand {
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.el.isIntakeAtPos(inches);
+		return Robot.el.isIntakeAtPos(inches) || isTimedOut();
 	}
 	
 	protected void end() {
+		
+		// add something
 	}
 	
 

@@ -1,12 +1,14 @@
 package main.commands.drivetrain;
 
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class DriveRightPID extends ImprovedCommand {
+public class DriveRightPID extends TimedCommand {
 	double inches;
 	
-	public DriveRightPID(double inches) {
+	public DriveRightPID(double timeout, double inches) {
+		super(timeout);
 		this.inches = inches;
 		requires(Robot.dt);
 	}

@@ -1,12 +1,14 @@
 package main.commands.drivetrain;
 
+import edu.wpi.first.wpilibj.command.TimedCommand;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-public class DriveLeftPID extends ImprovedCommand {
+public class DriveLeftPID extends TimedCommand {
 	double inches;
 	
-	public DriveLeftPID(double inches) {
+	public DriveLeftPID(double inches, double timeout) {
+		super(timeout);
 		this.inches = inches;
 		requires(Robot.dt);
 	}
@@ -25,6 +27,6 @@ public class DriveLeftPID extends ImprovedCommand {
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.dt.isLeftDriveAtDistance(inches);
+		return Robot.dt.isLeftDriveAtDistance(inches) || isTimedOut();
 	}
 }

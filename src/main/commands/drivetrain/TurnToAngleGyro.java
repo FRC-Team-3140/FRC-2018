@@ -31,7 +31,7 @@ public class TurnToAngleGyro extends TimedCommand {
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.dt.isDriveTrainAtAngle(angle);
+		return Robot.dt.isDriveTrainAtAngle(angle) || isTimedOut();
 	}
 
 }
