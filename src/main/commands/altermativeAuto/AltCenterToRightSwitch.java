@@ -5,6 +5,7 @@ import interfacesAndAbstracts.ImprovedCommandGroup;
 import main.commands.commandGroups.cubeManipulator.DropCube;
 import main.commands.commandGroups.cubeManipulator.DropCubeOff;
 import main.commands.drivetrain.DistanceDriveStraight;
+import main.commands.drivetrain.DriveRightPID;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TurnToAngle;
 import main.commands.drivetrain.TurnToAngleGyro;
@@ -22,15 +23,16 @@ import main.commands.pneumatics.tilt.TiltUp;
 public class AltCenterToRightSwitch extends ImprovedCommandGroup {
 	public AltCenterToRightSwitch() {
 		addSequential(new DistanceDriveStraight(30.375)); //(Break away from wall so there is no resistance on the first turn)
-		addSequential(new TurnToAngleGyro(30, 2));
-		addParallel(new MovePID(switchHeight, 1.5));
-		addSequential(new DistanceDriveStraight(98));
+		addSequential(new TurnToAngleGyro(40, 2));
+		addSequential(new DistanceDriveStraight(85));
+		addSequential(new DriveRightPID(30,2));
+		addSequential(new MovePID(switchHeight, 3));
 		addSequential(new DropCube());
 		addSequential(new WaitCommand(0.5));
 		addSequential(new DropCubeOff());
 		addSequential(new DistanceDriveStraight(-60));
 		addParallel(new MoveToBottom(1.5));
-		addSequential(new ArmOpen());
+		/*addSequential(new ArmOpen());
 		addSequential(new TiltDown());
 		addSequential(new WaitCommand(0.3));
 		addSequential(new TurnToAngleGyro(-50, 2));

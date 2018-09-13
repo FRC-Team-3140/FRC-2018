@@ -79,7 +79,11 @@ public class Elevator extends ImprovedSubsystem implements ElevatorConstants {
 		setVoltageComp(true, voltageCompensationVoltage, timeout);
 		elevatorMaster.setInverted(false);
 		elevatorSlave.setInverted(false);
-		}
+	}
+	
+	public void endElevatorPID() {
+		elevatorMaster.set(PERCENT_VBUS_MODE, 0);
+	}
 
 	/**************************
 	 * SENSOR SUPPORT METHODS *

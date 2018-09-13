@@ -17,7 +17,7 @@ import main.commands.pneumatics.tilt.TiltUp;
 public class AltRightToRightSwitch extends ImprovedCommandGroup {
 	public AltRightToRightSwitch() {
 		addSequential(new DistanceDriveStraight(148.75));
-		addSequential(new TurnToAngleGyro(-90, 5));
+		addSequential(new TurnToAngleGyro(-90, 3));
 		addSequential(new WaitCommand(0.25));
 		addSequential(new MovePID(switchHeight, 3));
 		addSequential(new AltDistanceDriveStraight(35,2));

@@ -23,9 +23,11 @@ public class MovePID extends TimedCommand {
 	}
 	
 	protected void end() {
-		
-		// add something
+		Robot.el.endElevatorPID();
 	}
 	
+	protected void interrupted() {
+		end();
+	}
 
 }

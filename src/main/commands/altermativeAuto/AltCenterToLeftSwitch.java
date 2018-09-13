@@ -6,19 +6,9 @@ import main.commands.commandGroups.cubeManipulator.DropCube;
 import main.commands.commandGroups.cubeManipulator.DropCubeOff;
 import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.DriveLeftPID;
-import main.commands.drivetrain.TimedDrive;
-import main.commands.drivetrain.TurnToAngle;
 import main.commands.drivetrain.TurnToAngleGyro;
 import main.commands.elevator.MovePID;
 import main.commands.elevator.MoveToBottom;
-import main.commands.elevator.MoveToSwitch;
-import main.commands.intake.SpinIn;
-import main.commands.intake.SpinOff;
-import main.commands.intake.SpinOut;
-import main.commands.pneumatics.arm.ArmClose;
-import main.commands.pneumatics.arm.ArmOpen;
-import main.commands.pneumatics.tilt.TiltDown;
-import main.commands.pneumatics.tilt.TiltUp;
 
 public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 	public AltCenterToLeftSwitch() {
@@ -26,6 +16,7 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 		addSequential(new TurnToAngleGyro(-40, 2));
 		addSequential(new DistanceDriveStraight(85));
 		addSequential(new DriveLeftPID(30, 2));
+		addSequential(new MovePID(switchHeight, 3));
 		addSequential(new DropCube()); // drops the first cube
 		addSequential(new WaitCommand(0.5));
 		addSequential(new DropCubeOff());
