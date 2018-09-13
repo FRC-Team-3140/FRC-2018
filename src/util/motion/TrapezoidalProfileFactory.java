@@ -1,4 +1,4 @@
-package Util.motion;
+package util.motion;
 
 import java.util.ArrayList;
 import java.util.List;

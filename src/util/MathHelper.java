@@ -1,4 +1,4 @@
-package Util;
+package util;
 
 public class MathHelper {
 	public static double limit(double val, double limit) {

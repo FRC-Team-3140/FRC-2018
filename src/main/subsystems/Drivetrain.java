@@ -7,9 +7,9 @@ import com.kauailabs.navx.frc.AHRS;//NavX import
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
-import Util.ChezyMath;
-import Util.DriveHelper;
-import Util.EncoderHelper;
+import util.ChezyMath;
+import util.DriveHelper;
+import util.EncoderHelper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.Robot;

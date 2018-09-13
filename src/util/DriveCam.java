@@ -1,4 +1,4 @@
-package Util;
+package util;
 //
 //import com.ni.vision.NIVision;
 //import com.ni.vision.NIVision.DrawMode;

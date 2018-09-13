@@ -3,8 +3,8 @@ package main.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 
-import Util.DriveHelper;
-import Util.EncoderHelper;
+import util.DriveHelper;
+import util.EncoderHelper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.commands.elevator.MoveWithJoystick;
