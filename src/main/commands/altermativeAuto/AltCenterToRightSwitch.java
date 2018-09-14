@@ -26,7 +26,8 @@ public class AltCenterToRightSwitch extends ImprovedCommandGroup {
 		addSequential(new TurnToAngleGyro(40, 2));
 		addSequential(new DistanceDriveStraight(85));
 		addSequential(new DriveRightPID(30,2));
-		addSequential(new MovePID(switchHeight, 3));
+		addSequential(new SpinOut());
+		/*addSequential(new MovePID(switchHeight, 3));
 		addSequential(new DropCube());
 		addSequential(new WaitCommand(0.5));
 		addSequential(new DropCubeOff());

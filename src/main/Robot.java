@@ -7,11 +7,15 @@ package main;
  * ALMOST WORKING: RIGHT SWITCH AND CENTER LEFT
  * 
  * TODO
+ * Drive elevator make sure that actually works (motors are going the right way)
+ * Mild retuning
  * Make sure same side switch works
- * Test autos on left side
+ * Make sure same side scale works
  * Get 1 cube center switch working on each side
  * 
  * If there's time: 
+ * 2 cube center switch
+ * Pick up a cube after scale
  * Do opposite side switch and scale? 
  ****/
 
