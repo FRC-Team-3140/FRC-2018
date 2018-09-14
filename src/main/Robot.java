@@ -8,7 +8,7 @@ package main;
  * 
  * TODO
  * Drive elevator make sure that actually works (motors are going the right way)
- * Mild retuning
+ * Mild re-tuning on elevator (who even cares anymore)
  * Make sure same side switch works
  * Make sure same side scale works
  * Get 1 cube center switch working on each side

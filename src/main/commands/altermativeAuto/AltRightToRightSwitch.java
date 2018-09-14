@@ -20,7 +20,7 @@ public class AltRightToRightSwitch extends ImprovedCommandGroup {
 		addSequential(new DistanceDriveStraight(148.75));
 		addSequential(new TurnToAngleGyro(-90, 3));
 		addSequential(new WaitCommand(0.25));
-		addSequential(new AltDistanceDriveStraight(35,2));
+		addSequential(new AltDistanceDriveStraight(40,2));
 		addSequential(new SpinOut());
 		/*addSequential(new MovePID(switchHeight, 3));
 		addSequential(new WaitCommand(0.5));
