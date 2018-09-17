@@ -1,2 +1,18 @@
 * text=auto
+
+/lib/** binary
+
+*.jar binary
+
+*.txt text
 *.java text
+*.xml text
+*.md text
+*.sh text
+*.bat text
+
+.gitattributes text
+.classpath text
+.gitignore text
+.project text
+build.properties text
