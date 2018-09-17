@@ -13,7 +13,6 @@ public class DistanceDriveStraight extends ImprovedCommand {
 	
 	protected void initialize() {
 		Robot.dt.initPID();
-		System.out.println("hi");
 	}
 	
 	protected void execute() {
