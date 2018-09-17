@@ -29,15 +29,13 @@ public class OI extends ImprovedClass {
 		xbox.leftJoystickPress.whenReleased(new ShiftDown());
 		
 		//xbox.a.whenPressed(new DistanceDriveStraight(12*10));
-
 		//xbox.b.whenPressed(new TurnToAngleGyro(90, 5));
 
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
-	
-		xbox2.x.whenPressed(new MovePID(elevatorHeight, 5));
-		xbox2.y.whenPressed(new MovePID(switchHeight, 3));
-		//xbox2.b.whileHeld(new MoveVelocityPID(2));
+
+//		xbox2.x.whenPressed(new MovePID(elevatorHeight, 5));
+//		xbox2.y.whenPressed(new MovePID(switchHeight, 3));
 		
 		/*xbox.b.whenPressed(new InitPID());
 		xbox.b.whileHeld(new DriveLeftPID(12));

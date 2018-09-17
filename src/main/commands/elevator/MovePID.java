@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
+// FIXME fix this
 public class MovePID extends TimedCommand {
 	private double inches;
 	
@@ -19,11 +20,11 @@ public class MovePID extends TimedCommand {
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.el.isIntakeAtPos(inches) || isTimedOut();
+		return Robot.el.isIntakeAtPos(inches); //|| isTimedOut();
 	}
 	
 	protected void end() {
-		Robot.el.endElevatorPID();
+		//Robot.el.endElevatorPID();
 	}
 	
 	protected void interrupted() {

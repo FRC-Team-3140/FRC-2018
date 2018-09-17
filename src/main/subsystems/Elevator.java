@@ -27,7 +27,7 @@ public class Elevator extends ImprovedSubsystem implements ElevatorConstants {
 	 ************************/
 	private void configSensors() {
 		elevatorMaster.configSelectedFeedbackSensor(magEncoder, pidIdx, timeout);
-		elevatorMaster.setSensorPhase(false);
+		elevatorMaster.setSensorPhase(true);
 	}
 	
 	private void setBrakeMode() {
@@ -77,8 +77,8 @@ public class Elevator extends ImprovedSubsystem implements ElevatorConstants {
 		setCtrlMode();
 		setBrakeMode();
 		setVoltageComp(true, voltageCompensationVoltage, timeout);
-		elevatorMaster.setInverted(false);
-		elevatorSlave.setInverted(false);
+		elevatorMaster.setInverted(true);
+		elevatorSlave.setInverted(true);
 	}
 	
 	public void endElevatorPID() {

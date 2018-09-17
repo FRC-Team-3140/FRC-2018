@@ -3,15 +3,17 @@
 package main;
 
 /***
+ * DEPLOYED LATEST VERSION
  * WORKING: RIGHT SCALE
  * ALMOST WORKING: RIGHT SWITCH AND CENTER LEFT
  * 
  * TODO
- * Drive elevator make sure that actually works (motors are going the right way)
  * Mild re-tuning on elevator (who even cares anymore)
- * Make sure same side switch works
  * Make sure same side scale works
- * Get 1 cube center switch working on each side
+ * Get 1 cube center switch working on left side
+ * 
+ * COMPETITION DONE:
+ * Elevator motors in the right direction!!!
  * 
  * If there's time: 
  * 2 cube center switch

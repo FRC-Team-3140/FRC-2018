@@ -7,42 +7,44 @@ import main.commands.commandGroups.cubeManipulator.DropCubeOff;
 import main.commands.drivetrain.AltDistanceDriveStraight;
 import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.DriveLeftPID;
+import main.commands.drivetrain.DriveRightPID;
 import main.commands.drivetrain.TurnToAngleGyro;
 import main.commands.elevator.MovePID;
 import main.commands.elevator.MoveToBottom;
+import main.commands.elevator.MoveToSwitch;
+import main.commands.intake.SpinOff;
 import main.commands.intake.SpinOut;
+import main.commands.intake.SpinOutTime;
+import main.commands.pneumatics.arm.ArmClose;
+import main.commands.pneumatics.arm.ArmOpen;
+import main.commands.pneumatics.tilt.TiltDown;
+import main.commands.pneumatics.tilt.TiltUp;
 
 public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 	public AltCenterToLeftSwitch() {
 		addSequential(new DistanceDriveStraight(30.375)); //(Break away from wall so there is no resistance on the first turn)
 		addSequential(new TurnToAngleGyro(-40, 2));
-		addSequential(new AltDistanceDriveStraight(85, 4));
+		addSequential(new AltDistanceDriveStraight(85, 2));
 		addSequential(new DriveLeftPID(30, 2));
-		addSequential(new SpinOut());
-		/*addSequential(new MovePID(switchHeight, 3));
-		addSequential(new DropCube()); // drops the first cube
-		addSequential(new WaitCommand(0.5));
-		addSequential(new DropCubeOff());
+		addSequential(new SpinOutTime(5));
 		
 		addSequential(new DistanceDriveStraight(-60)); // backs from switch
-		addParallel(new MoveToBottom(1.5));*/
-		/*addSequential(new ArmOpen());
+		addSequential(new ArmOpen());
 		addSequential(new TiltDown());
-		addSequential(new SpinIn());
-		addSequential(new TurnToAngleGyro(50, 2));
+		addSequential(new WaitCommand(0.3));
+		addSequential(new TurnToAngleGyro(45, 2));
+		addSequential(new AltDistanceDriveStraight(30, 2));
 		addSequential(new WaitCommand(0.1));
 		addSequential(new ArmClose());
 		addSequential(new WaitCommand(0.25));
 		addSequential(new TiltUp());
+		
 		addSequential(new DistanceDriveStraight(-35));
-		addSequential(new TurnToAngleGyro(-75, 2.5));
-		addSequential(new SpinOff());
-		//addParallel(new MoveToSwitch(1.5));
-		addSequential(new DistanceDriveStraight(80));
-		addSequential(new DropCube());*/
-		//addSequential(new WaitCommand(0.25));
-		//addSequential(new DropCubeOff());
-		//addSequential(new WaitCommand(0.2));
+		addSequential(new TurnToAngleGyro(-65, 2));
+		addParallel(new MoveToSwitch(1.5));
+		addSequential(new DistanceDriveStraight(65));
+		addSequential(new DriveLeftPID(20, 2));
+		addSequential(new SpinOutTime(3));
 		
 	}
 }
