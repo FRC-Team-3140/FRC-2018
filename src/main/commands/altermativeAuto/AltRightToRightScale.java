@@ -37,8 +37,8 @@ public class AltRightToRightScale extends ImprovedCommandGroup {
 		addSequential(new TiltDown());
 		addSequential(new ArmOpen());
 		addSequential(new SpinOut()); // FIXME inverted!!
-		addSequential(new AltDistanceDriveStraight(35, 2));
-		addSequential(new WaitCommand(1));
+		addSequential(new AltDistanceDriveStraight(35, 1.5));
+		addSequential(new WaitCommand(0.8));
 		addSequential(new SpinOff());
 		addSequential(new ArmClose());
 	}
