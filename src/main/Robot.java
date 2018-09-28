@@ -21,10 +21,6 @@ package main;
  * Do opposite side switch and scale? 
  ****/
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import util.Logger;
 import controllers.Record;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -66,34 +62,16 @@ public class Robot extends ImprovedRobot {
 	public static Logger lg;
     private static Looper autoLooper;
     private static SendableChooser<Command> fileChooser;
-    //private static Command autoPlayCommand;
-    private Command lastSelectedFile = new DoNothing();
     private static String newFileName = "";
-    private static List<File> listOfFiles = new ArrayList<File>();
-    private static int lastNumOfFiles = 0;
     
 	// AUTO LOGIC
 	private enum StartPos {LEFT, CENTER, RIGHT}
 	private enum RobotAction {DO_NOTHING, BASELINE, SWITCH, SCALE}
-	//private enum RobotAction{DO_Nothing, EDGECASE_DoNothing, EDGECASE_Baseline, EDGECASE_SwitchFromBehind}
 	public static StartPos start_pos;
 	public static RobotAction robot_act;
 	private static SendableChooser<RobotAction> autoChooser;
 	private static SendableChooser<StartPos> startPos;
 	private static Command autoCommand;
-	
-	// Competition Mode: Picking a recording and running it
-	private static Command competitionFilePicker;
-	private String fileToPlay = null;
-	private static Command competitionPlayCommand;
-	//private static Command autoCommand;
-	
-//	class AutoCommandGroup extends CommandGroup {
-//		public AutoCommandGroup(Command auto, boolean reset, boolean moveDown) {
-//			addSequential(auto);
-//			if(reset) addSequential(new ResetForTeleop(moveDown));
-//		}
-//	}
 	
 	@Override
 	public void robotInit() {
@@ -179,8 +157,7 @@ public class Robot extends ImprovedRobot {
 		boolean leftScale = gmsg.charAt(1) == 'L';
 		boolean scaleDisabled = false;
 		boolean behindSwitchDisabled = true;
-			
-		boolean isSwitch = false;
+		
 		start_pos = startPos.getSelected();
 		robot_act = autoChooser.getSelected();
 		
@@ -193,28 +170,23 @@ public class Robot extends ImprovedRobot {
 		else if(robot_act == RobotAction.SWITCH) {//Priority Switch
 			if(start_pos == StartPos.LEFT) {
 				if(leftSwitch) {
-					isSwitch = true;
 					autoCommand = new AltLeftToLeftSwitch();
 				}
 				else if(!behindSwitchDisabled) {
-					isSwitch = true;
 					autoCommand = new AltLeftToRightSwitch();
 				}
 				else if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
 				else autoCommand = new AltBaseline();					
 			}
 			else if(start_pos == StartPos.CENTER) {
-				isSwitch = true;
 				if(leftSwitch) autoCommand = new AltCenterToLeftSwitch();
 				else autoCommand = new AltCenterToRightSwitch();
 			}
 			else if(start_pos == StartPos.RIGHT) {
 				if(!leftSwitch) {
-					isSwitch = true;
 					autoCommand = new AltRightToRightSwitch();
 				}
 				else if(!behindSwitchDisabled) {
-					isSwitch = true;
 					autoCommand = new AltRightToLeftSwitch();
 				}
 				else if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
@@ -225,28 +197,23 @@ public class Robot extends ImprovedRobot {
 			if(start_pos == StartPos.LEFT) {
 				if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
 				else if(leftSwitch) {
-					isSwitch = true;
 					autoCommand = new AltLeftToLeftSwitch();
 				}
 				else if(!behindSwitchDisabled) {
-					isSwitch = true;
 					autoCommand = new AltLeftToRightSwitch();
 				}
 				else autoCommand = new AltBaseline();					
 			}
 			else if(start_pos == StartPos.CENTER) {
-				isSwitch = true;
 				if(leftSwitch) autoCommand = new AltCenterToLeftSwitch();
 				else autoCommand = new AltCenterToRightSwitch();
 			}
 			else if(start_pos == StartPos.RIGHT) {
 				if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
 				else if(!leftSwitch) {
-					isSwitch = true;
 					autoCommand = new AltRightToRightSwitch();
 				}
 				else if(!behindSwitchDisabled) {
-					isSwitch = true;
 					autoCommand = new AltRightToLeftSwitch();
 				}
 				else autoCommand = new AltBaseline();				
@@ -254,81 +221,6 @@ public class Robot extends ImprovedRobot {
 		}
 		
 		if(autoCommand != null) autoCommand.start();
-//			(autoCommand = new AutoCommandGroup(
-//					autoCommand, !(autoCommand instanceof AltBaseline || 
-//					autoCommand instanceof DoNothing), isSwitch)).start();	
-		
-		/*if(robot_act == RobotAction.DO_NOTHING)//Do Nothing
-			autoCommand = new DoNothing();
-		else if(robot_act == RobotAction.BASELINE)//Baseline
-			autoCommand = new Baseline();
-		else if(robot_act == RobotAction.SWITCH){//Priority Switch
-			if(start_pos == StartPos.LEFT) {
-				if(leftSwitch) {
-					isSwitch = true;
-					autoCommand = new AltLeftToLeftSwitch();
-				}
-				else if(!behindSwitchDisabled) {
-					isSwitch = true;
-					autoCommand = new AltLeftToRightSwitch();
-				}
-				else if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
-				else autoCommand = new Baseline();					
-			}
-			else if(start_pos == StartPos.CENTER) {
-				isSwitch = true;
-				if(leftSwitch) autoCommand = new AltCenterToLeftSwitch();
-				else autoCommand = new AltCenterToRightSwitch();
-			}
-			else if(start_pos == StartPos.RIGHT) {
-				if(!leftSwitch) {
-					isSwitch = true;
-					autoCommand = new AltRightToRightSwitch();
-				}
-				else if(!behindSwitchDisabled) {
-					isSwitch = true;
-					autoCommand = new AltRightToLeftSwitch();
-				}
-				else if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
-				else autoCommand = new Baseline();					
-			}
-		}
-		else {//Priority Scale
-			if(start_pos == StartPos.LEFT) {
-				if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
-				else if(leftSwitch) {
-					isSwitch = true;
-					autoCommand = new AltLeftToLeftSwitch();
-				}
-				else if(!behindSwitchDisabled) {
-					isSwitch = true;
-					autoCommand = new AltLeftToRightSwitch();
-				}
-				else autoCommand = new Baseline();					
-			}
-			else if(start_pos == StartPos.CENTER) {
-				isSwitch = true;
-				if(leftSwitch) autoCommand = new AltCenterToLeftSwitch();
-				else autoCommand = new AltCenterToRightSwitch();
-			}
-			else if(start_pos == StartPos.RIGHT) {
-				if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
-				else if(!leftSwitch) {
-					isSwitch = true;
-					autoCommand = new AltRightToRightSwitch();
-				}
-				else if(!behindSwitchDisabled) {
-					isSwitch = true;
-					autoCommand = new AltRightToLeftSwitch();
-				}
-				else autoCommand = new Baseline();				
-			}
-		}
-		
-		if(autoCommand != null)
-			(autoCommand = new AutoCommandGroup(
-					autoCommand, !(autoCommand instanceof Baseline || 
-					autoCommand instanceof DoNothing), isSwitch)).start();*/
 	}
 	
 	@Override
@@ -340,8 +232,6 @@ public class Robot extends ImprovedRobot {
 	@Override
 	public void teleopInit() {
 		autoLooper.start();
-//		if(autoCommand != null && autoCommand.isRunning())
-//			autoCommand.cancel();
 	}	
 
 	@Override
@@ -353,14 +243,6 @@ public class Robot extends ImprovedRobot {
 	@Override
 	public void testPeriodic() {
 		allPeriodic();
-	}
-	
-	private boolean fileNameInListOfFiles(List<File> l, File f) {
-		for(File file: l) {
-			if(file.getName().toLowerCase().equals(f.getName().toLowerCase()))
-				return true;
-		}
-		return false;
 	}
 	
 	public static SendableChooser<Command> getFileChooser() {
