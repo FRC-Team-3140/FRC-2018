@@ -3,6 +3,8 @@ package main;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
+import main.commands.intake.SpinIn;
+import main.commands.intake.SpinOff;
 import main.commands.pneumatics.arm.ArmClose;
 import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.arm.SwitchArm;
@@ -29,6 +31,9 @@ public class OI extends ImprovedClass {
 
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
+		
+		xbox2.b.whileHeld(new SpinIn());
+		xbox2.b.whenReleased(new SpinOff());
 
 //		xbox2.x.whenPressed(new MovePID(elevatorHeight, 5));
 //		xbox2.y.whenPressed(new MovePID(switchHeight, 3));

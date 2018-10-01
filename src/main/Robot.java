@@ -48,6 +48,7 @@ import main.commands.controllerCommands.FileCreator;
 import main.commands.controllerCommands.FileDeletor;
 import main.commands.controllerCommands.StartPlay;
 import main.commands.controllerCommands.StartRecord;
+import main.commands.drivetrain.TankDrive;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
 import main.subsystems.Elevator;
@@ -120,6 +121,9 @@ public class Robot extends ImprovedRobot {
     	fileChooser = new SendableChooser<>();
     	fileChooser.addDefault("", new DoNothing());
     	SmartDashboard.putData("File Selector", fileChooser);
+    	
+//    	SmartDashboard.putNumber("Throttle", 0.0);
+    	SmartDashboard.putData("Tank Drive", new TankDrive(.1,.1));
 		
 		SmartDashboard.putString("NOTICE:", "Whenever you redeploy code you must restart shuffleboard; And whenever you "
 				+ "delete a file you must restart robot code.");
@@ -395,7 +399,10 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("DriveTrain Right Encoder Distance", dt.getRightEncoderDistanceTravelled());
 		SmartDashboard.putNumber("DriveTrain Right Input", rightDriveMaster.getMotorOutputPercent());
 		SmartDashboard.putNumber("DriveTrain Right Input 2", rightDriveSlave1.getMotorOutputPercent());
+		SmartDashboard.putNumber("DT Left Speed encoder", dt.getLeftEncoderVelocity());
+		SmartDashboard.putNumber("DT Right Speed encoder", dt.getRightEncoderVelocity());
 
+		
 		SmartDashboard.putNumber("DriveTrain Distance", dt.getDistanceTravelled());
 		// DriveTrain Gyro
 		SmartDashboard.putNumber("NavX Heading", dt.getHeading());
