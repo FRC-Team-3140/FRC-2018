@@ -61,6 +61,7 @@ public class Robot extends ImprovedRobot {
 	public static Elevator el;
 	public static DriverCamera dc;
 	public static OI oi;
+	public static PowerManager power;
 	
 	// PLAY AND RECORD	
 	public static Logger lg;
@@ -104,6 +105,7 @@ public class Robot extends ImprovedRobot {
 		el = new Elevator();
 		oi = new OI();
 		dc = new DriverCamera();
+		power=new PowerManager();
 		
 		lg = new Logger();
 		autoLooper = new Looper(kLooperDt);
@@ -383,6 +385,8 @@ public class Robot extends ImprovedRobot {
 		in.check();
 		el.check();
 		oi.check();
+		SmartDashboard.putNumber("Battary Voltage", power.getVoltage());
+		SmartDashboard.putBoolean("Voltage Danger", power.isDangerous());
 		//SmartDashboard.putNumber("Free memory", runtime.freeMemory());
 		//SmartDashboard.putNumber("Total memory", runtime.totalMemory());
 		//SmartDashboard.putData(Scheduler.getInstance());
