@@ -401,7 +401,6 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("DriveTrain Right Input 2", rightDriveSlave1.getMotorOutputPercent());
 		SmartDashboard.putNumber("DT Left Speed encoder", dt.getLeftEncoderVelocity());
 		SmartDashboard.putNumber("DT Right Speed encoder", dt.getRightEncoderVelocity());
-
 		
 		SmartDashboard.putNumber("DriveTrain Distance", dt.getDistanceTravelled());
 		// DriveTrain Gyro
@@ -411,10 +410,18 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putBoolean("First Stage Top", !stage1TopSwitch.get());
 		// Elevator encoder
 		SmartDashboard.putNumber("Elevator encoder inches", el.getDistanceTravelled());
+		// elevator current
+		SmartDashboard.putNumber("el master current", el.getElevatorMasterCurrent());
+		SmartDashboard.putNumber("el slave current", el.getElevatorSlaveCurrent());
+		
 		//SmartDashboard.putNumber("is this number right?", el.distanceToTicks(el.getTicksTravelled()));
 		SmartDashboard.putNumber("Elevator encoder ticks", el.getTicksTravelled());
-		SmartDashboard.putNumber("Elevator Input", elevatorMaster.get());
+		SmartDashboard.putNumber("elevator input", elevatorMaster.get());
+		SmartDashboard.putNumber("Elevator master voltage", elevatorMaster.getMotorOutputVoltage());
+		SmartDashboard.putNumber("elevator slave voltage", elevatorSlave.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Elevator speed ticks", el.getElevatorVelocity());
+		SmartDashboard.putNumber("Elevator master power", (el.getElevatorMasterVoltage() * elevatorMaster.getMotorOutputVoltage()));
+		SmartDashboard.putNumber("Elevator slave power", (el.getElevatorSlaveVoltage() * elevatorSlave.getMotorOutputVoltage()));
 		
 		SmartDashboard.putString("Working File", lg.getWorkingFile());
 		SmartDashboard.putString("Working Path", outputPath);
