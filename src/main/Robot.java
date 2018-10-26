@@ -3,22 +3,12 @@
 package main;
 
 /***
- * DEPLOYED LATEST VERSION
- * WORKING: RIGHT SCALE
- * ALMOST WORKING: RIGHT SWITCH AND CENTER LEFT
- * 
  * TODO
- * Mild re-tuning on elevator (who even cares anymore)
- * Make sure same side scale works
- * Get 1 cube center switch working on left side
+ * Get 2 cube right side autos
+ * Test to make sure it's called at the right time
+ * Test switch (make sure all one cube), baseline autos 
+ * Left scale
  * 
- * COMPETITION DONE:
- * Elevator motors in the right direction!!!
- * 
- * If there's time: 
- * 2 cube center switch
- * Pick up a cube after scale
- * Do opposite side switch and scale? 
  ****/
 
 import java.io.File;
@@ -44,6 +34,7 @@ import main.commands.altermativeAuto.AltRightToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightScale;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
 import main.commands.altermativeAuto.DoNothing;
+import main.commands.altermativeAuto.RightToRightScaleSwitch;
 import main.commands.controllerCommands.FileCreator;
 import main.commands.controllerCommands.FileDeletor;
 import main.commands.controllerCommands.StartPlay;
@@ -183,6 +174,7 @@ public class Robot extends ImprovedRobot {
 		boolean leftScale = gmsg.charAt(1) == 'L';
 		boolean scaleDisabled = false;
 		boolean behindSwitchDisabled = true;
+		boolean scaleSwitchDisabled = false;
 			
 		boolean isSwitch = false;
 		start_pos = startPos.getSelected();
@@ -215,7 +207,9 @@ public class Robot extends ImprovedRobot {
 			else if(start_pos == StartPos.RIGHT) {
 				if(!leftSwitch) {
 					isSwitch = true;
-					autoCommand = new AltRightToRightSwitch();
+					if(!leftScale && !scaleSwitchDisabled)
+						autoCommand = new RightToRightScaleSwitch();
+					else autoCommand = new AltRightToRightSwitch();
 				}
 				else if(!behindSwitchDisabled) {
 					isSwitch = true;
@@ -244,7 +238,11 @@ public class Robot extends ImprovedRobot {
 				else autoCommand = new AltCenterToRightSwitch();
 			}
 			else if(start_pos == StartPos.RIGHT) {
-				if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
+				if(!leftScale && !scaleDisabled) {
+					if(!leftSwitch && !scaleSwitchDisabled) autoCommand = new RightToRightScaleSwitch();
+					else autoCommand = new AltRightToRightScale();
+					
+				}
 				else if(!leftSwitch) {
 					isSwitch = true;
 					autoCommand = new AltRightToRightSwitch();

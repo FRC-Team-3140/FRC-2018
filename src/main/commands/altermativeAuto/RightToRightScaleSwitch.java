@@ -16,8 +16,9 @@ import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.tilt.TiltDown;
 import main.commands.pneumatics.tilt.TiltUp;
 
-public class AltRightToRightScale extends ImprovedCommandGroup {
-	public AltRightToRightScale() {
+public class RightToRightScaleSwitch extends ImprovedCommandGroup {
+	
+	public RightToRightScaleSwitch() {
 		addSequential(new AltDistanceDriveStraight(230, 5));
 		addSequential(new TurnToAngleGyro(-27, 2.5));
 		addSequential(new MovePIDParallel(elevatorHeight));
@@ -41,5 +42,12 @@ public class AltRightToRightScale extends ImprovedCommandGroup {
 		addSequential(new SpinOff());
 		addSequential(new ArmClose());
 		addSequential(new WaitCommand(0.2));
+		//(new TiltUp());
+		addSequential(new MovePID(switchHeight, 2));
+		addSequential(new AltDistanceDriveStraight(12, 1));
+		addSequential(new SpinIn());
+		addSequential(new WaitCommand(1));
 	}
+	
+
 }
