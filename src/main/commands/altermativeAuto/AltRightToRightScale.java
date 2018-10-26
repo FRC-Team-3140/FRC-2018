@@ -6,7 +6,9 @@ import main.commands.drivetrain.AltDistanceDriveStraight;
 import main.commands.drivetrain.DistanceDriveStraight;
 import main.commands.drivetrain.TurnToAngleGyro;
 import main.commands.elevator.MovePID;
+import main.commands.elevator.MovePIDParallel;
 import main.commands.elevator.MoveToBottom;
+import main.commands.intake.SpinIn;
 import main.commands.intake.SpinOff;
 import main.commands.intake.SpinOut;
 import main.commands.pneumatics.arm.ArmClose;
@@ -17,29 +19,40 @@ import main.commands.pneumatics.tilt.TiltUp;
 public class AltRightToRightScale extends ImprovedCommandGroup {
 	public AltRightToRightScale() {
 		addSequential(new AltDistanceDriveStraight(230, 5));
-		addSequential(new TurnToAngleGyro(-32, 3));
-		addSequential(new WaitCommand(0.3));
-		addSequential(new DistanceDriveStraight(12));
-		addSequential(new MovePID(elevatorHeight, 4));
-		addSequential(new DistanceDriveStraight(43));
+		addSequential(new TurnToAngleGyro(-27, 2.5));
+		addSequential(new MovePIDParallel(elevatorHeight));
+		addSequential(new WaitCommand(0.85));
 		addSequential(new TiltDown());
+		addSequential(new DistanceDriveStraight(61));
+		/*addSequential(new TiltDown());
 		addSequential(new WaitCommand(0.1));
 		addSequential(new ArmOpen());
-		addSequential(new WaitCommand(0.3));
+		addSequential(new WaitCommand(0.1));
 		addSequential(new TiltUp());
 		addSequential(new WaitCommand(0.3));
 		addSequential(new ArmClose());
+		addSequential(new WaitCommand(0.1));*/
+		addSequential(new SpinIn());
 		addSequential(new WaitCommand(0.3));
+		addSequential(new SpinOff());
+		addSequential(new TiltUp());
 		addSequential(new DistanceDriveStraight(-30));
-		addSequential(new MoveToBottom(5));
+		//addSequential(new MovePIDParallel(0));
 		// first cube done
-		addSequential(new TurnToAngleGyro(-107, 2));
+		addSequential(new MoveToBottom(2.5));
+		addSequential(new TurnToAngleGyro(-110, 2));
 		addSequential(new TiltDown());
 		addSequential(new ArmOpen());
 		addSequential(new SpinOut()); // FIXME inverted!!
-		addSequential(new AltDistanceDriveStraight(35, 1.5));
-		addSequential(new WaitCommand(0.8));
+		addSequential(new AltDistanceDriveStraight(52, 1.5));
+		addSequential(new WaitCommand(0.5));
 		addSequential(new SpinOff());
 		addSequential(new ArmClose());
+		addSequential(new WaitCommand(0.2));
+		//(new TiltUp());
+		addSequential(new MovePID(switchHeight, 2));
+		addSequential(new AltDistanceDriveStraight(12, 1));
+		addSequential(new SpinIn());
+		addSequential(new WaitCommand(1));
 	}
 }

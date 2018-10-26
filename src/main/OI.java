@@ -3,6 +3,8 @@ package main;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
+import main.commands.altermativeAuto.AltRightToRightScale;
+import main.commands.elevator.MovePID;
 import main.commands.intake.SpinIn;
 import main.commands.intake.SpinOff;
 import main.commands.pneumatics.arm.ArmClose;
@@ -28,15 +30,17 @@ public class OI extends ImprovedClass {
 		
 		//xbox.a.whenPressed(new DistanceDriveStraight(12*10));
 		//xbox.b.whenPressed(new TurnToAngleGyro(90, 5));
+		
+		xbox.b.whenPressed(new AltRightToRightScale());
 
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
 		
-		xbox2.b.whileHeld(new SpinIn());
-		xbox2.b.whenReleased(new SpinOff());
+//		xbox2.b.whileHeld(new SpinIn());
+//		xbox2.b.whenReleased(new SpinOff());
 
-//		xbox2.x.whenPressed(new MovePID(elevatorHeight, 5));
-//		xbox2.y.whenPressed(new MovePID(switchHeight, 3));
+		xbox2.x.whenPressed(new MovePID(0, 5));
+		xbox2.y.whenPressed(new MovePID(switchHeight, 3));
 		
 		/*xbox.b.whenPressed(new InitPID());
 		xbox.b.whileHeld(new DriveLeftPID(12));

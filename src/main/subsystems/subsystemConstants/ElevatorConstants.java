@@ -5,9 +5,9 @@ public interface ElevatorConstants {
 	 * PID CONSTANTS *
 	 *****************/
 	public int slotIdx = 0;
-	public double kP = 1;
+	public double kP = .35;
 	public double kI = 0;
-	public double kD = 0.25; // used to be 3
+	public double kD = 0.2; // used to be 3
 	public double veloFeedForward = 0; // FOR FUTURE USE
 	public int toleranceTicks = 30;
 
@@ -25,7 +25,7 @@ public interface ElevatorConstants {
 	
 	// HEIGHTS IN INCHES
 	public final double elevatorHeight = 65;
-	public final double elevatorTolerance = 1;
+	public final double elevatorTolerance = 2;
 	public final double switchHeight = 20; 
 	public final double scaleNeutralHeight = 55;
 	public final double scaleUpHeight = 64; 
