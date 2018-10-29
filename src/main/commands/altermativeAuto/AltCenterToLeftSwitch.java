@@ -17,11 +17,12 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 	public AltCenterToLeftSwitch() {
 		addSequential(new DistanceDriveStraight(30.375)); //(Break away from wall so there is no resistance on the first turn)
 		addSequential(new TurnToAngleGyro(-40, 2));
-		addSequential(new AltDistanceDriveStraight(85, 2));
-		addSequential(new DriveLeftPID(30, 2));
+		addSequential(new AltDistanceDriveStraight(95, 2));
+		addSequential(new TurnToAngleGyro(40, 2));
+		addSequential(new AltDistanceDriveStraight(23, 2));
 		addSequential(new SpinOutTime(5));
 		
-		addSequential(new DistanceDriveStraight(-60)); // backs from switch
+		/*addSequential(new DistanceDriveStraight(-60)); // backs from switch
 		addSequential(new ArmOpen());
 		addSequential(new TiltDown());
 		addSequential(new WaitCommand(0.3));
@@ -37,7 +38,7 @@ public class AltCenterToLeftSwitch extends ImprovedCommandGroup {
 		addParallel(new MoveToSwitch(1.5));
 		addSequential(new DistanceDriveStraight(65));
 		addSequential(new DriveLeftPID(20, 2));
-		addSequential(new SpinOutTime(3));
+		addSequential(new SpinOutTime(3));*/
 		
 	}
 }

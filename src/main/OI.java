@@ -3,7 +3,11 @@ package main;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
+import main.commands.altermativeAuto.AltCenterToLeftSwitch;
+import main.commands.altermativeAuto.AltCenterToRightSwitch;
 import main.commands.altermativeAuto.AltRightToRightScale;
+import main.commands.altermativeAuto.AltRightToRightSwitch;
+import main.commands.altermativeAuto.RightToRightScaleSwitch;
 import main.commands.elevator.MovePID;
 import main.commands.intake.SpinIn;
 import main.commands.intake.SpinOff;
@@ -31,7 +35,12 @@ public class OI extends ImprovedClass {
 		//xbox.a.whenPressed(new DistanceDriveStraight(12*10));
 		//xbox.b.whenPressed(new TurnToAngleGyro(90, 5));
 		
-		xbox.b.whenPressed(new AltRightToRightScale());
+		xbox.b.whenPressed(new RightToRightScaleSwitch());
+		xbox.a.whenPressed(new AltRightToRightSwitch());
+		
+		xbox.y.whenPressed(new AltCenterToLeftSwitch());
+		xbox.x.whenPressed(new AltCenterToRightSwitch());
+	//	xbox
 
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));

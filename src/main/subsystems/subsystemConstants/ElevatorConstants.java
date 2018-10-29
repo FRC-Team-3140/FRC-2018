@@ -26,7 +26,7 @@ public interface ElevatorConstants {
 	// HEIGHTS IN INCHES
 	public final double elevatorHeight = 65;
 	public final double elevatorTolerance = 2;
-	public final double switchHeight = 20; 
+	public final double switchHeight = 25; 
 	public final double scaleNeutralHeight = 55;
 	public final double scaleUpHeight = 64; 
 	
