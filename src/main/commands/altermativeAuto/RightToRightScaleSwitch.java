@@ -37,12 +37,13 @@ public class RightToRightScaleSwitch extends ImprovedCommandGroup {
 		addSequential(new TiltDown());
 		addSequential(new ArmOpen());
 		addSequential(new SpinOut()); // FIXME inverted!!
-		addSequential(new AltDistanceDriveStraight(50, 1.5));
+		addSequential(new AltDistanceDriveStraight(40, 1.5));
 		addSequential(new WaitCommand(0.5));
 		addSequential(new SpinOff());
 		addSequential(new ArmClose());
 		addSequential(new WaitCommand(0.2));
 		//(new TiltUp());
+		//addSequential(new AltDistanceDriveStraight(6, 0.5));
 		addSequential(new MovePID(switchHeight, 2));
 		addSequential(new AltDistanceDriveStraight(12, 1));
 		addSequential(new SpinIn());

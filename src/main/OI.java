@@ -5,6 +5,8 @@ import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
 import main.commands.altermativeAuto.AltCenterToLeftSwitch;
 import main.commands.altermativeAuto.AltCenterToRightSwitch;
+import main.commands.altermativeAuto.AltLeftToLeftScale;
+import main.commands.altermativeAuto.AltLeftToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightScale;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
 import main.commands.altermativeAuto.RightToRightScaleSwitch;
@@ -35,8 +37,8 @@ public class OI extends ImprovedClass {
 		//xbox.a.whenPressed(new DistanceDriveStraight(12*10));
 		//xbox.b.whenPressed(new TurnToAngleGyro(90, 5));
 		
-		xbox.b.whenPressed(new RightToRightScaleSwitch());
-		xbox.a.whenPressed(new AltRightToRightSwitch());
+		xbox.b.whenPressed(new AltLeftToLeftScale());
+		xbox.a.whenPressed(new AltLeftToLeftSwitch());
 		
 		xbox.y.whenPressed(new AltCenterToLeftSwitch());
 		xbox.x.whenPressed(new AltCenterToRightSwitch());
