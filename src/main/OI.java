@@ -36,22 +36,22 @@ public class OI extends ImprovedClass {
 		
 		//xbox.a.whenPressed(new DistanceDriveStraight(12*10));
 		//xbox.b.whenPressed(new TurnToAngleGyro(90, 5));
-		
-		xbox.b.whenPressed(new AltLeftToLeftScale());
-		xbox.a.whenPressed(new AltLeftToLeftSwitch());
-		
-		xbox.y.whenPressed(new AltCenterToLeftSwitch());
-		xbox.x.whenPressed(new AltCenterToRightSwitch());
-	//	xbox
+//		
+//		xbox.b.whenPressed(new AltLeftToLeftScale());
+//		xbox.a.whenPressed(new AltLeftToLeftSwitch());
+//		
+//		xbox.y.whenPressed(new AltCenterToLeftSwitch());
+//		xbox.x.whenPressed(new AltCenterToRightSwitch());
+//	//	xbox
 
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
 		
 //		xbox2.b.whileHeld(new SpinIn());
 //		xbox2.b.whenReleased(new SpinOff());
-
-		xbox2.x.whenPressed(new MovePID(0, 5));
-		xbox2.y.whenPressed(new MovePID(switchHeight, 3));
+//
+//		xbox2.x.whenPressed(new MovePID(0, 5));
+//		xbox2.y.whenPressed(new MovePID(switchHeight, 3));
 		
 		/*xbox.b.whenPressed(new InitPID());
 		xbox.b.whileHeld(new DriveLeftPID(12));

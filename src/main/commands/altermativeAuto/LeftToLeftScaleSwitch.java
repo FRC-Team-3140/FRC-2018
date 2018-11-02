@@ -16,11 +16,31 @@ import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.tilt.TiltDown;
 import main.commands.pneumatics.tilt.TiltUp;
 
-public class RightToRightScaleSwitch extends ImprovedCommandGroup {
-	
-	public RightToRightScaleSwitch() {
+public class LeftToLeftScaleSwitch extends ImprovedCommandGroup{
+
+	public LeftToLeftScaleSwitch() {
 		addSequential(new AltDistanceDriveStraight(230, 5));
-		addSequential(new TurnToAngleGyro(-27, 2.5));
+		addSequential(new TurnToAngleGyro(30, 3));
+		/*addSequential(new DistanceDriveStraight(12));
+		addSequential(new TiltDown());
+		addSequential(new MovePID(elevatorHeight, 4));
+		addSequential(new DistanceDriveStraight(40)); // total 55
+		addSequential(new WaitCommand(0.1));
+		addSequential(new ArmOpen());
+		addSequential(new WaitCommand(0.3));
+		addSequential(new TiltUp());
+		addSequential(new WaitCommand(0.3));
+		addSequential(new ArmClose());
+		addSequential(new WaitCommand(0.3));
+		addSequential(new DistanceDriveStraight(-30));
+		addSequential(new MoveToBottom(5));
+		
+		addSequential(new TurnToAngleGyro(60, 2));
+		addSequential(new TiltDown());
+		addSequential(new ArmOpen());
+		addSequential(new AltDistanceDriveStraight(24,2));
+		addSequential(new ArmClose());*/
+		
 		addSequential(new MovePIDParallel(elevatorHeight));
 		addSequential(new WaitCommand(1.5));
 		addSequential(new TiltDown());
@@ -34,7 +54,7 @@ public class RightToRightScaleSwitch extends ImprovedCommandGroup {
 		
 		// first cube done
 		addSequential(new MoveToBottom(2.5));
-		addSequential(new TurnToAngleGyro(-110, 2));
+		addSequential(new TurnToAngleGyro(110, 2));
 		addSequential(new TiltDown());
 		addSequential(new ArmOpen());
 		addSequential(new SpinOut()); // FIXME inverted!!

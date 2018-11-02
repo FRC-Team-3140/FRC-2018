@@ -34,6 +34,7 @@ import main.commands.altermativeAuto.AltRightToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightScale;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
 import main.commands.altermativeAuto.DoNothing;
+import main.commands.altermativeAuto.LeftToLeftScaleSwitch;
 import main.commands.altermativeAuto.RightToRightScaleSwitch;
 import main.commands.controllerCommands.FileCreator;
 import main.commands.controllerCommands.FileDeletor;
@@ -188,7 +189,10 @@ public class Robot extends ImprovedRobot {
 		
 		else if(robot_act == RobotAction.SWITCH) {//Priority Switch
 			if(start_pos == StartPos.LEFT) {
-				if(leftSwitch) {
+				if(!scaleSwitchDisabled && leftSwitch && leftScale) {
+					autoCommand = new LeftToLeftScaleSwitch();
+				}
+				else if(leftSwitch) {
 					isSwitch = true;
 					autoCommand = new AltLeftToLeftSwitch();
 				}
@@ -205,7 +209,9 @@ public class Robot extends ImprovedRobot {
 				else autoCommand = new AltCenterToRightSwitch();
 			}
 			else if(start_pos == StartPos.RIGHT) {
-				if(!leftSwitch) {
+				if(!scaleSwitchDisabled && !leftSwitch && !leftScale) 
+					autoCommand = new RightToRightScaleSwitch();
+				else if(!leftSwitch) {
 					isSwitch = true;
 					if(!leftScale && !scaleSwitchDisabled)
 						autoCommand = new RightToRightScaleSwitch();
@@ -215,13 +221,18 @@ public class Robot extends ImprovedRobot {
 					isSwitch = true;
 					autoCommand = new AltRightToLeftSwitch();
 				}
-				else if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
+				else if(!leftScale && !scaleDisabled) {
+					autoCommand = new AltRightToRightScale();
+					
+				}
 				else autoCommand = new AltBaseline();					
 			}
 		}
 		else {//Priority Scale
 			if(start_pos == StartPos.LEFT) {
-				if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
+				if(!scaleSwitchDisabled && leftSwitch && leftScale) 
+					autoCommand = new LeftToLeftScaleSwitch();
+				else if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
 				else if(leftSwitch) {
 					isSwitch = true;
 					autoCommand = new AltLeftToLeftSwitch();
