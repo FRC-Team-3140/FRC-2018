@@ -24,7 +24,7 @@ public class RightToRightScaleSwitch extends ImprovedCommandGroup {
 		addSequential(new MovePIDParallel(elevatorHeight));
 		addSequential(new WaitCommand(1.5));
 		addSequential(new TiltDown());
-		addSequential(new DistanceDriveStraight(61));
+		addSequential(new DistanceDriveStraight(65));
 
 		addSequential(new SpinIn());
 		addSequential(new WaitCommand(0.3));

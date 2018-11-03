@@ -411,6 +411,8 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("DT Left Speed encoder", dt.getLeftEncoderVelocity());
 		SmartDashboard.putNumber("DT Right Speed encoder", dt.getRightEncoderVelocity());
 		
+		//SmartDashboard.putNumber("", value)
+		
 		SmartDashboard.putNumber("DriveTrain Distance", dt.getDistanceTravelled());
 		// DriveTrain Gyro
 		SmartDashboard.putNumber("NavX Heading", dt.getHeading());

@@ -23,7 +23,7 @@ public class AltRightToRightScale extends ImprovedCommandGroup {
 		addSequential(new MovePIDParallel(elevatorHeight));
 		addSequential(new WaitCommand(1.2));
 		
-		addSequential(new DistanceDriveStraight(61));
+		addSequential(new DistanceDriveStraight(65));
 
 		addSequential(new TiltDown());
 		addSequential(new SpinIn());
