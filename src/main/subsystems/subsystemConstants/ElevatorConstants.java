@@ -5,7 +5,7 @@ public interface ElevatorConstants {
 	 * PID CONSTANTS *
 	 *****************/
 	public int slotIdx = 0;
-	public double kP = .35;
+	public double kP = .42;
 	public double kI = 0;
 	public double kD = 0.2; // used to be 3
 	public double veloFeedForward = 0; // FOR FUTURE USE
