@@ -1,14 +1,12 @@
 package main.commands.elevator;
 
-import edu.wpi.first.wpilibj.command.TimedCommand;
+import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
-// FIXME fix this
-public class MovePID extends TimedCommand {
+public class MovePIDParallel extends ImprovedCommand {
 	private double inches;
 	
-	public MovePID(double inches, double timeout) {
-		super(timeout);
+	public MovePIDParallel(double inches) {
 		this.inches = inches;
 		requires(Robot.el);	
 	}
@@ -19,7 +17,7 @@ public class MovePID extends TimedCommand {
 
 	@Override
 	protected boolean isFinished() {
-		return Robot.el.isIntakeAtPos(inches) || isTimedOut();
+		return true;
 	}
 	
 	protected void end() {

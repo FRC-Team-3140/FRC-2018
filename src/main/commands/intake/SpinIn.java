@@ -8,6 +8,10 @@ public class SpinIn extends ImprovedCommand {
 		requires(Robot.in);
 	}
 	
+	protected void initialize() {
+		
+	}
+	
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.in.spinIn();
@@ -16,5 +20,9 @@ public class SpinIn extends ImprovedCommand {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return true;
+    }
+    
+    protected void end() {
+    	
     }
 }

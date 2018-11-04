@@ -74,17 +74,17 @@ public class Pneumatics extends ImprovedSubsystem {
 	/**
 	 * Toggles the compressor (ON/OFF)
 	 */
-	public void toggleComp() {
-		if (comp.enabled())
-			comp.stop();
-		else
-			comp.start();
-	}
-	
-	public void turnCompOff() {
-		if (comp.enabled())
-			comp.stop();
-	}
+//	public void toggleComp() {
+//		if (comp.enabled())
+//			comp.stop();
+//		else
+//			comp.start();
+//	}
+//	
+//	public void turnCompOff() {
+//		if (comp.enabled())
+//			comp.stop();
+//	}
 
 	/*******************
 	 * DEFAULT METHODS *

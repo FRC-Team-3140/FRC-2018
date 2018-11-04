@@ -322,6 +322,10 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		return (rightDriveSlave1.getMotorOutputVoltage());
 	}
 	
+	/*
+	 * CURRENT METHODS
+	 */
+	
 	/*************************
 	 * DRIVE SUPPORT METHODS *
 	 *************************/

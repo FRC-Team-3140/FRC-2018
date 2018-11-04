@@ -3,22 +3,12 @@
 package main;
 
 /***
- * DEPLOYED LATEST VERSION
- * WORKING: RIGHT SCALE
- * ALMOST WORKING: RIGHT SWITCH AND CENTER LEFT
- * 
  * TODO
- * Mild re-tuning on elevator (who even cares anymore)
- * Make sure same side scale works
- * Get 1 cube center switch working on left side
+ * Get 2 cube right side autos
+ * Test to make sure it's called at the right time
+ * Test switch (make sure all one cube), baseline autos 
+ * Left scale
  * 
- * COMPETITION DONE:
- * Elevator motors in the right direction!!!
- * 
- * If there's time: 
- * 2 cube center switch
- * Pick up a cube after scale
- * Do opposite side switch and scale? 
  ****/
 
 import java.io.File;
@@ -44,10 +34,13 @@ import main.commands.altermativeAuto.AltRightToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightScale;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
 import main.commands.altermativeAuto.DoNothing;
+import main.commands.altermativeAuto.LeftToLeftScaleSwitch;
+import main.commands.altermativeAuto.RightToRightScaleSwitch;
 import main.commands.controllerCommands.FileCreator;
 import main.commands.controllerCommands.FileDeletor;
 import main.commands.controllerCommands.StartPlay;
 import main.commands.controllerCommands.StartRecord;
+import main.commands.drivetrain.TankDrive;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
 import main.subsystems.Elevator;
@@ -120,6 +113,9 @@ public class Robot extends ImprovedRobot {
     	fileChooser = new SendableChooser<>();
     	fileChooser.addDefault("", new DoNothing());
     	SmartDashboard.putData("File Selector", fileChooser);
+    	
+//    	SmartDashboard.putNumber("Throttle", 0.0);
+    	SmartDashboard.putData("Tank Drive", new TankDrive(.1,.1));
 		
 		SmartDashboard.putString("NOTICE:", "Whenever you redeploy code you must restart shuffleboard; And whenever you "
 				+ "delete a file you must restart robot code.");
@@ -179,6 +175,7 @@ public class Robot extends ImprovedRobot {
 		boolean leftScale = gmsg.charAt(1) == 'L';
 		boolean scaleDisabled = false;
 		boolean behindSwitchDisabled = true;
+		boolean scaleSwitchDisabled = false;
 			
 		boolean isSwitch = false;
 		start_pos = startPos.getSelected();
@@ -192,7 +189,10 @@ public class Robot extends ImprovedRobot {
 		
 		else if(robot_act == RobotAction.SWITCH) {//Priority Switch
 			if(start_pos == StartPos.LEFT) {
-				if(leftSwitch) {
+				if(!scaleSwitchDisabled && leftSwitch && leftScale) {
+					autoCommand = new LeftToLeftScaleSwitch();
+				}
+				else if(leftSwitch) {
 					isSwitch = true;
 					autoCommand = new AltLeftToLeftSwitch();
 				}
@@ -209,21 +209,30 @@ public class Robot extends ImprovedRobot {
 				else autoCommand = new AltCenterToRightSwitch();
 			}
 			else if(start_pos == StartPos.RIGHT) {
-				if(!leftSwitch) {
+				if(!scaleSwitchDisabled && !leftSwitch && !leftScale) 
+					autoCommand = new RightToRightScaleSwitch();
+				else if(!leftSwitch) {
 					isSwitch = true;
-					autoCommand = new AltRightToRightSwitch();
+					if(!leftScale && !scaleSwitchDisabled)
+						autoCommand = new RightToRightScaleSwitch();
+					else autoCommand = new AltRightToRightSwitch();
 				}
 				else if(!behindSwitchDisabled) {
 					isSwitch = true;
 					autoCommand = new AltRightToLeftSwitch();
 				}
-				else if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
+				else if(!leftScale && !scaleDisabled) {
+					autoCommand = new AltRightToRightScale();
+					
+				}
 				else autoCommand = new AltBaseline();					
 			}
 		}
 		else {//Priority Scale
 			if(start_pos == StartPos.LEFT) {
-				if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
+				if(!scaleSwitchDisabled && leftSwitch && leftScale) 
+					autoCommand = new LeftToLeftScaleSwitch();
+				else if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
 				else if(leftSwitch) {
 					isSwitch = true;
 					autoCommand = new AltLeftToLeftSwitch();
@@ -240,7 +249,11 @@ public class Robot extends ImprovedRobot {
 				else autoCommand = new AltCenterToRightSwitch();
 			}
 			else if(start_pos == StartPos.RIGHT) {
-				if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
+				if(!leftScale && !scaleDisabled) {
+					if(!leftSwitch && !scaleSwitchDisabled) autoCommand = new RightToRightScaleSwitch();
+					else autoCommand = new AltRightToRightScale();
+					
+				}
 				else if(!leftSwitch) {
 					isSwitch = true;
 					autoCommand = new AltRightToRightSwitch();
@@ -395,7 +408,11 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("DriveTrain Right Encoder Distance", dt.getRightEncoderDistanceTravelled());
 		SmartDashboard.putNumber("DriveTrain Right Input", rightDriveMaster.getMotorOutputPercent());
 		SmartDashboard.putNumber("DriveTrain Right Input 2", rightDriveSlave1.getMotorOutputPercent());
-
+		SmartDashboard.putNumber("DT Left Speed encoder", dt.getLeftEncoderVelocity());
+		SmartDashboard.putNumber("DT Right Speed encoder", dt.getRightEncoderVelocity());
+		
+		//SmartDashboard.putNumber("", value)
+		
 		SmartDashboard.putNumber("DriveTrain Distance", dt.getDistanceTravelled());
 		// DriveTrain Gyro
 		SmartDashboard.putNumber("NavX Heading", dt.getHeading());
@@ -404,10 +421,18 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putBoolean("First Stage Top", !stage1TopSwitch.get());
 		// Elevator encoder
 		SmartDashboard.putNumber("Elevator encoder inches", el.getDistanceTravelled());
+		// elevator current
+		SmartDashboard.putNumber("el master current", el.getElevatorMasterCurrent());
+		SmartDashboard.putNumber("el slave current", el.getElevatorSlaveCurrent());
+		
 		//SmartDashboard.putNumber("is this number right?", el.distanceToTicks(el.getTicksTravelled()));
 		SmartDashboard.putNumber("Elevator encoder ticks", el.getTicksTravelled());
-		SmartDashboard.putNumber("Elevator Input", elevatorMaster.get());
+		SmartDashboard.putNumber("elevator input", elevatorMaster.get());
+		SmartDashboard.putNumber("Elevator master voltage", elevatorMaster.getMotorOutputVoltage());
+		SmartDashboard.putNumber("elevator slave voltage", elevatorSlave.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Elevator speed ticks", el.getElevatorVelocity());
+		SmartDashboard.putNumber("Elevator master power", (el.getElevatorMasterVoltage() * elevatorMaster.getMotorOutputVoltage()));
+		SmartDashboard.putNumber("Elevator slave power", (el.getElevatorSlaveVoltage() * elevatorSlave.getMotorOutputVoltage()));
 		
 		SmartDashboard.putString("Working File", lg.getWorkingFile());
 		SmartDashboard.putString("Working Path", outputPath);

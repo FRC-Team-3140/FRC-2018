@@ -116,6 +116,18 @@ public class Elevator extends ImprovedSubsystem implements ElevatorConstants {
 	public boolean isIntakeAbovePosition(double pos) {
 		return getDistanceFromPos(pos) < 0;
 	}
+	
+	/*
+	 * CURRENT METHODS
+	 */
+	public double getElevatorMasterCurrent() {
+		return elevatorMaster.getOutputCurrent();
+	}
+	
+	public double getElevatorSlaveCurrent() {
+		return elevatorSlave.getOutputCurrent();
+	}
+	
 	/**********************
 	 * ENC OUTPUT METHODS *
 	 **********************/

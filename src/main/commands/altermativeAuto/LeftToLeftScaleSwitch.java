@@ -16,8 +16,9 @@ import main.commands.pneumatics.arm.ArmOpen;
 import main.commands.pneumatics.tilt.TiltDown;
 import main.commands.pneumatics.tilt.TiltUp;
 
-public class AltLeftToLeftScale extends ImprovedCommandGroup {
-	public AltLeftToLeftScale() {
+public class LeftToLeftScaleSwitch extends ImprovedCommandGroup{
+
+	public LeftToLeftScaleSwitch() {
 		addSequential(new AltDistanceDriveStraight(230, 5));
 		addSequential(new TurnToAngleGyro(30, 3));
 		/*addSequential(new DistanceDriveStraight(12));
@@ -63,5 +64,10 @@ public class AltLeftToLeftScale extends ImprovedCommandGroup {
 		addSequential(new ArmClose());
 		addSequential(new WaitCommand(0.2));
 		
+		addSequential(new MovePID(switchHeight, 2));
+		addSequential(new AltDistanceDriveStraight(12, 1));
+		addSequential(new SpinIn());
+		addSequential(new WaitCommand(1));
 	}
+
 }
