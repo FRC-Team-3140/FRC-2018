@@ -301,8 +301,6 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		stopTimer();
 	}
 	
-	
-	
 	/*******************
 	 * VOLTAGE METHODS *
 	 *******************/

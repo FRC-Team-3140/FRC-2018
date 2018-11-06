@@ -23,4 +23,10 @@ public class EncoderHelper {
 	public double encoderTicksToInches(double encoderTicks, double ticksPerRev, double circum) {
 		return encoderTicksToRevs(encoderTicks, ticksPerRev) * circum;
 	}
+	
+	public static double inSecToTicks100Ms(double inSec, double quadconversionfactor, double circum) {
+		double in100Ms = inSec/10;
+		double ticks100Ms = inchesToEncoderTicks(in100Ms, circum, quadconversionfactor);
+		return ticks100Ms;
+	}
 }

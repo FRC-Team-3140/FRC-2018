@@ -14,7 +14,6 @@ public class AltDistanceDriveStraight extends TimedCommand {
 
 	protected void initialize() {
 		Robot.dt.initPID();
-		System.out.println("hi");
 	}
 	
 	protected void execute() {

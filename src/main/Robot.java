@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.Logger;
+import controllers.FollowTrajectory;
 import controllers.Record;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -100,7 +101,8 @@ public class Robot extends ImprovedRobot {
 		
 		lg = new Logger();
 		autoLooper = new Looper(kLooperDt);
-		autoLooper.register(new Record());
+		//autoLooper.register(new Record());
+		autoLooper.register(new FollowTrajectory());
 		
 		SmartDashboard.putData("Record", new StartRecord());
 		SmartDashboard.putData("Play", new StartPlay());
