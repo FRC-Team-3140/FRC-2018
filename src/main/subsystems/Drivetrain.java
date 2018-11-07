@@ -110,6 +110,12 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		lastTime = t;
 	}
 	
+	public void driveTankVeloFF(double veloTicks100Ms) {
+		double leftThrottle = veloTicks100Ms * kLeftVeloFeedForward;
+		double rightThrottle = veloTicks100Ms * kRightVeloFeedForward;
+		tankDrive(leftThrottle, rightThrottle, false);
+	}
+	
 	// Drives with closed loop position control w/o gyro correction
 	public void drivePID(double inches) {
 		int ticks = distanceToTicks(inches);

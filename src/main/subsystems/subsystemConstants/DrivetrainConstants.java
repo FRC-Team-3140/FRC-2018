@@ -12,7 +12,7 @@ public interface DrivetrainConstants {
 	public static int slotIdx = 0;
 	
 	// LEFT DRIVETRAIN PID CONSTANTS
-	public static double kPLeft = 0.015; // TODO have fun retuning lmfao 
+	public static double kPLeft = 0.015;
 	public static double kILeft = 0;
 	public static double kDLeft = 0.625;
 	// old constants: 0.015, 0, 0.625
@@ -30,11 +30,14 @@ public interface DrivetrainConstants {
 	// old constants: 0.017, 0.0004
 	
 	// VELOCITY
-	public static double cruiseSpeed = 0; // TODO FIND CRUISE SPEED 
+	public static double cruiseSpeed = 0; // TODO FIND CRUISE SPEED in units per 100ms
 	
 	// VELOCITY FEED FORWARD FOR FUTURE USE WHEN MOTION PROFILING
-	public static double kLeftVeloFeedForward = 0;
-	public static double kRightVeloFeedForward = 0;
+	public static double kLeftVeloFeedForward = 1.0/35000; // TODO find this. (% voltage / units per 100ms)
+	public static double kRightVeloFeedForward = 1.0/35000;
+	
+	// ACCELERATION
+	public static double RAMP_RATE_UNITS_100MS_S = 0; //TODO find this
 
 	/*************
 	 * CONSTANTS *

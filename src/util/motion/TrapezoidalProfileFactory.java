@@ -11,7 +11,7 @@ public class TrapezoidalProfileFactory {
 	
 	
 	/*
-	 * Writes an array of positions and speeds
+	 * Writes an array of positions and speeds | [position][speed]
 	 * Each row in the array has an interval of 10ms
 	 * Speed is in units per 100 ms and position is in encoder ticks
 	 * 
@@ -19,7 +19,7 @@ public class TrapezoidalProfileFactory {
 	 * @param cruiseVelocity The targeted velocity to cruise at in units per 100 ms
 	 * @param acceleration   The acceleration to hit the target velocity in units per 100ms per second
 	 */
-	public double[][] getProfile(double distanceUnits, double cruiseVelocity, double acceleration) {
+	public static double[][] getProfile(double distanceUnits, double cruiseVelocity, double acceleration) {
 		List<Double> speedList = new ArrayList<Double>();
 		List<Double> posList = new ArrayList<Double>();
 

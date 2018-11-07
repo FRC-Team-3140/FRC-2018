@@ -18,6 +18,7 @@ import java.util.List;
 import util.Logger;
 import controllers.FollowTrajectory;
 import controllers.Record;
+import controllers.VelocityFF;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -41,6 +42,7 @@ import main.commands.controllerCommands.FileCreator;
 import main.commands.controllerCommands.FileDeletor;
 import main.commands.controllerCommands.StartPlay;
 import main.commands.controllerCommands.StartRecord;
+import main.commands.controllerCommands.StartVeloFF;
 import main.commands.drivetrain.TankDrive;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
@@ -102,7 +104,8 @@ public class Robot extends ImprovedRobot {
 		lg = new Logger();
 		autoLooper = new Looper(kLooperDt);
 		//autoLooper.register(new Record());
-		autoLooper.register(new FollowTrajectory());
+		//autoLooper.register(new FollowTrajectory());
+		autoLooper.register(new VelocityFF());
 		
 		SmartDashboard.putData("Record", new StartRecord());
 		SmartDashboard.putData("Play", new StartPlay());
@@ -115,6 +118,7 @@ public class Robot extends ImprovedRobot {
     	fileChooser = new SendableChooser<>();
     	fileChooser.addDefault("", new DoNothing());
     	SmartDashboard.putData("File Selector", fileChooser);
+    	SmartDashboard.putData("Velo FF", new StartVeloFF(120));
     	
 //    	SmartDashboard.putNumber("Throttle", 0.0);
     	SmartDashboard.putData("Tank Drive", new TankDrive(.1,.1));

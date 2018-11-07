@@ -16,11 +16,11 @@ public class EncoderHelper {
 	
 	// Converts encoder ticks to revolution #.
 	// EncoderTicks is what you desire to convert. TicksPerRev is native units per revolution of the encoder
-	public double encoderTicksToRevs(double encoderTicks, double ticksPerRev) {
+	public static double encoderTicksToRevs(double encoderTicks, double ticksPerRev) {
 		return encoderTicks / ticksPerRev;
 	}
 	
-	public double encoderTicksToInches(double encoderTicks, double ticksPerRev, double circum) {
+	public static double encoderTicksToInches(double encoderTicks, double ticksPerRev, double circum) {
 		return encoderTicksToRevs(encoderTicks, ticksPerRev) * circum;
 	}
 	

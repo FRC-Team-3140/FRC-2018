@@ -32,7 +32,7 @@ public interface Constants {
 	public final String MID_LeftSwitch = "MID_LSwitch.txt";
 	public final String driveBaseline = "Baseline.txt";
 	
-	public final double kLooperDt = .005;
+	public final double kLooperDt = .1;
 	
 	// Auto Delay Time
 	// This is the time that the robot will wait before executing the selected auto in an EDGECASE situation.
