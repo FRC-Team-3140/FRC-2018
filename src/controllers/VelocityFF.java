@@ -36,7 +36,7 @@ public class VelocityFF implements Loop, Constants, DrivetrainConstants{
 		targetVelo = currentProf[i][1];
 		DriveVeloFF drive = new DriveVeloFF(targetVelo);
 		drive.start();
-		i++;
+		i += 10;
 	}
 	
 	public static void start(int distUnits) {
