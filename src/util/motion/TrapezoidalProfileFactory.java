@@ -44,7 +44,8 @@ public class TrapezoidalProfileFactory {
 			}
 		}
 		else {
-			System.out.println("too small distance"); //TODO make triangular motion profile for this case
+			System.out.println("too small distance"); //TODO make triangular motion profile for this case\
+			System.out.println("total accel distance: " + totalAccelDistanceUnits);
 			double[][] zero = new double[1][2];
 			zero[0][0] = 0;
 			zero[0][1] = 0;
