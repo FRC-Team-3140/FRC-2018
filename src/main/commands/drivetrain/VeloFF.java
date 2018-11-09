@@ -3,14 +3,16 @@ package main.commands.drivetrain;
 import edu.wpi.first.wpilibj.command.Command;
 import main.Robot;
 
-public class VeloFF  extends Command{
+public class VeloFF extends Command{
+	double inches;
 	
-	public VeloFF() {
+	public VeloFF(double inches) {
 		requires(Robot.dt);
+		this.inches = inches;
 	}
 	
 	public void initialize() {
-		Robot.dt.initDriveFF(120);
+		Robot.dt.initDriveFF(inches);
 	}
 	
 	public void execute() {
@@ -24,6 +26,7 @@ public class VeloFF  extends Command{
 	@Override
 	protected boolean isFinished() {
 		return false;
+		// TODO actually make this return true when it is done uwu
 	}
 
 }

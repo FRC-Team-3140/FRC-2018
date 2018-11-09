@@ -127,6 +127,7 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		tankDrive(leftThrottle, rightThrottle, false);
 	}
 	
+	// TODO add something to stop the command before the array ends so it won't crash code
 	public void initDriveFF(double inches) {
 		int distanceUnits = (int) EncoderHelper.inchesToEncoderTicks(inches, wheelCircum, quadConversionFactor);
 		System.out.println(distanceUnits);

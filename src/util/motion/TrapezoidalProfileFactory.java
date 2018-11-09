@@ -5,11 +5,6 @@ import java.util.List;
 
 public class TrapezoidalProfileFactory {
 	
-//	public double[][] getProfileIn(double distanceIn, double cruiseVelo, double accel) {
-//		return getProfile(double )
-//	}
-	
-	
 	/*
 	 * Writes an array of positions and speeds | [position][speed]
 	 * Each row in the array has an interval of 10ms

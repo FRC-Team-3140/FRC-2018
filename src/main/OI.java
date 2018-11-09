@@ -3,13 +3,6 @@ package main;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
-import main.commands.altermativeAuto.AltCenterToLeftSwitch;
-import main.commands.altermativeAuto.AltCenterToRightSwitch;
-import main.commands.altermativeAuto.AltLeftToLeftScale;
-import main.commands.altermativeAuto.AltLeftToLeftSwitch;
-import main.commands.altermativeAuto.AltRightToRightScale;
-import main.commands.altermativeAuto.AltRightToRightSwitch;
-import main.commands.altermativeAuto.RightToRightScaleSwitch;
 import main.commands.drivetrain.VeloFF;
 import main.commands.elevator.MovePID;
 import main.commands.intake.SpinIn;
@@ -34,48 +27,11 @@ public class OI extends ImprovedClass {
 		
 		xbox.leftJoystickPress.whenPressed(new ShiftUp());
 		xbox.leftJoystickPress.whenReleased(new ShiftDown());
-		
-		//xbox.a.whenPressed(new DistanceDriveStraight(12*10));
-		//xbox.b.whenPressed(new TurnToAngleGyro(90, 5));
-//		
-//		xbox.b.whenPressed(new AltLeftToLeftScale());
-//		xbox.a.whenPressed(new AltLeftToLeftSwitch());
-//		
-//		xbox.y.whenPressed(new AltCenterToLeftSwitch());
-//		xbox.x.whenPressed(new AltCenterToRightSwitch());
-//	//	xbox
-		
-		xbox.a.whenPressed(new VeloFF());
+
+		xbox.a.whenPressed(new VeloFF(120));
 
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
-		
-//		xbox2.b.whileHeld(new SpinIn());
-//		xbox2.b.whenReleased(new SpinOff());
-////
-//		xbox2.x.whenPressed(new MovePID(50, 5));
-//		xbox2.y.whenPressed(new MovePID(switchHeight, 3));
-//		
-		/*xbox.b.whenPressed(new InitPID());
-		xbox.b.whileHeld(new DriveLeftPID(12));
-		xbox.b.whenReleased(new EndPID());
-		xbox.x.whenPressed(new InitPID());
-		xbox.x.whileHeld(new DriveRightPID(12)); 
-		xbox.x.whenReleased(new EndPID());*/
-	//	xbox.y.whenPressed(new InitPID());
-		//xbox.y.whenPressed(new DistanceDriveStraight(driveDt));
-		//xbox.y.whenReleased(new EndPID());
-		
-//		xbox.b.whenPressed(new InitPID());
-//		xbox.b.whenPressed(new TurnToAngleInit(90));
-		//xbox.b.whileHeld(new TurnTest());
-//		xbox.b.whenPressed(new EndPID());
-		
-		//xbox.b.whenPressed(new AltRightToRightScale());
-		
-		//xbox.x.whenPressed(new InitPID());
-		//xbox.x.whenPressed(new TurnToAngleGyro(90, 5));
-		//xbox.x.whenReleased(new EndPID());
 		
 		SmartDashboard.putNumber("Drive for distance", driveDt);
 		SmartDashboard.putNumber("Turn to angle", turnDt);
