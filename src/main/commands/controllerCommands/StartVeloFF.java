@@ -6,14 +6,15 @@ import main.subsystems.subsystemConstants.DrivetrainConstants;
 import util.EncoderHelper;
 
 public class StartVeloFF extends ImprovedCommand implements DrivetrainConstants {
-	private int distUnits;
+	private double in;
 
 	public StartVeloFF(double inches) {
-		distUnits = EncoderHelper.inchesToEncoderTicks(inches, wheelCircum, quadConversionFactor);
+		in = EncoderHelper.inchesToEncoderTicks(inches, wheelCircum, quadConversionFactor);
+		//in = inches;
 	}
 	
 	protected void initialize() {
-		VelocityFF.start(distUnits);
+		VelocityFF.start(in);
 	}
 
 	@Override

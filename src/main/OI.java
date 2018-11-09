@@ -10,6 +10,7 @@ import main.commands.altermativeAuto.AltLeftToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightScale;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
 import main.commands.altermativeAuto.RightToRightScaleSwitch;
+import main.commands.drivetrain.VeloFF;
 import main.commands.elevator.MovePID;
 import main.commands.intake.SpinIn;
 import main.commands.intake.SpinOff;
@@ -43,6 +44,8 @@ public class OI extends ImprovedClass {
 //		xbox.y.whenPressed(new AltCenterToLeftSwitch());
 //		xbox.x.whenPressed(new AltCenterToRightSwitch());
 //	//	xbox
+		
+		xbox.a.whenPressed(new VeloFF());
 
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));

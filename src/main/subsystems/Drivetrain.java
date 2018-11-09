@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Timer;
 import util.ChezyMath;
 import util.DriveHelper;
 import util.EncoderHelper;
+import util.motion.TrapezoidalProfileFactory;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.Robot;
@@ -26,6 +27,8 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	private static double lastTime = 0;
 	private boolean okayToPID = false;
 	public double inchesToTurn = 0;
+	
+	double[][] prof;
 		
 	//TELEOP DRIVING
 	private DriveHelper driveHelper = new DriveHelper(7.5);
@@ -111,9 +114,28 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	}
 	
 	public void driveTankVeloFF(double veloTicks100Ms) {
+		//System.out.println(veloTicks100Ms);
+		double t = timer.get();
+		int i =(int) ( t/0.01);
+		
+		veloTicks100Ms = prof[i][1];
 		double leftThrottle = veloTicks100Ms * kLeftVeloFeedForward;
 		double rightThrottle = veloTicks100Ms * kRightVeloFeedForward;
+		if(leftThrottle > 1.0) leftThrottle = 1.0;
+		if(rightThrottle > 1.0) rightThrottle = 1.0;
+		System.out.println("throttle " + leftThrottle);
 		tankDrive(leftThrottle, rightThrottle, false);
+	}
+	
+	public void initDriveFF(double inches) {
+		int distanceUnits = (int) EncoderHelper.inchesToEncoderTicks(inches, wheelCircum, quadConversionFactor);
+		System.out.println(distanceUnits);
+		prof = TrapezoidalProfileFactory.getProfile(distanceUnits, cruiseSpeed, RAMP_RATE_UNITS_100MS_S);
+		initPID();
+	}
+	
+	public void driveVeloFF() {
+		
 	}
 	
 	// Drives with closed loop position control w/o gyro correction

@@ -118,7 +118,7 @@ public class Robot extends ImprovedRobot {
     	fileChooser = new SendableChooser<>();
     	fileChooser.addDefault("", new DoNothing());
     	SmartDashboard.putData("File Selector", fileChooser);
-    	SmartDashboard.putData("Velo FF", new StartVeloFF(120));
+    	SmartDashboard.putData("Velo FF", new StartVeloFF(500));
     	
 //    	SmartDashboard.putNumber("Throttle", 0.0);
     	SmartDashboard.putData("Tank Drive", new TankDrive(.1,.1));

@@ -8,9 +8,11 @@ public class DriveVeloFF extends ImprovedCommand {
 
 	public DriveVeloFF(double veloTicks100Ms) {
 		requires(Robot.dt);
+		velo = veloTicks100Ms;
 	}
 
 	protected void execute() {
+		System.out.println("drive velo FF");
 		Robot.dt.driveTankVeloFF(velo);
 	}
 	

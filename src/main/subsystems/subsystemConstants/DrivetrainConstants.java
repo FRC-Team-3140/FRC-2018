@@ -30,14 +30,14 @@ public interface DrivetrainConstants {
 	// old constants: 0.017, 0.0004
 	
 	// VELOCITY
-	public static double cruiseSpeed = 0; // TODO FIND CRUISE SPEED in units per 100ms
+	public static double cruiseSpeed = 10000; // TODO FIND CRUISE SPEED in units per 100ms
 	
 	// VELOCITY FEED FORWARD FOR FUTURE USE WHEN MOTION PROFILING
-	public static double kLeftVeloFeedForward = 1.0/35000; // TODO find this. (% voltage / units per 100ms)
-	public static double kRightVeloFeedForward = 1.0/35000;
+	public static double kLeftVeloFeedForward = 1.0/30000; // TODO find this. (% voltage / units per 100ms)
+	public static double kRightVeloFeedForward = 1.0/30000;
 	
 	// ACCELERATION
-	public static double RAMP_RATE_UNITS_100MS_S = 0; //TODO find this
+	public static double RAMP_RATE_UNITS_100MS_S = 50000; //TODO find this
 
 	/*************
 	 * CONSTANTS *
