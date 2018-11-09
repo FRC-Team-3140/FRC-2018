@@ -134,8 +134,18 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		initPID();
 	}
 	
+	// Drives with a velocity profile
 	public void driveVeloFF() {
+		double t = timer.get();
+		int i =(int) ( t/0.01);
 		
+		double veloTicks100Ms = prof[i][1];
+		double leftThrottle = veloTicks100Ms * kLeftVeloFeedForward;
+		double rightThrottle = veloTicks100Ms * kRightVeloFeedForward;
+		if(leftThrottle > 1.0) leftThrottle = 1.0;
+		if(rightThrottle > 1.0) rightThrottle = 1.0;
+		System.out.println("throttle " + leftThrottle);
+		tankDrive(leftThrottle, rightThrottle, false);
 	}
 	
 	// Drives with closed loop position control w/o gyro correction
