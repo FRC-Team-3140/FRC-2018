@@ -145,7 +145,7 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		double rightThrottle = veloTicks100Ms * kRightVeloFeedForward;
 		if(leftThrottle > 1.0) leftThrottle = 1.0;
 		if(rightThrottle > 1.0) rightThrottle = 1.0;
-		System.out.println("throttle " + leftThrottle);
+		System.out.println("throttle " + leftThrottle + "\tSpeed: " + getLeftEncoderVelocity());
 		tankDrive(leftThrottle, rightThrottle, false);
 	}
 	

@@ -11,7 +11,8 @@ public class VeloFF extends Command{
 		this.inches = inches;
 	}
 	
-	public void initialize() {
+	protected void initialize() {
+		System.out.println("init");
 		Robot.dt.initDriveFF(inches);
 	}
 	

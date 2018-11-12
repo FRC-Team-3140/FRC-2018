@@ -64,6 +64,7 @@ public class TrapezoidalProfileFactory {
 			profile[m][0] = posList.get(m);
 			profile[m][1] = speedList.get(m);
 		}
+		System.out.println("T-Profile Factory generated");
 		return profile;
 	}
 }
