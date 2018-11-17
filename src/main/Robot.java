@@ -16,9 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.Logger;
-import controllers.FollowTrajectory;
-import controllers.Record;
-import controllers.VelocityFF;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -31,8 +28,6 @@ import main.commands.altermativeAuto.AltCenterToLeftSwitch;
 import main.commands.altermativeAuto.AltCenterToRightSwitch;
 import main.commands.altermativeAuto.AltLeftToLeftScale;
 import main.commands.altermativeAuto.AltLeftToLeftSwitch;
-import main.commands.altermativeAuto.AltLeftToRightSwitch;
-import main.commands.altermativeAuto.AltRightToLeftSwitch;
 import main.commands.altermativeAuto.AltRightToRightScale;
 import main.commands.altermativeAuto.AltRightToRightSwitch;
 import main.commands.altermativeAuto.DoNothing;
@@ -42,7 +37,6 @@ import main.commands.controllerCommands.FileCreator;
 import main.commands.controllerCommands.FileDeletor;
 import main.commands.controllerCommands.StartPlay;
 import main.commands.controllerCommands.StartRecord;
-import main.commands.controllerCommands.StartVeloFF;
 import main.commands.drivetrain.TankDrive;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
@@ -105,7 +99,6 @@ public class Robot extends ImprovedRobot {
 		autoLooper = new Looper(kLooperDt);
 		//autoLooper.register(new Record());
 		//autoLooper.register(new FollowTrajectory());
-		autoLooper.register(new VelocityFF());
 		
 		SmartDashboard.putData("Record", new StartRecord());
 		SmartDashboard.putData("Play", new StartPlay());
@@ -118,7 +111,6 @@ public class Robot extends ImprovedRobot {
     	fileChooser = new SendableChooser<>();
     	fileChooser.addDefault("", new DoNothing());
     	SmartDashboard.putData("File Selector", fileChooser);
-    	SmartDashboard.putData("Velo FF", new StartVeloFF(500));
     	
 //    	SmartDashboard.putNumber("Throttle", 0.0);
     	SmartDashboard.putData("Tank Drive", new TankDrive(.1,.1));
@@ -204,7 +196,7 @@ public class Robot extends ImprovedRobot {
 				}
 				else if(!behindSwitchDisabled) {
 					isSwitch = true;
-					autoCommand = new AltLeftToRightSwitch();
+					autoCommand = new AltBaseline();
 				}
 				else if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
 				else autoCommand = new AltBaseline();					
@@ -225,7 +217,7 @@ public class Robot extends ImprovedRobot {
 				}
 				else if(!behindSwitchDisabled) {
 					isSwitch = true;
-					autoCommand = new AltRightToLeftSwitch();
+					autoCommand = new AltBaseline();
 				}
 				else if(!leftScale && !scaleDisabled) {
 					autoCommand = new AltRightToRightScale();
@@ -245,7 +237,7 @@ public class Robot extends ImprovedRobot {
 				}
 				else if(!behindSwitchDisabled) {
 					isSwitch = true;
-					autoCommand = new AltLeftToRightSwitch();
+					autoCommand = new AltBaseline();
 				}
 				else autoCommand = new AltBaseline();					
 			}
@@ -266,7 +258,7 @@ public class Robot extends ImprovedRobot {
 				}
 				else if(!behindSwitchDisabled) {
 					isSwitch = true;
-					autoCommand = new AltRightToLeftSwitch();
+					autoCommand = new AltBaseline();
 				}
 				else autoCommand = new AltBaseline();				
 			}

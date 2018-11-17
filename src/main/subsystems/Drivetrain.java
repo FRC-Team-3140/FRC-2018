@@ -113,20 +113,6 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		lastTime = t;
 	}
 	
-	public void driveTankVeloFF(double veloTicks100Ms) {
-		//System.out.println(veloTicks100Ms);
-		double t = timer.get();
-		int i =(int) ( t/0.01);
-		
-		veloTicks100Ms = prof[i][1];
-		double leftThrottle = veloTicks100Ms * kLeftVeloFeedForward;
-		double rightThrottle = veloTicks100Ms * kRightVeloFeedForward;
-		if(leftThrottle > 1.0) leftThrottle = 1.0;
-		if(rightThrottle > 1.0) rightThrottle = 1.0;
-		System.out.println("throttle " + leftThrottle);
-		tankDrive(leftThrottle, rightThrottle, false);
-	}
-	
 	// TODO add something to stop the command before the array ends so it won't crash code
 	public void initDriveFF(double inches) {
 		int distanceUnits = (int) EncoderHelper.inchesToEncoderTicks(inches, wheelCircum, quadConversionFactor);

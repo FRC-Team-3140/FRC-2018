@@ -5,7 +5,6 @@ import interfacesAndAbstracts.ImprovedCommandGroup;
 import main.commands.drivetrain.DriveTrainOff;
 import main.commands.drivetrain.TimedDrive;
 import main.commands.drivetrain.TimedTurn;
-import main.commands.drivetrain.TurnToAngle;
 import main.commands.elevator.MoveToBottom;
 import main.commands.elevator.MoveToSwitch;
 import main.commands.elevator.MoveToTop;
@@ -108,13 +107,13 @@ public class RobotSelfTest extends ImprovedCommandGroup {
 		addSequential(new WaitCommand(0.5));
 				
 		//Turn To Angle
-		addSequential(new TurnToAngle(45));
-		addSequential(new WaitCommand(0.5));
-		addSequential(new TurnToAngle(-45));
-		addSequential(new WaitCommand(0.5));
-		addSequential(new TurnToAngle(-90));
-		addSequential(new WaitCommand(0.5));
-		addSequential(new TurnToAngle(90));
+//		addSequential(new TurnToAngle(45));
+//		addSequential(new WaitCommand(0.5));
+//		addSequential(new TurnToAngle(-45));
+//		addSequential(new WaitCommand(0.5));
+//		addSequential(new TurnToAngle(-90));
+//		addSequential(new WaitCommand(0.5));
+//		addSequential(new TurnToAngle(90));
 				
 		//Stop & Wait
 		addSequential(new DriveTrainOff());
