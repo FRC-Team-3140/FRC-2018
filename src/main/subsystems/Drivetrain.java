@@ -177,8 +177,38 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		lastTime = t;
 	}
 	
-	// future use
-	public void driveFromPlayPID(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double headingTarget) {
+	/*
+	 * Drives to a profile
+	 * @param ticks    Profile with left and right distances in ticks, respectively
+	 * @param velo     Profile with left and right velocities in ticks per 100 ms, respectively
+	 * @param heading  Profile of the heading of the robot in degrees
+	 */
+	public void driveWithProfile(double[][] ticks, double[][] velo, double[] headings) {
+		initPID();
+		
+		for(int i =0; i < ticks.length; i++) {
+			double leftTicks = ticks[i][0];
+			double rightTicks = ticks[i][1];
+			double leftVelo = velo[i][0];
+			double rightVelo = velo[i][1];
+			double heading = headings[i];
+			
+			boolean reached = false;
+			
+			while(!reached) {
+				driveToWaypoint(leftTicks, rightTicks, leftVelo, rightVelo, heading);
+			//boolean leftReached = getLeftEncoderTicksTravelled();
+			}
+		}
+		
+		endPID();
+	}
+	
+	/*
+	 * Method to drive a short distance to a waypoint. Should be called in a loop.
+	 * Uses cascaded loop to drive to the waypoint
+	 */
+	public void driveToWaypoint(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double headingTarget) {
 		double heading = getHeading();
 		double headingError = headingTarget - heading;
 		double t = timer.get();

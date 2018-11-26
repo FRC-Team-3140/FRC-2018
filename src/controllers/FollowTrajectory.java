@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import loopController.Loop;
 import main.Constants;
-import main.commands.drivetrain.DriveTrajPID;
 import main.commands.drivetrain.EndPID;
 import main.commands.drivetrain.InitPID;
 import main.subsystems.subsystemConstants.DrivetrainConstants;
@@ -49,8 +48,8 @@ public class FollowTrajectory implements Loop, Constants, DrivetrainConstants {
 		double leftVeloTicks100Ms = EncoderHelper.inSecToTicks100Ms(leftVelo, quadConversionFactor, wheelCircum);
 		double rightVeloTicks100Ms = EncoderHelper.inSecToTicks100Ms(rightVelo, quadConversionFactor, wheelCircum);
 
-		Command drive = new DriveTrajPID(leftDistTicks, rightDistTicks, leftVeloTicks100Ms, rightVeloTicks100Ms, headingDeg);
-		drive.start();
+//		Command drive = new DriveTrajPID(leftDistTicks, rightDistTicks, leftVeloTicks100Ms, rightVeloTicks100Ms, headingDeg);
+//		drive.start();
 	}
 	
 	public static void setCanExecute(boolean b, String name) {

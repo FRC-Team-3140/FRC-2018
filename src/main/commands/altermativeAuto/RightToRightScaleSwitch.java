@@ -26,17 +26,21 @@ public class RightToRightScaleSwitch extends ImprovedCommandGroup {
 		addSequential(new TiltDown());
 		addSequential(new DistanceDriveStraight(65));
 
-		addSequential(new SpinIn());
+		//addSequential(new SpinIn());
+		addSequential(new ArmOpen());
 		addSequential(new WaitCommand(0.3));
-		addSequential(new SpinOff());
+		
+//		addSequential(new SpinOff());
+//		addSequential(new ArmClose());
 		addSequential(new TiltUp());
+		addSequential(new ArmClose());
+
 		addSequential(new DistanceDriveStraight(-35));
 		
 		// first cube done
 		addSequential(new MoveToBottom(2.5));
 		addSequential(new TurnToAngleGyro(-110, 2));
-		addSequential(new TiltDown());
-		addSequential(new ArmOpen());
+		addSequential(new TiltDown());		addSequential(new ArmOpen());
 		addSequential(new SpinOut()); // FIXME inverted!!
 		addSequential(new AltDistanceDriveStraight(40, 1.5));
 		addSequential(new WaitCommand(0.5));
@@ -45,8 +49,9 @@ public class RightToRightScaleSwitch extends ImprovedCommandGroup {
 		addSequential(new WaitCommand(0.2));
 		
 		addSequential(new MovePID(switchHeight, 2));
-		addSequential(new AltDistanceDriveStraight(12, 1));
-		addSequential(new SpinIn());
+		addSequential(new AltDistanceDriveStraight(15, 1.5));
+//		addSequential(new SpinIn());
+		addSequential(new ArmOpen());
 		addSequential(new WaitCommand(1));
 	}
 
