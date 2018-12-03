@@ -3,6 +3,7 @@ package main;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
+import main.commands.drivetrain.DriveProfile;
 import main.commands.drivetrain.VeloFF;
 import main.commands.elevator.MovePID;
 import main.commands.intake.SpinIn;
@@ -32,6 +33,8 @@ public class OI extends ImprovedClass {
 
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
+		
+		xbox.b.whenPressed(new DriveProfile(Robot.myFirstPath));
 		
 		SmartDashboard.putNumber("Drive for distance", driveDt);
 		SmartDashboard.putNumber("Turn to angle", turnDt);

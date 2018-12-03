@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.Logger;
+import util.motion.TrajectoryPath;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -78,6 +79,8 @@ public class Robot extends ImprovedRobot {
 	private static Command competitionPlayCommand;
 	//private static Command autoCommand;
 	
+	public static TrajectoryPath myFirstPath;
+	
 //	class AutoCommandGroup extends CommandGroup {
 //		public AutoCommandGroup(Command auto, boolean reset, boolean moveDown) {
 //			addSequential(auto);
@@ -97,6 +100,8 @@ public class Robot extends ImprovedRobot {
 		
 		lg = new Logger();
 		autoLooper = new Looper(kLooperDt);
+		
+		myFirstPath = new TrajectoryPath("myFirstMotionProfile");
 		//autoLooper.register(new Record());
 		//autoLooper.register(new FollowTrajectory());
 		
