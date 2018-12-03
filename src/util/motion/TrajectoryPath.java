@@ -30,6 +30,8 @@ public class TrajectoryPath implements Constants {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		init();
 	}
 	
 	// Initializes the class by reading in the appropriate file
@@ -86,6 +88,26 @@ public class TrajectoryPath implements Constants {
 			}
 			line = readLine();
 		}
+	}
+	
+	public double[] getHeadingArr() {
+		return headingDeg;
+	}
+	
+	public double[] getLeftPosArr() {
+		return leftPos;
+	}
+	
+	public double[] getRightPosArr() {
+		return rightPos;
+	}
+	
+	public double[] getLeftVeloArr() {
+		return leftVelocity;
+	}
+	
+	public double[] getRightVeloArr() {
+		return leftVelocity;
 	}
 	
 	// Returns the target heading at the time in degrees

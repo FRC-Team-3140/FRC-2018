@@ -5,15 +5,15 @@ import interfacesAndAbstracts.ImprovedCommand;
 import main.Robot;
 
 public class Tilt extends ImprovedCommand {
-	public DoubleSolenoid.Value v;
+	public DoubleSolenoid.Value val;
 	
 	public Tilt(DoubleSolenoid.Value v) {
 		requires(Robot.pn);
-		this.v = v;
+		val = v;
 	}
 	
 	public void execute() {
-		Robot.pn.tilt(v);
+		Robot.pn.tilt(val);
 	}
 
 	@Override

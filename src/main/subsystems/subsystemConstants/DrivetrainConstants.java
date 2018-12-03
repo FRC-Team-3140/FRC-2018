@@ -40,7 +40,8 @@ public interface DrivetrainConstants {
 	public static double RAMP_RATE_UNITS_100MS_S = 50000; //TODO find this
 
 	// ERROR
-	public static double ALLOWABLE_ERR = 300; //TODO find this
+	public static double ALLOWABLE_ERR_UNITS = 300; //TODO find this
+	public static double ALLOWABLE_ERR_DEG = 2;
 	
 	/*************
 	 * CONSTANTS *

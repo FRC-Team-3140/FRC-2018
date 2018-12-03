@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Timer;
 import util.ChezyMath;
 import util.DriveHelper;
 import util.EncoderHelper;
+import util.motion.TrajectoryPath;
 import util.motion.TrapezoidalProfileFactory;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
@@ -183,25 +184,32 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	 * @param velo     Profile with left and right velocities in ticks per 100 ms, respectively
 	 * @param heading  Profile of the heading of the robot in degrees
 	 */
-	public void driveWithProfile(double[][] ticks, double[][] velo, double[] headings) {
+	public void driveWithProfile(TrajectoryPath path) {
 		initPID();
 		
-		for(int i =0; i < ticks.length; i++) {
-			double leftTicks = ticks[i][0];
-			double rightTicks = ticks[i][1];
-			double leftVelo = velo[i][0];
-			double rightVelo = velo[i][1];
-			double heading = headings[i];
+		for(int i =0; i < path.getHeadingArr().length; i++) {
+			double leftTicks = path.getLeftPosArr()[i];
+			double rightTicks = path.getRightPosArr()[i];
+			double leftVelo = path.getLeftVeloArr()[i];
+			double rightVelo = path.getRightVeloArr()[i];
+			double heading = path.getHeadingArr()[i];
 			
 			boolean reached = false;
 			
 			while(!reached) {
 				driveToWaypoint(leftTicks, rightTicks, leftVelo, rightVelo, heading);
-			//boolean leftReached = getLeftEncoderTicksTravelled();
+				boolean leftReached = Math.abs(getLeftEncoderTicksTravelled() - leftTicks) < ALLOWABLE_ERR_UNITS;
+				boolean rightReached = Math.abs(getRightEncoderTicksTravelled() - rightTicks) < ALLOWABLE_ERR_UNITS;
+				boolean headingReached = Math.abs(getHeading() - heading) < ALLOWABLE_ERR_DEG;
+				
+				if(leftReached && rightReached && headingReached) reached = true;
 			}
+			
+			resetBetweenWaypoints();
 		}
 		
 		endPID();
+		arcadeDrive(0,0, false);
 	}
 	
 	/*
@@ -326,6 +334,11 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		lastHeadingError = 0;
 		lastHeadingIntegral = 0;
 		lastTime = 0;
+	}
+	
+	public void resetBetweenWaypoints() {
+		lastHeadingError = 0;
+		lastHeadingIntegral = 0;
 	}
 	
 	public void okayToPID(boolean okayToPID) {
