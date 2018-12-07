@@ -172,7 +172,6 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		
 		//System.out.println(output);
 		arcadeDrive(0, output, false);
-		
 		lastHeadingError = headingError;
 		lastHeadingIntegral = headingIntegral;
 		lastTime = t;
@@ -186,8 +185,10 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	 */
 	public void driveWithProfile(TrajectoryPath path) {
 		initPID();
+		System.out.println("drive With profile method");
 		
-		for(int i =0; i < path.getHeadingArr().length; i++) {
+		for(int i =0; i < 256; i++) { //TODO change 256 later
+			//System.out.println("for loop in drive w/ prof method");
 			double leftTicks = path.getLeftPosArr()[i];
 			double rightTicks = path.getRightPosArr()[i];
 			double leftVelo = path.getLeftVeloArr()[i];
@@ -204,10 +205,12 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 				
 				if(leftReached && rightReached && headingReached) reached = true;
 			}
+
 			
 			resetBetweenWaypoints();
 		}
 		
+		System.out.println("end of profile method");
 		endPID();
 		arcadeDrive(0,0, false);
 	}
@@ -217,6 +220,8 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	 * Uses cascaded loop to drive to the waypoint
 	 */
 	public void driveToWaypoint(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double headingTarget) {
+		//System.out.println("drive to waypoint method helloooo"); // This is printing successfully
+		
 		double heading = getHeading();
 		double headingError = headingTarget - heading;
 		double t = timer.get();

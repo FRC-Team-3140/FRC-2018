@@ -14,16 +14,18 @@ import main.Constants;
 public class TrajectoryPath implements Constants {
 	private File file;
 	private BufferedReader br;
-	private double[] leftVelocity; // ft/s
-	private double[] rightVelocity;
-	private double[] leftPos; //ft
-	private double[] rightPos;
-	private double[] headingDeg;
+	//TODO change these over to lists
+	private double[] leftVelocity = new double[256]; // ft/s
+	private double[] rightVelocity = new double[256];
+	private double[] leftPos=new double[256]; //ft
+	private double[] rightPos=new double[256];
+	private double[] headingDeg=new double[256];
 	private String current;
 	
 	private double dt = 0.05;
 	
-	public TrajectoryPath(String name) {		
+	public TrajectoryPath(String name) {	
+		//System.out.println("Directory: " + System.getProperty("user.dir"));
 		file = new File(outputPath + name + ".txt");
 		try {
 			br = new BufferedReader(new FileReader(file));
@@ -42,8 +44,13 @@ public class TrajectoryPath implements Constants {
 		double lastPosY = 0;
 		String line = readLine();
 		
+		//TODO: fix for empty lines
 		while(line != null) {
-			char ch = line.charAt(0);
+			char ch;
+			if(line != "")
+				ch = line.charAt(0);
+			else 
+				ch = 'X';
 			
 			// Changes the array to fill up if the we've reached the next array in the txt file
 			if(ch == 'H' || ch == 'V' || ch == 'P') {
@@ -63,8 +70,10 @@ public class TrajectoryPath implements Constants {
 				double x = Double.parseDouble(dtState[0]);
 				double y = Double.parseDouble(dtState[1]);
 				
+				//System.out.println(current);
 				// Fills up arrays appropriately
-				if(current.equals("H")) headingDeg[i] = y;
+				if(current.equals("H")) 
+					headingDeg[i] = y;
 				else if(current.equals("VL")) leftVelocity[i] = y;
 				else if(current.equals("VR")) rightVelocity[i] = y;
 				
@@ -88,6 +97,7 @@ public class TrajectoryPath implements Constants {
 			}
 			line = readLine();
 		}
+		System.out.println(headingDeg.length);
 	}
 	
 	public double[] getHeadingArr() {
@@ -107,7 +117,7 @@ public class TrajectoryPath implements Constants {
 	}
 	
 	public double[] getRightVeloArr() {
-		return leftVelocity;
+		return rightVelocity;
 	}
 	
 	// Returns the target heading at the time in degrees

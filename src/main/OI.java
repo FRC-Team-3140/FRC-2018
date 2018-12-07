@@ -34,7 +34,7 @@ public class OI extends ImprovedClass {
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
 		
-		xbox.b.whenPressed(new DriveProfile(Robot.myFirstPath));
+		xbox.b.whenPressed(new DriveProfile(myFirstPath));
 		
 		SmartDashboard.putNumber("Drive for distance", driveDt);
 		SmartDashboard.putNumber("Turn to angle", turnDt);

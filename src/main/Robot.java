@@ -79,7 +79,7 @@ public class Robot extends ImprovedRobot {
 	private static Command competitionPlayCommand;
 	//private static Command autoCommand;
 	
-	public static TrajectoryPath myFirstPath;
+//	public static TrajectoryPath myFirstPath;
 	
 //	class AutoCommandGroup extends CommandGroup {
 //		public AutoCommandGroup(Command auto, boolean reset, boolean moveDown) {
@@ -101,7 +101,6 @@ public class Robot extends ImprovedRobot {
 		lg = new Logger();
 		autoLooper = new Looper(kLooperDt);
 		
-		myFirstPath = new TrajectoryPath("myFirstMotionProfile");
 		//autoLooper.register(new Record());
 		//autoLooper.register(new FollowTrajectory());
 		

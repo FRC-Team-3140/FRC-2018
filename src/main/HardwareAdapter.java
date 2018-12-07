@@ -3,6 +3,7 @@ package main;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import lib.joystick.XboxController;
 import util.RevRoboticsAnalogPressureSensor;
+import util.motion.TrajectoryPath;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -37,4 +38,8 @@ public interface HardwareAdapter extends Constants{
 	public static DoubleSolenoid tilter = new DoubleSolenoid(PCM_Port1, TILT_EXT, TILT_RET);
 	public static Compressor comp = new Compressor(PCM_Port1);
 	public static DoubleSolenoid intakeArm = new DoubleSolenoid(PCM_Port1, INTAKE_EXT, INTAKE_RET);
+	
+	// PROFILES
+	public static TrajectoryPath myFirstPath = new TrajectoryPath("myFirstMotionProfile");
+
 }

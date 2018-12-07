@@ -17,7 +17,7 @@ public interface Constants {
 	public final boolean invertPIDHeadingCorrection = false;
 	
 	// FILE OUTPUT PATH
-	public final String outputPath = "profiles/";
+	public final String outputPath = "/home/lvuser/";
 	// FILE NAMES
 	public final String LEFT_LeftSwitch = "LEFT_LSwitch.txt";
 	public final String LEFT_Scale = "LEFT_Scale.txt";
