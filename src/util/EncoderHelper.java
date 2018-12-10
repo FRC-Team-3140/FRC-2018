@@ -29,4 +29,5 @@ public class EncoderHelper {
 		double ticks100Ms = inchesToEncoderTicks(in100Ms, circum, quadconversionfactor);
 		return ticks100Ms;
 	}
+	
 }

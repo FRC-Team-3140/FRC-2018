@@ -16,6 +16,7 @@ import main.commands.pneumatics.shift.ShiftUp;
 import main.commands.pneumatics.tilt.SwitchTilt;
 import main.commands.pneumatics.tilt.TiltDown;
 import main.commands.pneumatics.tilt.TiltUp;
+import util.motion.TrajectoryPath;
 
 public class OI extends ImprovedClass {	
 	private static double moveEl = 0;
@@ -34,7 +35,7 @@ public class OI extends ImprovedClass {
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));
 		
-		xbox.b.whenPressed(new DriveProfile(myFirstPath));
+		xbox.b.whenPressed(new DriveProfile(new TrajectoryPath("myFirstMotionProfile")));
 		
 		SmartDashboard.putNumber("Drive for distance", driveDt);
 		SmartDashboard.putNumber("Turn to angle", turnDt);

@@ -7,11 +7,13 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import main.Constants;
+import main.subsystems.subsystemConstants.DrivetrainConstants;
+import util.EncoderHelper;
 
 /*
  * Class to read in and convert to double from the trajectory path files as .txts
  */
-public class TrajectoryPath implements Constants {
+public class TrajectoryPath implements Constants, DrivetrainConstants {
 	private File file;
 	private BufferedReader br;
 	//TODO change these over to lists
@@ -74,21 +76,29 @@ public class TrajectoryPath implements Constants {
 				// Fills up arrays appropriately
 				if(current.equals("H")) 
 					headingDeg[i] = y;
-				else if(current.equals("VL")) leftVelocity[i] = y;
-				else if(current.equals("VR")) rightVelocity[i] = y;
+				else if(current.equals("VL")) {
+					leftVelocity[i] = EncoderHelper.inSecToTicks100Ms(y*12, 4096, wheelCircum);
+				}
+				else if(current.equals("VR")) {
+					rightVelocity[i] = EncoderHelper.inSecToTicks100Ms(y*12, 4096, wheelCircum);
+				}
 				
 				// Uses pythag from absolute position to get distances needed to travel.
 				else if(current.equals("PL")) {
 					if(i==0) leftPos[i] = 0;
-					else 
-						leftPos[i] = Math.sqrt(Math.pow(x-lastPosX, 2) + Math.pow(y-lastPosY, 2)); 
+					else  {
+						double posFt = Math.sqrt(Math.pow(x-lastPosX, 2) + Math.pow(y-lastPosY, 2)); 
+						leftPos[i] = EncoderHelper.inchesToEncoderTicks(12*posFt, wheelCircum, 4096);
+					}
 					lastPosX = x;
 					lastPosY = y;
 				}
 				else {
 					if(i==0) rightPos[i] = 0;
-					else 
-						rightPos[i] = Math.sqrt(Math.pow(x-lastPosX, 2) + Math.pow(y-lastPosY, 2)); 
+					else {
+						double posFt = Math.sqrt(Math.pow(x-lastPosX, 2) + Math.pow(y-lastPosY, 2));
+						rightPos[i] = EncoderHelper.inchesToEncoderTicks(12*posFt, wheelCircum, 4096);
+					}
 					lastPosX = x;
 					lastPosY = y;
 				}

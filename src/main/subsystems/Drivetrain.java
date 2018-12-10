@@ -194,6 +194,7 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 			double leftVelo = path.getLeftVeloArr()[i];
 			double rightVelo = path.getRightVeloArr()[i];
 			double heading = path.getHeadingArr()[i];
+			System.out.println(leftTicks);
 			
 			boolean reached = false;
 			
@@ -202,8 +203,12 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 				boolean leftReached = Math.abs(getLeftEncoderTicksTravelled() - leftTicks) < ALLOWABLE_ERR_UNITS;
 				boolean rightReached = Math.abs(getRightEncoderTicksTravelled() - rightTicks) < ALLOWABLE_ERR_UNITS;
 				boolean headingReached = Math.abs(getHeading() - heading) < ALLOWABLE_ERR_DEG;
+				System.out.println("driving to waypoint... left ticks: " + getLeftEncoderTicksTravelled());
 				
-				if(leftReached && rightReached && headingReached) reached = true;
+				if(leftReached && rightReached && headingReached) {
+					reached = true;
+					System.out.println("reached!!!");
+				}
 			}
 
 			
