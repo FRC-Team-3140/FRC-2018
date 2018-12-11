@@ -4,12 +4,16 @@ package main;
 
 /***
  * TODO
- * Get 2 cube right side autos
- * Test to make sure it's called at the right time
- * Test switch (make sure all one cube), baseline autos 
- * Left scale
+ * Comment your PID and profiles stuff!!
+ * Clean/organize project a bit more
+ * Add feature for PID to either stop or skip a waypoint if it doesn't get there within a certain amount of time
  * 
- ****/
+ * 12/10 meeting:
+ * Profile stuff is WORKING, but obviously needs tuning. Tested on blocks so angle
+ * would quickly have too much error and it would get stuck in a loop
+ * 
+ * Take notes Alex c:
+ */
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
