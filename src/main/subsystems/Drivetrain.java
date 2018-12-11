@@ -11,7 +11,6 @@ import util.ChezyMath;
 import util.DriveHelper;
 import util.EncoderHelper;
 import util.motion.TrajectoryPath;
-import util.motion.TrapezoidalProfileFactory;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedSubsystem;
 import main.Robot;
@@ -26,7 +25,6 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	private static double lastHeadingIntegral = 0;
 	private static double lastHeadingError = 0;
 	private static double lastTime = 0;
-	private boolean okayToPID = false;
 	public double inchesToTurn = 0;
 	
 	double[][] prof;
@@ -71,20 +69,12 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 					driveHelper.handleOverPower(driveHelper.handleDeadband(-heading, headingDeadband)), true);
 		}
 	}
-
-	//Drive for voltage playing back
-	public void driveVoltageTank(double leftVoltage, double rightVoltage, double voltageCompensationVoltage) {
-		double leftValue = ((Math.abs(leftVoltage) > voltageCompensationVoltage) ? Math.signum(leftVoltage) : leftVoltage/voltageCompensationVoltage);
-			// Negate one side so that the robot won't drive in circles
-			double rightValue = ((Math.abs(rightVoltage)  > voltageCompensationVoltage) ? Math.signum(rightVoltage) : rightVoltage/voltageCompensationVoltage);	
-	
-		tankDrive(leftValue, rightValue, false);// Don't square inputs as this will affect accuracy
-	}
 	
 	//Drive for testing the drivetrain so that the needed constants to compute the bias voltages may be derived
 	public void driveVoltageTankTest(double leftVoltage, double rightVoltage, double voltageCompensationVoltage) {
 		tankDrive(leftVoltage/voltageCompensationVoltage, rightVoltage/voltageCompensationVoltage, false);
 	}
+	
 	public void turnOff() {
 		tankDrive(0.0, 0.0, false);
 	}
@@ -112,28 +102,6 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		lastHeadingError = headingError;
 		lastHeadingIntegral = integral;
 		lastTime = t;
-	}
-	
-	// TODO add something to stop the command before the array ends so it won't crash code
-	public void initDriveFF(double inches) {
-		int distanceUnits = (int) EncoderHelper.inchesToEncoderTicks(inches, wheelCircum, quadConversionFactor);
-		System.out.println(distanceUnits);
-		prof = TrapezoidalProfileFactory.getProfile(distanceUnits, cruiseSpeed, RAMP_RATE_UNITS_100MS_S);
-		initPID();
-	}
-	
-	// Drives with a velocity profile
-	public void driveVeloFF() {
-		double t = timer.get();
-		int i =(int) ( t/0.01);
-		
-		double veloTicks100Ms = prof[i][1];
-		double leftThrottle = veloTicks100Ms * kLeftVeloFeedForward;
-		double rightThrottle = veloTicks100Ms * kRightVeloFeedForward;
-		if(leftThrottle > 1.0) leftThrottle = 1.0;
-		if(rightThrottle > 1.0) rightThrottle = 1.0;
-		System.out.println("throttle " + leftThrottle + "\tSpeed: " + getLeftEncoderVelocity());
-		tankDrive(leftThrottle, rightThrottle, false);
 	}
 	
 	// Drives with closed loop position control w/o gyro correction
@@ -187,7 +155,7 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		initPID();
 		System.out.println("drive With profile method");
 		
-		for(int i =0; i < path.getLeftPosList().size(); i++) { //TODO change 256 later
+		for(int i =0; i < path.getLeftPosList().size(); i++) {
 			double leftTicks = path.getLeftPosList().get(i);
 			double rightTicks = path.getRightPosList().get(i);
 			double leftVelo = path.getLeftVeloList().get(i);
@@ -248,14 +216,6 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		lastHeadingIntegral = headingIntegral;
 		lastHeadingError = headingError;
 		lastTime = t;
-	}
-	
-	// Future use- velocity closed loop control
-	public void driveAngleVeloPID(double velocityInchesPerSec, double targetHeading) {
-		double veloTicks100Ms = distanceToTicks(velocityInchesPerSec) * 10;
-		//TODO gyro correction and switching constants for velocity/position modes
-		leftDriveMaster.set(ControlMode.Velocity, veloTicks100Ms);
-		rightDriveMaster.set(ControlMode.Velocity, veloTicks100Ms);
 	}
 	
 	public void driveTimeStraight(double throttle) {
@@ -351,10 +311,6 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		lastHeadingIntegral = 0;
 	}
 	
-	public void okayToPID(boolean okayToPID) {
-		this.okayToPID = okayToPID;
-	}
-	
 	public void startTimer() {
 		timer.reset();
 		timer.start();
@@ -369,13 +325,11 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		updateHeadingGains();
 		zeroSensors();
 		resetForPID();
-		okayToPID(true);
 		startTimer();
 	}
 	
 	public void endPID() {
 		resetForPID();
-		okayToPID(false);
 		stopTimer();
 	}
 	
@@ -397,10 +351,6 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	public double getRightSlaveVoltage() {
 		return (rightDriveSlave1.getMotorOutputVoltage());
 	}
-	
-	/*
-	 * CURRENT METHODS
-	 */
 	
 	/*************************
 	 * DRIVE SUPPORT METHODS *
@@ -459,7 +409,6 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		rightDriveSlave1.configNominalOutputReverse(0.0, timeout);
 	}
 
-	
 	public void setTalonDefaults() {
 		reverseTalons(false);
 		setBrakeMode(BRAKE_MODE);
@@ -567,7 +516,6 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	 ***************/
 	private int distanceToTicks(double distanceInches) {
 		return (int) Math.round(EncoderHelper.inchesToEncoderTicks(distanceInches, wheelCircum, quadConversionFactor) * lowGearDriveTrainGearRatio);
-		// TODO CHECK THIS
 	}
 	
 	/*****************
@@ -589,29 +537,9 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		return Math.abs(distance - distanceTravelled) < driveTrainDistanceTolerance;
 	}
 	
-	public boolean isDriveAtDistanceGreaterThan(double distance) {
-		double currentDistance = (getLeftEncoderDistanceTravelled() + getRightEncoderDistanceTravelled())/2;
-		return Math.abs(currentDistance) > Math.abs(distance); 
-	}
-	
-	public boolean isDriveAtDistanceLessThan(double distance) {
-		double currentDistance = (getLeftEncoderDistanceTravelled() + getRightEncoderDistanceTravelled())/2;
-		return Math.abs(currentDistance) < Math.abs(distance); 
-	}
-	
 	public boolean isDriveTrainAtAngle(double angle) {
 		double currentAngle = getHeading();
 		return Math.abs(angle - currentAngle) < driveTrainAngleTolerance;
-	}
-	
-	public boolean isDriveAtAngleGreaterThan(double angle) {
-		double currentAngle = getHeading();
-		return Math.abs(currentAngle) > Math.abs(angle); 
-	}
-	
-	public boolean isDriveAtAngleLessThan(double angle) {
-		double currentAngle = getHeading();
-		return Math.abs(currentAngle) < Math.abs(angle); 
 	}
 
 	@Override

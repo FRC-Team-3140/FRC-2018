@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedClass;
 import lib.joystick.XboxController;
 import main.commands.drivetrain.DriveProfile;
-import main.commands.drivetrain.VeloFF;
 import main.commands.elevator.MovePID;
 import main.commands.intake.SpinIn;
 import main.commands.intake.SpinOff;
@@ -29,8 +28,6 @@ public class OI extends ImprovedClass {
 		
 		xbox.leftJoystickPress.whenPressed(new ShiftUp());
 		xbox.leftJoystickPress.whenReleased(new ShiftDown());
-
-		xbox.a.whenPressed(new VeloFF(120));
 
 		xbox2.leftBumper.whenPressed(new SwitchTilt(new TiltDown(), new TiltUp()));
 		xbox2.rightBumper.whenPressed(new SwitchArm(new ArmOpen(), new ArmClose()));

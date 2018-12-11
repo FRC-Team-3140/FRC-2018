@@ -11,19 +11,12 @@ package main;
  * 
  ****/
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import util.Logger;
-import util.motion.TrajectoryPath;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import interfacesAndAbstracts.ImprovedRobot;
-import loopController.Looper;
 import main.commands.altermativeAuto.AltBaseline;
 import main.commands.altermativeAuto.AltCenterToLeftSwitch;
 import main.commands.altermativeAuto.AltCenterToRightSwitch;
@@ -34,11 +27,6 @@ import main.commands.altermativeAuto.AltRightToRightSwitch;
 import main.commands.altermativeAuto.DoNothing;
 import main.commands.altermativeAuto.LeftToLeftScaleSwitch;
 import main.commands.altermativeAuto.RightToRightScaleSwitch;
-import main.commands.controllerCommands.FileCreator;
-import main.commands.controllerCommands.FileDeletor;
-import main.commands.controllerCommands.StartPlay;
-import main.commands.controllerCommands.StartRecord;
-import main.commands.drivetrain.TankDrive;
 import main.subsystems.DriverCamera;
 import main.subsystems.Drivetrain;
 import main.subsystems.Elevator;
@@ -53,16 +41,6 @@ public class Robot extends ImprovedRobot {
 	public static DriverCamera dc;
 	public static OI oi;
 	
-	// PLAY AND RECORD	
-	public static Logger lg;
-    private static Looper autoLooper;
-    private static SendableChooser<Command> fileChooser;
-    //private static Command autoPlayCommand;
-    private Command lastSelectedFile = new DoNothing();
-    private static String newFileName = "";
-    private static List<File> listOfFiles = new ArrayList<File>();
-    private static int lastNumOfFiles = 0;
-    
 	// AUTO LOGIC
 	private enum StartPos {LEFT, CENTER, RIGHT}
 	private enum RobotAction {DO_NOTHING, BASELINE, SWITCH, SCALE}
@@ -73,21 +51,6 @@ public class Robot extends ImprovedRobot {
 	private static SendableChooser<StartPos> startPos;
 	private static Command autoCommand;
 	
-	// Competition Mode: Picking a recording and running it
-	private static Command competitionFilePicker;
-	private String fileToPlay = null;
-	private static Command competitionPlayCommand;
-	//private static Command autoCommand;
-	
-//	public static TrajectoryPath myFirstPath;
-	
-//	class AutoCommandGroup extends CommandGroup {
-//		public AutoCommandGroup(Command auto, boolean reset, boolean moveDown) {
-//			addSequential(auto);
-//			if(reset) addSequential(new ResetForTeleop(moveDown));
-//		}
-//	}
-	
 	@Override
 	public void robotInit() {
 		// OI must be at end
@@ -97,31 +60,7 @@ public class Robot extends ImprovedRobot {
 		el = new Elevator();
 		oi = new OI();
 		dc = new DriverCamera();
-		
-		lg = new Logger();
-		autoLooper = new Looper(kLooperDt);
-		
-		//autoLooper.register(new Record());
-		//autoLooper.register(new FollowTrajectory());
-		
-		SmartDashboard.putData("Record", new StartRecord());
-		SmartDashboard.putData("Play", new StartPlay());
-		// File adder
-		SmartDashboard.putString("New File Name", "");
-		SmartDashboard.putData("Create a new file", new FileCreator()); 
-		// File deleter
-		SmartDashboard.putData("Delete a file", new FileDeletor());
-		//FileSelector
-    	fileChooser = new SendableChooser<>();
-    	fileChooser.addDefault("", new DoNothing());
-    	SmartDashboard.putData("File Selector", fileChooser);
-    	
-//    	SmartDashboard.putNumber("Throttle", 0.0);
-    	SmartDashboard.putData("Tank Drive", new TankDrive(.1,.1));
-		
-		SmartDashboard.putString("NOTICE:", "Whenever you redeploy code you must restart shuffleboard; And whenever you "
-				+ "delete a file you must restart robot code.");
-		
+
 		// Auto modes
 		autoChooser = new SendableChooser<>();
 		autoChooser.addDefault("Do Nothing", RobotAction.DO_NOTHING);
@@ -157,7 +96,6 @@ public class Robot extends ImprovedRobot {
 
 	@Override
 	public void autonomousInit() {		
-		autoLooper.start();
 		
 		String gmsg = DriverStation.getInstance().getGameSpecificMessage();
 		while (gmsg == null || gmsg.length() != 3) {
@@ -269,81 +207,7 @@ public class Robot extends ImprovedRobot {
 		}
 		
 		if(autoCommand != null) autoCommand.start();
-//			(autoCommand = new AutoCommandGroup(
-//					autoCommand, !(autoCommand instanceof AltBaseline || 
-//					autoCommand instanceof DoNothing), isSwitch)).start();	
-		
-		/*if(robot_act == RobotAction.DO_NOTHING)//Do Nothing
-			autoCommand = new DoNothing();
-		else if(robot_act == RobotAction.BASELINE)//Baseline
-			autoCommand = new Baseline();
-		else if(robot_act == RobotAction.SWITCH){//Priority Switch
-			if(start_pos == StartPos.LEFT) {
-				if(leftSwitch) {
-					isSwitch = true;
-					autoCommand = new AltLeftToLeftSwitch();
-				}
-				else if(!behindSwitchDisabled) {
-					isSwitch = true;
-					autoCommand = new AltLeftToRightSwitch();
-				}
-				else if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
-				else autoCommand = new Baseline();					
-			}
-			else if(start_pos == StartPos.CENTER) {
-				isSwitch = true;
-				if(leftSwitch) autoCommand = new AltCenterToLeftSwitch();
-				else autoCommand = new AltCenterToRightSwitch();
-			}
-			else if(start_pos == StartPos.RIGHT) {
-				if(!leftSwitch) {
-					isSwitch = true;
-					autoCommand = new AltRightToRightSwitch();
-				}
-				else if(!behindSwitchDisabled) {
-					isSwitch = true;
-					autoCommand = new AltRightToLeftSwitch();
-				}
-				else if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
-				else autoCommand = new Baseline();					
-			}
-		}
-		else {//Priority Scale
-			if(start_pos == StartPos.LEFT) {
-				if(leftScale && !scaleDisabled) autoCommand = new AltLeftToLeftScale();
-				else if(leftSwitch) {
-					isSwitch = true;
-					autoCommand = new AltLeftToLeftSwitch();
-				}
-				else if(!behindSwitchDisabled) {
-					isSwitch = true;
-					autoCommand = new AltLeftToRightSwitch();
-				}
-				else autoCommand = new Baseline();					
-			}
-			else if(start_pos == StartPos.CENTER) {
-				isSwitch = true;
-				if(leftSwitch) autoCommand = new AltCenterToLeftSwitch();
-				else autoCommand = new AltCenterToRightSwitch();
-			}
-			else if(start_pos == StartPos.RIGHT) {
-				if(!leftScale && !scaleDisabled) autoCommand = new AltRightToRightScale();
-				else if(!leftSwitch) {
-					isSwitch = true;
-					autoCommand = new AltRightToRightSwitch();
-				}
-				else if(!behindSwitchDisabled) {
-					isSwitch = true;
-					autoCommand = new AltRightToLeftSwitch();
-				}
-				else autoCommand = new Baseline();				
-			}
-		}
-		
-		if(autoCommand != null)
-			(autoCommand = new AutoCommandGroup(
-					autoCommand, !(autoCommand instanceof Baseline || 
-					autoCommand instanceof DoNothing), isSwitch)).start();*/
+
 	}
 	
 	@Override
@@ -354,9 +218,6 @@ public class Robot extends ImprovedRobot {
 
 	@Override
 	public void teleopInit() {
-		autoLooper.start();
-//		if(autoCommand != null && autoCommand.isRunning())
-//			autoCommand.cancel();
 	}	
 
 	@Override
@@ -368,26 +229,6 @@ public class Robot extends ImprovedRobot {
 	@Override
 	public void testPeriodic() {
 		allPeriodic();
-	}
-	
-	private boolean fileNameInListOfFiles(List<File> l, File f) {
-		for(File file: l) {
-			if(file.getName().toLowerCase().equals(f.getName().toLowerCase()))
-				return true;
-		}
-		return false;
-	}
-	
-	public static SendableChooser<Command> getFileChooser() {
-		return fileChooser;
-	}
-	
-	public static Command getFile() {
-		return fileChooser.getSelected();
-	}
-	
-	public static String getNewFileName() {
-		return newFileName;
 	}
 	
 	public void allPeriodic() {
@@ -436,7 +277,5 @@ public class Robot extends ImprovedRobot {
 		SmartDashboard.putNumber("Elevator master power", (el.getElevatorMasterVoltage() * elevatorMaster.getMotorOutputVoltage()));
 		SmartDashboard.putNumber("Elevator slave power", (el.getElevatorSlaveVoltage() * elevatorSlave.getMotorOutputVoltage()));
 		
-		SmartDashboard.putString("Working File", lg.getWorkingFile());
-		SmartDashboard.putString("Working Path", outputPath);
 	}
 }
