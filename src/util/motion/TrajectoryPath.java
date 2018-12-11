@@ -5,6 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
 
 import main.Constants;
 import main.subsystems.subsystemConstants.DrivetrainConstants;
@@ -16,12 +20,13 @@ import util.EncoderHelper;
 public class TrajectoryPath implements Constants, DrivetrainConstants {
 	private File file;
 	private BufferedReader br;
-	//TODO change these over to lists
-	private double[] leftVelocity = new double[256]; // ft/s
-	private double[] rightVelocity = new double[256];
-	private double[] leftPos=new double[256]; //ft
-	private double[] rightPos=new double[256];
-	private double[] headingDeg=new double[256];
+
+	private List<Double> leftVelocity = new ArrayList<>();
+	private List<Double> rightVelocity = new ArrayList<>(); 
+	private List<Integer> leftPos = new ArrayList<>(); 
+	private List<Integer> rightPos = new ArrayList<>(); 
+	private List<Double> headingDeg = new ArrayList<>(); 
+
 	private String current;
 	
 	private double dt = 0.05;
@@ -75,29 +80,29 @@ public class TrajectoryPath implements Constants, DrivetrainConstants {
 				//System.out.println(current);
 				// Fills up arrays appropriately
 				if(current.equals("H")) 
-					headingDeg[i] = y;
+					headingDeg.add(y);
 				else if(current.equals("VL")) {
-					leftVelocity[i] = EncoderHelper.inSecToTicks100Ms(y*12, 4096, wheelCircum);
+					leftVelocity.add(EncoderHelper.inSecToTicks100Ms(y*12, 4096, wheelCircum));
 				}
 				else if(current.equals("VR")) {
-					rightVelocity[i] = EncoderHelper.inSecToTicks100Ms(y*12, 4096, wheelCircum);
+					rightVelocity.add(EncoderHelper.inSecToTicks100Ms(y*12, 4096, wheelCircum));
 				}
 				
 				// Uses pythag from absolute position to get distances needed to travel.
 				else if(current.equals("PL")) {
-					if(i==0) leftPos[i] = 0;
+					if(i==0) leftPos.add(0);
 					else  {
 						double posFt = Math.sqrt(Math.pow(x-lastPosX, 2) + Math.pow(y-lastPosY, 2)); 
-						leftPos[i] = EncoderHelper.inchesToEncoderTicks(12*posFt, wheelCircum, 4096);
+						leftPos.add(EncoderHelper.inchesToEncoderTicks(12*posFt, wheelCircum, 4096));
 					}
 					lastPosX = x;
 					lastPosY = y;
 				}
 				else {
-					if(i==0) rightPos[i] = 0;
+					if(i==0) rightPos.add(0);
 					else {
 						double posFt = Math.sqrt(Math.pow(x-lastPosX, 2) + Math.pow(y-lastPosY, 2));
-						rightPos[i] = EncoderHelper.inchesToEncoderTicks(12*posFt, wheelCircum, 4096);
+						rightPos.add(EncoderHelper.inchesToEncoderTicks(12*posFt, wheelCircum, 4096));
 					}
 					lastPosX = x;
 					lastPosY = y;
@@ -107,31 +112,31 @@ public class TrajectoryPath implements Constants, DrivetrainConstants {
 			}
 			line = readLine();
 		}
-		System.out.println(headingDeg.length);
+		System.out.println(headingDeg.size());
 	}
 	
-	public double[] getHeadingArr() {
+	public List<Double> getHeadingList() {
 		return headingDeg;
 	}
 	
-	public double[] getLeftPosArr() {
+	public List<Integer> getLeftPosList() {
 		return leftPos;
 	}
 	
-	public double[] getRightPosArr() {
+	public List<Integer> getRightPosList() {
 		return rightPos;
 	}
 	
-	public double[] getLeftVeloArr() {
+	public List<Double> getLeftVeloList() {
 		return leftVelocity;
 	}
 	
-	public double[] getRightVeloArr() {
+	public List<Double> getRightVeloList() {
 		return rightVelocity;
 	}
 	
 	// Returns the target heading at the time in degrees
-	public double getHeading(double time) {
+	/*public double getHeading(double time) {
 		int i = timeToIndex(time);
 		return headingDeg[i];
 	}
@@ -156,7 +161,7 @@ public class TrajectoryPath implements Constants, DrivetrainConstants {
 	public double getLeftVelocity(double time) {
 		int i = timeToIndex(time);
 		return leftVelocity[i];
-	}
+	}*/
 	
 	// Reads one line from the file
 	private String readLine() {

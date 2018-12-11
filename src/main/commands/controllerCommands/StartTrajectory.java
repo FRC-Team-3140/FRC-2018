@@ -11,7 +11,7 @@ public class StartTrajectory extends ImprovedCommand {
 	}
 	
 	protected void initialize() {
-		FollowTrajectory.setCanExecute(true, name);
+		//FollowTrajectory.setCanExecute(true, name);
 	}
 
 	@Override

@@ -36,7 +36,7 @@ public class FollowTrajectory implements Loop, Constants, DrivetrainConstants {
 	}
 	
 	public void execute() {
-		double t = timer.get();
+		/*double t = timer.get();
 		double headingDeg = currentPath.getHeading(t);
 		double leftVelo = currentPath.getLeftVelocity(t);
 		double rightVelo = currentPath.getRightVelocity(t);
@@ -66,7 +66,7 @@ public class FollowTrajectory implements Loop, Constants, DrivetrainConstants {
 			timer.stop();
 			timer.reset();
 		}
-		execute = b;	
+		execute = b;	*/
 	}
 
 }

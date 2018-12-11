@@ -187,23 +187,24 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		initPID();
 		System.out.println("drive With profile method");
 		
-		for(int i =0; i < 256; i++) { //TODO change 256 later
-			//System.out.println("for loop in drive w/ prof method");
-			double leftTicks = path.getLeftPosArr()[i];
-			double rightTicks = path.getRightPosArr()[i];
-			double leftVelo = path.getLeftVeloArr()[i];
-			double rightVelo = path.getRightVeloArr()[i];
-			double heading = path.getHeadingArr()[i];
+		for(int i =0; i < path.getLeftPosList().size(); i++) { //TODO change 256 later
+			double leftTicks = path.getLeftPosList().get(i);
+			double rightTicks = path.getRightPosList().get(i);
+			double leftVelo = path.getLeftVeloList().get(i);
+			double rightVelo = path.getRightVeloList().get(i);
+			double heading = path.getHeadingList().get(i);
 			System.out.println(leftTicks);
-			
+		
 			boolean reached = false;
 			
+			driveToWaypoint(leftTicks, rightTicks, leftVelo, rightVelo, heading);
+
 			while(!reached) {
-				driveToWaypoint(leftTicks, rightTicks, leftVelo, rightVelo, heading);
 				boolean leftReached = Math.abs(getLeftEncoderTicksTravelled() - leftTicks) < ALLOWABLE_ERR_UNITS;
 				boolean rightReached = Math.abs(getRightEncoderTicksTravelled() - rightTicks) < ALLOWABLE_ERR_UNITS;
 				boolean headingReached = Math.abs(getHeading() - heading) < ALLOWABLE_ERR_DEG;
-				System.out.println("driving to waypoint... left ticks: " + getLeftEncoderTicksTravelled());
+				System.out.println("driving to waypoint... left ticks: " + getLeftEncoderTicksTravelled() +
+						"heading error: " + heading);
 				
 				if(leftReached && rightReached && headingReached) {
 					reached = true;
@@ -225,7 +226,6 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	 * Uses cascaded loop to drive to the waypoint
 	 */
 	public void driveToWaypoint(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double headingTarget) {
-		//System.out.println("drive to waypoint method helloooo"); // This is printing successfully
 		
 		double heading = getHeading();
 		double headingError = headingTarget - heading;
