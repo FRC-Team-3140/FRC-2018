@@ -180,17 +180,7 @@ public class Elevator extends ImprovedSubsystem implements ElevatorConstants {
 	public void movePID(double distanceInches) {
 		elevatorMaster.set(ControlMode.Position, distanceToTicks(distanceInches));
 	}
-	
-	/***
-	 * Uses PID to hit a certain target velocity and maintains that velocity until stopped by another command/cancelled.
-	 * @param velocityInchesPerSecond The target velocity in inches per second to hit
-	 */
-	public void moveVelocityPID(double velocityInchesPerSecond) {
-		double velocityTicksPer100Ms = distanceToTicks(velocityInchesPerSecond) * 10;
-		SmartDashboard.putNumber("Target elevator velocity", velocityTicksPer100Ms);
-		elevatorMaster.set(ControlMode.Velocity, velocityTicksPer100Ms);
-	}
-	
+
 	/**
 	 * Uses a cascaded loop with position closed loop and velocity feed-forward. Used in motion profiles. Velocity
 	 * feed forward helps "skip over" any slowing down before hitting a trajectory point that isn't near the end of
@@ -203,10 +193,6 @@ public class Elevator extends ImprovedSubsystem implements ElevatorConstants {
 		elevatorMaster.set(ControlMode.Position, distanceTicks, DemandType.ArbitraryFeedForward, feedForward);
 		// if this doesnt work i will cry
 		if(Math.abs(getTicksTravelled() - distanceTicks) < toleranceTicks) playFinished = true;
-	}
-	
-	public void moveTrapezoidalProfile(double distance) {
-		
 	}
 			
 	public void moveWithJoystick(double throttle) {
