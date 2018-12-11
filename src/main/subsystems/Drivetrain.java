@@ -25,12 +25,10 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	private static double lastHeadingIntegral = 0;
 	private static double lastHeadingError = 0;
 	private static double lastTime = 0;
-	public double inchesToTurn = 0;
-	
-	double[][] prof;
-		
+			
 	//TELEOP DRIVING
 	private DriveHelper driveHelper = new DriveHelper(7.5);
+	
 	//Timer for PID
 	private Timer timer = new Timer();
 	
@@ -54,6 +52,7 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		pushNormallyUnusedToSmartDashboard();
 		setPIDDefaults();
 	}
+	
 	/*****************
 	 * DRIVE METHODS *
 	 *****************/
@@ -73,10 +72,6 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	//Drive for testing the drivetrain so that the needed constants to compute the bias voltages may be derived
 	public void driveVoltageTankTest(double leftVoltage, double rightVoltage, double voltageCompensationVoltage) {
 		tankDrive(leftVoltage/voltageCompensationVoltage, rightVoltage/voltageCompensationVoltage, false);
-	}
-	
-	public void turnOff() {
-		tankDrive(0.0, 0.0, false);
 	}
 	
 	/**
@@ -104,20 +99,11 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		lastTime = t;
 	}
 	
-	// Drives with closed loop position control w/o gyro correction
-	public void drivePID(double inches) {
-		int ticks = distanceToTicks(inches);
-		leftDriveMaster.set(ControlMode.Position, ticks);
-		rightDriveMaster.set(ControlMode.Position, ticks);
-	}
-	
-	// Drives one side of the drivetrain with position closed loop control
-	public void drivePID(double inches, String side) {
-		int ticks = distanceToTicks(inches);
-		if(side.toLowerCase().equals("left")) leftDriveMaster.set(ControlMode.Position, ticks);
-		else if(side.toLowerCase().equals("right")) rightDriveMaster.set(ControlMode.Position, ticks);
-	}
-	
+	/*
+	 *  Drives each side with closed-loop position PID independently
+	 *  @param leftInches   Inches for the left side to drive, in inches
+	 *  @param rightInches  Inches for the right side to drive, in inches
+	 */
 	public void drivePID(double leftInches, double rightInches) {
 		int leftTicks = distanceToTicks(leftInches);
 		int rightTicks = distanceToTicks(rightInches);
@@ -125,7 +111,10 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		rightDriveMaster.set(ControlMode.Position, rightTicks);
 	}
 
-	// Turns to angle w/ closed loop control using the gyro's heading
+	/*
+	 * Turns to the specified angle with closed loop heading PID
+	 * @param angle  The number of degrees to turn
+	 */
 	public void turnToAngleGyro(double angle) {
 		double heading = getHeading();
 		double headingError = angle - heading;
@@ -147,9 +136,7 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	
 	/*
 	 * Drives to a profile
-	 * @param ticks    Profile with left and right distances in ticks, respectively
-	 * @param velo     Profile with left and right velocities in ticks per 100 ms, respectively
-	 * @param heading  Profile of the heading of the robot in degrees
+	 * @param path  The TrajectoryPath object that contains the profile to follow
 	 */
 	public void driveWithProfile(TrajectoryPath path) {
 		initPID();
@@ -190,8 +177,14 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 	}
 	
 	/*
-	 * Method to drive a short distance to a waypoint. Should be called in a loop.
-	 * Uses cascaded loop to drive to the waypoint
+	 * Drives to a single waypoint in a motion profile. Uses cascaded-closed loop. 
+	 * 
+	 * Position and heading are controlled with closed loop PID. The target velocity is scaled and added to the closed loop values
+	 * @param leftTicks            Target number of ticks for left side to drive
+	 * @param rightTicks           Target number of ticks for left side to drive
+	 * @param leftVeloTicks100Ms   Target velocity in ticks per 100ms for the left side
+	 * @param rightVeloTicks100Ms  Target velocity in ticks per 100ms for the left side
+	 * @param headingTarget        Target heading in degrees
 	 */
 	public void driveToWaypoint(double leftTicks, double rightTicks, double leftVeloTicks100Ms, double rightVeloTicks100Ms, double headingTarget) {
 		
@@ -218,19 +211,21 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		lastTime = t;
 	}
 	
+	/*
+	 * Drives forward with gyro correction
+	 * @param throttle  The throttle to apply to the motors
+	 */
 	public void driveTimeStraight(double throttle) {
 		double heading = getHeading();
 		double headingError = 0 - heading;
 		double t = timer.get();
 		double dt = t - lastTime;
-		//System.out.println(headingError);
 		
 		double headingDerivative = (headingError - lastHeadingError) / dt;
 		double headingIntegral = lastHeadingIntegral + headingError * dt;
 		double gyroCorrection = kPHeading * headingError + kIHeading * headingIntegral + kDHeading * headingDerivative;
 		if(Math.abs(gyroCorrection) > kMaxTurnRate) gyroCorrection = Math.signum(gyroCorrection) * kMaxTurnRate;
 		
-		//System.out.println(output);
 		arcadeDrive(throttle, gyroCorrection, false);
 		
 		lastHeadingError = headingError;
@@ -238,6 +233,7 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		lastTime = t;
 	}
 	
+	// Turns the drivetrain by raw throttle
 	public void timedTurn(TurnMode mode, double throttle) {
 		if (mode == TurnMode.Left) tankDrive(-throttle, throttle, false);
 		if (mode == TurnMode.Right) tankDrive(throttle, -throttle, false);
@@ -300,17 +296,19 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		rightDriveMaster.configAllowableClosedloopError(slotIdx, 0, timeout);
 	}
 	
+	// Resets PID variables
 	public void resetForPID() {
 		lastHeadingError = 0;
 		lastHeadingIntegral = 0;
 		lastTime = 0;
 	}
 	
+	// Resets some PID variables when changing the target waypoint
 	public void resetBetweenWaypoints() {
 		lastHeadingError = 0;
 		lastHeadingIntegral = 0;
 	}
-	
+
 	public void startTimer() {
 		timer.reset();
 		timer.start();
@@ -321,6 +319,7 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		timer.reset();
 	}
 	
+	// Updates all variables/values for PID
 	public void initPID() {
 		updateHeadingGains();
 		zeroSensors();
@@ -328,6 +327,7 @@ public class Drivetrain extends ImprovedSubsystem implements DrivetrainConstants
 		startTimer();
 	}
 	
+	// Stops and resets any values needed for when PID ends
 	public void endPID() {
 		resetForPID();
 		stopTimer();
